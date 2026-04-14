@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip show:*)",
+      "Bash(pip install:*)",
+      "Bash(python generate_lead_magnet.py)",
+      "Bash(find 'c:\\\\Users\\\\jgome\\\\3nity Dropbox\\\\Company Files\\\\3nity\\\\Development\\\\advoc8 Design System' -type d -iname *design* -o -type d -iname *template* -o -type d -iname *style* -o -type d -iname *training*)",
+      "Bash(powershell -Command \"Rename-Item -Path 'D:\\\\Dropbox\\\\WORK FILES\\\\BMB\\\\AI SHIT\\\\Live Streaming for Venues and AV Companies' -NewName 'BM Live Stream Projects'\")",
+      "WebFetch(domain:www.blackmarkermedia.com)",
+      "WebSearch",
+      "WebFetch(domain:beverlyboy.com)",
+      "Bash(cmd /c \"dir C:\\\\\\\\* /b 2>nul | findstr -i node\")",
+      "Bash(npm install:*)",
+      "Bash(node server.js)",
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(curl -s http://localhost:3000/admin)",
+      "Bash(curl -s -X POST http://localhost:3000/api/submit-form -H 'Content-Type: application/json' -d '{\"form_type\":\"lead\",\"name\":\"Test User\",\"email\":\"test@example.com\",\"company\":\"Test Co\",\"message\":\"Hello from the test\"}')"
+    ]
+  }
+}

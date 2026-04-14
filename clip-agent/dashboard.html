@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BlackMarker.TV Clip Agent</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0d;
+    --surface: #1a1a1a;
+    --surface-2: #222222;
+    --border: #2a2a2a;
+    --accent: #dc2626;
+    --accent-hover: #ef4444;
+    --text: #e5e5e5;
+    --muted: #737373;
+    --success: #16a34a;
+    --warning: #ca8a04;
+    --error: #dc2626;
+    --info: #2563eb;
+    --radius: 8px;
+    --nav-height: 56px;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--nav-height);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 100;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-brand .dot {
+    color: var(--accent);
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+  }
+
+  .nav-tab {
+    background: none;
+    border: none;
+    color: var(--muted);
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .nav-tab:hover {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+
+  .nav-tab.active {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  /* LAYOUT */
+  main {
+    margin-top: var(--nav-height);
+    padding: 24px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: calc(var(--nav-height) + 0px);
+  }
+
+  .tab-section { display: none; }
+  .tab-section.active { display: block; }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  /* STAT CARDS */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 900px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .stat-grid { grid-template-columns: 1fr; }
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .stat-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  /* STATUS BADGES */
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-pending   { background: #1c1c1c; color: var(--muted); border: 1px solid var(--border); }
+  .badge-downloading { background: #1e2d3d; color: #60a5fa; border: 1px solid #1d4ed8; }
+  .badge-transcribing { background: #1e2d3d; color: #60a5fa; border: 1px solid #1d4ed8; }
+  .badge-analyzing { background: #2d1e3d; color: #c084fc; border: 1px solid #7c3aed; }
+  .badge-cutting   { background: #2d1e1e; color: #fca5a5; border: 1px solid #dc2626; }
+  .badge-done      { background: #14271c; color: #4ade80; border: 1px solid #16a34a; }
+  .badge-error     { background: #2d1e1e; color: #f87171; border: 1px solid #dc2626; }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    background: var(--surface-2);
+    border-radius: 99px;
+    height: 6px;
+    overflow: hidden;
+    margin: 10px 0;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+
+  .progress-bar.done { background: var(--success); }
+  .progress-bar.error { background: var(--error); }
+
+  /* JOB CARD */
+  .job-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .job-card-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .job-show-name {
+    font-weight: 700;
+    font-size: 15px;
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .job-episode {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .job-meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .job-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+  /* TERMINAL LOG */
+  .log-toggle-btn {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 5px 12px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 12px;
+    font-family: inherit;
+    transition: background 0.15s;
+  }
+
+  .log-toggle-btn:hover { background: var(--border); }
+
+  .log-window {
+    display: none;
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+    margin-top: 10px;
+    max-height: 280px;
+    overflow-y: auto;
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .log-window.open { display: block; }
+
+  .log-entry { white-space: pre-wrap; word-break: break-word; }
+  .log-entry.info    { color: #a3a3a3; }
+  .log-entry.success { color: #4ade80; }
+  .log-entry.warn    { color: #fbbf24; }
+  .log-entry.error   { color: #f87171; }
+
+  /* CLIP GRID */
+  .clip-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 900px) {
+    .clip-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .clip-grid { grid-template-columns: 1fr; }
+  }
+
+  .clip-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.15s;
+  }
+
+  .clip-card:hover { border-color: #444; }
+
+  .clip-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--surface-2);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .clip-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .clip-thumb-placeholder {
+    color: var(--muted);
+    font-size: 36px;
+    opacity: 0.4;
+  }
+
+  .clip-body {
+    padding: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .clip-title {
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--text);
+  }
+
+  .clip-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  .tag-show { background: #1e2535; color: #93c5fd; }
+  .tag-duration { background: var(--surface-2); color: var(--muted); border: 1px solid var(--border); }
+  .tag-type { background: #2a1e2e; color: #d8b4fe; }
+
+  .vibe-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .vibe-gray   { background: #2a2a2a; color: var(--muted); }
+  .vibe-yellow { background: #2d2408; color: #fbbf24; }
+  .vibe-red    { background: #2d0a0a; color: #f87171; }
+
+  .clip-actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+
+  /* BUTTONS */
+  .btn {
+    border: none;
+    border-radius: var(--radius);
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, opacity 0.15s;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+
+  .btn-accent {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-accent:hover { background: var(--accent-hover); }
+
+  .btn-ghost {
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { background: var(--border); }
+
+  .btn-sm {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+
+  .btn-danger {
+    background: transparent;
+    color: #f87171;
+    border: 1px solid #3d1515;
+  }
+  .btn-danger:hover { background: #2d1515; }
+
+  .btn-big {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 800;
+    border-radius: var(--radius);
+  }
+
+  /* FORM */
+  .form-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    max-width: 680px;
+  }
+
+  .form-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 24px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .form-input, .form-select {
+    width: 100%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    padding: 10px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .form-input:focus, .form-select:focus {
+    border-color: var(--accent);
+  }
+
+  .form-select option { background: var(--surface-2); }
+
+  .radio-group {
+    display: flex;
+    gap: 12px;
+  }
+
+  .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 9px 16px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .radio-label input { accent-color: var(--accent); }
+
+  .radio-label:has(input:checked) {
+    border-color: var(--accent);
+    background: #1e0909;
+    color: #fca5a5;
+  }
+
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .form-range {
+    flex: 1;
+    accent-color: var(--accent);
+  }
+
+  .slider-val {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 44px;
+    text-align: right;
+  }
+
+  .form-hint {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 5px;
+  }
+
+  /* FILTER ROW */
+  .filter-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .filter-row .form-input,
+  .filter-row .form-select {
+    width: auto;
+    flex: 1;
+    min-width: 160px;
+  }
+
+  /* CHARTS */
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 800px) {
+    .charts-grid { grid-template-columns: 1fr; }
+  }
+
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .chart-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 16px;
+  }
+
+  .chart-wrap {
+    position: relative;
+    height: 280px;
+  }
+
+  /* REPORTS STATS */
+  .reports-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 900px) {
+    .reports-stat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .reports-stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .reports-stat-icon {
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  .reports-stat-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  .reports-stat-value {
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .reports-stat-sub {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* RECENT CLIPS ROW */
+  .recent-clips-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 1100px) {
+    .recent-clips-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .recent-clips-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .recent-clip-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+
+  .recent-clip-card:hover { border-color: #555; }
+
+  .recent-clip-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .recent-clip-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .recent-clip-info {
+    padding: 8px;
+  }
+
+  .recent-clip-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .recent-clip-show {
+    font-size: 10px;
+    color: var(--muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  /* TOAST */
+  #toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+  }
+
+  .toast {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+    animation: slideIn 0.2s ease;
+    min-width: 180px;
+    max-width: 340px;
+  }
+
+  .toast.success { border-color: var(--success); color: #4ade80; }
+  .toast.error   { border-color: var(--error); color: #f87171; }
+  .toast.info    { border-color: var(--info); color: #93c5fd; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--muted);
+  }
+
+  .empty-state-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.4; }
+  .empty-state-text { font-size: 14px; }
+
+  /* UTILS */
+  .flex { display: flex; }
+  .gap-8 { gap: 8px; }
+  .items-center { align-items: center; }
+  .mt-4 { margin-top: 4px; }
+  .mt-8 { margin-top: 8px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-24 { margin-top: 24px; }
+  .mb-16 { margin-bottom: 16px; }
+  .text-muted { color: var(--muted); }
+  .text-sm { font-size: 12px; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .spin { animation: spin 1s linear infinite; display: inline-block; }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #444; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <span class="dot">&#11044;</span>
+    BlackMarker.TV Clip Agent
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="nav-dashboard" onclick="switchTab('dashboard')">Dashboard</button>
+    <button class="nav-tab" id="nav-submit" onclick="switchTab('submit')">Submit Job</button>
+    <button class="nav-tab" id="nav-library" onclick="switchTab('library')">Clips Library</button>
+    <button class="nav-tab" id="nav-reports" onclick="switchTab('reports')">Reports</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ========== DASHBOARD TAB ========== -->
+  <div class="tab-section active" id="tab-dashboard">
+
+    <div class="stat-grid" id="dash-stats">
+      <div class="stat-card">
+        <div class="stat-label">Total Clips</div>
+        <div class="stat-value" id="stat-total-clips">—</div>
+        <div class="stat-sub">all time</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active Jobs</div>
+        <div class="stat-value" id="stat-active-jobs">—</div>
+        <div class="stat-sub">running now</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Clips This Week</div>
+        <div class="stat-value" id="stat-clips-week">—</div>
+        <div class="stat-sub">last 7 days</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Video Created</div>
+        <div class="stat-value" id="stat-total-dur">—</div>
+        <div class="stat-sub">combined clip duration</div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div class="section-title">Active Jobs</div>
+      <button class="btn btn-ghost btn-sm" onclick="loadDashboard()">&#8635; Refresh</button>
+    </div>
+    <div id="active-jobs-list">
+      <div class="empty-state">
+        <div class="empty-state-icon">&#128247;</div>
+        <div class="empty-state-text">No active jobs. Submit a job to get started.</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-header">
+      <div class="section-title">Recent Clips</div>
+      <button class="btn btn-ghost btn-sm" onclick="switchTab('library')">View All &rarr;</button>
+    </div>
+    <div class="recent-clips-grid" id="recent-clips-grid">
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-state-icon">&#127916;</div>
+        <div class="empty-state-text">No clips yet.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SUBMIT TAB ========== -->
+  <div class="tab-section" id="tab-submit">
+    <div class="form-card">
+      <div class="form-title">Run Clip Agent</div>
+      <form id="job-form" onsubmit="submitJob(event)">
+
+        <div class="form-group">
+          <label class="form-label">Input Type</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="input_type" value="file" checked onchange="updateInputLabel()" />
+              Local File
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="input_type" value="youtube" onchange="updateInputLabel()" />
+              YouTube URL
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" id="input-path-label">File Path</label>
+          <input type="text" class="form-input" id="input-path"
+            placeholder="C:\Videos\episode.mp4" required />
+          <div class="form-hint" id="input-path-hint">Full path to the local video file.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Show Name</label>
+          <select class="form-select" id="show-name" required>
+            <option value="">— Select Show —</option>
+            <option>The Weekly Interrupt</option>
+            <option>Can You Dig It!? Live Music Review</option>
+            <option>Talking Tipsy</option>
+            <option>The Alien Podcast</option>
+            <option>For The Record</option>
+            <option>Duh Diggity Show</option>
+            <option>2 Bafoonz 1 Lagoon</option>
+            <option>Other / Custom</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Episode / Title</label>
+          <input type="text" class="form-input" id="episode"
+            placeholder="Ep. 42 — The Drake Debate" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Whisper Model</label>
+          <select class="form-select" id="whisper-model">
+            <option value="tiny">tiny — fastest / least accurate</option>
+            <option value="base" selected>base — recommended</option>
+            <option value="small">small — better accuracy</option>
+            <option value="medium">medium — best / slowest</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">SRT Transcript Path (optional)</label>
+          <input type="text" class="form-input" id="srt-path"
+            placeholder="Skip transcription — provide existing .srt" />
+          <div class="form-hint">Leave blank to auto-transcribe with Whisper.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Min Clip Duration</label>
+          <div class="slider-row">
+            <input type="range" class="form-range" id="min-duration"
+              min="30" max="120" value="45"
+              oninput="document.getElementById('min-dur-val').textContent=this.value+'s'" />
+            <span class="slider-val" id="min-dur-val">45s</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Max Clip Duration</label>
+          <div class="slider-row">
+            <input type="range" class="form-range" id="max-duration"
+              min="60" max="180" value="90"
+              oninput="document.getElementById('max-dur-val').textContent=this.value+'s'" />
+            <span class="slider-val" id="max-dur-val">90s</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Max Clips to Find</label>
+          <input type="number" class="form-input" id="max-clips"
+            min="1" max="20" value="10" />
+        </div>
+
+        <button type="submit" class="btn btn-accent btn-big" id="submit-btn">
+          Run Clip Agent
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========== LIBRARY TAB ========== -->
+  <div class="tab-section" id="tab-library">
+    <div class="filter-row">
+      <select class="form-select" id="lib-show-filter" onchange="loadLibrary()"
+        style="max-width:220px;">
+        <option value="">All Shows</option>
+        <option>The Weekly Interrupt</option>
+        <option>Can You Dig It!? Live Music Review</option>
+        <option>Talking Tipsy</option>
+        <option>The Alien Podcast</option>
+        <option>For The Record</option>
+        <option>Duh Diggity Show</option>
+        <option>2 Bafoonz 1 Lagoon</option>
+        <option>Other / Custom</option>
+      </select>
+      <input type="text" class="form-input" id="lib-search"
+        placeholder="Search clips..." oninput="filterLibraryBySearch()"
+        style="max-width:280px;" />
+      <button class="btn btn-ghost" onclick="loadLibrary()">&#8635; Refresh</button>
+    </div>
+    <div class="clip-grid" id="library-grid">
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-state-icon">&#127916;</div>
+        <div class="empty-state-text">No clips yet. Run a job to create clips.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== REPORTS TAB ========== -->
+  <div class="tab-section" id="tab-reports">
+    <div class="reports-stat-grid" id="reports-stats">
+      <div class="reports-stat-card">
+        <div class="reports-stat-icon">&#127916;</div>
+        <div class="reports-stat-label">Total Clips</div>
+        <div class="reports-stat-value" id="rpt-total-clips">—</div>
+        <div class="reports-stat-sub">all time</div>
+      </div>
+      <div class="reports-stat-card">
+        <div class="reports-stat-icon">&#9889;</div>
+        <div class="reports-stat-label">This Week</div>
+        <div class="reports-stat-value" id="rpt-week-clips">—</div>
+        <div class="reports-stat-sub">last 7 days</div>
+      </div>
+      <div class="reports-stat-card">
+        <div class="reports-stat-icon">&#128202;</div>
+        <div class="reports-stat-label">Avg per Job</div>
+        <div class="reports-stat-value" id="rpt-avg-clips">—</div>
+        <div class="reports-stat-sub">clips per job</div>
+      </div>
+      <div class="reports-stat-card">
+        <div class="reports-stat-icon">&#127942;</div>
+        <div class="reports-stat-label">Top Show</div>
+        <div class="reports-stat-value" style="font-size:18px;margin-top:4px;" id="rpt-top-show">—</div>
+        <div class="reports-stat-sub">most clips</div>
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">Clips by Show</div>
+        <div class="chart-wrap">
+          <canvas id="chart-by-show"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Clips Per Week</div>
+        <div class="chart-wrap">
+          <canvas id="chart-per-week"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div id="toast-container"></div>
+
+<script>
+'use strict';
+
+// ── State ──────────────────────────────────────────────────────────────────
+let _activeTab = 'dashboard';
+let _dashPollInterval = null;
+let _sseConnections = {};
+let _sseRetryTimers = {};
+let _charts = {};
+let _allLibraryClips = [];
+
+// ── Tab Switching ──────────────────────────────────────────────────────────
+function switchTab(name) {
+  _activeTab = name;
+  document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+  const section = document.getElementById('tab-' + name);
+  if (section) section.classList.add('active');
+  const navBtn = document.getElementById('nav-' + name);
+  if (navBtn) navBtn.classList.add('active');
+
+  if (name === 'dashboard') {
+    loadDashboard();
+    startDashPoll();
+  } else {
+    stopDashPoll();
+  }
+  if (name === 'library') loadLibrary();
+  if (name === 'reports') loadReports();
+}
+
+function startDashPoll() {
+  stopDashPoll();
+  _dashPollInterval = setInterval(() => {
+    if (_activeTab === 'dashboard') loadDashboard();
+  }, 8000);
+}
+
+function stopDashPoll() {
+  if (_dashPollInterval) { clearInterval(_dashPollInterval); _dashPollInterval = null; }
+}
+
+// ── API Helpers ────────────────────────────────────────────────────────────
+async function apiFetch(url, opts = {}) {
+  const res = await fetch(url, opts);
+  if (!res.ok) {
+    let msg = `HTTP ${res.status}`;
+    try { const j = await res.json(); msg = j.detail || JSON.stringify(j); } catch {}
+    throw new Error(msg);
+  }
+  return res.json();
+}
+
+// ── Dashboard ──────────────────────────────────────────────────────────────
+async function loadDashboard() {
+  try {
+    const [jobs, stats] = await Promise.all([
+      apiFetch('/api/jobs'),
+      apiFetch('/api/reports/stats'),
+    ]);
+    renderDashStats(jobs, stats);
+    renderActiveJobs(jobs);
+
+    const clips = await apiFetch('/api/clips?limit=6');
+    renderRecentClips(clips.slice(0, 6));
+  } catch (e) {
+    console.error('loadDashboard error:', e);
+  }
+}
+
+function renderDashStats(jobs, stats) {
+  const active = jobs.filter(j => !['done','error'].includes(j.status)).length;
+  document.getElementById('stat-total-clips').textContent = stats.total_clips ?? 0;
+  document.getElementById('stat-active-jobs').textContent = active;
+  document.getElementById('stat-clips-week').textContent = stats.clips_this_week ?? 0;
+  const totalSec = stats.total_duration_seconds || 0;
+  document.getElementById('stat-total-dur').textContent = formatDuration(totalSec);
+}
+
+function renderActiveJobs(jobs) {
+  const container = document.getElementById('active-jobs-list');
+  if (!jobs.length) {
+    container.innerHTML = `<div class="empty-state">
+      <div class="empty-state-icon">&#128247;</div>
+      <div class="empty-state-text">No jobs yet. Submit one to get started.</div>
+    </div>`;
+    return;
+  }
+
+  const html = jobs.map(job => {
+    const progress = job.progress || 0;
+    const barClass = job.status === 'done' ? 'done' : job.status === 'error' ? 'error' : '';
+    const episodeLabel = job.episode ? ` &mdash; ${escHtml(job.episode)}` : '';
+    const clipCount = (job.clips || []).length;
+    const doneClips = (job.clips || []).filter(c => c.status === 'done').length;
+
+    return `<div class="job-card" id="jobcard-${job.id}">
+      <div class="job-card-top">
+        <div class="job-show-name">${escHtml(job.show_name)}<span class="job-episode">${episodeLabel}</span></div>
+        <span class="badge badge-${job.status}">${job.status}</span>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-bar ${barClass}" style="width:${progress}%"></div>
+      </div>
+      <div class="job-meta">
+        ${relativeTime(job.created_at)} &bull;
+        ${doneClips}/${clipCount} clips &bull;
+        ${progress}% complete
+        ${job.error_message ? ' &bull; <span style="color:#f87171">' + escHtml(job.error_message.slice(0,80)) + '</span>' : ''}
+      </div>
+      <div class="job-actions">
+        <button class="log-toggle-btn" onclick="toggleJobLog('${job.id}')">&#9654; View Logs</button>
+        ${job.status === 'done' ? `<button class="btn btn-ghost btn-sm" onclick="switchTab('library')">View Clips</button>` : ''}
+        <button class="btn btn-danger btn-sm" onclick="deleteJob('${job.id}')">Delete</button>
+      </div>
+      <div class="log-window" id="logwin-${job.id}"></div>
+    </div>`;
+  }).join('');
+
+  container.innerHTML = html;
+
+  // Connect SSE for non-terminal jobs
+  jobs.forEach(job => {
+    if (!['done','error'].includes(job.status)) {
+      connectStream(job.id);
+    }
+  });
+}
+
+function toggleJobLog(jobId) {
+  const win = document.getElementById('logwin-' + jobId);
+  if (!win) return;
+  const isOpen = win.classList.contains('open');
+  win.classList.toggle('open');
+  const btn = win.previousElementSibling.querySelector('.log-toggle-btn');
+  if (btn) btn.textContent = isOpen ? '▶ View Logs' : '▼ Hide Logs';
+  if (!isOpen) {
+    loadJobLogs(jobId);
+  }
+}
+
+async function loadJobLogs(jobId) {
+  try {
+    const job = await apiFetch(`/api/jobs/${jobId}`);
+    const win = document.getElementById('logwin-' + jobId);
+    if (!win) return;
+    win.innerHTML = '';
+    (job.logs || []).forEach(entry => appendLogEntry(jobId, entry));
+  } catch (e) {
+    console.error('loadJobLogs error:', e);
+  }
+}
+
+function appendLogEntry(jobId, entry) {
+  const win = document.getElementById('logwin-' + jobId);
+  if (!win || !win.classList.contains('open')) return;
+  const level = entry.level || 'info';
+  const stage = entry.stage || '';
+  const time = new Date((entry.ts || 0) * 1000).toLocaleTimeString();
+  const div = document.createElement('div');
+  div.className = `log-entry ${level}`;
+  div.textContent = `[${time}] [${stage.toUpperCase()}] ${entry.message}`;
+  win.appendChild(div);
+  win.scrollTop = win.scrollHeight;
+}
+
+function renderRecentClips(clips) {
+  const grid = document.getElementById('recent-clips-grid');
+  if (!clips.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-state-icon">&#127916;</div>
+      <div class="empty-state-text">No clips yet.</div>
+    </div>`;
+    return;
+  }
+  grid.innerHTML = clips.map(clip => {
+    const thumb = clip.thumbnail_path
+      ? `/api/clips/${clip.id}/thumbnail`
+      : null;
+    const thumbHtml = thumb
+      ? `<img src="${thumb}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<span style=\\'font-size:24px;opacity:0.3\\'>&#9654;</span>'" />`
+      : '<span style="font-size:24px;opacity:0.3">&#9654;</span>';
+    return `<div class="recent-clip-card" onclick="switchTab('library')">
+      <div class="recent-clip-thumb">${thumbHtml}</div>
+      <div class="recent-clip-info">
+        <div class="recent-clip-title">${escHtml(clip.title || 'Untitled')}</div>
+        <div class="recent-clip-show">${escHtml(clip.show_name || '')}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function deleteJob(jobId) {
+  if (!confirm('Delete this job and all its clips from disk?')) return;
+  try {
+    await apiFetch(`/api/jobs/${jobId}`, { method: 'DELETE' });
+    showToast('Job deleted', 'success');
+    loadDashboard();
+  } catch (e) {
+    showToast('Delete failed: ' + e.message, 'error');
+  }
+}
+
+// ── SSE Streaming ──────────────────────────────────────────────────────────
+function connectStream(jobId) {
+  if (_sseConnections[jobId]) return; // already connected
+
+  const es = new EventSource(`/api/jobs/${jobId}/stream`);
+  _sseConnections[jobId] = es;
+
+  es.onmessage = (ev) => {
+    let data;
+    try { data = JSON.parse(ev.data); } catch { return; }
+    handleStreamMessage(jobId, data);
+  };
+
+  es.onerror = () => {
+    es.close();
+    delete _sseConnections[jobId];
+    // Retry after 3 seconds if job may still be running
+    if (!_sseRetryTimers[jobId]) {
+      _sseRetryTimers[jobId] = setTimeout(() => {
+        delete _sseRetryTimers[jobId];
+        // Check if job is still active before reconnecting
+        apiFetch(`/api/jobs/${jobId}`).then(job => {
+          if (!['done','error'].includes(job.status)) {
+            connectStream(jobId);
+          }
+        }).catch(() => {});
+      }, 3000);
+    }
+  };
+}
+
+function handleStreamMessage(jobId, data) {
+  const type = data.type;
+
+  if (type === 'heartbeat') return;
+
+  if (type === 'log') {
+    appendLogEntry(jobId, { level: data.level, stage: data.stage, message: data.message, ts: data.ts });
+  }
+
+  if (type === 'stage_change') {
+    const card = document.getElementById('jobcard-' + jobId);
+    if (card) {
+      const badge = card.querySelector('.badge');
+      if (badge) {
+        badge.className = `badge badge-${data.stage}`;
+        badge.textContent = data.stage;
+      }
+      const bar = card.querySelector('.progress-bar');
+      if (bar) bar.style.width = (data.progress || 0) + '%';
+    }
+  }
+
+  if (type === 'clip_done') {
+    // Update clip count in job meta display
+    const card = document.getElementById('jobcard-' + jobId);
+    if (card) {
+      // Light refresh of dashboard after each clip finishes
+      loadDashboard();
+    }
+  }
+
+  if (type === 'job_done') {
+    const card = document.getElementById('jobcard-' + jobId);
+    if (card) {
+      const badge = card.querySelector('.badge');
+      if (badge) { badge.className = 'badge badge-done'; badge.textContent = 'done'; }
+      const bar = card.querySelector('.progress-bar');
+      if (bar) { bar.style.width = '100%'; bar.classList.add('done'); }
+    }
+    showToast(`Job done — ${data.clips_count || 0} clips ready`, 'success');
+    // Close SSE
+    if (_sseConnections[jobId]) { _sseConnections[jobId].close(); delete _sseConnections[jobId]; }
+    loadDashboard();
+  }
+
+  if (type === 'job_error') {
+    const card = document.getElementById('jobcard-' + jobId);
+    if (card) {
+      const badge = card.querySelector('.badge');
+      if (badge) { badge.className = 'badge badge-error'; badge.textContent = 'error'; }
+      const bar = card.querySelector('.progress-bar');
+      if (bar) bar.classList.add('error');
+    }
+    showToast('Job failed: ' + (data.error_message || 'unknown error'), 'error');
+    if (_sseConnections[jobId]) { _sseConnections[jobId].close(); delete _sseConnections[jobId]; }
+    loadDashboard();
+  }
+}
+
+// ── Submit Job ─────────────────────────────────────────────────────────────
+function updateInputLabel() {
+  const type = document.querySelector('input[name="input_type"]:checked').value;
+  const label = document.getElementById('input-path-label');
+  const hint = document.getElementById('input-path-hint');
+  const inp = document.getElementById('input-path');
+  if (type === 'youtube') {
+    label.textContent = 'YouTube URL';
+    hint.textContent = 'Full YouTube video URL (not playlist).';
+    inp.placeholder = 'https://www.youtube.com/watch?v=...';
+  } else {
+    label.textContent = 'File Path';
+    hint.textContent = 'Full path to the local video file.';
+    inp.placeholder = 'C:\\Videos\\episode.mp4';
+  }
+}
+
+async function submitJob(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  const inputType = document.querySelector('input[name="input_type"]:checked').value;
+  const inputPath = document.getElementById('input-path').value.trim();
+  const showName = document.getElementById('show-name').value.trim();
+  const episode = document.getElementById('episode').value.trim();
+  const whisperModel = document.getElementById('whisper-model').value;
+  const srtPath = document.getElementById('srt-path').value.trim() || null;
+  const minDuration = parseInt(document.getElementById('min-duration').value);
+  const maxDuration = parseInt(document.getElementById('max-duration').value);
+  const maxClips = parseInt(document.getElementById('max-clips').value);
+
+  if (!inputPath) { showToast('Please enter a file path or URL', 'error'); return; }
+  if (!showName) { showToast('Please select a show name', 'error'); return; }
+  if (minDuration >= maxDuration) { showToast('Min duration must be less than max duration', 'error'); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  try {
+    const result = await apiFetch('/api/jobs', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        input_type: inputType,
+        input_path: inputPath,
+        show_name: showName,
+        episode,
+        whisper_model: whisperModel,
+        min_duration: minDuration,
+        max_duration: maxDuration,
+        max_clips: maxClips,
+        srt_path: srtPath,
+      }),
+    });
+    showToast('Job started! ID: ' + result.job_id.slice(0,8) + '...', 'success');
+    document.getElementById('job-form').reset();
+    document.getElementById('min-dur-val').textContent = '45s';
+    document.getElementById('max-dur-val').textContent = '90s';
+    switchTab('dashboard');
+    connectStream(result.job_id);
+  } catch (err) {
+    showToast('Error: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Run Clip Agent';
+  }
+}
+
+// ── Clips Library ──────────────────────────────────────────────────────────
+async function loadLibrary() {
+  const showFilter = document.getElementById('lib-show-filter').value.trim();
+  const grid = document.getElementById('library-grid');
+  grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="spin">&#9654;</div> Loading...</div>`;
+
+  try {
+    let url = '/api/clips';
+    if (showFilter) url += `?show_name=${encodeURIComponent(showFilter)}`;
+    _allLibraryClips = await apiFetch(url);
+    filterLibraryBySearch();
+  } catch (e) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;color:#f87171">Error: ${escHtml(e.message)}</div>`;
+  }
+}
+
+function filterLibraryBySearch() {
+  const search = (document.getElementById('lib-search').value || '').toLowerCase();
+  const clips = search
+    ? _allLibraryClips.filter(c =>
+        (c.title || '').toLowerCase().includes(search) ||
+        (c.show_name || '').toLowerCase().includes(search) ||
+        (c.episode || '').toLowerCase().includes(search)
+      )
+    : _allLibraryClips;
+  renderLibrary(clips);
+}
+
+function renderLibrary(clips) {
+  const grid = document.getElementById('library-grid');
+  if (!clips.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-state-icon">&#127916;</div>
+      <div class="empty-state-text">No clips found. Adjust filters or run a job.</div>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = clips.map(clip => {
+    const thumb = clip.thumbnail_path
+      ? `/api/clips/${clip.id}/thumbnail`
+      : null;
+    const thumbHtml = thumb
+      ? `<img src="${thumb}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<span class=\\'clip-thumb-placeholder\\'>&#9654;</span>'" />`
+      : '<span class="clip-thumb-placeholder">&#9654;</span>';
+    const dur = formatDuration(clip.duration || 0);
+    const vibeClass = vibeColor(clip.vibe_score || 5);
+    const showEp = clip.episode ? `${clip.show_name} &bull; ${clip.episode}` : (clip.show_name || '');
+    const clipType = (clip.clip_type || 'highlight').toUpperCase();
+
+    const igCap = escAttr(clip.caption_instagram || 'No Instagram caption');
+    const ttCap = escAttr(clip.caption_tiktok || 'No TikTok caption');
+    const ytCap = escAttr(clip.caption_youtube || 'No YouTube caption');
+
+    return `<div class="clip-card">
+      <div class="clip-thumb">${thumbHtml}</div>
+      <div class="clip-body">
+        <div class="clip-title">${escHtml(clip.title || 'Untitled')}</div>
+        <div class="clip-tags">
+          <span class="tag tag-show" title="${escAttr(clip.show_name || '')}">${escHtml((clip.show_name || '').slice(0, 22))}</span>
+          <span class="tag tag-duration">${dur}</span>
+          <span class="tag tag-type">${clipType}</span>
+          <span class="vibe-badge ${vibeClass}">&#9889; ${clip.vibe_score || 5}/10</span>
+        </div>
+        <div class="text-muted text-sm">${showEp}</div>
+        <div class="clip-actions">
+          <button class="btn btn-ghost btn-sm"
+            onclick="copyToClipboard(${JSON.stringify(clip.caption_instagram || '')}, 'IG Caption')">
+            &#128247; IG
+          </button>
+          <button class="btn btn-ghost btn-sm"
+            onclick="copyToClipboard(${JSON.stringify(clip.caption_tiktok || '')}, 'TikTok Caption')">
+            &#9836; TT
+          </button>
+          <button class="btn btn-ghost btn-sm"
+            onclick="copyToClipboard(${JSON.stringify(clip.caption_youtube || '')}, 'YT Caption')">
+            &#9654; YT
+          </button>
+          <a class="btn btn-accent btn-sm" href="/api/clips/${clip.id}/download"
+            download style="text-decoration:none;">
+            &#8659; Download
+          </a>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Reports ────────────────────────────────────────────────────────────────
+async function loadReports() {
+  try {
+    const [stats, byShow, perWeek] = await Promise.all([
+      apiFetch('/api/reports/stats'),
+      apiFetch('/api/reports/clips-by-show'),
+      apiFetch('/api/reports/clips-per-week'),
+    ]);
+    renderReportStats(stats);
+    renderByShowChart(byShow);
+    renderPerWeekChart(perWeek);
+  } catch (e) {
+    showToast('Reports error: ' + e.message, 'error');
+  }
+}
+
+function renderReportStats(stats) {
+  document.getElementById('rpt-total-clips').textContent = stats.total_clips ?? 0;
+  document.getElementById('rpt-week-clips').textContent = stats.clips_this_week ?? 0;
+  document.getElementById('rpt-avg-clips').textContent = stats.avg_clips_per_job ?? 0;
+  document.getElementById('rpt-top-show').textContent = stats.most_active_show || '—';
+}
+
+function renderByShowChart(data) {
+  const ctx = document.getElementById('chart-by-show').getContext('2d');
+  if (_charts['by-show']) { _charts['by-show'].destroy(); }
+  const labels = data.map(d => d.show);
+  const counts = data.map(d => d.count);
+  _charts['by-show'] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Clips',
+        data: counts,
+        backgroundColor: 'rgba(220,38,38,0.75)',
+        borderColor: '#dc2626',
+        borderWidth: 1,
+        borderRadius: 4,
+      }],
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1a1a1a',
+          borderColor: '#2a2a2a',
+          borderWidth: 1,
+          titleColor: '#e5e5e5',
+          bodyColor: '#a3a3a3',
+        },
+      },
+      scales: {
+        x: {
+          ticks: { color: '#737373', font: { size: 11 } },
+          grid: { color: '#1f1f1f' },
+          border: { color: '#2a2a2a' },
+        },
+        y: {
+          ticks: {
+            color: '#a3a3a3', font: { size: 11 },
+            callback: (val, idx) => {
+              const label = labels[idx] || '';
+              return label.length > 20 ? label.slice(0, 18) + '…' : label;
+            },
+          },
+          grid: { color: '#1f1f1f' },
+          border: { color: '#2a2a2a' },
+        },
+      },
+    },
+  });
+}
+
+function renderPerWeekChart(data) {
+  const ctx = document.getElementById('chart-per-week').getContext('2d');
+  if (_charts['per-week']) { _charts['per-week'].destroy(); }
+  const labels = data.map(d => d.week);
+  const counts = data.map(d => d.count);
+  _charts['per-week'] = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Clips',
+        data: counts,
+        borderColor: '#dc2626',
+        backgroundColor: 'rgba(220,38,38,0.12)',
+        borderWidth: 2,
+        pointBackgroundColor: '#dc2626',
+        pointRadius: 4,
+        tension: 0.3,
+        fill: true,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1a1a1a',
+          borderColor: '#2a2a2a',
+          borderWidth: 1,
+          titleColor: '#e5e5e5',
+          bodyColor: '#a3a3a3',
+        },
+      },
+      scales: {
+        x: {
+          ticks: { color: '#737373', font: { size: 11 } },
+          grid: { color: '#1f1f1f' },
+          border: { color: '#2a2a2a' },
+        },
+        y: {
+          beginAtZero: true,
+          ticks: { color: '#737373', font: { size: 11 }, precision: 0 },
+          grid: { color: '#1f1f1f' },
+          border: { color: '#2a2a2a' },
+        },
+      },
+    },
+  });
+}
+
+// ── Utility Functions ──────────────────────────────────────────────────────
+function formatDuration(seconds) {
+  if (!seconds || seconds < 1) return '0s';
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = Math.floor(seconds % 60);
+  if (h > 0) return `${h}h ${m}m ${s}s`;
+  if (m > 0) return `${m}m ${s}s`;
+  return `${s}s`;
+}
+
+function relativeTime(unixTs) {
+  if (!unixTs) return '—';
+  const diff = Date.now() / 1000 - unixTs;
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return Math.floor(diff / 60) + ' min ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + ' hours ago';
+  if (diff < 604800) return Math.floor(diff / 86400) + ' days ago';
+  return new Date(unixTs * 1000).toLocaleDateString();
+}
+
+function vibeColor(score) {
+  if (score >= 8) return 'vibe-red';
+  if (score >= 5) return 'vibe-yellow';
+  return 'vibe-gray';
+}
+
+function copyToClipboard(text, label) {
+  if (!text) { showToast('No caption available', 'error'); return; }
+  navigator.clipboard.writeText(text).then(() => {
+    showToast((label || 'Text') + ' copied!', 'success');
+  }).catch(() => {
+    // Fallback for older browsers / non-HTTPS
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast((label || 'Text') + ' copied!', 'success');
+  });
+}
+
+function showToast(msg, type) {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type || 'info'}`;
+  toast.textContent = msg;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity 0.3s';
+    setTimeout(() => toast.remove(), 350);
+  }, 2500);
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function escAttr(str) {
+  return escHtml(str);
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  loadDashboard();
+  startDashPoll();
+});
+</script>
+</body>
+</html>

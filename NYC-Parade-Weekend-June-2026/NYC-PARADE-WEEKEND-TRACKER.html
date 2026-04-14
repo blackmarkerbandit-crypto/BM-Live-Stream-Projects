@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NYC Parade Weekend 2026 — BMB Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E8181C;
+  --red-dim: rgba(232,24,28,0.15);
+  --bg: #080808;
+  --surface: #111111;
+  --surface2: #191919;
+  --border: #242424;
+  --text: #F0F0F0;
+  --muted: #666666;
+  --green: #22c55e;
+  --green-dim: rgba(34,197,94,0.12);
+  --yellow: #eab308;
+  --yellow-dim: rgba(234,179,8,0.12);
+  --blue: #3b82f6;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;}
+a{color:var(--red);text-decoration:none;}
+
+/* ── HEADER ── */
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;}
+.header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:16px 0;}
+.logo{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--red);text-transform:uppercase;}
+.header-title{flex:1;}
+.header-title h1{font-size:18px;font-weight:700;line-height:1.2;}
+.header-title .sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.header-actions{display:flex;gap:10px;align-items:center;}
+.save-status{font-size:11px;color:var(--muted);}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;transition:all .15s;}
+.btn-red{background:var(--red);color:#fff;}
+.btn-red:hover{background:#c91014;}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text);}
+.btn-outline:hover{border-color:var(--muted);background:var(--surface2);}
+.btn-sm{padding:5px 10px;font-size:12px;}
+
+/* ── PROGRESS OVERVIEW ── */
+.progress-bar-wrap{max-width:1100px;margin:0 auto;padding:20px 24px;}
+.progress-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.progress-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+.progress-card .label{font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
+.progress-card .pct{font-size:22px;font-weight:800;margin-bottom:6px;}
+.progress-card .pct.done{color:var(--green);}
+.progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--red);border-radius:2px;transition:width .3s;}
+.progress-fill.green{background:var(--green);}
+
+/* ── TEAM ROSTER ── */
+.team-section{max-width:1100px;margin:0 auto;padding:0 24px 20px;}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;user-select:none;}
+.panel-header:hover{background:var(--surface2);}
+.panel-title{font-size:13px;font-weight:700;letter-spacing:.3px;display:flex;align-items:center;gap:8px;}
+.panel-toggle{font-size:12px;color:var(--muted);transition:transform .2s;}
+.panel-toggle.open{transform:rotate(180deg);}
+.panel-body{padding:18px;border-top:1px solid var(--border);display:none;}
+.panel-body.open{display:block;}
+
+.team-add{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:10px;margin-bottom:16px;align-items:end;}
+.field-group{display:flex;flex-direction:column;gap:4px;}
+.field-group label{font-size:11px;color:var(--muted);font-weight:500;}
+.field-input{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:'Inter',sans-serif;font-size:13px;width:100%;}
+.field-input:focus{outline:none;border-color:var(--red);}
+.field-input::placeholder{color:var(--muted);}
+
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;}
+.team-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;position:relative;}
+.team-card .tc-name{font-size:13px;font-weight:700;margin-bottom:2px;}
+.team-card .tc-role{font-size:11px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.team-card .tc-contact{font-size:12px;color:var(--muted);line-height:1.7;}
+.team-card .tc-del{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;line-height:1;padding:2px;}
+.team-card .tc-del:hover{color:var(--red);}
+.team-empty{color:var(--muted);font-size:13px;font-style:italic;}
+
+/* ── TABS ── */
+.tabs-section{max-width:1100px;margin:0 auto;padding:0 24px;}
+.tab-nav{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:20px;}
+.tab-btn{padding:10px 20px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--red);border-bottom-color:var(--red);}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+/* ── CHECKLIST GROUP ── */
+.group{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:12px;overflow:hidden;}
+.group-header{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;cursor:pointer;user-select:none;}
+.group-header:hover{background:var(--surface2);}
+.group-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.group-badge{font-size:11px;background:var(--surface2);border:1px solid var(--border);padding:2px 8px;border-radius:20px;color:var(--muted);}
+.group-body{border-top:1px solid var(--border);display:none;}
+.group-body.open{display:block;}
+
+/* ── TASK ITEM ── */
+.task-item{border-bottom:1px solid var(--border);transition:background .1s;}
+.task-item:last-child{border-bottom:none;}
+.task-item.completed .task-text{color:var(--muted);text-decoration:line-through;}
+.task-item.completed{background:rgba(34,197,94,0.04);}
+.task-row{display:flex;align-items:flex-start;gap:10px;padding:12px 18px;}
+.task-cb{margin-top:1px;width:16px;height:16px;accent-color:var(--red);cursor:pointer;flex-shrink:0;}
+.task-text{flex:1;font-size:13px;line-height:1.5;cursor:pointer;}
+.task-meta{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+.multi-select{position:relative;}
+.ms-trigger{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:5px;padding:4px 8px;font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;max-width:160px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;}
+.ms-trigger:hover{border-color:var(--muted);}
+.ms-trigger.assigned{border-color:var(--blue);color:var(--blue);}
+.ms-dropdown{display:none;position:fixed;background:var(--surface);border:1px solid var(--border);border-radius:6px;z-index:9999;min-width:190px;padding:6px 0;box-shadow:0 6px 24px rgba(0,0,0,.6);}
+.ms-dropdown.open{display:block;}
+.ms-option{display:flex;align-items:center;gap:8px;padding:7px 12px;cursor:pointer;font-size:12px;}
+.ms-option:hover{background:var(--surface2);}
+.ms-option input{accent-color:var(--red);cursor:pointer;}
+.ms-empty{padding:8px 12px;font-size:12px;color:var(--muted);font-style:italic;}
+.task-date-wrap{position:relative;display:inline-flex;align-items:center;}
+.task-date{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:5px;padding:4px 28px 4px 8px;font-family:'Inter',sans-serif;font-size:12px;width:130px;cursor:pointer;-webkit-appearance:none;appearance:none;}
+.task-date::-webkit-calendar-picker-indicator{opacity:0;position:absolute;right:0;width:100%;height:100%;cursor:pointer;}
+.task-date:focus{outline:none;border-color:var(--red);}
+.task-date-icon{position:absolute;right:8px;pointer-events:none;font-size:13px;color:var(--muted);}
+.task-date-wrap:hover .task-date{border-color:var(--muted);}
+.task-date-wrap:hover .task-date-icon{color:var(--text);}
+.task-notes-btn{background:none;border:1px solid var(--border);color:var(--muted);border-radius:5px;padding:4px 8px;font-size:11px;cursor:pointer;white-space:nowrap;}
+.task-notes-btn:hover{border-color:var(--muted);color:var(--text);}
+.task-notes-btn.has-notes{border-color:var(--yellow);color:var(--yellow);}
+.task-notes-area{padding:0 18px 12px 44px;display:none;}
+.task-notes-area.open{display:block;}
+.task-notes-input{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:8px 10px;font-family:'Inter',sans-serif;font-size:12px;resize:vertical;min-height:60px;}
+.task-notes-input:focus{outline:none;border-color:var(--yellow);}
+.task-notes-input::placeholder{color:var(--muted);}
+
+/* ── PRINT MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:12px;width:480px;max-width:95vw;overflow:hidden;}
+.modal-header{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.modal-header h2{font-size:16px;font-weight:700;}
+.modal-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:20px;line-height:1;padding:2px;}
+.modal-close:hover{color:var(--text);}
+.modal-body{padding:20px;}
+.modal-section{margin-bottom:16px;}
+.modal-section label{display:block;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.radio-group{display:flex;flex-direction:column;gap:8px;}
+.radio-opt{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;}
+.radio-opt input{accent-color:var(--red);}
+.modal-footer{padding:16px 20px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;}
+
+/* ── FOOTER ── */
+.footer{max-width:1100px;margin:30px auto 0;padding:0 24px 40px;text-align:center;color:var(--muted);font-size:11px;}
+
+/* ── PRINT STYLES ── */
+@media print {
+  body{background:#fff;color:#000;}
+  .header,.tab-nav,.team-section,.progress-bar-wrap,.header-actions,
+  .panel-header,.task-meta,.task-notes-btn,.group-header .panel-toggle,
+  .modal-overlay,.footer,.btn{display:none!important;}
+  .group-body,.panel-body,.task-notes-area{display:block!important;}
+  .task-item.print-hide{display:none!important;}
+  .group{border:1px solid #ddd;margin-bottom:10px;page-break-inside:avoid;}
+  .group-header{background:#f5f5f5;padding:8px 12px;}
+  .group-title{font-size:12px;color:#333;}
+  .task-row{padding:8px 12px;}
+  .task-text{font-size:12px;color:#000;}
+  .task-item.completed .task-text{color:#999;text-decoration:line-through;}
+  .task-notes-area{padding:0 12px 8px 28px;}
+  .task-notes-input{border:none;padding:0;font-size:11px;color:#555;resize:none;}
+  .print-header{display:block!important;}
+  .tab-content{display:block!important;}
+  .tab-content.print-section-hide{display:none!important;}
+  .print-assignee-label{font-size:11px;color:#666;display:block;}
+}
+.print-header{display:none;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">BlackMarker.TV</div>
+    <div class="header-title">
+      <h1>NYC Parade Weekend 2026 — Production Tracker</h1>
+      <div class="sub">June 13 (116th St Festival) &nbsp;·&nbsp; June 14 (Puerto Rican Day Parade Float)</div>
+    </div>
+    <div class="header-actions">
+      <span class="save-status" id="saveStatus">All changes auto-saved</span>
+      <button class="btn btn-outline btn-sm" onclick="openPrintModal()">🖨 Print Action List</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS OVERVIEW -->
+<div class="progress-bar-wrap">
+  <div class="progress-cards">
+    <div class="progress-card">
+      <div class="label">Overall Weekend</div>
+      <div class="pct" id="pctOverall">0%</div>
+      <div class="progress-track"><div class="progress-fill" id="fillOverall" style="width:0%"></div></div>
+    </div>
+    <div class="progress-card">
+      <div class="label">Event 1 — 116th St Festival</div>
+      <div class="pct" id="pctE1">0%</div>
+      <div class="progress-track"><div class="progress-fill" id="fillE1" style="width:0%"></div></div>
+    </div>
+    <div class="progress-card">
+      <div class="label">Event 2 — Parade Float</div>
+      <div class="pct" id="pctE2">0%</div>
+      <div class="progress-track"><div class="progress-fill" id="fillE2" style="width:0%"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM ROSTER -->
+<div class="team-section">
+  <div class="panel">
+    <div class="panel-header" onclick="togglePanel('teamPanel')">
+      <div class="panel-title">👥 Team Roster &amp; Contacts</div>
+      <div class="panel-toggle" id="teamPanelToggle">▼</div>
+    </div>
+    <div class="panel-body" id="teamPanel">
+      <div class="team-add">
+        <div class="field-group">
+          <label>Name</label>
+          <input class="field-input" id="tmName" placeholder="Full name">
+        </div>
+        <div class="field-group">
+          <label>Role</label>
+          <input class="field-input" id="tmRole" placeholder="e.g. Stream Tech">
+        </div>
+        <div class="field-group">
+          <label>Phone</label>
+          <input class="field-input" id="tmPhone" placeholder="(xxx) xxx-xxxx">
+        </div>
+        <div class="field-group">
+          <label>Email</label>
+          <input class="field-input" id="tmEmail" placeholder="email@example.com">
+        </div>
+        <button class="btn btn-red" onclick="addTeamMember()">+ Add</button>
+      </div>
+      <div class="team-grid" id="teamGrid">
+        <div class="team-empty" id="teamEmpty">No team members added yet.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-section">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('overall',this)">Overall Weekend</button>
+    <button class="tab-btn" onclick="switchTab('event1',this)">Event 1 — 116th St Festival (June 13)</button>
+    <button class="tab-btn" onclick="switchTab('event2',this)">Event 2 — Parade Float (June 14)</button>
+  </div>
+
+  <!-- ══ TAB: OVERALL ══ -->
+  <div class="tab-content active" id="tab-overall">
+    <div class="print-header"><h2 style="margin-bottom:16px;">Overall Weekend Checklist</h2></div>
+  </div>
+
+  <!-- ══ TAB: EVENT 1 ══ -->
+  <div class="tab-content" id="tab-event1">
+    <div class="print-header"><h2 style="margin-bottom:16px;">Event 1 — 116th Street Festival (June 13, 2026)</h2></div>
+  </div>
+
+  <!-- ══ TAB: EVENT 2 ══ -->
+  <div class="tab-content" id="tab-event2">
+    <div class="print-header"><h2 style="margin-bottom:16px;">Event 2 — Puerto Rican Day Parade Float (June 14, 2026)</h2></div>
+  </div>
+</div>
+
+<!-- PRINT MODAL -->
+<div class="modal-overlay" id="printModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>🖨 Print Action List</h2>
+      <button class="modal-close" onclick="closePrintModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <label>Sections to include</label>
+        <div class="radio-group">
+          <label class="radio-opt"><input type="radio" name="pSection" value="all" checked> All sections (Overall + Both Events)</label>
+          <label class="radio-opt"><input type="radio" name="pSection" value="overall"> Overall Weekend only</label>
+          <label class="radio-opt"><input type="radio" name="pSection" value="event1"> Event 1 — 116th St Festival only</label>
+          <label class="radio-opt"><input type="radio" name="pSection" value="event2"> Event 2 — Parade Float only</label>
+        </div>
+      </div>
+      <div class="modal-section">
+        <label>Task filter</label>
+        <div class="radio-group">
+          <label class="radio-opt"><input type="radio" name="pFilter" value="all" checked> All tasks</label>
+          <label class="radio-opt"><input type="radio" name="pFilter" value="incomplete"> Incomplete tasks only</label>
+          <label class="radio-opt"><input type="radio" name="pFilter" value="complete"> Completed tasks only</label>
+        </div>
+      </div>
+      <div class="modal-section">
+        <label>Filter by assigned team member</label>
+        <select class="field-input" id="printMemberFilter">
+          <option value="all">All team members</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closePrintModal()">Cancel</button>
+      <button class="btn btn-red" onclick="doPrint()">Print</button>
+    </div>
+  </div>
+</div>
+
+<div class="footer">BMB / BlackMarker.TV &nbsp;·&nbsp; NYC Parade Weekend 2026 &nbsp;·&nbsp; All data saved locally in your browser</div>
+
+<script>
+// ══════════════════════════════════════════
+// TASK DEFINITIONS
+// ══════════════════════════════════════════
+const TASKS = {
+  overall: [
+    {
+      id: 'grp-oa', label: 'Administrative & Registrations',
+      tasks: [
+        { id: 'oa1', text: 'Float application submitted to NPRDP', preComplete: true },
+        { id: 'oa2', text: 'Registered for first orientation with NPRDP', preComplete: true },
+        { id: 'oa3', text: 'Custom Float package selected and paid — $6,500 (8\' × 28\' × 13\', custom signage/graphics, driver insurance included)', preComplete: true },
+        { id: 'oa4', text: 'Attend NPRDP orientation — document all requirements, deadlines, float specs, and wristband process' },
+        { id: 'oa5', text: 'Obtain $1M+ General Liability Insurance certificate — name "National Puerto Rican Day Parade, Inc." as additional insured. Options: Thimble (thimble.com) ~$100–$300/day | NEXT Insurance (nextinsurance.com) ~$300–$800 | Existing business broker | Or ask NPRDP at orientation for preferred vendor. Confirm if one policy covers both event days (June 13–14).' },
+        { id: 'oa6', text: 'Submit vendor application for 116th Street Festival (June 13) — call 212-348-8272. As of Aug 2024: retail vendors no longer need DCWP permit, just organizer application + fee.' },
+        { id: 'oa7', text: 'Confirm Joselito DaPuppet contract for both events (June 13 + June 14)' },
+        { id: 'oa8', text: 'Confirm DJ Charlie Chase contract for parade float (June 14) — confirm travel/accommodation covered by BMB or self?' },
+        { id: 'oa9', text: 'Receive wristbands and permits for 50-person walking contingent from NPRDP (issued after application completion)' },
+        { id: 'oa10', text: 'Confirm float participant number and staging assignment from NPRDP' },
+      ]
+    },
+    {
+      id: 'grp-ob', label: 'Billboard & Marketing',
+      tasks: [
+        { id: 'ob1', text: 'Book Times Square area digital billboard — contact Outfront Media, Clear Channel Outdoor, or theadfocus.com. June = peak season ($20K–$50K+/wk marquee; $3K–$8K/wk secondary/adjacent boards). Secondary boards deliver same "Times Square" story at a fraction.' },
+        { id: 'ob2', text: 'Commission billboard creative — 10-second animated spot, min 1080p. Talent photos (Joselito, Charlie Chase), BlackMarker.TV logo, parade date, tune-in CTA. Get file specs from OOH company first.' },
+        { id: 'ob3', text: 'Announce float participation on all BMB/BlackMarker.TV channels' },
+        { id: 'ob4', text: 'Announce DJ Charlie Chase booking — this is newsworthy (NPRDP historical honoree, Cold Crush Brothers founder). Pitch to Puerto Rican media outlets.' },
+        { id: 'ob5', text: 'Coordinate Joselito DaPuppet cross-promotion — 500K+ followers / 2M+ weekly reach. Align post timing with BMB announcements.' },
+        { id: 'ob6', text: 'Launch paid digital ad campaigns — Meta Ads Manager + Google Ads. Target: Puerto Rican community, NYC metro + FL + diaspora markets.' },
+        { id: 'ob7', text: 'Schedule countdown social posts for both events leading up to parade weekend' },
+        { id: 'ob8', text: 'Send team member to photograph Times Square billboard while it\'s running — pure social media gold' },
+      ]
+    },
+    {
+      id: 'grp-oc', label: 'Equipment',
+      tasks: [
+        { id: 'oc1', text: 'Inventory all existing equipment — cameras, audio kit, laptop, encoders, cables, adapters' },
+        { id: 'oc2', text: 'Identify equipment gaps and decide rent vs. buy for each item' },
+        { id: 'oc3', text: 'Reserve cellular bonding device for weekend — LiveU Solo+ or Teradek Bond. Must bond 3 carriers (AT&T + T-Mobile + Verizon). Rental ~$600–$1,000 for weekend.' },
+        { id: 'oc4', text: 'Source generator for Event 1 (Festival Tent) — Honda EU3000iS or equiv. 3,000–5,000W inverter generator. Quiet enough for tent environment.' },
+        { id: 'oc5', text: 'Source generator for Event 2 (Parade Float) — Honda EU7000iS or equiv. 5,000–8,000W. Must be secured to float with steel straps.' },
+        { id: 'oc6', text: 'Order walking contingent branded shirts × 55 (50 + 5 spares) — 3 weeks minimum lead time before June 14. Black shirt, BlackMarker.TV logo front, "Celebrating Puerto Rican Pioneers" back.' },
+        { id: 'oc7', text: 'Order branded tablecloth + vertical banners × 2 for festival tent (Event 1)' },
+        { id: 'oc8', text: 'Order float banners — BlackMarker.TV main banner + "Celebrating Puerto Rican Pioneers" theme banner + PR flag. Weatherproof vinyl.' },
+      ]
+    },
+    {
+      id: 'grp-od', label: 'Production Pre-Production',
+      tasks: [
+        { id: 'od1', text: 'Design branded graphics package: intro bumper (10–15 sec animation), lower thirds ("LIVE FROM 116TH ST FESTIVAL" / "LIVE — PUERTO RICAN DAY PARADE"), talent name cards (Joselito, Charlie Chase, host names), intermission card' },
+        { id: 'od2', text: 'Set up stream keys on BlackMarker.TV RTMP for both events' },
+        { id: 'od3', text: 'Set up YouTube Live stream keys for both events (simulcast)' },
+        { id: 'od4', text: 'Set up Facebook Live stream keys for both events (simulcast)' },
+        { id: 'od5', text: 'Full stream rig test before travel — run 1-hour test stream from studio to verify all systems' },
+        { id: 'od6', text: 'Create show rundown for Event 1 (116th St Festival) — segment list, timing, transitions, host cues' },
+        { id: 'od7', text: 'Create show rundown for Event 2 (Parade Float) — segment list, timing, Charlie Chase interview block, contingent walk segment' },
+        { id: 'od8', text: 'Brief both hosts on format and show rundown for each event' },
+        { id: 'od9', text: 'Create DJ Charlie Chase host talking point card — born 1/16/1959 Manhattan (PR parents), Cold Crush Brothers (1975), first hip-hop group signed by CBS, DMC Hall of Fame 2003, NPRDP historical honoree' },
+        { id: 'od10', text: 'Create Joselito DaPuppet host talking point card' },
+      ]
+    },
+    {
+      id: 'grp-oe', label: 'Travel & Logistics',
+      tasks: [
+        { id: 'oe1', text: 'Book flights for all traveling crew — round trip, arriving June 12. June = peak travel season, book early.' },
+        { id: 'oe2', text: 'Book hotel — June 12–15, near Midtown Manhattan. Budget ~$300–$600/night.' },
+        { id: 'oe3', text: 'Reserve cargo van — Ryder or Enterprise. Must fit full equipment load including generators, canopy, cases, and float materials.' },
+        { id: 'oe4', text: 'Plan equipment transport logistics from hotel to Event 1 (116th St) on June 13, then to parade staging on June 14' },
+        { id: 'oe5', text: 'Plan crew meals and per diem for each day (June 12–14 minimum)' },
+        { id: 'oe6', text: 'Build emergency contacts list: NPRDP organizer, 116th St Festival organizer, insurance provider, float driver, Joselito, Charlie Chase contacts' },
+        { id: 'oe7', text: 'Confirm rain contingency plan — who makes the call, what changes for each event if weather is bad' },
+      ]
+    },
+    {
+      id: 'grp-of', label: 'Post-Event',
+      tasks: [
+        { id: 'of1', text: 'Download and archive all local recordings from both events' },
+        { id: 'of2', text: 'Export VOD versions to BlackMarker.TV, YouTube, Facebook' },
+        { id: 'of3', text: 'Create highlight clips (3–5 min) for each event for social media' },
+        { id: 'of4', text: 'Post Times Square billboard content to social media' },
+        { id: 'of5', text: 'Send thank-you to Joselito DaPuppet, DJ Charlie Chase, and walking contingent captain' },
+        { id: 'of6', text: 'Document actual spend vs. budget for the weekend' },
+        { id: 'of7', text: 'Log viewer numbers, stream duration, and social reach for each event' },
+        { id: 'of8', text: 'Write internal recap — what worked, what to fix for next year' },
+      ]
+    },
+  ],
+
+  event1: [
+    {
+      id: 'grp-e1a', label: 'Permitting & Applications',
+      tasks: [
+        { id: 'e1a1', text: 'Call 116th Street Festival organizers — 212-348-8272 — to confirm vendor space availability for June 13 and submit application' },
+        { id: 'e1a2', text: 'Pay vendor registration/application fee (confirm amount when calling)' },
+        { id: 'e1a3', text: 'Confirm assigned space dimensions (standard: 10×10 or 10×20 ft)' },
+        { id: 'e1a4', text: 'Confirm generator policy — permitted? Any fuel type restrictions?' },
+        { id: 'e1a5', text: 'Confirm electrical hookup availability (some festivals offer it; reduces generator load)' },
+        { id: 'e1a6', text: 'Confirm load-in time and parking/cargo van access for the day' },
+      ]
+    },
+    {
+      id: 'grp-e1b', label: 'Tent & Physical Setup',
+      tasks: [
+        { id: 'e1b1', text: 'Source 10×20 pop-up canopy — must be fire-retardant certified (NYC requirement for commercial events)' },
+        { id: 'e1b2', text: 'Canopy sidewalls × 2 (back + one side for wind/tech station privacy)' },
+        { id: 'e1b3', text: 'Sandbag leg weights × 4 — 40–50 lbs each (NYC requires this; no staking in asphalt)' },
+        { id: 'e1b4', text: '6ft folding table for commentary table' },
+        { id: 'e1b5', text: 'Chairs × 3 (Host 1, Joselito, Host 2 / extra seat)' },
+        { id: 'e1b6', text: 'Branded tablecloth + vertical banners × 2 at tent opening' },
+        { id: 'e1b7', text: 'Finalize tent layout — commentary table faces crowd/street; cameras frame hosts with street visible behind; DJ booth to the side; tech station at rear' },
+        { id: 'e1b8', text: 'Optional: monitor/display at front of tent showing stream playback to attract passersby' },
+      ]
+    },
+    {
+      id: 'grp-e1c', label: 'Power Setup',
+      tasks: [
+        { id: 'e1c1', text: 'Generator confirmed: Honda EU3000iS or equiv. 3,000W+ inverter — quiet enough for tent environment (~57dB)' },
+        { id: 'e1c2', text: 'Generator fuel: full tank + 5-gallon backup can. Check level every 2 hours during event.' },
+        { id: 'e1c3', text: 'Position generator 10–15 ft from rear of tent, properly vented' },
+        { id: 'e1c4', text: 'Heavy-duty outdoor extension cord (30A, 25–50ft) from generator to tent' },
+        { id: 'e1c5', text: 'Power strips × 2 with surge protection inside tent' },
+        { id: 'e1c6', text: 'Load check before event: DJ (~1,200W) + laptop/encoder (~300W) + displays (~400W) + misc (~300W) = ~2,200W — confirm within generator headroom' },
+      ]
+    },
+    {
+      id: 'grp-e1d', label: 'Live Stream Tech Setup',
+      tasks: [
+        { id: 'e1d1', text: 'Cellular bonding device configured — SIM cards active on AT&T + T-Mobile + Verizon. Target: 10+ Mbps stable upload. Stream at 6 Mbps for 1080p30.' },
+        { id: 'e1d2', text: 'vMix Pro loaded and licensed on production laptop' },
+        { id: 'e1d3', text: 'Scene layout configured: main commentary cam, PIP with field cam, lower thirds, bumper' },
+        { id: 'e1d4', text: 'Stream keys entered: BlackMarker.TV RTMP + YouTube Live + Facebook Live' },
+        { id: 'e1d5', text: 'vMix local recording enabled (always record locally as safety net)' },
+        { id: 'e1d6', text: 'Backup: OBS on backup laptop as failsafe encoder' },
+        { id: 'e1d7', text: 'Primary camera on tripod — frame: hosts at table, crowd/street visible behind. HDMI to capture card → laptop.' },
+        { id: 'e1d8', text: 'Field camera (ZV-1 or GoPro on gimbal) charged and tested — for Host 2 roaming coverage' },
+        { id: 'e1d9', text: 'Camera angles tested, white balance set, exposure locked' },
+        { id: 'e1d10', text: 'Private test stream (all 3 destinations active) run before day-of' },
+        { id: 'e1d11', text: 'Stream title configured on all platforms: "BlackMarker.TV LIVE | 116th Street Festival | feat. Joselito DaPuppet"' },
+      ]
+    },
+    {
+      id: 'grp-e1e', label: 'Audio Setup',
+      tasks: [
+        { id: 'e1e1', text: 'Rode Wireless GO II configured — transmitter on Joselito, transmitter on Host 1. Foam windscreens on both.' },
+        { id: 'e1e2', text: 'IEM monitoring for both hosts — they must hear each other + program audio in the crowd noise' },
+        { id: 'e1e3', text: 'DJ line out: DI box (Radial ProDI) → XLR → audio interface → laptop. Never mic the PA speakers.' },
+        { id: 'e1e4', text: 'Ambient stereo condenser mic at front of tent for crowd atmosphere (blend 20–30% in mix)' },
+        { id: 'e1e5', text: 'Full audio mix tested before going live: commentary levels, DJ music levels, ambient blend' },
+        { id: 'e1e6', text: 'Backup wired mics + XLR cables on standby at all times' },
+      ]
+    },
+    {
+      id: 'grp-e1f', label: 'Joselito DaPuppet Coordination',
+      tasks: [
+        { id: 'e1f1', text: 'Confirm Joselito arrival time — minimum 30 min before stream start for sound check and briefing' },
+        { id: 'e1f2', text: 'Confirm his segments — how many, how long, topic areas' },
+        { id: 'e1f3', text: 'Brief him on show format, rundown, and any on-camera cues' },
+        { id: 'e1f4', text: 'Confirm any content restrictions or topics to avoid on stream' },
+        { id: 'e1f5', text: 'Get his preferred social handles for on-screen lower third graphic' },
+        { id: 'e1f6', text: 'Coordinate cross-promotion: align his post timing to announce his appearance at BlackMarker.TV tent' },
+      ]
+    },
+    {
+      id: 'grp-e1g', label: 'Show Format & Staffing',
+      tasks: [
+        { id: 'e1g1', text: 'Show rundown finalized and printed × 4 copies (Stream Tech, Host 1, Host 2, Joselito)' },
+        { id: 'e1g2', text: 'Stream Tech confirmed and briefed for Event 1' },
+        { id: 'e1g3', text: 'Host 1 (anchor) confirmed and briefed' },
+        { id: 'e1g4', text: 'Host 2 / Field Reporter confirmed and briefed' },
+        { id: 'e1g5', text: 'DJ for Event 1 (festival tent) confirmed' },
+        { id: 'e1g6', text: 'DJ briefed on music transitions for each segment break in the show' },
+        { id: 'e1g7', text: 'Security/equipment watcher designated — tent must never be left completely unattended' },
+      ]
+    },
+    {
+      id: 'grp-e1h', label: 'Day-Of Execution',
+      tasks: [
+        { id: 'e1h1', text: 'Arrive with cargo van at load-in time — all equipment unloaded' },
+        { id: 'e1h2', text: 'T–3 hrs: tent up, sandbags set, furniture placed' },
+        { id: 'e1h3', text: 'T–2 hrs: generator running, all equipment powered on' },
+        { id: 'e1h4', text: 'T–1.5 hrs: cameras positioned, audio tested, stream rig fully connected' },
+        { id: 'e1h5', text: 'T–1 hr: private test stream — verify all three destinations active' },
+        { id: 'e1h6', text: 'T–30 min: stream goes live (public, pre-show music + countdown)' },
+        { id: 'e1h7', text: 'During event: monitor stream health, audio levels, generator fuel every 2 hrs' },
+        { id: 'e1h8', text: 'Proper on-camera sign-off — stop stream, stop recording, begin breakdown' },
+        { id: 'e1h9', text: 'Post-event: load out all equipment into van, inventory all items before leaving' },
+      ]
+    },
+  ],
+
+  event2: [
+    {
+      id: 'grp-e2a', label: 'Registration & Compliance',
+      tasks: [
+        { id: 'e2a1', text: 'Float application submitted to NPRDP', preComplete: true },
+        { id: 'e2a2', text: 'Registered for first NPRDP orientation', preComplete: true },
+        { id: 'e2a3', text: 'Custom Float package paid — $6,500', preComplete: true },
+        { id: 'e2a4', text: 'Attend NPRDP orientation — note all float spec requirements, deadlines, and wristband process' },
+        { id: 'e2a5', text: 'Obtain $1M+ GL insurance certificate — name NPRDP as additional insured. See Overall checklist for provider options and pricing.' },
+        { id: 'e2a6', text: 'Submit insurance certificate to NPRDP per their deadline' },
+        { id: 'e2a7', text: 'Confirm float participant number and staging assignment from NPRDP' },
+        { id: 'e2a8', text: 'Receive wristbands and permits for all 50 walking contingent members — required; no one marches without wristbands' },
+      ]
+    },
+    {
+      id: 'grp-e2b', label: 'Float Build & Design',
+      tasks: [
+        { id: 'e2b1', text: 'Finalize visual design concept for float — "Celebrating Puerto Rican Pioneers" theme. Include: PR flag colors (red/white/blue), star symbol, BlackMarker.TV branding, Joselito + Charlie Chase positioning.' },
+        { id: 'e2b2', text: 'Confirm float dimensions from NPRDP: max 8\' wide × 28\' long × 13\' tall (Custom package). Stay under 13 ft height clearance along route.' },
+        { id: 'e2b3', text: 'Float layout finalized — Joselito + Host 1 at front/crowd-facing, DJ Chase elevated booth mid/rear, tech station at rear, generator rear corner' },
+        { id: 'e2b4', text: 'All float branding elements ordered: BlackMarker.TV main banner, "Celebrating Puerto Rican Pioneers" banner, PR flag (weatherproof vinyl, secured to structure)' },
+        { id: 'e2b5', text: 'DJ booth riser/platform on float confirmed (even 8-inch riser helps frame Chase on camera)' },
+        { id: 'e2b6', text: 'PA speakers sourced and secured to float (minimum 2 × 15" powered speakers, facing outward L+R)' },
+        { id: 'e2b7', text: 'LED accent lighting for float — battery or generator powered' },
+        { id: 'e2b8', text: 'All float structural elements secured — nothing can detach during the route (NPRDP requirement)' },
+        { id: 'e2b9', text: 'Float build complete and loaded before parade staging day' },
+      ]
+    },
+    {
+      id: 'grp-e2c', label: 'Power Setup (On Float)',
+      tasks: [
+        { id: 'e2c1', text: 'Generator confirmed: Honda EU7000iS or equiv. 5,000–8,000W inverter. Load: DJ+PA (~3,500W) + stream (~400W) + lights (~800W) + misc (~300W) = ~5,000W peak.' },
+        { id: 'e2c2', text: 'Generator secured to float with steel straps/tie-down chains — must not shift during route' },
+        { id: 'e2c3', text: 'Exhaust routing confirmed: directed away from talent, walking contingent, and crowd' },
+        { id: 'e2c4', text: 'Generator fuel: full tank + 5-gallon backup can (secured, approved container). EU7000iS runs ~6 hrs at 50% load — parade is 3–4 hrs.' },
+        { id: 'e2c5', text: 'Designate crew member to check generator every 45 minutes during route' },
+        { id: 'e2c6', text: 'All float wiring secured to structure — no loose cables on float surface' },
+      ]
+    },
+    {
+      id: 'grp-e2d', label: 'Live Stream Tech (Moving Vehicle)',
+      tasks: [
+        { id: 'e2d1', text: 'Cellular bonding device — LiveU Solo+ or Teradek Bond with 3–4 SIM cards (AT&T + T-Mobile + Verizon). Mount securely on float, antennas pointing up and unobstructed. NYC Fifth Ave = heavy congestion on parade day; bonding is mandatory.' },
+        { id: 'e2d2', text: 'Test connectivity while moving in a vehicle before parade day — simulate the moving environment' },
+        { id: 'e2d3', text: 'Primary camera on vibration-dampening mount — rubber isolation between float structure and camera arm. Frame: Joselito + Host 1 with crowd/street behind.' },
+        { id: 'e2d4', text: 'Field camera (GoPro Hero 12 or ZV-1 on gimbal) for walking contingent shots and crowd moments' },
+        { id: 'e2d5', text: 'Production laptop secured on float tech station — laptop strap or lock, must not shift on bumps' },
+        { id: 'e2d6', text: 'vMix configured with all stream keys — BlackMarker.TV + YouTube + Facebook + local recording' },
+        { id: 'e2d7', text: 'Test stream from staging area 1 hour before parade begins' },
+        { id: 'e2d8', text: 'Camera vibration mounts tested in moving vehicle before event day' },
+      ]
+    },
+    {
+      id: 'grp-e2e', label: 'Audio Setup (Float)',
+      tasks: [
+        { id: 'e2e1', text: 'Rode Wireless GO II: transmitter on Joselito + transmitter on Host 1. Use furry windscreens (deadcat) — open-air + moving vehicle = serious wind noise.' },
+        { id: 'e2e2', text: 'IEM monitoring for both hosts — critical in open-air moving environment to hear each other and program audio' },
+        { id: 'e2e3', text: 'DJ direct line out: DI box → XLR → encoder. Never mic the PA.' },
+        { id: 'e2e4', text: 'Sound check at staging area before parade: DJ + PA + commentary mics + stream audio all confirmed' },
+        { id: 'e2e5', text: 'Confirm DJ PA speaker levels meet parade sound regulations (check with NPRDP at orientation)' },
+        { id: 'e2e6', text: 'Backup wired mics + XLR cables on float as failsafe' },
+      ]
+    },
+    {
+      id: 'grp-e2f', label: 'Walking Contingent (50 People)',
+      tasks: [
+        { id: 'e2f1', text: 'Finalize list of exactly 50 walkers — all names registered with NPRDP application' },
+        { id: 'e2f2', text: 'Collect shirt sizes from all 50 participants' },
+        { id: 'e2f3', text: 'Order branded shirts × 55 (50 + 5 spares) — 3 weeks minimum lead time. Black shirt, BMB/BlackMarker.TV logo front, "Celebrating Puerto Rican Pioneers" back.' },
+        { id: 'e2f4', text: 'Confirm shirt distribution method: mail in advance OR distribute at staging area morning of parade' },
+        { id: 'e2f5', text: 'Designate walking contingent Marshall/Captain (NPRDP requires a designated Marshall per contingent)' },
+        { id: 'e2f6', text: 'Assign sub-captains for each row of 10 walkers' },
+        { id: 'e2f7', text: 'Send briefing document to all 50 walkers: staging location, arrival time, dress code, rules (no alcohol, stay in formation, no leaving the line, no personal signs/items not approved by BMB), emergency contact' },
+        { id: 'e2f8', text: 'Day-of: take attendance of all 50 walkers at staging, distribute shirts if not pre-shipped' },
+        { id: 'e2f9', text: 'Take group photo at staging area before parade (content + documentation)' },
+        { id: 'e2f10', text: 'Note: ZERO third parties may join the registered contingent — NPRDP rule. All 50 must be BMB/BlackMarker.TV registered participants.' },
+      ]
+    },
+    {
+      id: 'grp-e2g', label: 'DJ Charlie Chase Coordination',
+      tasks: [
+        { id: 'e2g1', text: 'Confirm DJ Charlie Chase booking and contract signed' },
+        { id: 'e2g2', text: 'Confirm travel and accommodation (BMB covering flights/hotel, or self-arranging?)' },
+        { id: 'e2g3', text: 'Confirm DJ equipment needs — does he bring own CDJs/Serato, or does BMB rent? Confirm turntable/controller preferences.' },
+        { id: 'e2g4', text: 'Confirm XLR line out from his mixer to BMB encoder (DI box provided by BMB)' },
+        { id: 'e2g5', text: 'Brief him on streaming format — he is on camera; brief him on show segments and interview format' },
+        { id: 'e2g6', text: 'Get his preferred social handles for on-screen lower third graphic' },
+        { id: 'e2g7', text: 'Sound check with Charlie Chase at staging area — DJ booth on float, PA speakers, monitor levels' },
+      ]
+    },
+    {
+      id: 'grp-e2h', label: 'Show Format & Staffing',
+      tasks: [
+        { id: 'e2h1', text: 'Float show rundown finalized and printed × 4 copies (Stream Tech, Host 1, Joselito, Charlie Chase)' },
+        { id: 'e2h2', text: 'Stream Tech for parade float confirmed and briefed' },
+        { id: 'e2h3', text: 'Host 1 (anchor on float) confirmed and briefed' },
+        { id: 'e2h4', text: 'Host 2 / Field Reporter (walking contingent or hanging off float) confirmed and briefed' },
+        { id: 'e2h5', text: 'Walking contingent captain confirmed and fully briefed' },
+        { id: 'e2h6', text: 'Float driver confirmed — experienced parade vehicle operator, knows the route' },
+      ]
+    },
+    {
+      id: 'grp-e2i', label: 'Day-Of Execution',
+      tasks: [
+        { id: 'e2i1', text: '5–6 AM: Float arrives at staging area (40s on Fifth Avenue). BMB crew meets float.' },
+        { id: 'e2i2', text: '6–7 AM: Equipment setup on float — cameras mounted, laptop secured, generator positioned and running' },
+        { id: 'e2i3', text: '7–8 AM: Full tech stack powered on and connected. Camera vibration confirmed. Audio routing confirmed.' },
+        { id: 'e2i4', text: '8–9 AM: Walking contingent arrives at staging. Marshall takes attendance. Shirts distributed if not pre-shipped.' },
+        { id: 'e2i5', text: '9 AM: Sound check — DJ + PA + commentary mics + stream audio' },
+        { id: 'e2i6', text: '9:30 AM: Private test stream from staging — confirm all destinations active and stable' },
+        { id: 'e2i7', text: '~10 AM: Float inspection by NPRDP officials — have insurance certificate and permit documents on hand' },
+        { id: 'e2i8', text: 'Parade start (~11 AM TBC with NPRDP): stream goes live (public). "Celebrating Puerto Rican Pioneers" open.' },
+        { id: 'e2i9', text: 'During route: stream tech monitors health + generator fuel; walking captain maintains formation' },
+        { id: 'e2i10', text: 'End of route (79th St): proper on-camera sign-off. Stop recording. Float exits route.' },
+        { id: 'e2i11', text: 'Post-parade: equipment breakdown. Return float to pickup area. Team debrief.' },
+      ]
+    },
+  ]
+};
+
+// ══════════════════════════════════════════
+// STATE & STORAGE
+// ══════════════════════════════════════════
+const STORAGE_KEY = 'bmb_nyc_parade_2026';
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch(e) { return {}; }
+}
+
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  const el = document.getElementById('saveStatus');
+  el.textContent = 'Saved ' + new Date().toLocaleTimeString();
+}
+
+let state = loadState();
+
+function getTaskState(id) {
+  return state.tasks?.[id] || {};
+}
+
+function setTaskState(id, key, value) {
+  if (!state.tasks) state.tasks = {};
+  if (!state.tasks[id]) state.tasks[id] = {};
+  state.tasks[id][key] = value;
+  saveState(state);
+  updateAllProgress();
+}
+
+// ══════════════════════════════════════════
+// TEAM MEMBERS
+// ══════════════════════════════════════════
+function getTeam() { return state.team || []; }
+
+function addTeamMember() {
+  const name = document.getElementById('tmName').value.trim();
+  const role = document.getElementById('tmRole').value.trim();
+  const phone = document.getElementById('tmPhone').value.trim();
+  const email = document.getElementById('tmEmail').value.trim();
+  if (!name) { alert('Please enter a name.'); return; }
+  if (!state.team) state.team = [];
+  const member = { id: 'tm_' + Date.now(), name, role, phone, email };
+  state.team.push(member);
+  saveState(state);
+  ['tmName','tmRole','tmPhone','tmEmail'].forEach(id => document.getElementById(id).value = '');
+  renderTeam();
+  updateAllAssigneeDropdowns();
+}
+
+function deleteTeamMember(id) {
+  if (!confirm('Remove this team member?')) return;
+  state.team = (state.team || []).filter(m => m.id !== id);
+  // Clear assignments for this member
+  if (state.tasks) {
+    Object.values(state.tasks).forEach(t => {
+      if (Array.isArray(t.assignees)) t.assignees = t.assignees.filter(aid => aid !== id);
+    });
+  }
+  saveState(state);
+  renderTeam();
+  updateAllAssigneeDropdowns();
+}
+
+function renderTeam() {
+  const grid = document.getElementById('teamGrid');
+  const empty = document.getElementById('teamEmpty');
+  const team = getTeam();
+  // Remove old cards
+  grid.querySelectorAll('.team-card').forEach(c => c.remove());
+  if (team.length === 0) { empty.style.display = ''; return; }
+  empty.style.display = 'none';
+  team.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'team-card';
+    card.innerHTML = `
+      <button class="tc-del" onclick="deleteTeamMember('${m.id}')" title="Remove">✕</button>
+      <div class="tc-name">${esc(m.name)}</div>
+      <div class="tc-role">${esc(m.role || '—')}</div>
+      <div class="tc-contact">
+        ${m.phone ? '📞 ' + esc(m.phone) + '<br>' : ''}
+        ${m.email ? '✉ ' + esc(m.email) : ''}
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function updateAllAssigneeDropdowns() {
+  document.querySelectorAll('.multi-select').forEach(ms => {
+    updateMSTrigger(ms.dataset.taskId);
+  });
+  updatePrintMemberDropdown();
+}
+
+function toggleMSDropdown(taskId, e) {
+  e.stopPropagation();
+  const dropdown = document.getElementById('msd-' + taskId);
+  const trigger = document.getElementById('mst-' + taskId);
+  const isOpen = dropdown.classList.contains('open');
+  // Close all open dropdowns
+  document.querySelectorAll('.ms-dropdown.open').forEach(d => d.classList.remove('open'));
+  if (!isOpen) {
+    populateMSDropdown(taskId);
+    // Position using fixed coordinates from trigger's screen rect
+    const rect = trigger.getBoundingClientRect();
+    const dropdownHeight = Math.min(getTeam().length * 34 + 12, 300);
+    const spaceBelow = window.innerHeight - rect.bottom;
+    if (spaceBelow < dropdownHeight && rect.top > dropdownHeight) {
+      // Open upward if not enough space below
+      dropdown.style.top = (rect.top - dropdownHeight) + 'px';
+    } else {
+      dropdown.style.top = (rect.bottom + 4) + 'px';
+    }
+    // Align right edge with trigger right edge, but keep on screen
+    let right = window.innerWidth - rect.right;
+    dropdown.style.right = 'auto';
+    dropdown.style.left = Math.max(8, rect.right - 190) + 'px';
+    dropdown.classList.add('open');
+  }
+}
+
+function toggleMSOption(taskId, memberId, checked) {
+  const ts = getTaskState(taskId);
+  let assignees = Array.isArray(ts.assignees) ? [...ts.assignees] : [];
+  if (checked) { if (!assignees.includes(memberId)) assignees.push(memberId); }
+  else { assignees = assignees.filter(id => id !== memberId); }
+  setTaskState(taskId, 'assignees', assignees);
+  updateMSTrigger(taskId);
+}
+
+function updateMSTrigger(taskId) {
+  const ts = getTaskState(taskId);
+  const assignees = Array.isArray(ts.assignees) ? ts.assignees : [];
+  const trigger = document.getElementById('mst-' + taskId);
+  if (!trigger) return;
+  const team = getTeam();
+  const names = assignees.map(id => team.find(m => m.id === id)?.name).filter(Boolean);
+  trigger.textContent = names.length > 0 ? names.join(', ') : '— Unassigned —';
+  trigger.classList.toggle('assigned', names.length > 0);
+}
+
+function populateMSDropdown(taskId) {
+  const dropdown = document.getElementById('msd-' + taskId);
+  if (!dropdown) return;
+  const team = getTeam();
+  const ts = getTaskState(taskId);
+  const assignees = Array.isArray(ts.assignees) ? ts.assignees : [];
+  dropdown.innerHTML = '';
+  if (team.length === 0) {
+    dropdown.innerHTML = '<div class="ms-empty">No team members added yet</div>';
+    return;
+  }
+  team.forEach(m => {
+    const label = document.createElement('label');
+    label.className = 'ms-option';
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = assignees.includes(m.id);
+    cb.onchange = (ev) => { ev.stopPropagation(); toggleMSOption(taskId, m.id, cb.checked); };
+    label.appendChild(cb);
+    label.appendChild(document.createTextNode(m.name + (m.role ? ' (' + m.role + ')' : '')));
+    dropdown.appendChild(label);
+  });
+}
+
+function esc(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ══════════════════════════════════════════
+// RENDER CHECKLISTS
+// ══════════════════════════════════════════
+function renderAllChecklists() {
+  ['overall','event1','event2'].forEach(section => {
+    const container = document.getElementById('tab-' + section);
+    const printHeader = container.querySelector('.print-header');
+    // Clear existing groups
+    container.querySelectorAll('.group').forEach(g => g.remove());
+
+    const groups = TASKS[section];
+    groups.forEach(grp => {
+      const div = document.createElement('div');
+      div.className = 'group';
+      div.id = grp.id;
+
+      // Count for badge
+      const total = grp.tasks.length;
+
+      div.innerHTML = `
+        <div class="group-header" onclick="toggleGroup('${grp.id}')">
+          <div class="group-title">
+            ${esc(grp.label)}
+            <span class="group-badge" id="badge-${grp.id}">0 / ${total}</span>
+          </div>
+          <span id="toggle-${grp.id}" style="color:var(--muted);font-size:12px;">▼</span>
+        </div>
+        <div class="group-body open" id="body-${grp.id}"></div>`;
+
+      const body = div.querySelector('.group-body');
+
+      grp.tasks.forEach(task => {
+        const ts = getTaskState(task.id);
+        const isComplete = ts.completed || (task.preComplete && ts.completed !== false);
+        const hasNotes = ts.notes && ts.notes.trim().length > 0;
+
+        const row = document.createElement('div');
+        row.className = 'task-item' + (isComplete ? ' completed' : '');
+        row.id = 'task-' + task.id;
+
+        row.innerHTML = `
+          <div class="task-row">
+            <input type="checkbox" class="task-cb" id="cb-${task.id}" ${isComplete ? 'checked' : ''}
+              onchange="toggleTask('${task.id}', this.checked)">
+            <div class="task-text" onclick="document.getElementById('cb-${task.id}').click()">${esc(task.text)}</div>
+            <div class="task-meta">
+              <div class="multi-select" id="ms-${task.id}" data-task-id="${task.id}">
+                <button type="button" class="ms-trigger" id="mst-${task.id}" onclick="toggleMSDropdown('${task.id}',event)">— Unassigned —</button>
+                <div class="ms-dropdown" id="msd-${task.id}"></div>
+              </div>
+              <div class="task-date-wrap">
+                <input type="date" class="task-date" value="${ts.dueDate || ''}"
+                  onchange="setTaskState('${task.id}','dueDate',this.value)">
+                <span class="task-date-icon">📅</span>
+              </div>
+              <button class="task-notes-btn ${hasNotes ? 'has-notes' : ''}" id="notesbtn-${task.id}"
+                onclick="toggleNotes('${task.id}')">📝 Notes</button>
+            </div>
+          </div>
+          <div class="task-notes-area" id="notes-${task.id}">
+            <textarea class="task-notes-input" placeholder="Add notes, links, or context…"
+              onchange="setTaskState('${task.id}','notes',this.value)"
+              oninput="onNotesInput('${task.id}',this)">${esc(ts.notes || '')}</textarea>
+          </div>`;
+
+        body.appendChild(row);
+      });
+
+      container.appendChild(div);
+      updateGroupBadge(grp.id);
+      // Update trigger labels AFTER the group is in the DOM
+      grp.tasks.forEach(t => updateMSTrigger(t.id));
+    });
+  });
+}
+
+function toggleTask(id, checked) {
+  setTaskState(id, 'completed', checked);
+  const item = document.getElementById('task-' + id);
+  if (checked) item.classList.add('completed');
+  else item.classList.remove('completed');
+  // Find which group this task belongs to and update badge
+  for (const section of Object.values(TASKS)) {
+    for (const grp of section) {
+      if (grp.tasks.find(t => t.id === id)) {
+        updateGroupBadge(grp.id);
+        break;
+      }
+    }
+  }
+}
+
+function toggleNotes(id) {
+  const area = document.getElementById('notes-' + id);
+  area.classList.toggle('open');
+}
+
+function onNotesInput(id, el) {
+  setTaskState(id, 'notes', el.value);
+  const btn = document.getElementById('notesbtn-' + id);
+  if (el.value.trim().length > 0) btn.classList.add('has-notes');
+  else btn.classList.remove('has-notes');
+}
+
+function toggleGroup(id) {
+  const body = document.getElementById('body-' + id);
+  const tog = document.getElementById('toggle-' + id);
+  body.classList.toggle('open');
+  tog.textContent = body.classList.contains('open') ? '▼' : '▶';
+}
+
+function updateGroupBadge(grpId) {
+  for (const section of Object.values(TASKS)) {
+    for (const grp of section) {
+      if (grp.id === grpId) {
+        const done = grp.tasks.filter(t => {
+          const ts = getTaskState(t.id);
+          return ts.completed || (t.preComplete && ts.completed !== false);
+        }).length;
+        const badge = document.getElementById('badge-' + grpId);
+        if (badge) badge.textContent = done + ' / ' + grp.tasks.length;
+        return;
+      }
+    }
+  }
+}
+
+// ══════════════════════════════════════════
+// PROGRESS BARS
+// ══════════════════════════════════════════
+function calcProgress(section) {
+  const groups = TASKS[section];
+  let total = 0, done = 0;
+  groups.forEach(grp => {
+    grp.tasks.forEach(t => {
+      total++;
+      const ts = getTaskState(t.id);
+      if (ts.completed || (t.preComplete && ts.completed !== false)) done++;
+    });
+  });
+  return total === 0 ? 0 : Math.round((done / total) * 100);
+}
+
+function updateAllProgress() {
+  ['overall','event1','event2'].forEach((section, i) => {
+    const keys = ['Overall','E1','E2'];
+    const pct = calcProgress(section);
+    const pctEl = document.getElementById('pct' + keys[i]);
+    const fillEl = document.getElementById('fill' + keys[i]);
+    if (pctEl) { pctEl.textContent = pct + '%'; pctEl.className = 'pct' + (pct === 100 ? ' done' : ''); }
+    if (fillEl) { fillEl.style.width = pct + '%'; fillEl.className = 'progress-fill' + (pct === 100 ? ' green' : ''); }
+  });
+  // Update all group badges
+  Object.values(TASKS).forEach(section => {
+    section.forEach(grp => updateGroupBadge(grp.id));
+  });
+}
+
+// ══════════════════════════════════════════
+// TABS
+// ══════════════════════════════════════════
+function switchTab(section, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + section).classList.add('active');
+}
+
+// ══════════════════════════════════════════
+// PANEL TOGGLE (TEAM)
+// ══════════════════════════════════════════
+function togglePanel(id) {
+  const body = document.getElementById(id);
+  const tog = document.getElementById(id + 'Toggle');
+  body.classList.toggle('open');
+  tog.classList.toggle('open');
+}
+
+// ══════════════════════════════════════════
+// PRINT
+// ══════════════════════════════════════════
+function openPrintModal() {
+  updatePrintMemberDropdown();
+  document.getElementById('printModal').classList.add('open');
+}
+
+function closePrintModal() {
+  document.getElementById('printModal').classList.remove('open');
+}
+
+function updatePrintMemberDropdown() {
+  const sel = document.getElementById('printMemberFilter');
+  const team = getTeam();
+  sel.innerHTML = '<option value="all">All team members</option>';
+  team.forEach(m => {
+    const opt = document.createElement('option');
+    opt.value = m.id;
+    opt.textContent = m.name;
+    sel.appendChild(opt);
+  });
+}
+
+function doPrint() {
+  const sectionVal = document.querySelector('input[name="pSection"]:checked').value;
+  const filterVal = document.querySelector('input[name="pFilter"]:checked').value;
+  const memberVal = document.getElementById('printMemberFilter').value;
+
+  // Show/hide tab sections
+  ['overall','event1','event2'].forEach(s => {
+    const tab = document.getElementById('tab-' + s);
+    if (sectionVal === 'all' || sectionVal === s) {
+      tab.classList.remove('print-section-hide');
+      tab.classList.add('active');
+    } else {
+      tab.classList.add('print-section-hide');
+    }
+  });
+
+  // Show/hide tasks
+  document.querySelectorAll('.task-item').forEach(item => {
+    const taskId = item.id.replace('task-','');
+    const ts = getTaskState(taskId);
+    const isComplete = item.classList.contains('completed');
+    const assignees = Array.isArray(ts.assignees) ? ts.assignees : [];
+
+    let hide = false;
+    if (filterVal === 'incomplete' && isComplete) hide = true;
+    if (filterVal === 'complete' && !isComplete) hide = true;
+    if (memberVal !== 'all' && !assignees.includes(memberVal)) hide = true;
+
+    item.classList.toggle('print-hide', hide);
+  });
+
+  // Add assignee labels for print
+  document.querySelectorAll('.task-row').forEach(row => {
+    row.querySelectorAll('.print-assignee-label').forEach(l => l.remove());
+    const taskId = row.querySelector('.multi-select')?.dataset.taskId;
+    if (taskId) {
+      const ts = getTaskState(taskId);
+      const assignees = Array.isArray(ts.assignees) ? ts.assignees : [];
+      const team = getTeam();
+      const names = assignees.map(id => {
+        const m = team.find(m => m.id === id);
+        return m ? m.name + (m.role ? ' (' + m.role + ')' : '') : null;
+      }).filter(Boolean);
+      if (names.length > 0) {
+        const label = document.createElement('span');
+        label.className = 'print-assignee-label';
+        label.textContent = '👤 ' + names.join(', ');
+        row.querySelector('.task-text').insertAdjacentElement('afterend', label);
+      }
+      const dueDate = ts.dueDate;
+      if (dueDate) {
+        const label = document.createElement('span');
+        label.className = 'print-assignee-label';
+        label.textContent = '📅 Due: ' + dueDate;
+        row.querySelector('.task-text').insertAdjacentElement('afterend', label);
+      }
+    }
+  });
+
+  closePrintModal();
+  setTimeout(() => {
+    window.print();
+    // Restore after print
+    setTimeout(() => {
+      document.querySelectorAll('.task-item').forEach(i => i.classList.remove('print-hide'));
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('print-section-hide'));
+      // Re-apply proper tab visibility
+      document.querySelectorAll('.tab-content:not(.active)').forEach(t => {
+        if (!t.classList.contains('print-section-hide')) {
+          // Only the active tab stays active
+        }
+      });
+      document.querySelectorAll('.print-assignee-label').forEach(l => l.remove());
+    }, 500);
+  }, 100);
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize pre-completed tasks in state if not already set
+  Object.values(TASKS).forEach(section => {
+    section.forEach(grp => {
+      grp.tasks.forEach(t => {
+        if (t.preComplete && !(state.tasks?.[t.id]?.hasOwnProperty('completed'))) {
+          if (!state.tasks) state.tasks = {};
+          if (!state.tasks[t.id]) state.tasks[t.id] = {};
+          state.tasks[t.id].completed = true;
+        }
+      });
+    });
+  });
+  saveState(state);
+
+  renderTeam();
+  renderAllChecklists();
+  updateAllProgress();
+
+  // Close multi-select dropdowns when clicking outside
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.ms-dropdown.open').forEach(d => d.classList.remove('open'));
+  });
+});
+</script>
+</body>
+</html>
