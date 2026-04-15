@@ -1,0 +1,2397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Freestyle Explosion 3 — Marketing Brief</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0d0d0d;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    .hero {
+      background: linear-gradient(135deg, #1a0a2e 0%, #16213e 40%, #0f3460 80%, #1a1a2e 100%);
+      border-bottom: 3px solid #e94560;
+      padding: 48px 40px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(233,69,96,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: #e94560;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .hero h1 span { color: #e94560; }
+    .hero-sub {
+      font-size: 15px;
+      color: #94a3b8;
+      margin-bottom: 24px;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .meta-pill {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #cbd5e1;
+    }
+    .meta-pill strong { color: #fff; }
+
+    /* COUNTDOWN */
+    .countdown-bar {
+      background: #e94560;
+      color: #fff;
+      text-align: center;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* LAYOUT */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    /* SECTION HEADERS */
+    .section {
+      margin-bottom: 48px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #1e293b;
+    }
+    .section-num {
+      background: #e94560;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f1f5f9;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* CARDS */
+    .card {
+      background: #111827;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #e94560;
+      flex-shrink: 0;
+    }
+
+    /* GRID */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 700px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 26px; }
+    }
+
+    /* TABLES */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    th {
+      background: #1e293b;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 10px 14px;
+      text-align: left;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #1e293b;
+      color: #cbd5e1;
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(233,69,96,0.04); }
+    td strong { color: #f1f5f9; }
+    td .p1 { color: #22c55e; font-weight: 700; font-size: 12px; }
+    td .p2 { color: #f59e0b; font-weight: 700; font-size: 12px; }
+    td .p3 { color: #94a3b8; font-weight: 700; font-size: 12px; }
+
+    /* TAGS / PILLS */
+    .tag {
+      display: inline-block;
+      background: rgba(233,69,96,0.15);
+      border: 1px solid rgba(233,69,96,0.3);
+      color: #fca5a5;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin: 2px 2px 2px 0;
+    }
+    .tag.green {
+      background: rgba(34,197,94,0.1);
+      border-color: rgba(34,197,94,0.3);
+      color: #86efac;
+    }
+    .tag.blue {
+      background: rgba(59,130,246,0.1);
+      border-color: rgba(59,130,246,0.3);
+      color: #93c5fd;
+    }
+    .tag.yellow {
+      background: rgba(245,158,11,0.1);
+      border-color: rgba(245,158,11,0.3);
+      color: #fcd34d;
+    }
+
+    /* STAT BOXES */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .stat-box {
+      background: #111827;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: #e94560;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* HIGHLIGHT BOX */
+    .highlight {
+      background: linear-gradient(135deg, rgba(233,69,96,0.08), rgba(233,69,96,0.02));
+      border: 1px solid rgba(233,69,96,0.25);
+      border-left: 4px solid #e94560;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 14px;
+      color: #e2e8f0;
+    }
+    .highlight strong { color: #fca5a5; }
+
+    .note {
+      background: rgba(245,158,11,0.06);
+      border: 1px solid rgba(245,158,11,0.2);
+      border-left: 4px solid #f59e0b;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 12px 0;
+      font-size: 13px;
+      color: #fcd34d;
+    }
+
+    /* COPY BLOCKS */
+    .copy-block {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin: 12px 0;
+      font-size: 14px;
+      font-style: italic;
+      color: #e2e8f0;
+      line-height: 1.7;
+      position: relative;
+    }
+    .copy-block::before {
+      content: '"';
+      font-size: 48px;
+      color: #e94560;
+      opacity: 0.3;
+      position: absolute;
+      top: 4px; left: 14px;
+      font-style: normal;
+      line-height: 1;
+    }
+    .copy-block p { padding-left: 24px; }
+
+    /* CHECKLIST */
+    .checklist { list-style: none; }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #1a2234;
+      font-size: 14px;
+      color: #cbd5e1;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li::before {
+      content: '☐';
+      color: #e94560;
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .checklist .urgent { color: #fca5a5; font-weight: 600; }
+
+    /* COUNTDOWN TIMELINE */
+    .timeline { position: relative; padding-left: 24px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 0; bottom: 0;
+      width: 2px;
+      background: #1e293b;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 6px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: #e94560;
+      border: 2px solid #0d0d0d;
+    }
+    .timeline-day {
+      font-size: 12px;
+      font-weight: 700;
+      color: #e94560;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .timeline-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+    }
+
+    /* BUDGET BAR */
+    .budget-item {
+      margin-bottom: 14px;
+    }
+    .budget-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: #cbd5e1;
+    }
+    .budget-label span { font-weight: 700; color: #f1f5f9; }
+    .budget-bar-wrap {
+      background: #1e293b;
+      border-radius: 4px;
+      height: 8px;
+      overflow: hidden;
+    }
+    .budget-bar {
+      height: 100%;
+      border-radius: 4px;
+      background: #e94560;
+    }
+
+    /* ARTIST CARDS */
+    .artist-card {
+      background: #111827;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .artist-card::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle at top right, rgba(233,69,96,0.1), transparent 70%);
+    }
+    .artist-name {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .artist-sub {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .artist-stat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 6px 0;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+    .artist-stat strong { color: #e2e8f0; }
+    .artist-stat .icon { color: #e94560; width: 16px; }
+
+    /* PRICING */
+    .price-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .price-card {
+      background: #111827;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    .price-card.featured {
+      border-color: #e94560;
+      background: linear-gradient(135deg, rgba(233,69,96,0.1), #111827);
+    }
+    .price-tier { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .price-amount { font-size: 36px; font-weight: 800; color: #e94560; line-height: 1; margin-bottom: 6px; }
+    .price-desc { font-size: 12px; color: #94a3b8; }
+    .price-deadline { font-size: 11px; color: #f59e0b; margin-top: 6px; font-weight: 600; }
+
+    /* PLATFORM TABLE */
+    .platform-row td:first-child { font-weight: 700; color: #f1f5f9; }
+
+    /* FOOTER */
+    .footer {
+      background: #080808;
+      border-top: 1px solid #1e293b;
+      padding: 24px 40px;
+      text-align: center;
+      font-size: 12px;
+      color: #334155;
+    }
+
+    p { margin-bottom: 10px; font-size: 14px; color: #94a3b8; }
+    p:last-child { margin-bottom: 0; }
+    ul { padding-left: 20px; }
+    ul li { font-size: 14px; color: #94a3b8; margin-bottom: 6px; }
+    ul li strong { color: #e2e8f0; }
+
+    /* TABS */
+    .tab-nav {
+      background: #0a0a0a;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      gap: 0;
+      padding: 0 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: #64748b;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 16px 24px;
+      text-transform: uppercase;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .tab-btn:hover { color: #cbd5e1; }
+    .tab-btn.active { border-bottom-color: #e94560; color: #fff; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* FACEBOOK POST MOCKUPS */
+    .posts-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+    .phase-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 32px 0 16px;
+    }
+    .phase-label:first-child { margin-top: 0; }
+    .phase-badge {
+      background: #e94560;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .phase-line {
+      flex: 1;
+      height: 1px;
+      background: #1e293b;
+    }
+    .phase-dates {
+      font-size: 11px;
+      color: #475569;
+      white-space: nowrap;
+    }
+    .fb-post {
+      background: #1c1c1e;
+      border: 1px solid #2a2a2e;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .fb-post-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px 10px;
+    }
+    .fb-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e94560, #0f3460);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .fb-meta { flex: 1; }
+    .fb-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #f1f5f9;
+      line-height: 1.2;
+    }
+    .fb-sub {
+      font-size: 11px;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 2px;
+    }
+    .fb-tag {
+      background: rgba(233,69,96,0.15);
+      border: 1px solid rgba(233,69,96,0.3);
+      color: #fca5a5;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    .fb-body {
+      padding: 4px 16px 14px;
+      font-size: 14px;
+      color: #e2e8f0;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .fb-body a { color: #60a5fa; text-decoration: none; }
+    .fb-image {
+      background: #111827;
+      border-top: 1px solid #2a2a2e;
+      border-bottom: 1px solid #2a2a2e;
+      padding: 24px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #475569;
+      font-size: 13px;
+    }
+    .fb-image-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .fb-image-note { font-size: 12px; color: #64748b; margin-top: 2px; }
+    .fb-image.urgent { border-left: 3px solid #e94560; }
+    .fb-image.urgent .fb-image-note { color: #fca5a5; }
+    .fb-actions {
+      display: flex;
+      border-top: 1px solid #2a2a2e;
+      padding: 4px 8px;
+    }
+    .fb-action {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px;
+      border-radius: 6px;
+      cursor: default;
+    }
+    .fb-lang-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: auto;
+    }
+    .fb-lang-badge.en {
+      background: rgba(59,130,246,0.15);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: #93c5fd;
+    }
+    .fb-lang-badge.spanglish {
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.3);
+      color: #86efac;
+    }
+    .fb-lang-badge.group {
+      background: rgba(245,158,11,0.1);
+      border: 1px solid rgba(245,158,11,0.3);
+      color: #fcd34d;
+    }
+    .group-target {
+      font-size: 11px;
+      color: #475569;
+      padding: 8px 16px;
+      background: #111827;
+      border-top: 1px solid #1e293b;
+      font-style: italic;
+    }
+    .critical-note {
+      background: linear-gradient(135deg, rgba(233,69,96,0.12), rgba(233,69,96,0.04));
+      border: 1px solid rgba(233,69,96,0.3);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #fca5a5;
+    }
+    .critical-note strong { color: #fff; }
+
+    /* COPY BUTTON */
+    .copy-btn {
+      background: none;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      color: #475569;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 5px 12px;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .copy-btn:hover { background: #1e293b; color: #cbd5e1; border-color: #334155; }
+    .copy-btn.copied { background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.4); color: #86efac; }
+    .fb-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 6px 12px;
+      border-bottom: 1px solid #2a2a2e;
+    }
+
+    /* AUTOMATION TAB */
+    .auto-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+    .tier-card {
+      background: #111827;
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+    .tier-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      border-bottom: 1px solid #1e293b;
+    }
+    .tier-num {
+      font-size: 28px;
+      font-weight: 900;
+      color: #e94560;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .tier-title { font-size: 18px; font-weight: 800; color: #f1f5f9; }
+    .tier-sub { font-size: 12px; color: #64748b; margin-top: 2px; }
+    .tier-badge {
+      margin-left: auto;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+    .tier-badge.now { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); color: #86efac; }
+    .tier-badge.soon { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: #fcd34d; }
+    .tier-badge.future { background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.3); color: #c4b5fd; }
+    .tier-body { padding: 20px 24px; }
+    .tool-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid #1a2234;
+    }
+    .tool-row:last-child { border-bottom: none; }
+    .tool-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+      background: #1e293b;
+    }
+    .tool-name { font-size: 14px; font-weight: 700; color: #f1f5f9; margin-bottom: 4px; }
+    .tool-desc { font-size: 13px; color: #94a3b8; line-height: 1.5; }
+    .tool-desc strong { color: #e2e8f0; }
+    .cant-automate {
+      background: rgba(100,116,139,0.06);
+      border: 1px solid #1e293b;
+      border-left: 4px solid #475569;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 16px;
+    }
+    .cant-automate strong { color: #94a3b8; }
+    .stack-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .stack-item {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stack-item .icon { font-size: 24px; margin-bottom: 8px; }
+    .stack-item .name { font-size: 13px; font-weight: 700; color: #f1f5f9; margin-bottom: 4px; }
+    .stack-item .role { font-size: 11px; color: #64748b; }
+    .stack-item .cost { font-size: 11px; color: #86efac; font-weight: 700; margin-top: 6px; }
+    .setup-steps { counter-reset: steps; list-style: none; padding: 0; }
+    .setup-steps li {
+      counter-increment: steps;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #1a2234;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+    .setup-steps li:last-child { border-bottom: none; }
+    .setup-steps li::before {
+      content: counter(steps);
+      background: #e94560;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .setup-steps li strong { color: #e2e8f0; }
+  </style>
+</head>
+<body>
+
+<!-- COUNTDOWN BAR -->
+<div class="countdown-bar">
+  &#9889; 11 DAYS OUT — APRIL 25, 2026 &nbsp;|&nbsp; FREESTYLE EXPLOSION 3 &nbsp;|&nbsp; BLACKMARKER.TV
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Marketing Brief</div>
+  <h1>Freestyle Explosion <span>3</span></h1>
+  <div class="hero-sub">DJ Frankie Cutlass &nbsp;·&nbsp; Hanson &amp; Davis &nbsp;·&nbsp; DJ C-4 &nbsp;·&nbsp; The Krates at The Grove, Wesley Chapel, FL</div>
+  <div class="hero-meta">
+    <div class="meta-pill"><strong>Date:</strong> April 25, 2026</div>
+    <div class="meta-pill"><strong>Time:</strong> 8PM – 12AM EST</div>
+    <div class="meta-pill"><strong>In-Person:</strong> 2,000+ expected</div>
+    <div class="meta-pill"><strong>PPV Platform:</strong> BlackMarker.tv</div>
+    <div class="meta-pill"><strong>Event Page:</strong> blackmarker.tv/FE3</div>
+    <div class="meta-pill"><strong>Brief Created:</strong> April 14, 2026</div>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('brief', this)">&#128203; Marketing Brief</button>
+  <button class="tab-btn" onclick="switchTab('posts', this)">&#128247; Post Copy</button>
+  <button class="tab-btn" onclick="switchTab('automation', this)">&#9889; Automation Plan</button>
+</div>
+
+<!-- TAB: BRIEF -->
+<div id="tab-brief" class="tab-content active">
+<div class="container">
+
+  <!-- KEY STATS -->
+  <div class="stat-grid">
+    <div class="stat-box">
+      <div class="stat-value">465K</div>
+      <div class="stat-label">Frankie Cutlass Facebook Fans</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">2,000+</div>
+      <div class="stat-label">Expected In-Person Crowd</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">8,000</div>
+      <div class="stat-label">Peak Crowd at KRATE R&amp;B Night</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">$10</div>
+      <div class="stat-label">Early Bird (thru Apr 20) / $15 after</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">11</div>
+      <div class="stat-label">Days to Event</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">40</div>
+      <div class="stat-label">Years of Freestyle Music</div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: AUDIENCE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title">Audience Intelligence</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Who Your Buyer Is</div>
+        <ul>
+          <li><strong>Core age:</strong> 45–60 (teens/young adults during freestyle's 1985–1995 peak)</li>
+          <li><strong>Secondary:</strong> 35–44 (grew up hearing it at home)</li>
+          <li><strong>Ethnicity:</strong> Predominantly Puerto Rican, Dominican, Cuban — plus African American urban and Italian-American (NY/NJ club culture)</li>
+          <li><strong>Income:</strong> Middle-income adults with disposable income and nostalgia spending power</li>
+          <li><strong>Mindset:</strong> Value-conscious but WILL spend on the right experience</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>What Drives Them to Buy</div>
+        <ul>
+          <li><strong>Nostalgia:</strong> Copy that evokes specific memories converts best</li>
+          <li><strong>Artist credibility:</strong> Frankie Cutlass IS credible to this community</li>
+          <li><strong>Social proof:</strong> Facebook group buzz beats paid ads</li>
+          <li><strong>The 2,000-person crowd:</strong> Use this number everywhere — it's your best PPV marketing tool</li>
+          <li><strong>Diaspora identity:</strong> PPV = maintaining cultural membership across distance</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Geographic Targets</div>
+      <table>
+        <thead>
+          <tr><th>Market</th><th>Priority</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Wesley Chapel / Tampa Bay</strong></td><td><span class="p1">LOCAL #1</span></td><td>24.7% Hispanic; 10% Puerto Rican; proven freestyle market; KRATE already draws 8K for R&amp;B nights</td></tr>
+          <tr><td><strong>New York / New Jersey</strong></td><td><span class="p1">PPV #1</span></td><td>Bronx, Queens, Brooklyn, Union City NJ, Paterson NJ — ground zero for freestyle</td></tr>
+          <tr><td><strong>Miami / South Florida</strong></td><td><span class="p1">PPV #2</span></td><td>TK Records epicenter; Stevie B, Expose, Frankie Cutlass fanbase</td></tr>
+          <tr><td><strong>Orlando / Central FL</strong></td><td><span class="p2">PPV #3</span></td><td>Massive Puerto Rican community; many Wesley Chapel transplants</td></tr>
+          <tr><td><strong>Puerto Rico</strong></td><td><span class="p2">PPV #4</span></td><td>Directly addressable via Facebook ads; ET timezone; deep freestyle roots</td></tr>
+          <tr><td><strong>Chicago</strong></td><td><span class="p2">PPV #5</span></td><td>Strong Latin freestyle scene; loyal fanbase</td></tr>
+          <tr><td><strong>Atlanta / Charlotte</strong></td><td><span class="p3">PPV #6</span></td><td>NY/NJ diaspora who moved south — diaspora PPV angle is strong here</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Platform Usage</div>
+      <table>
+        <thead>
+          <tr><th>Platform</th><th>Priority</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Facebook</strong></td><td><span class="p1">NON-NEGOTIABLE #1</span></td><td>Primary platform for 35–60 demo. Frankie Cutlass has 465K fans here. This is where tickets are sold.</td></tr>
+          <tr><td><strong>YouTube</strong></td><td><span class="p1">#2</span></td><td>Heavy consumers of freestyle mixes, live performances, throwback compilations</td></tr>
+          <tr><td><strong>Instagram</strong></td><td><span class="p2">#3</span></td><td>Nostalgia content and event promotion perform well; secondary to Facebook</td></tr>
+          <tr><td><strong>WhatsApp</strong></td><td><span class="p2">Organic only</span></td><td>Cannot advertise directly — activate through buyers asking them to share to group chats</td></tr>
+          <tr><td><strong>TikTok</strong></td><td><span class="p3">Secondary</span></td><td>Nostalgia clips go viral but audience skews younger; lower purchase intent for this demo</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 2: ARTISTS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title">Artist Intelligence</div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:16px;">
+
+      <div class="artist-card">
+        <div class="artist-name">DJ Frankie Cutlass</div>
+        <div class="artist-sub">Headliner</div>
+        <div class="artist-stat"><span class="icon">&#9733;</span> <span>Born Frank Javiel Malave, East Harlem (El Barrio), NYC — Jan 16, 1971</span></div>
+        <div class="artist-stat"><span class="icon">&#9733;</span> <strong>465,736 Facebook fan page likes</strong></div>
+        <div class="artist-stat"><span class="icon">&#9733;</span> <span>62K Instagram followers (@frankiecutlass)</span></div>
+        <div class="artist-stat"><span class="icon">&#9733;</span> <span>Grammy-nominated (co-producer, DJ Khaled's <em>Major Keys</em>, 2017)</span></div>
+        <div class="artist-stat"><span class="icon">&#9733;</span> <span>Named "Son of Puerto Rico" — National Puerto Rican Day Parade, June 2024</span></div>
+        <div class="artist-stat"><span class="icon">&#9733;</span> <span>"Puerto Rico" — #42 Billboard Hot Dance (1994) — functions as a cultural anthem</span></div>
+        <div class="artist-stat"><span class="icon">&#9733;</span> <span>Produced for TKA, Sa-Fire, The Cover Girls, George Lamond, Judy Torres</span></div>
+        <div class="highlight" style="margin-top:14px;">
+          <strong>First action:</strong> Contact his team to post about the PPV from his 465K Facebook fan page. This single post is worth more than any paid ad at this budget.
+        </div>
+        <div style="margin-top:10px;">
+          <span class="tag green">Puerto Rican pride angle</span>
+          <span class="tag green">Grammy credibility</span>
+          <span class="tag green">"Son of Puerto Rico" title</span>
+          <span class="tag">"Puerto Rico" anthem</span>
+        </div>
+      </div>
+
+      <div class="artist-card">
+        <div class="artist-name">Hanson &amp; Davis</div>
+        <div class="artist-sub">Special Performance — "Hungry for Your Love"</div>
+        <div class="highlight" style="margin-bottom:14px;">
+          <strong>Confirmed:</strong> This is <strong>Hanson &amp; Davis</strong> — the East Coast freestyle duo (Aaron Hanson + Edward J. Davis), NOT the pop band. Make this clear in all copy since the name could cause confusion — lead with "Hanson &amp; Davis" and always reference the song title alongside it.
+        </div>
+        <div class="artist-stat"><span class="icon">&#9733;</span> <span>Duo: Aaron Hanson (vocalist) + Edward J. Davis (producer), based in NYC</span></div>
+        <div class="artist-stat"><span class="icon">&#9733;</span> <span>Signed to Fresh Records (NYC electro/dance label)</span></div>
+        <div class="artist-stat"><span class="icon">&#9733;</span> <span>"Hungry for Your Love" — released 1986, co-written by Kurtis Mantronik of Mantronix</span></div>
+        <div class="artist-stat"><span class="icon">&#9733;</span> <span>Song still circulates actively in freestyle communities on TikTok and Spotify</span></div>
+        <div class="artist-stat"><span class="icon">&#9733;</span> <span>2025/2026 = <strong>40th anniversary of freestyle music</strong> — built-in hook</span></div>
+        <div class="highlight" style="margin-top:14px;">
+          <strong>Marketing asset:</strong> Use "Hungry for Your Love" in every promo video and trailer — it is instantly recognizable and will generate organic shares.
+        </div>
+        <div style="margin-top:10px;">
+          <span class="tag">"Hungry for Your Love" as audio brand</span>
+          <span class="tag yellow">40th anniversary hook</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>DJ C-4 — DJ Carlos C4 Ramos</div>
+      <p><strong>Based in New York City.</strong> Active in the freestyle community with an extensive mixing catalog on Mixcloud under the series "I Will Love Freestyle Music 4 Ever" and "For Those Who Love Freestyle Music." His audience is the same core freestyle fan demographic as the other artists — NYC/NJ roots, 40–58 age range, heavy Facebook and Mixcloud presence.</p>
+      <ul style="margin-top:10px;">
+        <li>Look up his Mixcloud (mixcloud.com/carlosramosnyc) and any Facebook/Instagram pages to get his handles for tagging</li>
+        <li>His value is his personal network and credibility within the freestyle DJ community — coordinate with him for posts to his followers</li>
+        <li>His Mixcloud audience skews toward dedicated music enthusiasts — a natural fit for PPV buyers</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 3: VENUE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title">Venue Intelligence — The Krates at The Grove</div>
+    </div>
+
+    <div class="highlight">
+      <strong>The Krates already draws your exact audience.</strong> An R&amp;B Night there peaked at 8,000 attendees — so large it required 22 Pasco County Sheriff's Deputies. They also run a weekly Latin Night with DJ Neko from El Nuevo ZOL 97.1 FM. Freestyle sits exactly between these two proven formats.
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Venue Details</div>
+        <ul>
+          <li><strong>Address:</strong> 5817 Wesley Grove Blvd, Wesley Chapel, FL 33544</li>
+          <li><strong>Format:</strong> 94 repurposed shipping containers — open-air market and entertainment complex</li>
+          <li><strong>Stage:</strong> Dedicated outdoor stage (open-air; natural amphitheater feel)</li>
+          <li><strong>Proven capacity:</strong> 8,000 at peak R&amp;B Night; 3,000+ on rainy nights (post-ticketing)</li>
+          <li><strong>Adjacent to:</strong> The Grove at Wesley Chapel (472,000 sq ft retail, high foot traffic)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Wesley Chapel Demographics</div>
+        <ul>
+          <li><strong>Population:</strong> ~78,000–80,800 (growing at 2.8%/yr)</li>
+          <li><strong>Median age:</strong> 37.1 — squarely in your target range</li>
+          <li><strong>Hispanic/Latino:</strong> 24.7% (~17,800 people)</li>
+          <li><strong>Puerto Rican:</strong> 10% (~5,115 people) — largest Hispanic subgroup</li>
+          <li><strong>Median HHI:</strong> ~$107,500 (33% above national median)</li>
+          <li><strong>Migration source:</strong> Heavy influx from South Florida, NYC, NJ, CT, Puerto Rico</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Drive Market Radius</div>
+      <table>
+        <thead>
+          <tr><th>Zone</th><th>Drive Time</th><th>Key Areas</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Primary</strong></td><td>0–20 min</td><td>Wesley Chapel, New Tampa, Land O Lakes, Zephyrhills, Lutz</td></tr>
+          <tr><td><strong>Secondary</strong></td><td>20–40 min</td><td>Tampa (400K+), Brandon/Riverview, Temple Terrace, Odessa/Trinity</td></tr>
+          <tr><td><strong>Extended</strong></td><td>40–60 min</td><td>Lakeland, Clearwater/St. Pete, Brooksville/Spring Hill</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:12px;">KRATE's R&amp;B nights already pull regionally — Tampa Bay residents will drive 30–45 minutes for a compelling event.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Key Partnerships at the Venue</div>
+      <ul>
+        <li><strong>DJ Neko / El Nuevo ZOL 97.1 FM:</strong> Already hosts the weekly Latin Night at KRATE. Natural radio partnership — reaches the exact target audience.</li>
+        <li><strong>Nico Brown Productions:</strong> Main promoter for this event — already running social media posts. Existing venue relationship and proven audience. Coordinate all campaign assets through them.</li>
+        <li><strong>@krateatthegrove:</strong> Tag them in all posts and request co-promotion — this event fits their programming perfectly.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 4: PPV STRATEGY -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title">PPV Strategy</div>
+    </div>
+
+    <div class="price-grid" style="margin-bottom:20px;">
+      <div class="price-card featured">
+        <div class="price-tier">Early Bird</div>
+        <div class="price-amount">$10</div>
+        <div class="price-desc">Available now through April 20th — impulse buy price, drives early conversions and word-of-mouth</div>
+        <div class="price-deadline">&#9888; Deadline: April 20th — use this date in ALL urgency copy</div>
+      </div>
+      <div class="price-card">
+        <div class="price-tier">General Admission</div>
+        <div class="price-amount">$15</div>
+        <div class="price-desc">April 21 through event day — still accessible, but the $5 jump gives people a real reason to buy now</div>
+      </div>
+    </div>
+
+    <div class="note">
+      &#9888; Do NOT use subscription gating — this audience will not subscribe to a platform for a single concert. One-time purchase only.
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Platform Status — Already Live</div>
+        <ul>
+          <li><strong>Event page live:</strong> <a href="https://www.blackmarker.tv/FE3" style="color:#e94560;">blackmarker.tv/FE3</a></li>
+          <li><strong>PPV paywall, logins, and checkout:</strong> All configured and in place</li>
+          <li><strong>Production:</strong> All hardware and production equipment in-house; commentators and in-house guests confirmed</li>
+          <li><strong>Calendar:</strong> Event listed on BlackMarker.tv site calendar pointing to /FE3</li>
+          <li><strong>Promoter social posts:</strong> Nico Brown Productions (main promoter) already has social media posts running</li>
+        </ul>
+        <div class="note" style="margin-top:12px;">
+          &#9888; <strong>Browser-only streaming.</strong> This PPV is accessible on any computer, phone, or browser-enabled device — but viewers must open it in a browser. There is no native app, Chromecast, Roku, or Fire Stick support. All marketing copy and purchase confirmation emails must clearly communicate: <em>"Watch on your phone, tablet, or computer at blackmarker.tv/FE3"</em>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Post-Purchase Flow</div>
+        <ul>
+          <li>Confirmation email includes the PPV link: <strong>blackmarker.tv/FE3</strong></li>
+          <li>Include clear browser access instructions: <em>"Open blackmarker.tv/FE3 on your phone, tablet, or computer — no app needed"</em></li>
+          <li>If watching on a smart TV with a browser, direct them to open the URL there</li>
+          <li>Explicit ask to share the link to WhatsApp groups</li>
+          <li>Watch party framing: "Share with your people — one ticket works for the whole room"</li>
+          <li>Optional: "Share with 3 friends, get a discount on a future BlackMarker.tv event"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>PPV Messaging Frameworks</div>
+
+      <div class="copy-block"><p><strong>"The Room" Frame:</strong> "2,000 people are going to lose their minds on April 25th. You can be one of them — from your couch."</p></div>
+      <div class="copy-block"><p><strong>"Your People" Frame:</strong> "Whether you're in Tampa, or Atlanta, or New York, or Puerto Rico — you're invited. Same energy. Same artists. One household ticket." <em>(Name specific cities — when a reader sees their city, they feel seen and convert.)</em></p></div>
+      <div class="copy-block"><p><strong>"Quality Proof" Frame:</strong> "This is not someone's phone. This is a professional broadcast." <em>(Show 15 seconds of the camera rig and production setup.)</em></p></div>
+      <div class="copy-block"><p><strong>"Watch Party" Frame:</strong> "Call your people. Order the food. Grab one ticket for $10 and make it a party. Freestyle Explosion 3 — April 25th. Price goes up April 20th."</p></div>
+      <div class="copy-block"><p><strong>"40th Anniversary" Frame:</strong> "Freestyle music turns 40 this year. DJ Frankie Cutlass is celebrating in Wesley Chapel. So are we."</p></div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: 10-DAY COUNTDOWN -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title">10-Day Countdown Plan</div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-day">April 14–16 &nbsp;·&nbsp; Days 11–9</div>
+        <div class="timeline-title">LAUNCH</div>
+        <ul class="checklist">
+          <li class="urgent">Post PPV stream announcement across all platforms — CTA always points to <strong>blackmarker.tv/FE3</strong></li>
+          <li class="urgent">Contact DJ Frankie Cutlass team — request a post from his 465K Facebook fan page with the /FE3 link</li>
+          <li class="urgent">Manually seed posts in top freestyle Facebook groups (see Section 7)</li>
+          <li class="urgent">Seed posts in NY/NJ transplant Florida groups, Tampa Bay Latino groups</li>
+          <li>Confirm $10 early bird is live at blackmarker.tv/FE3 — steps to $15 on April 21st</li>
+          <li>Build and publish Facebook Event page for April 25 linking to blackmarker.tv/FE3</li>
+          <li>Post PPV link (blackmarker.tv/FE3) in YouTube comment sections of top Frankie Cutlass videos</li>
+          <li>Contact DJ Neko / El Nuevo ZOL 97.1 FM about a radio mention — coordinate with Nico Brown Productions</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-day">April 17–19 &nbsp;·&nbsp; Days 8–6</div>
+        <div class="timeline-title">URGENCY + PROOF</div>
+        <ul class="checklist">
+          <li class="urgent">Early bird cutoff urgency — "$10 early bird ends April 20th, goes to $15 after — get yours now"</li>
+          <li>Behind-the-scenes content — stage setup, production rig, venue walkthrough</li>
+          <li>"Stream quality" proof post — clip of camera/production setup</li>
+          <li>Submit press release to Tampa Beacon and Wesley Chapel Community Website</li>
+          <li>Submit event to Patch.com/florida/wesley-chapel-fl and Pasco News Online</li>
+          <li>Continue Facebook group seeding — new groups, tailored posts</li>
+          <li>Launch Facebook paid boost — $100–$150 over remaining days (see Section 6)</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-day">April 20–22 &nbsp;·&nbsp; Days 5–3</div>
+        <div class="timeline-title">SOCIAL PROOF + WATCH PARTY</div>
+        <ul class="checklist">
+          <li>"X people already have their tickets" social proof content</li>
+          <li>Watch party framing — "Gather the crew, grab one household ticket"</li>
+          <li>Email/message every ticket buyer asking them to share to their WhatsApp groups</li>
+          <li>Artist content — "I'll see you there" clip from Frankie Cutlass if possible</li>
+          <li>Play up "Hungry for Your Love" — 40th anniversary of freestyle angle</li>
+          <li>Post to Nextdoor in Wesley Grove and surrounding neighborhoods</li>
+          <li>Tag @krateatthegrove in all posts — request they co-promote</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-day">April 23–24 &nbsp;·&nbsp; Days 2–1</div>
+        <div class="timeline-title">LAST CALL</div>
+        <ul class="checklist">
+          <li>"Last chance" messaging across all platforms</li>
+          <li>Countdown content (24-hour, 48-hour posts)</li>
+          <li>Tech setup guide post — "Here's how to watch on your TV"</li>
+          <li>FAQ post addressing stream concerns (quality, access, devices)</li>
+          <li>Final push in all Facebook groups</li>
+          <li>Bump Facebook paid boost budget slightly for final stretch</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-day">April 25 &nbsp;·&nbsp; Event Day</div>
+        <div class="timeline-title">LIVE DAY</div>
+        <ul class="checklist">
+          <li>"Doors open" announcement 3 hours before showtime</li>
+          <li class="urgent">Video from inside the venue as crowd arrives (90 min before) — your #1 FOMO driver for same-day PPV purchases</li>
+          <li>Stream link reminder with setup instructions (2 hours before)</li>
+          <li>Post from inside the venue showing the crowd building</li>
+          <li>Acknowledge online audience from stage at least once during the show</li>
+          <li>Post-event highlight clips to drive future BlackMarker.tv awareness</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 6: ORGANIC OUTREACH (PRIMARY) -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div class="section-title">Organic Outreach — Primary Strategy</div>
+    </div>
+
+    <div class="highlight">
+      <strong>This is the primary driver for this campaign.</strong> For this audience — 40–58 year old freestyle fans on Facebook — a single genuine post in the right group outperforms $200 in paid ads. Organic reach through community, artist amplification, and local media is the engine. Paid ads are the supplement, not the strategy.
+    </div>
+
+    <!-- ARTIST AMPLIFICATION -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title"><span class="dot"></span>Artist Amplification — Your Biggest Free Asset</div>
+      <p style="margin-bottom:12px;">Combined, your artists have hundreds of thousands of followers already pre-qualified for this event. Getting them to post is worth more than any ad spend at this budget level.</p>
+      <table>
+        <thead>
+          <tr><th>Artist / Page</th><th>Platform</th><th>Audience</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>DJ Frankie Cutlass Fan Page</strong></td>
+            <td>Facebook</td>
+            <td><span class="p1">465,736 likes</span></td>
+            <td>Request a post with the /FE3 link — <strong>this is the #1 priority action of the entire campaign</strong></td>
+          </tr>
+          <tr>
+            <td><strong>DJ Frankie Cutlass</strong></td>
+            <td>Instagram @frankiecutlass</td>
+            <td>62K followers</td>
+            <td>Request a Reel or Story with link in bio pointing to blackmarker.tv/FE3</td>
+          </tr>
+          <tr>
+            <td><strong>DJ Frankie Cutlass DJ Page</strong></td>
+            <td>Facebook</td>
+            <td>84,170 likes</td>
+            <td>Cross-post the event announcement</td>
+          </tr>
+          <tr>
+            <td><strong>Hanson &amp; Davis</strong></td>
+            <td>Any active channels</td>
+            <td>Freestyle community reach</td>
+            <td>If accessible, request a video message or post — even a 15-second "I'll see you there" clip is a viral asset</td>
+          </tr>
+          <tr>
+            <td><strong>DJ Carlos C4 Ramos</strong></td>
+            <td>Facebook / Instagram / Mixcloud</td>
+            <td>NYC freestyle DJ community</td>
+            <td>Get his handles, request posts to his network; his Mixcloud audience are dedicated freestyle fans = high-intent PPV buyers</td>
+          </tr>
+          <tr>
+            <td><strong>Nico Brown Productions</strong></td>
+            <td>All platforms</td>
+            <td>Established promoter audience</td>
+            <td>Already posting — coordinate messaging and timing so all posts land within same 24–48hr window for maximum algorithmic impact</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FACEBOOK GROUPS -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title"><span class="dot"></span>Facebook Groups — Manual Outreach</div>
+      <div class="note" style="margin-bottom:14px;">
+        &#9888; <strong>Post manually, tailored to each group.</strong> One genuine, community-specific post per group — not copy-paste spam. Mention the specific community in each post. "Fellow NJ transplants in Florida — this is the event you've been waiting for." Group admins notice and engage with posts that feel authentic.
+      </div>
+      <div class="grid-2">
+        <div>
+          <p style="font-size:12px; font-weight:700; color:#e94560; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Freestyle / Music Groups</p>
+          <ul>
+            <li>"Freestyle Music Lovers" — multiple groups, 10K–50K+ members each</li>
+            <li>"I Love Freestyle Music"</li>
+            <li>"Freestyle Music of the 80s and 90s"</li>
+            <li>"Latin Freestyle Music"</li>
+            <li>"Freestyle Explosion Fans"</li>
+            <li>"Old School Dance Music / 90s R&amp;B / Freestyle"</li>
+            <li>"80s &amp; 90s Dance Music"</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:12px; font-weight:700; color:#e94560; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Community / Location Groups</p>
+          <ul>
+            <li>"Puerto Ricans in Tampa" / "Puerto Ricans in Florida"</li>
+            <li>"New Yorkers in Florida" / "NJ People in Florida"</li>
+            <li>"Tampa Bay Latinos" / "Hispanic Events Tampa"</li>
+            <li>"Wesley Chapel Community" (26K+ followers)</li>
+            <li>"Wesley Chapel &amp; Pasco County Florida Community"</li>
+            <li>"Things to Do in Tampa Bay"</li>
+            <li>"Tampa Bay Events &amp; Entertainment"</li>
+          </ul>
+        </div>
+      </div>
+      <div class="highlight" style="margin-top:14px;">
+        <strong>Group admin strategy:</strong> Before posting, identify the admins of the largest freestyle groups. Message them directly — offer a free PPV link in exchange for a group post or pinned announcement. Admins are the tastemakers of these communities.
+      </div>
+    </div>
+
+    <!-- YOUTUBE COMMENT SEEDING -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title"><span class="dot"></span>YouTube Comment Seeding</div>
+      <p>The comment sections on Frankie Cutlass and classic freestyle videos are live, active fan communities. These people are already engaged with the music right now.</p>
+      <ul style="margin-top:10px;">
+        <li>Find the top 5–10 DJ Frankie Cutlass videos on YouTube with active comment sections</li>
+        <li>Find top videos for "Hungry for Your Love," TKA, Judy Torres, Shannon, Lisa Lisa — same audience</li>
+        <li>Post a genuine comment (not just a link) mentioning the event: <em>"Frankie is performing live April 25 in Wesley Chapel — streaming at blackmarker.tv/FE3 for anyone not in FL"</em></li>
+        <li>Pin the comment if posting from the BlackMarker.tv or event account</li>
+        <li>This is free, high-intent, zero setup — do it day one</li>
+      </ul>
+    </div>
+
+    <!-- LOCAL MEDIA -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Local Media — Submit Event Listings</div>
+        <ul>
+          <li><strong>Tampa Beacon</strong> (tampabeacon.com) — has covered KRATE events directly; submit a press release</li>
+          <li><strong>Wesley Chapel Community Website</strong> (wesleychapelcommunity.com) — 26K+ followers; submit event listing</li>
+          <li><strong>Neighborhood News Online</strong> (neighborhoodnewsonline.net) — covered KRATE R&amp;B Night overflow story</li>
+          <li><strong>Patch.com/florida/wesley-chapel-fl</strong> — free local events calendar</li>
+          <li><strong>Pasco News Online</strong> (pasconewsonline.com)</li>
+          <li><strong>El Nuevo ZOL 97.1 FM</strong> — DJ Neko hosts Latin Night at KRATE; natural on-air mention</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Nextdoor &amp; Hyper-Local</div>
+        <p style="margin-bottom:10px;">Post in these Wesley Chapel Nextdoor neighborhoods — ideally via a resident or event partner:</p>
+        <div style="margin-bottom:14px;">
+          <span class="tag blue">Wesley Grove</span>
+          <span class="tag blue">Seven Oaks</span>
+          <span class="tag blue">Meadow Pointe</span>
+          <span class="tag blue">Chapel Pines</span>
+          <span class="tag blue">Carlyle</span>
+        </div>
+        <div class="card-title" style="margin-top:4px;"><span class="dot"></span>WhatsApp Activation</div>
+        <p>Cannot advertise into WhatsApp. Activate organically: every PPV buyer gets a confirmation message with an explicit ask — <em>"Share this link to your group chats: blackmarker.tv/FE3"</em>. Even a 10% share rate drives meaningful additional sales in the final days.</p>
+      </div>
+    </div>
+
+    <!-- KRATE CO-PROMOTION -->
+    <div class="card" style="margin-top:16px;">
+      <div class="card-title"><span class="dot"></span>Venue &amp; Promoter Co-Promotion</div>
+      <table>
+        <thead>
+          <tr><th>Partner</th><th>Ask</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>@krateatthegrove</strong></td><td>Tag in all posts; request they share the event on their page and stories — they want their venue looking packed and live-streamed</td></tr>
+          <tr><td><strong>Nico Brown Productions</strong></td><td>Coordinate post timing — all partners posting within the same 24–48hr window creates an algorithmic surge</td></tr>
+          <tr><td><strong>DJ Neko / El Nuevo ZOL 97.1 FM</strong></td><td>On-air mention of the event and stream URL; ZOL already has a Thursday night presence at KRATE</td></tr>
+          <tr><td><strong>The Grove at Wesley Chapel</strong></td><td>Request event mention on their social pages and in-complex signage</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 7: PAID ADS (SUPPLEMENTAL) -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div class="section-title">Paid Ads — Minimal Budget, Gap-Fill Only</div>
+    </div>
+
+    <div class="highlight">
+      <strong>Paid ads are the supplement, not the strategy.</strong> With 11 days to event and a tight budget, every organic channel should be exhausted first. Use paid spend only to (1) amplify posts that are already performing organically, and (2) retarget people who visited blackmarker.tv/FE3 but didn't buy. Do not build cold-audience campaigns from scratch at this stage.
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div class="card-title"><span class="dot"></span>Recommended Paid Budget Split</div>
+      <div class="budget-item">
+        <div class="budget-label">Facebook / Instagram Post Boost (amplify best organic posts) <span>~70%</span></div>
+        <div class="budget-bar-wrap"><div class="budget-bar" style="width:70%;"></div></div>
+      </div>
+      <div class="budget-item">
+        <div class="budget-label">Facebook / Instagram Retargeting (blackmarker.tv/FE3 visitors who didn't buy) <span>~30%</span></div>
+        <div class="budget-bar-wrap"><div class="budget-bar" style="width:30%; background:#f59e0b;"></div></div>
+      </div>
+      <div class="budget-item">
+        <div class="budget-label">Google Ads &nbsp;<span style="color:#64748b; font-weight:400;">— Skip for this event. Insufficient runway to build effective campaigns in 11 days.</span> <span>$0</span></div>
+        <div class="budget-bar-wrap"><div class="budget-bar" style="width:1%; background:#334155;"></div></div>
+      </div>
+      <div class="budget-item">
+        <div class="budget-label">YouTube Ads &nbsp;<span style="color:#64748b; font-weight:400;">— Skip. No time to build audience pools and test creative.</span> <span>$0</span></div>
+        <div class="budget-bar-wrap"><div class="budget-bar" style="width:1%; background:#334155;"></div></div>
+      </div>
+      <div class="budget-item">
+        <div class="budget-label">Paramount+ / CTV &nbsp;<span style="color:#64748b; font-weight:400;">— Skip. Minimum $500, too slow for organic events at this timeline.</span> <span>$0</span></div>
+        <div class="budget-bar-wrap"><div class="budget-bar" style="width:1%; background:#334155;"></div></div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Facebook / Instagram Boost — How to Use It</div>
+        <p><strong>Only boost posts that are already getting organic engagement.</strong> Putting money behind a post with zero likes is wasted. Wait 2–4 hours after posting, see what's resonating, then boost the winner.</p>
+        <ul style="margin-top:10px;">
+          <li><strong>Budget:</strong> $10–$20/day per boosted post; run each boost for 3–5 days max</li>
+          <li><strong>Targeting:</strong> Ages 35–60, interests: freestyle music, Latin R&amp;B, TKA, Judy Torres, Shannon; geo: Wesley Chapel 50-mile radius + NYC metro, NJ, Miami, Orlando, Puerto Rico</li>
+          <li><strong>Format:</strong> Boost video posts or Reels over static images — video gets more reach per dollar for this audience</li>
+          <li><strong>Test bilingual copy:</strong> Run one English version and one Spanish version; whichever gets better CTR, put more budget there</li>
+          <li><strong>Stop boosting 24 hours before the event</strong> — day-of organic content (crowd arriving, venue energy) will outperform any ad</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Facebook Retargeting — The Only Cold-to-Warm Bridge</div>
+        <p>Anyone who visited <strong>blackmarker.tv/FE3</strong> and didn't buy is a warm lead. This is the highest-ROI paid spend available.</p>
+        <ul style="margin-top:10px;">
+          <li><strong>Requires:</strong> Meta Pixel installed on blackmarker.tv/FE3 — confirm this is active</li>
+          <li><strong>Audience:</strong> Page visitors from the last 14 days who did not reach the confirmation/thank-you page</li>
+          <li><strong>Ad message:</strong> Urgency-focused — "Still thinking about it? $10 early bird ends April 20th." → Post April 20: "It's $15 now — last chance before April 25th." → Final days: "Stream goes live tonight — blackmarker.tv/FE3"</li>
+          <li><strong>Budget:</strong> $5–$10/day; small pool of warm visitors, doesn't need much spend</li>
+          <li><strong>Format:</strong> Single image or short video; keep it simple and direct</li>
+        </ul>
+        <div class="note" style="margin-top:12px;">&#9888; If the Meta Pixel is NOT installed on blackmarker.tv/FE3, skip retargeting and put all budget into boosting organic posts instead.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: KEY COPY LINES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div class="section-title">Key Copy Lines &amp; Messaging</div>
+    </div>
+
+    <div class="copy-block"><p>"2,000 people are going to be in that room on April 25th. The ones who can't make it to Wesley Chapel are watching live on BlackMarker.tv. Which one are you?"</p></div>
+    <div class="copy-block"><p>"Whether you're in Tampa, or Atlanta, or New York, or Puerto Rico — you're invited. Same energy. Same artists. One household ticket."</p></div>
+    <div class="copy-block"><p>"The music that was playing the night you fell in love. The mix that had the whole block outside. The sound that doesn't get old. April 25th, it's back."</p></div>
+    <div class="copy-block"><p>"Grammy-nominated. 465,000 fans. Named 'Son of Puerto Rico.' DJ Frankie Cutlass doesn't just play freestyle — he helped build it."</p></div>
+    <div class="copy-block"><p>"You've heard 'Hungry for Your Love' a thousand times. On April 25th, you'll hear it live."</p></div>
+    <div class="copy-block"><p>"Freestyle music turns 40 this year. Frankie Cutlass is celebrating in Wesley Chapel. So are we."</p></div>
+    <div class="copy-block"><p>"$10 early bird — ends April 20th. After that it's $15. Stream live April 25th at blackmarker.tv/FE3."</p></div>
+  </div>
+
+  <!-- SECTION 9: VERIFY BEFORE LAUNCH -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <div class="section-title">Verify Before Launch</div>
+    </div>
+
+    <div class="card">
+      <div class="highlight" style="margin-bottom:16px;">
+        <strong>Already confirmed:</strong> Event page live at blackmarker.tv/FE3 &nbsp;·&nbsp; PPV paywall &amp; logins configured &nbsp;·&nbsp; Production hardware in-house &nbsp;·&nbsp; Site calendar pointing to /FE3 &nbsp;·&nbsp; Nico Brown Productions posts running
+      </div>
+      <ul class="checklist">
+        <li><strong>&#10003; DJ C-4 confirmed:</strong> DJ Carlos C4 Ramos (NYC). Look up and note his Facebook/Instagram handles for tagging in posts.</li>
+        <li><strong>&#10003; Hanson confirmed:</strong> Hanson &amp; Davis — the 1986 freestyle duo. Always reference as "Hanson &amp; Davis" with the song title alongside to avoid pop-band confusion.</li>
+        <li class="urgent">Confirm early bird $10 pricing is live at blackmarker.tv/FE3 with April 20th deadline, stepping up to $15 after</li>
+        <li><strong>&#10003; All marketing copy confirmed</strong> — blackmarker.tv/FE3 is the CTA link throughout; browser-only access noted</li>
+        <li class="urgent">Update purchase confirmation email to include browser access instructions ("Open blackmarker.tv/FE3 on your phone, tablet, or computer")</li>
+        <li>Reach out to DJ Frankie Cutlass team to coordinate a post from his 465K Facebook fan page</li>
+        <li>Reach out to El Nuevo ZOL 97.1 FM / DJ Neko for radio mention</li>
+        <li>Reach out to @krateatthegrove for co-promotion / social tag</li>
+        <li>Set up Meta Pixel on blackmarker.tv/FE3 page for ad retargeting (if not already done)</li>
+        <li>Build and publish Facebook Event page for April 25 with link to blackmarker.tv/FE3</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+</div><!-- /container -->
+</div><!-- /tab-brief -->
+
+<!-- TAB: POST COPY -->
+<div id="tab-posts" class="tab-content">
+<div class="posts-container">
+
+  <!-- PHASE 1 -->
+  <div class="phase-label">
+    <div class="phase-badge">Phase 1</div>
+    <div class="phase-line"></div>
+    <div class="phase-dates">Apr 14–16 &nbsp;·&nbsp; Launch Announcement</div>
+  </div>
+
+  <!-- 1A English -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge en">English</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Just now</div>
+      </div>
+    </div>
+    <div class="fb-image">
+      <div class="fb-image-icon">&#128247;</div>
+      <div><div>Event flyer or artist photo</div><div class="fb-image-note">Attach before posting</div></div>
+    </div>
+    <div class="fb-body">It's official. Freestyle Explosion 3 is coming to Wesley Chapel — and if you can't be in the room, we've got you covered.
+
+BlackMarker.TV is streaming Freestyle Explosion 3 LIVE on April 25th, presented by Nico Brown Productions.
+
+🎧 DJ FRANKIE CUTLASS
+🎤 HANSON &amp; DAVIS — "Hungry for Your Love"
+🎧 DJ C-4
+
+📍 The Krates at The Grove | Wesley Chapel, FL
+📅 April 25, 2026 | 8PM EST
+👥 2,000+ people in the building
+
+Watch it LIVE from your phone, tablet, or computer.
+🎟️ PPV tickets are $10 — but only through April 20th.
+After that, price goes up to $15.
+
+➡️ Get your ticket now: <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>
+
+Tag someone who grew up on freestyle. They need to see this. 👇</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- 1B Spanglish -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge spanglish">Spanglish</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Just now</div>
+      </div>
+    </div>
+    <div class="fb-image">
+      <div class="fb-image-icon">&#128247;</div>
+      <div><div>Event flyer or artist photo</div><div class="fb-image-note">Attach before posting</div></div>
+    </div>
+    <div class="fb-body">Mira, si no puedes estar en Wesley Chapel el 25 de abril — we still got you.
+
+BlackMarker.TV va a transmitir Freestyle Explosion 3 EN VIVO, presentado por Nico Brown Productions.
+
+🎧 DJ FRANKIE CUTLASS — Grammy-nominated, el hijo de Puerto Rico
+🎤 HANSON &amp; DAVIS — "Hungry for Your Love" (you already know this song 🎵)
+🎧 DJ C-4
+
+📍 The Krates at The Grove | Wesley Chapel, FL
+📅 April 25, 2026 | 8PM EST
+👥 Más de 2,000 personas en el lugar
+
+Míralo LIVE desde tu teléfono, tablet, o computadora.
+🎟️ Los tickets de PPV están a $10 — pero solo hasta el 20 de abril.
+Después sube a $15.
+
+➡️ Consigue el tuyo ahora: <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>
+
+Taguea a alguien que creció escuchando freestyle. Ellos necesitan ver esto. 👇</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase-label">
+    <div class="phase-badge">Phase 2</div>
+    <div class="phase-line"></div>
+    <div class="phase-dates">Apr 17–19 &nbsp;·&nbsp; Early Bird Urgency</div>
+  </div>
+
+  <!-- 2A English -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge en">English</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Just now</div>
+      </div>
+    </div>
+    <div class="fb-image">
+      <div class="fb-image-icon">&#128247;</div>
+      <div><div>Artist photo or event flyer</div><div class="fb-image-note">Attach before posting</div></div>
+    </div>
+    <div class="fb-body">3 days left to get in at $10.
+
+Freestyle Explosion 3 is happening April 25th — DJ Frankie Cutlass, Hanson &amp; Davis performing "Hungry for Your Love," and DJ C-4 all on one stage at The Krates in Wesley Chapel.
+
+BlackMarker.TV is streaming the whole night LIVE so you can watch from anywhere.
+
+🎟️ $10 early bird — ends April 20th
+🎟️ $15 after that
+
+Your phone. Your couch. Your people. April 25th.
+
+➡️ <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a></div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- 2B Spanglish -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge spanglish">Spanglish</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Just now</div>
+      </div>
+    </div>
+    <div class="fb-image">
+      <div class="fb-image-icon">&#128247;</div>
+      <div><div>Artist photo or event flyer</div><div class="fb-image-note">Attach before posting</div></div>
+    </div>
+    <div class="fb-body">Solo quedan 3 días para conseguirlo a $10. ⏳
+
+El 25 de abril, DJ Frankie Cutlass toma el escenario en Wesley Chapel — junto a Hanson &amp; Davis ("Hungry for Your Love") y DJ C-4. Más de 2,000 personas van a estar en ese lugar.
+
+Y tú puedes verlo todo EN VIVO desde donde quiera que estés.
+
+🎟️ $10 early bird — termina el 20 de abril
+🎟️ Después sube a $15
+
+No esperes más, wepa. 🙌
+
+➡️ <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a></div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- 2C Last Day Eve -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge en">English</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Apr 19</div>
+      </div>
+    </div>
+    <div class="fb-image">
+      <div class="fb-image-icon">&#128247;</div>
+      <div><div>Countdown graphic or artist photo</div><div class="fb-image-note">Attach before posting</div></div>
+    </div>
+    <div class="fb-body">Tomorrow is the last day to get your Freestyle Explosion 3 PPV ticket at $10.
+
+After April 20th it goes to $15.
+
+DJ Frankie Cutlass. Hanson &amp; Davis. DJ C-4.
+April 25th. 8PM. Live from Wesley Chapel.
+
+Watch from your phone, tablet, or computer — no app needed.
+Just open <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>, grab your ticket, and you're in.
+
+Don't wait. Get it tonight.</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase-label">
+    <div class="phase-badge">Phase 3</div>
+    <div class="phase-line"></div>
+    <div class="phase-dates">Apr 20–21 &nbsp;·&nbsp; Price Increase</div>
+  </div>
+
+  <!-- 3A English Last Day -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge en">English</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Apr 20 — Morning</div>
+      </div>
+    </div>
+    <div class="fb-image">
+      <div class="fb-image-icon">&#128247;</div>
+      <div><div>Event flyer or countdown graphic</div><div class="fb-image-note">Attach before posting</div></div>
+    </div>
+    <div class="fb-body">TODAY is the last day to get Freestyle Explosion 3 at $10.
+
+Tonight at midnight the price goes to $15 — and it's not coming back down.
+
+DJ Frankie Cutlass. Hanson &amp; Davis — "Hungry for Your Love." DJ C-4.
+April 25th. 8PM EST. Live from The Krates at The Grove in Wesley Chapel, FL.
+
+Stream it live from your phone, tablet, or computer at <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>.
+
+⏳ $10 ends TONIGHT. Don't say we didn't tell you.</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- 3B Spanglish Last Day -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge spanglish">Spanglish</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Apr 20 — Morning</div>
+      </div>
+    </div>
+    <div class="fb-image">
+      <div class="fb-image-icon">&#128247;</div>
+      <div><div>Event flyer or countdown graphic</div><div class="fb-image-note">Attach before posting</div></div>
+    </div>
+    <div class="fb-body">HOY es el último día para conseguir el ticket a $10.
+
+Esta noche a medianoche, el precio sube a $15 — y no baja más.
+
+DJ Frankie Cutlass. Hanson &amp; Davis — "Hungry for Your Love." DJ C-4.
+25 de abril. 8PM EST. EN VIVO desde The Krates at The Grove, Wesley Chapel, FL.
+
+Míralo desde tu teléfono, tablet, o computadora en <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>.
+
+⏳ Los $10 terminan HOY. No digas que no te avisamos. 😅</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- 3C Price is now $15 -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge en">English</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Apr 21</div>
+      </div>
+    </div>
+    <div class="fb-image">
+      <div class="fb-image-icon">&#128247;</div>
+      <div><div>Event flyer</div><div class="fb-image-note">Attach before posting</div></div>
+    </div>
+    <div class="fb-body">Early bird is gone. Tickets are now $15.
+
+Still worth every dollar.
+
+Freestyle Explosion 3 — April 25th, 8PM EST.
+DJ Frankie Cutlass. Hanson &amp; Davis. DJ C-4.
+Live from Wesley Chapel. 2,000+ in the building.
+
+Stream it live on your phone, tablet, or computer.
+5 days away. Get your ticket before the night is gone.
+
+➡️ <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a></div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="phase-label">
+    <div class="phase-badge">Phase 4</div>
+    <div class="phase-line"></div>
+    <div class="phase-dates">Apr 22–24 &nbsp;·&nbsp; Final Countdown</div>
+  </div>
+
+  <!-- 4A 3 Days Out English -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge en">English</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Apr 22</div>
+      </div>
+    </div>
+    <div class="fb-image">
+      <div class="fb-image-icon">&#128247;</div>
+      <div><div>Behind-the-scenes production setup or venue photo</div><div class="fb-image-note">Attach before posting</div></div>
+    </div>
+    <div class="fb-body">3 days.
+
+Freestyle Explosion 3 hits the stage at The Krates in Wesley Chapel on April 25th — and BlackMarker.TV is bringing the whole night to your screen, LIVE.
+
+DJ Frankie Cutlass. The man who made "Puerto Rico" an anthem. Grammy-nominated. 465,000 fans worldwide. On stage April 25th.
+
+Hanson &amp; Davis performing "Hungry for Your Love" — live.
+
+DJ C-4 in the mix.
+
+2,000+ people in that room. You should be watching.
+
+🎟️ $15 | <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>
+Phone. Tablet. Computer. Browser. That's all you need.</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- 4B 3 Days Out Spanglish -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge spanglish">Spanglish</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Apr 22</div>
+      </div>
+    </div>
+    <div class="fb-image">
+      <div class="fb-image-icon">&#128247;</div>
+      <div><div>Behind-the-scenes or artist photo</div><div class="fb-image-note">Attach before posting</div></div>
+    </div>
+    <div class="fb-body">3 días. That's it.
+
+El 25 de abril, Freestyle Explosion 3 llega a Wesley Chapel — y BlackMarker.TV lo transmite todo EN VIVO para que tú no te pierdas nada.
+
+DJ Frankie Cutlass — el que convirtió "Puerto Rico" en un himno. Grammy-nominated. Más de 465,000 fans en todo el mundo.
+
+Hanson &amp; Davis cantando "Hungry for Your Love" — en vivo, pa' que lo sepas. 🎤
+
+DJ C-4 poniendo la música.
+
+Más de 2,000 personas en ese lugar. ¿Y tú?
+
+🎟️ $15 | <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>
+Tu teléfono. Tu tablet. Tu computadora. Solo abre el browser y listo.</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- 4C 1 Day Out English -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge en">English</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Apr 24</div>
+      </div>
+    </div>
+    <div class="fb-image">
+      <div class="fb-image-icon">&#128247;</div>
+      <div><div>Venue / stage setup photo</div><div class="fb-image-note">Attach before posting — show the room being built</div></div>
+    </div>
+    <div class="fb-body">Tomorrow night. 8PM.
+
+Freestyle Explosion 3 goes live from Wesley Chapel — and if you're watching on BlackMarker.TV, your ticket is waiting for you at <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>.
+
+The stage is set. The artists are ready. 2,000+ people are showing up.
+
+Are you in?
+
+🎟️ Last chance — <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>
+Watch live on your phone, tablet, or computer. No app. Just open the link.
+
+April 25th. 8PM EST. See you there. 🔥</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- 4D 1 Day Out Spanglish -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge spanglish">Spanglish</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Apr 24</div>
+      </div>
+    </div>
+    <div class="fb-image">
+      <div class="fb-image-icon">&#128247;</div>
+      <div><div>Venue / stage setup photo</div><div class="fb-image-note">Attach before posting</div></div>
+    </div>
+    <div class="fb-body">Mañana. 8PM. No hay excusas.
+
+Freestyle Explosion 3 se transmite EN VIVO desde Wesley Chapel — y si lo vas a ver en BlackMarker.TV, tu ticket te está esperando en <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>.
+
+El escenario está listo. Los artistas están listos. Más de 2,000 personas van a estar ahí.
+
+¿Y tú, estás listo?
+
+🎟️ Última oportunidad — <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>
+Ábrelo en tu teléfono, tablet, o computadora. Sin app. Solo el link y ya.
+
+25 de abril. 8PM EST. Nos vemos allá. 🔥</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- PHASE 5 -->
+  <div class="phase-label">
+    <div class="phase-badge">Phase 5</div>
+    <div class="phase-line"></div>
+    <div class="phase-dates">Apr 25 &nbsp;·&nbsp; Day of Event</div>
+  </div>
+
+  <!-- 5A Morning English -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge en">English</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Apr 25 — Morning</div>
+      </div>
+    </div>
+    <div class="fb-image">
+      <div class="fb-image-icon">&#128247;</div>
+      <div><div>Event flyer or artist graphic</div><div class="fb-image-note">Attach before posting</div></div>
+    </div>
+    <div class="fb-body">Today is the day.
+
+Freestyle Explosion 3 goes LIVE tonight at 8PM EST from The Krates at The Grove in Wesley Chapel, FL.
+
+BlackMarker.TV has you covered wherever you are.
+
+🎧 DJ Frankie Cutlass
+🎤 Hanson &amp; Davis — "Hungry for Your Love"
+🎧 DJ C-4
+
+Still need your ticket? You can still get in.
+🎟️ $15 | <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>
+Open it on your phone, tablet, or computer — no app needed. Just the link.
+
+Tonight. 8PM. Be there. 🙌</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- 5B Morning Spanglish -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge spanglish">Spanglish</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Apr 25 — Morning</div>
+      </div>
+    </div>
+    <div class="fb-image">
+      <div class="fb-image-icon">&#128247;</div>
+      <div><div>Event flyer or artist graphic</div><div class="fb-image-note">Attach before posting</div></div>
+    </div>
+    <div class="fb-body">Llegó el día. 🙌
+
+Esta noche a las 8PM EST, Freestyle Explosion 3 se transmite EN VIVO desde The Krates at The Grove en Wesley Chapel, FL — y BlackMarker.TV te lleva ahí sin importar donde estés.
+
+🎧 DJ Frankie Cutlass
+🎤 Hanson &amp; Davis — "Hungry for Your Love"
+🎧 DJ C-4
+
+¿Todavía no tienes tu ticket? Todavía puedes entrar.
+🎟️ $15 | <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>
+Ábrelo en tu teléfono, tablet, o computadora. Sin app. Solo el link.
+
+Esta noche. 8PM. Let's go. 🔥</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- 5C Crowd Arriving — CRITICAL -->
+  <div class="critical-note">
+    &#9889; <strong>Most important post of the entire campaign.</strong> Shoot this video on the day — crowd arriving, stage lit, energy building. This drives same-day PPV purchases from fence-sitters.
+  </div>
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge en">English</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Apr 25 — ~6:30PM</div>
+      </div>
+    </div>
+    <div class="fb-image urgent">
+      <div class="fb-image-icon">&#127916;</div>
+      <div><div>VIDEO — Crowd arriving at The Krates, stage lit up, energy building</div><div class="fb-image-note">&#9888; Shoot this on the day. This is non-negotiable.</div></div>
+    </div>
+    <div class="fb-body">The doors are open. The crowd is here.
+
+This is what 2,000 freestyle fans look like when they show up.
+
+Freestyle Explosion 3 goes LIVE at 8PM EST — and you can be part of it right now from wherever you are.
+
+🎟️ Last chance to get your PPV ticket: <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>
+Open it on your phone, tablet, or computer. That's all you need.
+
+8PM. Tonight. Don't miss it. 🔥
+
+Presented by BlackMarker.TV | Nico Brown Productions</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- 5D Stream is Live -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge en">English</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Apr 25 — 8PM</div>
+      </div>
+    </div>
+    <div class="fb-image">
+      <div class="fb-image-icon">&#128247;</div>
+      <div><div>Stage / performer photo or short clip</div><div class="fb-image-note">Grab from the stream or shoot at the venue</div></div>
+    </div>
+    <div class="fb-body">WE ARE LIVE. 🔴
+
+Freestyle Explosion 3 is happening RIGHT NOW at The Krates at The Grove in Wesley Chapel, FL — and BlackMarker.TV is streaming every second of it.
+
+Watch LIVE at <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>
+Phone. Tablet. Computer. Just open the link.
+
+🎧 DJ Frankie Cutlass
+🎤 Hanson &amp; Davis
+🎧 DJ C-4
+
+Get in. The night just started. 🔥</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+  </div>
+
+  <!-- FACEBOOK GROUP POSTS -->
+  <div class="phase-label">
+    <div class="phase-badge">Group Posts</div>
+    <div class="phase-line"></div>
+    <div class="phase-dates">Organic Outreach &nbsp;·&nbsp; Customize per group</div>
+  </div>
+
+  <!-- Group A -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge group">Group Post</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Freestyle Music Groups</div>
+      </div>
+    </div>
+    <div class="fb-body">For everyone in here who loves the real thing —
+
+Freestyle Explosion 3 is happening April 25th at The Krates at The Grove in Wesley Chapel, FL. DJ Frankie Cutlass is headlining, Hanson &amp; Davis are performing "Hungry for Your Love" live, and DJ C-4 is in the mix.
+
+If you can't make it in person, BlackMarker.TV is streaming the whole night live at <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>. Watch from your phone, tablet, or computer.
+
+$10 early bird through April 20th. $15 after that.
+
+This one is the real deal. Just wanted to make sure this community knew about it. 🙌</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+    <div class="group-target">&#127775; For: "Freestyle Music Lovers," "I Love Freestyle Music," "Freestyle Music of the 80s and 90s"</div>
+  </div>
+
+  <!-- Group B -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge group">Group Post</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Latino / Puerto Rican Groups</div>
+      </div>
+    </div>
+    <div class="fb-body">For the freestyle people in this group —
+
+DJ Frankie Cutlass is coming to Wesley Chapel on April 25th for Freestyle Explosion 3. If you know, you know. The man made "Puerto Rico" an anthem for a reason.
+
+Hanson &amp; Davis are performing "Hungry for Your Love" live. DJ C-4 is also on the lineup.
+
+The event is at The Krates at The Grove — 2,000+ people expected in person. BlackMarker.TV is streaming it live for everyone who can't make it: <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>
+
+$10 through April 20th. $15 after.
+
+Tag someone from the block who needs to see this. 🇵🇷</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+    <div class="group-target">&#127775; For: "Puerto Ricans in Tampa," "Puerto Ricans in Florida," "Tampa Bay Latinos," "Hispanic Events Tampa"</div>
+  </div>
+
+  <!-- Group C -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge group">Group Post</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; NY/NJ Transplants in Florida</div>
+      </div>
+    </div>
+    <div class="fb-body">For the ones who moved down here but never left the music behind —
+
+Freestyle Explosion 3. April 25th. Wesley Chapel, FL.
+DJ Frankie Cutlass. Hanson &amp; Davis — "Hungry for Your Love." DJ C-4.
+
+If you grew up on this in the Bronx, Brooklyn, Jersey, or Queens — this one is for you. And if your people back home want to watch, BlackMarker.TV is streaming it live at <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>. Phone, tablet, computer. $10 through April 20th.
+
+Send the link to your group chat. You already know who needs to see it.</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+    <div class="group-target">&#127775; For: "New Yorkers in Florida," "NJ People in Florida"</div>
+  </div>
+
+  <!-- Group D -->
+  <div class="fb-post">
+    <div class="fb-post-header">
+      <div class="fb-avatar">BM</div>
+      <div class="fb-meta">
+        <div class="fb-name">BlackMarker.TV <span class="fb-lang-badge group">Group Post</span></div>
+        <div class="fb-sub">&#127757; Public &nbsp;·&nbsp; Local Wesley Chapel Groups</div>
+      </div>
+    </div>
+    <div class="fb-body">Something special is coming to Wesley Chapel on April 25th.
+
+Freestyle Explosion 3 at The Krates at The Grove — DJ Frankie Cutlass headlining, Hanson &amp; Davis performing "Hungry for Your Love," DJ C-4 on the mix. 2,000+ expected in person.
+
+And for anyone who can't make it to the venue that night, BlackMarker.TV is streaming it live at <a href="https://www.blackmarker.tv/FE3">blackmarker.tv/FE3</a>. Watch from your phone, tablet, or computer for $10 through April 20th ($15 after).
+
+Great night at a great venue. Just wanted to make sure the local community knew about it. 🙌</div>
+    <div class="fb-actions">
+      <div class="fb-action">&#128077; Like</div>
+      <div class="fb-action">&#128172; Comment</div>
+      <div class="fb-action">&#8594; Share</div>
+    </div>
+    <div class="group-target">&#127775; For: "Wesley Chapel Community," "Wesley Chapel &amp; Pasco County Florida Community," "Things to Do in Tampa Bay"</div>
+  </div>
+
+</div><!-- /posts-container -->
+</div><!-- /tab-posts -->
+
+<!-- TAB: AUTOMATION -->
+<div id="tab-automation" class="tab-content">
+<div class="auto-container">
+
+  <div class="highlight" style="margin-bottom:28px;">
+    <strong>Goal:</strong> As a one-man operation, every minute you spend manually copy-pasting and scheduling is a minute you're not spending on production, relationships, or the next event. This plan automates everything that can be automated — and makes the manual stuff as fast as possible for what can't.
+  </div>
+
+  <!-- TIER 1 -->
+  <div class="tier-card">
+    <div class="tier-header">
+      <div class="tier-num">01</div>
+      <div>
+        <div class="tier-title">Copy-to-Clipboard Buttons</div>
+        <div class="tier-sub">Built directly into this document — zero setup required</div>
+      </div>
+      <div class="tier-badge now">Live Now</div>
+    </div>
+    <div class="tier-body">
+      <p style="margin-bottom:14px;">Every post in the <strong>Post Copy</strong> tab has a one-click copy button. Click it — the full post text is in your clipboard. Open Facebook, paste, attach your image, post. No scrolling, no selecting text, no typos.</p>
+      <p style="margin-bottom:14px;">This covers everything that <strong>cannot</strong> be automated — Facebook group posts, Nextdoor, WhatsApp group chats, YouTube comments. The copy button cuts the friction on all of them.</p>
+      <div class="cant-automate">
+        <strong>What will always need a human touch (Facebook ToS + platform rules):</strong><br><br>
+        &#8226; Facebook Group posts — the API does not allow automated posting to groups. Must be done by a real person.<br>
+        &#8226; Nextdoor posts — no external API; manual only.<br>
+        &#8226; WhatsApp group messages — no broadcast API for group chats; activate through buyers sharing organically.<br>
+        &#8226; YouTube comments — technically possible but flagged as spam; do manually.<br><br>
+        For all of these, the copy button is your best tool. One click, paste, done.
+      </div>
+    </div>
+  </div>
+
+  <!-- TIER 2 -->
+  <div class="tier-card">
+    <div class="tier-header">
+      <div class="tier-num">02</div>
+      <div>
+        <div class="tier-title">Scheduling Layer — Set It and Walk Away</div>
+        <div class="tier-sub">Connect your Facebook Page and Instagram once — schedule all posts in one sitting</div>
+      </div>
+      <div class="tier-badge soon">This Week</div>
+    </div>
+    <div class="tier-body">
+      <p style="margin-bottom:16px;">Instead of logging in every day to post, you sit down once, schedule everything through April 25th, and let the tool post automatically at the right time. For a one-man band, this is the highest-leverage move you can make right now.</p>
+
+      <div class="tool-row">
+        <div class="tool-icon">&#128260;</div>
+        <div>
+          <div class="tool-name">Buffer — Recommended Starting Point</div>
+          <div class="tool-desc"><strong>buffer.com</strong> — Free tier supports 3 channels and 10 scheduled posts at a time. Connect your Facebook Page and Instagram account. Copy the post text from this document using the copy buttons, paste into Buffer's composer, set the date and time, and schedule. It posts automatically. The Essentials plan ($6/mo) removes the 10-post queue limit and is worth it for a campaign like this.</div>
+        </div>
+      </div>
+
+      <div class="tool-row">
+        <div class="tool-icon">&#9881;</div>
+        <div>
+          <div class="tool-name">Make (formerly Integromat) — More Power</div>
+          <div class="tool-desc"><strong>make.com</strong> — Free tier available. More powerful than Buffer — can trigger posts based on conditions, connect multiple services, and handle logic. For example: post goes live on Facebook automatically AND sends you a Slack/text notification AND logs the post in a Google Sheet. Steeper learning curve than Buffer but much more flexible. Recommended for Tier 3 integration.</div>
+        </div>
+      </div>
+
+      <div class="tool-row">
+        <div class="tool-icon">&#128197;</div>
+        <div>
+          <div class="tool-name">Meta Business Suite — Free, No Third Party</div>
+          <div class="tool-desc"><strong>business.facebook.com</strong> — Facebook's own free scheduling tool. Schedule posts directly to your Facebook Page and Instagram from one dashboard. No third-party required. Less polished than Buffer but costs nothing and has no post limits. Good option if budget is zero. Copy from this doc → paste into Meta Business Suite → schedule.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <div class="card-title" style="margin-bottom:12px;"><span class="dot"></span>Buffer Setup — Step by Step</div>
+        <ol class="setup-steps">
+          <li>Go to <strong>buffer.com</strong> and create a free account</li>
+          <li>Click <strong>Connect a Channel</strong> → select Facebook Page → log in with your Facebook credentials → select the BlackMarker.TV page</li>
+          <li>Connect Instagram the same way (requires a Business/Creator account linked to the Facebook Page)</li>
+          <li>Go to the <strong>Post Copy tab</strong> in this document → click the <strong>Copy</strong> button on the first post</li>
+          <li>In Buffer, click <strong>Create Post</strong> → paste the text → attach your image → set the date and time from the campaign schedule → click <strong>Schedule</strong></li>
+          <li>Repeat for all posts — you can do all of Phase 1–5 in one sitting (takes about 30–45 minutes)</li>
+          <li>Buffer posts automatically at the scheduled times — you're done until the day-of</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIER 3 -->
+  <div class="tier-card">
+    <div class="tier-header">
+      <div class="tier-num">03</div>
+      <div>
+        <div class="tier-title">Direct API Automation — Post From This Document</div>
+        <div class="tier-sub">Schedule and publish to Facebook directly from the Post Copy tab with a date/time picker and one button</div>
+      </div>
+      <div class="tier-badge future">Next Phase</div>
+    </div>
+    <div class="tier-body">
+      <p style="margin-bottom:16px;">The end goal: every post in the Post Copy tab gets a <strong>Schedule to Facebook</strong> button with a date/time picker. You set the time, click Schedule, and a Make webhook receives the post content and publishes it to your Facebook Page automatically at the right moment — without you touching Facebook at all.</p>
+
+      <div class="tool-row">
+        <div class="tool-icon">&#128273;</div>
+        <div>
+          <div class="tool-name">Meta Graph API — What Makes It Work</div>
+          <div class="tool-desc">Facebook's Graph API allows you to publish posts to a Page programmatically. You need: (1) a Facebook Developer account, (2) an App created in the Meta Developer Console, (3) a long-lived Page Access Token for the BlackMarker.TV page. Once you have the token, posting is a single API call. The token lasts 60 days and can be refreshed.</div>
+        </div>
+      </div>
+
+      <div class="tool-row">
+        <div class="tool-icon">&#9889;</div>
+        <div>
+          <div class="tool-name">Make Webhook — The Bridge</div>
+          <div class="tool-desc">A Make scenario watches a webhook URL. When this document sends post content + a scheduled time to that URL, Make receives it and either posts immediately or schedules it via the Facebook Graph API module. No server required — Make handles everything in the cloud. Free tier supports 1,000 operations/month which is more than enough for an event campaign.</div>
+        </div>
+      </div>
+
+      <div class="tool-row">
+        <div class="tool-icon">&#128196;</div>
+        <div>
+          <div class="tool-name">What Gets Built Into This Document</div>
+          <div class="tool-desc">Each post card gets a <strong>date/time picker</strong> and a <strong>"Schedule to Facebook" button</strong>. Click the button → the document sends the post text, image note, and scheduled time to the Make webhook → Make posts it to the BlackMarker.TV Facebook Page at exactly that time. You never have to open Facebook to post a main page post again.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <div class="card-title" style="margin-bottom:12px;"><span class="dot"></span>Setup Steps for Tier 3</div>
+        <ol class="setup-steps">
+          <li>Create a <strong>Facebook Developer account</strong> at developers.facebook.com</li>
+          <li>Create a new App → choose <strong>Business</strong> type → add the <strong>Pages API</strong> product</li>
+          <li>Generate a <strong>User Access Token</strong> with <code>pages_manage_posts</code> and <code>pages_read_engagement</code> permissions</li>
+          <li>Exchange it for a <strong>long-lived Page Access Token</strong> (valid 60 days) for the BlackMarker.TV page</li>
+          <li>Create a <strong>Make account</strong> at make.com → build a new scenario with a <strong>Webhooks → Custom Webhook</strong> trigger</li>
+          <li>Add a <strong>Facebook Pages → Create a Page Post</strong> module — paste in your Page Access Token and map the incoming post content from the webhook</li>
+          <li>Add a <strong>sleep/delay</strong> module if scheduling for a future time, or use Make's built-in scheduling</li>
+          <li>Copy the webhook URL from Make → we add it to this document → the Schedule buttons go live</li>
+        </ol>
+      </div>
+
+      <div class="note" style="margin-top:16px;">
+        &#9888; <strong>Instagram note:</strong> Instagram automation via API requires a Professional/Business account and content approval flow. Images must be hosted at a public URL before posting — they can't be uploaded from a local file. Plan to host event graphics on BlackMarker.tv or an S3 bucket for automated Instagram posts.
+      </div>
+    </div>
+  </div>
+
+  <!-- RECOMMENDED STACK -->
+  <div class="card">
+    <div class="card-title"><span class="dot"></span>Recommended Stack — One-Man Band</div>
+    <div class="stack-grid">
+      <div class="stack-item">
+        <div class="icon">&#128203;</div>
+        <div class="name">This Document</div>
+        <div class="role">Copy buttons for all manual posts (groups, Nextdoor, WhatsApp, YouTube comments)</div>
+        <div class="cost">Free — built in</div>
+      </div>
+      <div class="stack-item">
+        <div class="icon">&#128260;</div>
+        <div class="name">Buffer</div>
+        <div class="role">Schedule all main page Facebook + Instagram posts in one sitting</div>
+        <div class="cost">Free → $6/mo Essentials</div>
+      </div>
+      <div class="stack-item">
+        <div class="icon">&#9889;</div>
+        <div class="name">Make</div>
+        <div class="role">Tier 3 automation — direct scheduling from this document via webhook</div>
+        <div class="cost">Free tier (1K ops/mo)</div>
+      </div>
+    </div>
+    <div class="highlight">
+      <strong>For this event right now:</strong> Use the copy buttons (Tier 1) and Buffer or Meta Business Suite (Tier 2). That's all you need for April 25th. Build Tier 3 afterward as the foundation for future events — once it's set up, every event you do from here on is nearly fully automated on the posting side.
+    </div>
+  </div>
+
+  <!-- WHAT TO AUTOMATE TABLE -->
+  <div class="card">
+    <div class="card-title"><span class="dot"></span>What Gets Automated vs. What Stays Manual</div>
+    <table>
+      <thead>
+        <tr><th>Task</th><th>Can Automate?</th><th>Tool</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Facebook Page posts</strong></td><td><span class="p1">Yes — fully</span></td><td>Buffer / Make / Meta Business Suite</td></tr>
+        <tr><td><strong>Instagram posts</strong></td><td><span class="p1">Yes — fully</span></td><td>Buffer / Make (image must be hosted URL)</td></tr>
+        <tr><td><strong>Facebook Group posts</strong></td><td><span class="p3">No — ToS violation</span></td><td>Copy button → paste manually</td></tr>
+        <tr><td><strong>YouTube video descriptions</strong></td><td><span class="p2">Partial</span></td><td>Copy button → paste manually when uploading</td></tr>
+        <tr><td><strong>YouTube comments</strong></td><td><span class="p3">No — spam risk</span></td><td>Copy button → paste manually</td></tr>
+        <tr><td><strong>Nextdoor posts</strong></td><td><span class="p3">No — no API</span></td><td>Copy button → paste manually</td></tr>
+        <tr><td><strong>WhatsApp group messages</strong></td><td><span class="p3">No</span></td><td>Activate organically through buyers</td></tr>
+        <tr><td><strong>Post confirmation emails</strong></td><td><span class="p1">Yes</span></td><td>BlackMarker.tv platform (already configured)</td></tr>
+        <tr><td><strong>Event calendar listing</strong></td><td><span class="p1">Yes — already done</span></td><td>BlackMarker.tv site calendar</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /auto-container -->
+</div><!-- /tab-automation -->
+
+<div class="footer">
+  Freestyle Explosion 3 &nbsp;·&nbsp; Marketing Brief &nbsp;·&nbsp; Created April 14, 2026 &nbsp;·&nbsp; BlackMarker Media / BlackMarker.tv
+</div>
+
+<script>
+  // Tab switching
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Add copy buttons to every post
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.fb-post').forEach(function (post) {
+      const body = post.querySelector('.fb-body');
+      if (!body) return;
+
+      // Build toolbar
+      const toolbar = document.createElement('div');
+      toolbar.className = 'fb-toolbar';
+
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.innerHTML = '&#128203; Copy Post';
+      btn.addEventListener('click', function () {
+        const text = body.innerText.trim();
+        navigator.clipboard.writeText(text).then(function () {
+          btn.innerHTML = '&#10003; Copied!';
+          btn.classList.add('copied');
+          setTimeout(function () {
+            btn.innerHTML = '&#128203; Copy Post';
+            btn.classList.remove('copied');
+          }, 2000);
+        });
+      });
+
+      toolbar.appendChild(btn);
+
+      // Insert toolbar before fb-body
+      post.insertBefore(toolbar, body);
+    });
+  });
+</script>
+</body>
+</html>

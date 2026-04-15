@@ -14,7 +14,21 @@
       "Bash(node server.js)",
       "Bash(curl -s http://localhost:3000/)",
       "Bash(curl -s http://localhost:3000/admin)",
-      "Bash(curl -s -X POST http://localhost:3000/api/submit-form -H 'Content-Type: application/json' -d '{\"form_type\":\"lead\",\"name\":\"Test User\",\"email\":\"test@example.com\",\"company\":\"Test Co\",\"message\":\"Hello from the test\"}')"
+      "Bash(curl -s -X POST http://localhost:3000/api/submit-form -H 'Content-Type: application/json' -d '{\"form_type\":\"lead\",\"name\":\"Test User\",\"email\":\"test@example.com\",\"company\":\"Test Co\",\"message\":\"Hello from the test\"}')",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/animations.js)",
+      "Bash(cmd /c \"for /f \\\\\"tokens=5\\\\\" %a in \\('netstat -aon ^| findstr :3000'\\) do taskkill /PID %a /F\")",
+      "Bash(curl -s -o /dev/null -w \"index.html: %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"animations.js: %{http_code}\\\\n\" http://localhost:3000/animations.js)",
+      "Bash(curl -s -o /dev/null -w \"channelcast: %{http_code}\\\\n\" http://localhost:3000/channelcast.html)",
+      "Bash(curl -s -o /dev/null -w \"production: %{http_code}\\\\n\" http://localhost:3000/production.html)",
+      "Bash(curl -s -o /dev/null -w \"forms.js: %{http_code}\\\\n\" http://localhost:3000/forms.js)",
+      "Bash(curl -s -o /dev/null -w \"contact.html: %{http_code}\\\\n\" http://localhost:3000/contact.html)",
+      "Bash(curl -s -X POST http://localhost:3000/api/submit-form -H 'Content-Type: application/json' -d '{\"form_type\":\"lead\",\"name\":\"Jane Doe\",\"email\":\"jane@venue.com\",\"phone\":\"555-0100\",\"company\":\"Venue Co\",\"interest\":\"ChannelCast Platform\",\"message\":\"Interested in the Growth plan\"}')",
+      "Bash(curl -s -X POST http://localhost:3000/api/submit-form -H 'Content-Type: application/json' -d '{\"form_type\":\"booking\",\"name\":\"John Smith\",\"email\":\"john@events.com\",\"phone\":\"555-0200\",\"company\":\"Events LLC\",\"event_type\":\"Corporate Event\",\"event_date\":\"2026-06-15\",\"message\":\"500 attendees, need 3 cameras\"}')",
+      "Bash(curl -s -X POST http://localhost:3000/api/submit-form -H 'Content-Type: application/json' -d '{\"form_type\":\"signup\",\"name\":\"Alex\",\"email\":\"alex@example.com\"}')",
+      "Bash(node -e ':*)",
+      "Read(//c/Users/imagi/**)"
     ]
   }
 }
