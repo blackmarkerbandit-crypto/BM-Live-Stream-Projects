@@ -21,6 +21,7 @@
 | Also Performing | DJ C-4 |
 | Expected In-Person Crowd | 2,000+ |
 | PPV Platform | BlackMarker.tv |
+| Event Page | blackmarker.tv/FE3 |
 
 ---
 
@@ -119,11 +120,9 @@
 ---
 
 ### DJ C-4
-**Research note:** Multiple DJs use the C-4/C4 name. The most likely candidate in the freestyle circuit is **DJ Carlos C4 Ramos**, based in New York, with an extensive freestyle-dedicated mixing catalog on Mixcloud ("I Will Love Freestyle Music 4 Ever" series).
+**Confirmed:** DJ Carlos C4 Ramos, based in New York City. Extensive freestyle-dedicated mixing catalog on Mixcloud ("I Will Love Freestyle Music 4 Ever" series). Look up and note his Facebook/Instagram handles for tagging in posts.
 
-**Confirm which DJ C-4 is performing before building specific marketing around him.**
-
-If he is a regional/local market DJ, his value is primarily as a local draw whose personal network drives ticket sales in his specific market. Market him accordingly — his community reach matters more than his social following.
+His value is his personal network and credibility within the freestyle DJ community — his Mixcloud audience skews toward dedicated music enthusiasts, a natural fit for PPV buyers. Coordinate with him for posts to his followers.
 
 ---
 
@@ -164,21 +163,23 @@ The R&B Night at KRATE drew an estimated **8,000 attendees in a single night** (
 
 ## SECTION 4: PPV STRATEGY
 
-### Pricing Recommendation
+### Pricing
 | Tier | Price | Notes |
 |---|---|---|
-| Early Bird (first 100) | $15 | Create urgency — hard deadline April 18 |
-| General Admission | $20 | Sweet spot for this demographic; proven at comps |
-| Household/Watch Party | $25 | "Grab one ticket, gather the crew" framing |
+| Early Bird | $10 | Available through April 20 — impulse buy price, drives early conversions and word-of-mouth |
+| General Admission | $15 | April 21 through event day — the $5 jump gives real urgency to buy early |
 
-**Do NOT price above $35.** That's for mainstream artists with wider crossover. Do NOT use subscriptions — this audience will not subscribe to a platform to access one concert.
+Do NOT use subscriptions — this audience will not subscribe to a platform to access one concert.
 
-### Technical Requirements (non-negotiable)
-- Checkout must be **3 clicks or fewer**
-- Must accept: **Apple Pay, PayPal, credit card**
-- Stream must be **castable to TV** (Chromecast, AirPlay, Roku, Fire Stick)
-- Include "How to watch on your TV" instructions in every purchase confirmation email
-- Consider Eventbrite as the trusted ticketing front-end, redirecting buyers to BlackMarker.tv for the actual stream
+### Platform Status — Already Live
+- **Event page live:** blackmarker.tv/FE3
+- **PPV paywall, logins, and checkout:** All configured and in place
+- **Production:** All hardware and production equipment in-house; commentators and in-house guests confirmed
+- **Calendar:** Event listed on BlackMarker.tv site calendar pointing to /FE3
+- **Promoter social posts:** Nico Brown Productions already has social media posts running
+
+### Streaming Access — BROWSER ONLY
+**Important:** This PPV is browser-only — phone, tablet, or computer. There is no native app, Chromecast, Roku, Fire Stick, or AirPlay support. All marketing copy and purchase confirmation emails must clearly state: *"Watch on your phone, tablet, or computer at blackmarker.tv/FE3"*
 
 ### PPV Messaging Frameworks
 
@@ -201,13 +202,13 @@ The R&B Night at KRATE drew an estimated **8,000 attendees in a single night** (
 - [ ] Tag DJ Frankie Cutlass in all posts — request he share from his 465K Facebook fan page
 - [ ] Manually seed posts in top freestyle Facebook groups (see list in Section 7)
 - [ ] Seed posts in NY/NJ transplant Florida groups, Tampa Bay Latino groups
-- [ ] Launch early bird pricing at $15 — set hard deadline of April 18
-- [ ] Set up and boost Facebook Event page for April 25
-- [ ] Post in YouTube comment sections of top Frankie Cutlass videos with PPV link
+- [ ] Confirm $10 early bird is live at blackmarker.tv/FE3 — steps to $15 on April 21
+- [ ] Set up and boost Facebook Event page for April 25 linking to blackmarker.tv/FE3
+- [ ] Post in YouTube comment sections of top Frankie Cutlass videos with PPV link (blackmarker.tv/FE3)
 - [ ] Contact DJ Neko / El Nuevo ZOL 97.1 FM about radio mention (they host KRATE's Latin Night)
 
 ### April 17–19 (Days 8–6): URGENCY + PROOF
-- [ ] Early bird cutoff urgency — "Last 48 hours at $15"
+- [ ] Early bird cutoff urgency — "$10 early bird ends April 20th, goes to $15 after — get yours now"
 - [ ] Behind-the-scenes content — show the stage setup, the production rig, the venue
 - [ ] "Stream quality" proof post — short clip of camera/production setup
 - [ ] Post press release to Tampa Beacon and Wesley Chapel Community Website
@@ -227,7 +228,7 @@ The R&B Night at KRATE drew an estimated **8,000 attendees in a single night** (
 ### April 23–24 (Days 2–1): LAST CALL
 - [ ] "Last chance" messaging everywhere
 - [ ] Countdown content (24-hour, 48-hour posts)
-- [ ] Tech setup guide — "Here's how to watch on your TV" post
+- [ ] Tech setup guide — "Here's how to watch: open blackmarker.tv/FE3 on your phone, tablet, or computer" post
 - [ ] FAQ post addressing stream concerns (quality, access, devices)
 - [ ] Final push in all Facebook groups
 - [ ] Bump Facebook paid boost budget slightly
@@ -244,106 +245,33 @@ The R&B Night at KRATE drew an estimated **8,000 attendees in a single night** (
 
 ## SECTION 6: PAID ADVERTISING STRATEGY
 
-### Budget Allocation Recommendation
+**Paid ads are the supplement, not the strategy.** With limited days to event, exhaust every organic channel first. Use paid spend only to (1) amplify posts already getting organic engagement, and (2) retarget people who visited blackmarker.tv/FE3 but didn't buy. Do not build cold-audience campaigns from scratch at this stage.
 
-| Platform | % of Budget | Priority |
+### Budget Split
+
+| Platform | Allocation | Notes |
 |---|---|---|
-| Meta (Facebook/Instagram) | 40–45% | Highest — best targeting for this demo |
-| Google Ads (Search + Display) | 25–30% | High — captures active searchers |
-| YouTube Ads | 15–20% | Medium — brand building + retargeting |
-| CTV / Paramount+ | 0–10% | Optional — only with remaining budget |
+| Facebook/Instagram Boost | ~70% | Amplify best-performing organic posts |
+| Facebook/Instagram Retargeting | ~30% | Re-engage blackmarker.tv/FE3 visitors who didn't buy |
+| Google Ads | $0 | Skip — insufficient runway to build effective campaigns |
+| YouTube Ads | $0 | Skip — no time to build audience pools and test creative |
+| Paramount+ / CTV | $0 | Skip — $500 minimum, too slow for this timeline |
 
----
+### Facebook/Instagram Boost
+**Only boost posts that are already getting organic engagement.** Wait 2–4 hours after posting, see what's resonating, then boost the winner.
+- **Budget:** $10–$20/day per boosted post; run each boost 3–5 days max
+- **Targeting:** Ages 35–60, interests: freestyle music, Latin R&B, TKA, Judy Torres, Shannon; geo: Wesley Chapel 50-mile radius + NYC metro, NJ, Miami, Orlando, Puerto Rico
+- **Format:** Boost video posts or Reels over static images — video gets more reach per dollar
+- **Test bilingual copy:** Run one English and one Spanish version; put more budget behind whichever gets better CTR
+- **Stop boosting 24 hours before the event** — day-of organic content (crowd arriving, venue energy) will outperform any ad
 
-### META ADS (Facebook/Instagram) — TOP PRIORITY
-
-**Cold Audience Targeting:**
-- Ages 35–60
-- Interests: freestyle music, Latin freestyle, TKA, Judy Torres, Shannon, Lisa Lisa, Cover Girlz, George Lamond, Stevie B, Latin R&B, old school hip-hop, merengue, salsa
-- Behaviors: concert attendees, Ticketmaster users, StubHub users, Latin music fans
-- Geography: Wesley Chapel 50-mile radius + NYC metro, NJ, South Florida, Orlando, Puerto Rico, Atlanta, Charlotte
-
-**Lookalike Audiences (highest value):**
-1. 1% Lookalike from your email/CRM list of past ticket buyers
-2. 1% Lookalike from BlackMarker.tv PPV purchasers (via Meta Pixel)
-3. 1-2% Lookalike from people who watched 75%+ of your promo video
-
-**Ad Formats:**
-- **Reels** (15–30 sec): crowd energy, artist performance clips — feels native, highest algorithm boost
-- **Carousel**: one artist per card — "meet the lineup"
-- **Feed Video** (30–60 sec sizzle reel): hook in the first 3 seconds with strongest performance clip, NOT a logo
-- **Stories** (15 sec max): urgency messaging "Tickets selling fast"
-
-**Key rules:**
-- Open every video with the crowd or a performance clip — NEVER a logo
-- Test bilingual copy: "La noche que no olvidarás" vs "The night you won't forget"
-- Scarcity works: "Only 200 PPV spots left" even if not technically true as a hard limit
-- Facebook Event page: maintain for community building; run ads to your actual ticket page for conversions
-
-**Budget: $100–$150 total boost over 10 days** (launch now, run through April 24)
-
----
-
-### GOOGLE ADS
-
-**Campaign priority order:**
-1. **Search** — branded terms (artist names), event keywords ("freestyle concert Tampa 2026")
-2. **Display Retargeting** — re-engage ticket page visitors who didn't convert
-3. **Performance Max** — only if you have 30+ conversions already (algorithm needs data)
-
-**Critical negative keywords to add immediately:**
-- "free"
-- "how to freestyle rap"
-- "freestyle dance lessons"
-- "freestyle swimming"
-
-Without negatives, "freestyle" campaigns bleed budget to completely unrelated searches.
-
-**Retargeting ladder:**
-- Ticket page visitors (no purchase): urgency ads, +50–100% bid adjustment
-- Cart abandoners: strongest urgency + possible promo code, +100–150% bid adjustment
-- Past buyers (CRM upload): loyalty/early access messaging
-
-**Budget benchmark:** $1,500–$5,000 for a local/regional niche event. Start at $25–50/day, scale to $75–150/day in the final 2 weeks.
-
----
-
-### YOUTUBE ADS
-
-**Best formats:**
-- **Skippable In-Stream** (60–90 sec): workhorse format — you only pay if someone watches 30+ sec. Hook must land in the first 5 seconds before the skip button appears.
-- **Bumper Ads** (6 sec, non-skippable): cheap CPM, great for frequency and final countdown urgency. Run alongside skippable, not instead of.
-
-**Targeting:**
-- Custom Intent Audiences: users who searched "freestyle music concert," "DJ Frankie Cutlass tickets," "80s freestyle music," "Latin freestyle songs"
-- Channel placements: hand-pick freestyle music channels, Latin music channels, old school hip-hop channels — run your ads specifically on those channels
-- In-Market: "Concert and Music Festival Tickets" Google audience
-
-**Content structure for skippable ads:**
-- Seconds 0–5: Performance clip or bold hook (crowd, energy)
-- Seconds 5–25: Artist lineup reveal
-- Seconds 25+: Ticket/PPV CTA with URL end card
-
-**Cost benchmark:** $0.03–$0.08 per view. $500 = 6,000–16,000 targeted views.
-
----
-
-### PARAMOUNT+ / CONNECTED TV — OPTIONAL
-
-**Honest assessment:** Use only if budget remains after maxing Meta, Google, and YouTube.
-
-**Paramount Ads Manager** (self-serve, adsmanager.paramount.com):
-- Minimum: **$500**
-- CPM starts at ~$7 (below industry average of $25–40)
-- Inventory across Paramount+, Pluto TV, BET+
-- Format required: 15 or 30-second video, broadcast quality (1920x1080)
-- Target by zip code + Latin content affinity on Pluto TV
-
-**Why it might work:** Your 35–55 demo watches significantly more streaming TV than younger demos; CTV reach for this age group is strong. It also builds credibility — "I saw it on TV" carries weight this paid social doesn't.
-
-**Why to be cautious:** At $500–$1,000 you get maybe 15,000–70,000 impressions — limited reach for a niche event. Creative must meet broadcast specs. Hard to track direct conversions.
-
-**Use for:** Awareness/brand lift among cord-cutters aged 45–55 who are harder to reach on social. Not as a conversion driver.
+### Facebook Retargeting
+Anyone who visited blackmarker.tv/FE3 and didn't buy is a warm lead — highest-ROI paid spend available.
+- **Requires:** Meta Pixel installed on blackmarker.tv/FE3 — confirm this is active
+- **Audience:** Page visitors from last 14 days who did not reach the confirmation page
+- **Ad message:** Urgency-focused — "Still thinking about it? $10 early bird ends April 20th." → After April 20: "It's $15 now — last chance before April 25th."
+- **Budget:** $5–$10/day; small warm pool, doesn't need much spend
+- **Note:** If Meta Pixel is NOT installed, skip retargeting and put all budget into boosting organic posts instead
 
 ---
 
@@ -415,28 +343,36 @@ These are the strongest lines from research — proven language for this audienc
 > "You've heard 'Hungry for Your Love' a thousand times. On April 25th, you'll hear it live."
 
 **For the watch party:**
-> "Call your people. Order the food. Grab one household ticket at $25 and make it a party. Freestyle Explosion 3 — April 25th."
+> "Call your people. Order the food. Grab one ticket for $10 and make it a party. Freestyle Explosion 3 — April 25th. Price goes up April 20th."
 
 **For scarcity:**
-> "Early bird at $15 ends Sunday. After that, it's $20. Get yours now."
+> "Early bird at $10 ends April 20th. After that, it's $15. Get yours now at blackmarker.tv/FE3."
 
 **For the 40th anniversary:**
 > "Freestyle music turns 40 this year. Frankie Cutlass is celebrating in Wesley Chapel. So are we."
 
 ---
 
-## SECTION 9: THINGS TO VERIFY BEFORE LAUNCH
+## SECTION 9: VERIFY BEFORE LAUNCH
 
-- [ ] Confirm which DJ C-4 is performing — get his social handles for tagging
-- [ ] Confirm Hanson refers to Hanson & Davis (the freestyle duo) — clarify in all copy that this is NOT the pop band Hanson
-- [ ] Confirm BlackMarker.tv checkout accepts Apple Pay and PayPal
-- [ ] Confirm stream is castable to TV via Chromecast/Roku/Fire Stick/AirPlay
-- [ ] Confirm early bird pricing tier is live at $15 with April 18 hard deadline
-- [ ] Reach out to DJ Frankie Cutlass team to coordinate Facebook fan page post
-- [ ] Reach out to El Nuevo ZOL 97.1 FM / DJ Neko for radio partnership
-- [ ] Reach out to @krateatthegrove for co-promotion
-- [ ] Set up Meta Pixel on BlackMarker.tv ticket/PPV page for ad tracking
-- [ ] Build Facebook Event page for April 25
+**Already confirmed:**
+- [x] DJ C-4 confirmed: DJ Carlos C4 Ramos (NYC) — look up his Facebook/Instagram handles for tagging
+- [x] Hanson confirmed: Hanson & Davis — the 1986 freestyle duo; always reference with song title to avoid pop-band confusion
+- [x] Event page live at blackmarker.tv/FE3
+- [x] PPV paywall & logins configured
+- [x] Production hardware in-house
+- [x] Site calendar pointing to /FE3
+- [x] Nico Brown Productions posts running
+- [x] All marketing copy uses blackmarker.tv/FE3 as CTA; browser-only access noted throughout
+
+**Still to do:**
+- [ ] Confirm $10 early bird pricing is live at blackmarker.tv/FE3 with April 20 deadline stepping to $15
+- [ ] Update purchase confirmation email to include browser access instructions ("Open blackmarker.tv/FE3 on your phone, tablet, or computer")
+- [ ] Reach out to DJ Frankie Cutlass team to coordinate post from his 465K Facebook fan page
+- [ ] Reach out to El Nuevo ZOL 97.1 FM / DJ Neko for radio mention
+- [ ] Reach out to @krateatthegrove for co-promotion / social tag
+- [ ] Set up Meta Pixel on blackmarker.tv/FE3 for ad retargeting (if not already done)
+- [ ] Build and publish Facebook Event page for April 25 with link to blackmarker.tv/FE3
 
 ---
 
