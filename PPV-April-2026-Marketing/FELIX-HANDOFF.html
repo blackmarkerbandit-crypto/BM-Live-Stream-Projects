@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Felix — Freestyle Explosion 3 Handoff</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0d0d0d;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+    .hero {
+      background: linear-gradient(135deg, #1a0a2e 0%, #16213e 40%, #0f3460 80%, #1a1a2e 100%);
+      border-bottom: 3px solid #e94560;
+      padding: 48px 40px 36px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: #e94560;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+    .hero h1 span { color: #e94560; }
+    .hero-sub { font-size: 15px; color: #94a3b8; margin-bottom: 20px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; }
+    .meta-pill {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 13px;
+      color: #cbd5e1;
+    }
+    .meta-pill strong { color: #fff; }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+
+    .section { margin-bottom: 40px; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #1e293b;
+    }
+    .section-num {
+      background: #e94560;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .section-title { font-size: 18px; font-weight: 700; color: #f1f5f9; text-transform: uppercase; letter-spacing: 1px; }
+
+    .card {
+      background: #111827;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 14px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title .dot { width: 8px; height: 8px; border-radius: 50%; background: #e94560; flex-shrink: 0; }
+
+    .highlight {
+      background: linear-gradient(135deg, rgba(233,69,96,0.08), rgba(233,69,96,0.02));
+      border: 1px solid rgba(233,69,96,0.25);
+      border-left: 4px solid #e94560;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 12px 0;
+      font-size: 14px;
+      color: #e2e8f0;
+    }
+    .highlight strong { color: #fca5a5; }
+
+    .note {
+      background: rgba(245,158,11,0.06);
+      border: 1px solid rgba(245,158,11,0.2);
+      border-left: 4px solid #f59e0b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 10px 0;
+      font-size: 13px;
+      color: #fcd34d;
+    }
+
+    .file-card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .file-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .file-name { font-size: 14px; font-weight: 700; color: #e94560; margin-bottom: 4px; font-family: monospace; }
+    .file-desc { font-size: 13px; color: #94a3b8; line-height: 1.55; }
+    .file-desc strong { color: #e2e8f0; }
+    .file-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+    .file-tag.html { background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); color: #93c5fd; }
+    .file-tag.md { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); color: #86efac; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+    th { background: #1e293b; color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 9px 13px; text-align: left; }
+    td { padding: 9px 13px; border-bottom: 1px solid #1e293b; color: #cbd5e1; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    td strong { color: #f1f5f9; }
+    .done { color: #86efac; font-weight: 700; }
+    .pending { color: #fcd34d; font-weight: 700; }
+    .felix { color: #c4b5fd; font-weight: 700; }
+
+    .checklist { list-style: none; }
+    .checklist li {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 8px 0; border-bottom: 1px solid #1a2234;
+      font-size: 14px; color: #cbd5e1;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li.done::before { content: '✓'; color: #86efac; font-weight: 800; font-size: 14px; flex-shrink: 0; }
+    .checklist li.felix-item::before { content: '→'; color: #c4b5fd; font-weight: 800; font-size: 14px; flex-shrink: 0; }
+    .checklist li.shared::before { content: '◎'; color: #f59e0b; font-weight: 800; font-size: 14px; flex-shrink: 0; }
+
+    /* CLAUDE CONTEXT BOX */
+    .claude-box {
+      background: #020617;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .claude-box-header {
+      background: #0f172a;
+      border-bottom: 1px solid #334155;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .claude-box-title { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+    .claude-box-body {
+      padding: 20px;
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.75;
+      white-space: pre-wrap;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    .copy-btn {
+      background: none;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      color: #64748b;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      transition: all 0.15s;
+    }
+    .copy-btn:hover { background: #1e293b; color: #cbd5e1; }
+    .copy-btn.copied { background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.4); color: #86efac; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    p { font-size: 14px; color: #94a3b8; margin-bottom: 10px; }
+    p:last-child { margin-bottom: 0; }
+    ul { padding-left: 20px; }
+    ul li { font-size: 14px; color: #94a3b8; margin-bottom: 6px; }
+    ul li strong { color: #e2e8f0; }
+
+    .footer {
+      background: #080808;
+      border-top: 1px solid #1e293b;
+      padding: 20px 40px;
+      text-align: center;
+      font-size: 12px;
+      color: #334155;
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">Partner Handoff — Felix</div>
+  <h1>Freestyle Explosion <span>3</span></h1>
+  <div class="hero-sub">Administrative, Marketing & Sales Briefing — BlackMarker.TV × Nico Brown Productions</div>
+  <div class="hero-meta">
+    <div class="meta-pill"><strong>Event Date:</strong> April 25, 2026</div>
+    <div class="meta-pill"><strong>Time:</strong> 8PM – 12AM EST</div>
+    <div class="meta-pill"><strong>Venue:</strong> The Krates at The Grove, Wesley Chapel, FL</div>
+    <div class="meta-pill"><strong>PPV:</strong> blackmarker.tv/FE3</div>
+    <div class="meta-pill"><strong>Pricing:</strong> $10 early bird (thru Apr 20) → $15</div>
+    <div class="meta-pill"><strong>Handoff Prepared:</strong> April 15, 2026</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- WELCOME -->
+  <div class="section">
+    <div class="highlight">
+      <strong>Hey Felix —</strong> This document is your entry point into the Freestyle Explosion 3 PPV campaign. Everything built so far lives in the files listed below. Your role covers the administrative, marketing execution, and sales side. This brief gives you the full picture of where things stand, what's confirmed, what still needs to happen, and a ready-to-use Claude prompt so you can pick up right where we left off on your end.
+    </div>
+  </div>
+
+  <!-- FILES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title">Your Files — What Each One Is</div>
+    </div>
+
+    <div class="file-card">
+      <div class="file-icon">&#128196;</div>
+      <div>
+        <div class="file-tag html">HTML — Open in Browser</div>
+        <div class="file-name">freestyle-explosion-3-brief.html</div>
+        <div class="file-desc">
+          <strong>The main working document.</strong> Open this in any browser — Chrome, Edge, Safari. It has three tabs:<br><br>
+          &#128203; <strong>Marketing Brief</strong> — Full strategy: audience research, artist profiles, venue intel, PPV pricing, 10-day countdown plan, organic outreach, and ad strategy.<br><br>
+          &#128247; <strong>Post Copy</strong> — All 18 Facebook posts laid out as visual mockups (English + Spanglish), organized by phase with dates. Each post has a <strong>Copy Post button</strong> — one click copies the text to your clipboard, ready to paste into Facebook or a scheduler.<br><br>
+          &#9889; <strong>Automation Plan</strong> — Three-tier plan for automating posts: copy buttons (built in), Buffer/Meta Business Suite scheduling, and future Meta Graph API integration via Make webhooks. Includes a breakdown of what can vs. cannot be automated.
+        </div>
+      </div>
+    </div>
+
+    <div class="file-card">
+      <div class="file-icon">&#128203;</div>
+      <div>
+        <div class="file-tag md">Markdown — Reference Doc</div>
+        <div class="file-name">freestyle-explosion-3-marketing-brief.md</div>
+        <div class="file-desc">
+          <strong>The source markdown for the marketing brief.</strong> Same content as the HTML brief but in plain text format. Useful for pasting into Claude, sharing in emails, or reading without opening a browser. All sections are here: audience, artists, venue, PPV strategy, countdown, outreach, ad strategy, copy lines, and the verify checklist.
+        </div>
+      </div>
+    </div>
+
+    <div class="file-card">
+      <div class="file-icon">&#128221;</div>
+      <div>
+        <div class="file-tag md">Markdown — Post Copy</div>
+        <div class="file-name">freestyle-explosion-3-post-copy.md</div>
+        <div class="file-desc">
+          <strong>All 18 Facebook posts in plain text.</strong> Organized by phase (Launch, Early Bird Urgency, Price Increase, Final Countdown, Day Of) plus 4 Facebook Group post templates — each customized for a different community (freestyle fans, Puerto Rican/Latino groups, NY/NJ transplants in Florida, Wesley Chapel locals). Use this to paste copy into scheduling tools or share with your team.
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      &#9888; The HTML file is <strong>fully self-contained</strong> — no internet connection needed, no additional files required. Just open it in a browser and everything works.
+    </div>
+  </div>
+
+  <!-- EVENT SNAPSHOT -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title">Event Snapshot — What You Need to Know</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>The Event</div>
+        <ul>
+          <li><strong>Freestyle Explosion 3</strong> — April 25, 2026, 8PM–12AM EST</li>
+          <li><strong>Venue:</strong> The Krates at The Grove, Wesley Chapel, FL</li>
+          <li><strong>Expected in-person crowd:</strong> 2,000+</li>
+          <li><strong>PPV stream:</strong> blackmarker.tv/FE3 — browser only (phone, tablet, computer)</li>
+          <li><strong>Pricing:</strong> $10 early bird through April 20th → $15 after</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>The Artists</div>
+        <ul>
+          <li><strong>DJ Frankie Cutlass</strong> — Headliner. Grammy-nominated, East Harlem NYC, 465K Facebook fans, named "Son of Puerto Rico" 2024</li>
+          <li><strong>Hanson & Davis</strong> — Performing "Hungry for Your Love" (1986 freestyle duo — NOT the pop band Hanson)</li>
+          <li><strong>DJ C-4</strong> — DJ Carlos C4 Ramos, NYC-based freestyle DJ</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Business Structure</div>
+      <ul>
+        <li><strong>BlackMarker.TV</strong> — Owns and operates the PPV stream. Main presenter. Revenue from PPV ticket sales.</li>
+        <li><strong>Nico Brown Productions</strong> — Event promoter. Owns the in-person event. Already running social media posts for the event.</li>
+        <li><strong>Relationship:</strong> "Presented by BlackMarker.TV | Nico Brown Productions" — two entities, two lanes, one event.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STATUS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title">What's Done vs. What Still Needs to Happen</div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Item</th><th>Status</th><th>Owner</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Event page live at blackmarker.tv/FE3</strong></td><td><span class="done">✓ Done</span></td><td>BlackMarker.TV</td></tr>
+        <tr><td><strong>PPV paywall, logins, checkout configured</strong></td><td><span class="done">✓ Done</span></td><td>BlackMarker.TV</td></tr>
+        <tr><td><strong>Production hardware in-house</strong></td><td><span class="done">✓ Done</span></td><td>BlackMarker.TV</td></tr>
+        <tr><td><strong>Site calendar pointing to /FE3</strong></td><td><span class="done">✓ Done</span></td><td>BlackMarker.TV</td></tr>
+        <tr><td><strong>Nico Brown Productions social posts running</strong></td><td><span class="done">✓ Done</span></td><td>Nico Brown Productions</td></tr>
+        <tr><td><strong>$10 early bird pricing confirmed (ends Apr 20)</strong></td><td><span class="done">✓ Done</span></td><td>BlackMarker.TV</td></tr>
+        <tr><td><strong>Marketing brief + post copy built</strong></td><td><span class="done">✓ Done</span></td><td>BlackMarker.TV</td></tr>
+        <tr><td><strong>DJ C-4 social handles for tagging</strong></td><td><span class="pending">⏳ Pending</span></td><td>Shared</td></tr>
+        <tr><td><strong>Frankie Cutlass team — coordinate 465K fan page post</strong></td><td><span class="pending">⏳ Pending</span></td><td>Shared</td></tr>
+        <tr><td><strong>El Nuevo ZOL 97.1 FM / DJ Neko — radio mention</strong></td><td><span class="pending">⏳ Pending</span></td><td>Shared</td></tr>
+        <tr><td><strong>@krateatthegrove — request co-promotion</strong></td><td><span class="pending">⏳ Pending</span></td><td>Shared</td></tr>
+        <tr><td><strong>Facebook Event page published for April 25</strong></td><td><span class="pending">⏳ Pending</span></td><td>Shared</td></tr>
+        <tr><td><strong>Meta Pixel confirmed on blackmarker.tv/FE3</strong></td><td><span class="pending">⏳ Pending</span></td><td>BlackMarker.TV</td></tr>
+        <tr><td><strong>Phase 1 posts live (launch announcement)</strong></td><td><span class="pending">⏳ Pending</span></td><td>Shared</td></tr>
+        <tr><td><strong>Facebook group organic outreach (10+ groups)</strong></td><td><span class="felix">→ Felix</span></td><td>Your team</td></tr>
+        <tr><td><strong>Local media submissions (Tampa Beacon, Patch, etc.)</strong></td><td><span class="felix">→ Felix</span></td><td>Your team</td></tr>
+        <tr><td><strong>Buffer / scheduling tool setup</strong></td><td><span class="felix">→ Felix</span></td><td>Your team</td></tr>
+        <tr><td><strong>YouTube comment seeding (Frankie Cutlass videos)</strong></td><td><span class="felix">→ Felix</span></td><td>Your team</td></tr>
+        <tr><td><strong>Nextdoor posts (Wesley Chapel neighborhoods)</strong></td><td><span class="felix">→ Felix</span></td><td>Your team</td></tr>
+        <tr><td><strong>Day-of crowd video (90 min before showtime)</strong></td><td><span class="felix">→ Felix</span></td><td>On-site team</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FELIX'S LANE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title">Your Lane — Admin, Marketing Execution & Sales</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Marketing Execution</div>
+        <ul>
+          <li>Post the Phase 1 launch announcement using the copy buttons in the brief</li>
+          <li>Seed posts into all Facebook groups on the outreach list (tailored per group — do NOT copy-paste the same post)</li>
+          <li>Submit event listings to Tampa Beacon, Patch, Wesley Chapel Community Website, Pasco News Online</li>
+          <li>Post on Nextdoor in Wesley Grove, Seven Oaks, Meadow Pointe, Chapel Pines, Carlyle</li>
+          <li>Seed YouTube comments on top Frankie Cutlass videos with the /FE3 link</li>
+          <li>Set up Buffer or Meta Business Suite and schedule all Phase 1–5 posts</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Sales & Admin</div>
+        <ul>
+          <li>Track PPV ticket sales vs. in-person sales separately</li>
+          <li>Coordinate the Frankie Cutlass team outreach for the 465K fan page post</li>
+          <li>Reach out to El Nuevo ZOL 97.1 FM / DJ Neko for radio mention</li>
+          <li>Reach out to @krateatthegrove for co-promotion</li>
+          <li>Build and publish the Facebook Event page for April 25</li>
+          <li>Ensure team members posting to groups have the correct copy and link</li>
+          <li>Monitor engagement on posted content and flag anything getting traction</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:4px;">
+      <strong>Critical date:</strong> The $10 early bird ends April 20th. All Phase 1 and 2 posts need to be live and the group outreach needs to happen before that date to capture the most conversions at the lower price point.
+    </div>
+  </div>
+
+  <!-- CLAUDE CONTEXT -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title">Your Claude Starting Prompt</div>
+    </div>
+
+    <p style="margin-bottom:14px;">Paste the text below into a new Claude conversation. It gives Claude everything it needs to know about you, the project, and where things stand — so you can pick up right where we left off without re-explaining the whole campaign.</p>
+
+    <div class="claude-box">
+      <div class="claude-box-header">
+        <div class="claude-box-title">Copy this into Claude to get started</div>
+        <button class="copy-btn" id="claudeCopyBtn" onclick="copyClaudePrompt()">&#128203; Copy Prompt</button>
+      </div>
+      <div class="claude-box-body" id="claudePrompt">Hi Claude. My name is Felix. I'm a business partner on the Freestyle Explosion 3 PPV campaign, working alongside the team at BlackMarker.TV. My role covers the administrative, marketing execution, and sales side of this event — I'm building a small team to handle these areas.
+
+Here is the full context on what's been built and where things stand:
+
+THE EVENT:
+- Freestyle Explosion 3 — April 25, 2026, 8PM–12AM EST
+- Venue: The Krates at The Grove, Wesley Chapel, FL
+- Expected in-person crowd: 2,000+
+- PPV stream: blackmarker.tv/FE3 (browser only — phone, tablet, computer — no app)
+- Pricing: $10 early bird through April 20th, then $15
+
+THE ARTISTS:
+- DJ Frankie Cutlass — Headliner. Grammy-nominated DJ/producer from East Harlem NYC. 465,736 Facebook fan page likes. Named "Son of Puerto Rico" by the National Puerto Rican Day Parade in 2024. His song "Puerto Rico" is a cultural anthem for this audience.
+- Hanson & Davis — Performing "Hungry for Your Love" (released 1986, a top freestyle classic). NOTE: This is NOT the pop band Hanson — this is Hanson & Davis, the East Coast freestyle duo. Always clarify this in copy.
+- DJ C-4 — DJ Carlos C4 Ramos, NYC-based freestyle DJ with an extensive Mixcloud catalog.
+
+BUSINESS STRUCTURE:
+- BlackMarker.TV presents the PPV and owns the stream revenue
+- Nico Brown Productions is the main event promoter and owns the in-person event
+- All posts are credited: "Presented by BlackMarker.TV | Nico Brown Productions"
+
+TARGET AUDIENCE:
+- Core: Ages 45–60, predominantly Puerto Rican, Dominican, Cuban, and African American urban communities
+- Secondary: Ages 35–44
+- Primary platform: Facebook (non-negotiable — this audience lives here)
+- Key markets: Tampa Bay/Wesley Chapel (local), New York/NJ (PPV #1), Miami/South Florida (PPV #2), Orlando/Central FL (PPV #3), Puerto Rico (PPV #4)
+
+WHAT'S ALREADY DONE:
+- Event page live at blackmarker.tv/FE3
+- PPV paywall, logins, and checkout all configured
+- Production hardware in-house, commentators confirmed
+- Site calendar pointing to the event page
+- Nico Brown Productions already running social posts
+- Full marketing brief built (audience research, venue intel, PPV strategy, 10-day countdown)
+- 18 Facebook posts written in English and Spanglish across 5 phases
+- 4 Facebook group post templates written (freestyle fans, Latino/Puerto Rican groups, NY/NJ transplants in FL, local Wesley Chapel)
+- Automation plan built (copy buttons, Buffer scheduling, future Make/Meta API integration)
+
+WHAT STILL NEEDS TO HAPPEN (my team's responsibilities):
+- Schedule all 18 posts using Buffer or Meta Business Suite
+- Seed posts into 10+ Facebook groups (each tailored to that community — no copy-paste spam)
+- Submit event listings to Tampa Beacon, Patch, Wesley Chapel Community Website, Pasco News Online
+- Post on Nextdoor in Wesley Grove, Seven Oaks, Meadow Pointe, Chapel Pines, Carlyle neighborhoods
+- Seed YouTube comments on top Frankie Cutlass videos with the /FE3 link
+- Reach out to DJ Frankie Cutlass team for a post from his 465K Facebook fan page
+- Reach out to El Nuevo ZOL 97.1 FM / DJ Neko for radio mention
+- Reach out to @krateatthegrove for co-promotion
+- Build and publish the Facebook Event page for April 25
+- Get DJ C-4's social media handles for tagging
+- Day-of: shoot a crowd video 90 minutes before showtime — this is the most important marketing asset of the event
+
+STRATEGY APPROACH:
+- Organic outreach first, paid ads minimal (small Facebook boost budget only)
+- Only boost posts that are already getting organic engagement
+- Facebook group posts must be done manually — cannot be automated per Facebook ToS
+- WhatsApp, Nextdoor, and YouTube comments also manual — copy buttons in the brief make this fast
+- The $10 early bird ends April 20th — all Phase 1 and 2 posts need to be live before that date
+
+I'm ready to start working through my responsibilities. Please help me prioritize what to tackle first and build out any additional materials I need for my team.</div>
+    </div>
+  </div>
+
+  <!-- KEY DATES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div class="section-title">Key Dates at a Glance</div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Date</th><th>What Happens</th><th>Priority</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Apr 15–16</strong></td><td>Phase 1 launch posts go live — main announcement (English + Spanglish). Facebook group outreach begins.</td><td style="color:#e94560; font-weight:700;">URGENT</td></tr>
+        <tr><td><strong>Apr 17–19</strong></td><td>Phase 2 early bird urgency posts. Continue group seeding. Submit local media listings.</td><td style="color:#e94560; font-weight:700;">URGENT</td></tr>
+        <tr><td><strong>Apr 20</strong></td><td>Last day at $10 — post morning AND evening. Price goes to $15 at midnight.</td><td style="color:#e94560; font-weight:700;">URGENT</td></tr>
+        <tr><td><strong>Apr 21</strong></td><td>Phase 3 — "Early bird is gone, tickets are $15" post.</td><td style="color:#f59e0b; font-weight:700;">HIGH</td></tr>
+        <tr><td><strong>Apr 22</strong></td><td>Phase 4 — "3 days out" posts (English + Spanglish).</td><td style="color:#f59e0b; font-weight:700;">HIGH</td></tr>
+        <tr><td><strong>Apr 24</strong></td><td>Phase 4 — "Tomorrow night" posts (English + Spanglish).</td><td style="color:#f59e0b; font-weight:700;">HIGH</td></tr>
+        <tr><td><strong>Apr 25 AM</strong></td><td>Phase 5 — "Today is the day" posts (English + Spanglish).</td><td style="color:#94a3b8; font-weight:700;">NORMAL</td></tr>
+        <tr><td><strong>Apr 25 ~6:30PM</strong></td><td>SHOOT AND POST the crowd arriving video. Most important asset of the campaign.</td><td style="color:#e94560; font-weight:700;">CRITICAL</td></tr>
+        <tr><td><strong>Apr 25 8PM</strong></td><td>"WE ARE LIVE" post. Stream is up at blackmarker.tv/FE3.</td><td style="color:#94a3b8; font-weight:700;">NORMAL</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div class="footer">
+  Freestyle Explosion 3 &nbsp;·&nbsp; Partner Handoff for Felix &nbsp;·&nbsp; Prepared April 15, 2026 &nbsp;·&nbsp; BlackMarker Media / BlackMarker.tv
+</div>
+
+<script>
+  function copyClaudePrompt() {
+    const text = document.getElementById('claudePrompt').innerText.trim();
+    navigator.clipboard.writeText(text).then(function () {
+      const btn = document.getElementById('claudeCopyBtn');
+      btn.innerHTML = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(function () {
+        btn.innerHTML = '&#128203; Copy Prompt';
+        btn.classList.remove('copied');
+      }, 2500);
+    });
+  }
+</script>
+</body>
+</html>

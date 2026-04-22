@@ -366,12 +366,13 @@ These are the strongest lines from research — proven language for this audienc
 - [x] All marketing copy uses blackmarker.tv/FE3 as CTA; browser-only access noted throughout
 
 **Still to do:**
-- [ ] Confirm $10 early bird pricing is live at blackmarker.tv/FE3 with April 20 deadline stepping to $15
-- [ ] Update purchase confirmation email to include browser access instructions ("Open blackmarker.tv/FE3 on your phone, tablet, or computer")
-- [ ] Reach out to DJ Frankie Cutlass team to coordinate post from his 465K Facebook fan page
+- [x] Confirm $10 early bird pricing is live at blackmarker.tv/FE3 with April 20 deadline stepping to $15
+- [x] Update purchase confirmation email to include browser access instructions ("Open blackmarker.tv/FE3 on your phone, tablet, or computer")
+- [ ] Contact Nico Brown to coordinate Frankie Cutlass Facebook fan page post (465K fans)
 - [ ] Reach out to El Nuevo ZOL 97.1 FM / DJ Neko for radio mention
 - [ ] Reach out to @krateatthegrove for co-promotion / social tag
-- [ ] Set up Meta Pixel on blackmarker.tv/FE3 for ad retargeting (if not already done)
+- [ ] Install Meta Pixel on blackmarker.tv/FE3 and configure Meta Business Suite
+- [ ] Launch Facebook paid boost ($10–$20/day on best-performing posts)
 - [ ] Build and publish Facebook Event page for April 25 with link to blackmarker.tv/FE3
 
 ---
