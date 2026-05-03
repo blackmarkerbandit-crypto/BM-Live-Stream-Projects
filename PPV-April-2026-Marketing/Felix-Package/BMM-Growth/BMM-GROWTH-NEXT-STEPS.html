@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMM Growth — Next Steps & Roles | May 3, 2026</title>
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --surface: #1a1a1a;
+    --surface2: #242424;
+    --border: #2e2e2e;
+    --text: #f0f0f0;
+    --muted: #888;
+    --red: #e02020;
+    --amber: #f5a623;
+    --green: #27ae60;
+    --blue: #2980b9;
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    padding-bottom: 80px;
+  }
+
+  /* HEADER */
+  .header {
+    background: #111;
+    border-bottom: 2px solid var(--red);
+    padding: 24px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .logo {
+    width: 40px; height: 40px;
+    background: var(--red);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 18px; color: #fff;
+    flex-shrink: 0;
+  }
+  .header-title { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
+  .header-title span { color: var(--red); }
+  .header-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .date-badge {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* LAYOUT */
+  .container { max-width: 960px; margin: 0 auto; padding: 40px 32px; }
+
+  /* SECTION */
+  .section { margin-bottom: 48px; }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .section-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  /* ALERT BANNER */
+  .alert {
+    background: #1f1200;
+    border: 1px solid var(--amber);
+    border-left: 4px solid var(--amber);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-text { font-size: 14px; color: #f0d080; line-height: 1.5; }
+  .alert-text strong { color: #ffc84a; }
+
+  /* STATUS CARDS */
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .status-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+  .status-card .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .status-card .card-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .status-card .card-body { font-size: 13px; color: #bbb; line-height: 1.5; }
+  .status-card .card-action {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .label-amber { color: var(--amber); }
+  .label-green { color: var(--green); }
+  .label-blue { color: var(--blue); }
+
+  /* ROLE TABLE */
+  .role-table { width: 100%; border-collapse: collapse; }
+  .role-table thead tr {
+    background: var(--surface2);
+    border-bottom: 2px solid var(--border);
+  }
+  .role-table th {
+    padding: 12px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+  }
+  .role-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .role-table tbody tr:hover { background: var(--surface); }
+  .role-table td { padding: 14px 16px; font-size: 14px; vertical-align: top; }
+  .role-table td:first-child { font-weight: 700; color: #fff; white-space: nowrap; }
+  .role-table td .desc { color: var(--muted); font-size: 12px; margin-top: 3px; }
+  .owner-blank {
+    display: inline-block;
+    background: var(--surface2);
+    border: 1px dashed #444;
+    border-radius: 4px;
+    padding: 3px 14px;
+    font-size: 13px;
+    color: #555;
+    font-style: italic;
+  }
+
+  /* TRACK CARDS */
+  .track-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .track-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .track-card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .track-num {
+    width: 28px; height: 28px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; color: #fff;
+    flex-shrink: 0;
+  }
+  .track-card-header .track-name { font-size: 15px; font-weight: 700; color: #fff; }
+  .track-card-body { padding: 16px 20px; }
+  .track-card-body p { font-size: 13px; color: #bbb; margin-bottom: 12px; line-height: 1.5; }
+  .track-steps { list-style: none; padding: 0; }
+  .track-steps li {
+    font-size: 13px;
+    color: #ccc;
+    padding: 6px 0;
+    border-bottom: 1px solid #1e1e1e;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.4;
+  }
+  .track-steps li:last-child { border-bottom: none; }
+  .track-steps li::before {
+    content: "→";
+    color: var(--red);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .track-owner {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .track-owner-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .track-owner-name {
+    display: inline-block;
+    background: var(--surface2);
+    border: 1px dashed #444;
+    border-radius: 4px;
+    padding: 3px 12px;
+    font-size: 12px;
+    color: #555;
+    font-style: italic;
+  }
+
+  /* DEADLINE BOX */
+  .deadline-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .deadline-header {
+    background: var(--surface2);
+    padding: 14px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .deadline-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    gap: 16px;
+  }
+  .deadline-row:last-child { border-bottom: none; }
+  .deadline-when {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--amber);
+    white-space: nowrap;
+    min-width: 100px;
+    padding-top: 2px;
+  }
+  .deadline-when.green { color: var(--green); }
+  .deadline-what { font-size: 14px; color: #ddd; line-height: 1.5; }
+  .deadline-what .who { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* CALLOUT */
+  .callout {
+    background: #0e1a10;
+    border: 1px solid #27ae60;
+    border-left: 4px solid #27ae60;
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 32px;
+  }
+  .callout-title { font-size: 16px; font-weight: 800; color: #5ddb8a; margin-bottom: 6px; }
+  .callout-body { font-size: 14px; color: #a8ddb8; line-height: 1.6; }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 48px 0;
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 32px;
+    font-size: 12px;
+    color: #444;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="logo">B</div>
+    <div>
+      <div class="header-title">BMM <span>Growth</span> — Next Steps & Roles</div>
+      <div class="header-meta">Black Marker Media / BlackMarker.TV</div>
+    </div>
+  </div>
+  <div class="date-badge">Team Meeting — May 3, 2026</div>
+</div>
+
+<div class="container">
+
+  <!-- SECTION: WHERE WE ARE -->
+  <div class="section">
+    <div class="section-label">Context</div>
+    <div class="section-title">Where We Are Right Now</div>
+    <div class="section-sub">Day 27 of the 90-day Phase 1 plan. Two key conversations have happened. The clock is running.</div>
+
+    <div class="status-grid">
+      <div class="status-card">
+        <div class="card-label label-amber">In Progress</div>
+        <div class="card-title">IDVES Retainer</div>
+        <div class="card-body">Conversation happened. Decision is still pending on their end. This is a $18,000–$24,000/year opportunity compared to ~$12,300/year today.</div>
+        <div class="card-action label-amber">→ Needs a follow-up date set today</div>
+      </div>
+      <div class="status-card">
+        <div class="card-label label-amber">In Progress</div>
+        <div class="card-title">Studio Enterprise</div>
+        <div class="card-body">Conversation happened. They are considering options. Referral opportunities and expanded calendar both discussed. No answer yet.</div>
+        <div class="card-action label-amber">→ Needs a follow-up date set today</div>
+      </div>
+      <div class="status-card">
+        <div class="card-label label-blue">Confirm Today</div>
+        <div class="card-title">Build Packages Written?</div>
+        <div class="card-body">Three pricing tiers need to exist before any outreach begins. Starter ($1,000–$1,500/mo), Growth ($2,000–$2,500/mo), Pro ($3,500–$5,000/mo).</div>
+        <div class="card-action label-blue">→ Confirm status — if not done, assign today</div>
+      </div>
+    </div>
+
+    <div class="alert">
+      <div class="alert-icon">⚠</div>
+      <div class="alert-text"><strong>The Phase B targets are right now.</strong> The plan calls for 3 retainer clients signed by Day 30 and 5 venue pitches started by Day 30. Day 30 is one week away. If we are not actively working those targets, today is the reset point — either recommit to the timeline or adjust it with eyes open.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION: THREE TRACKS -->
+  <div class="section">
+    <div class="section-label">Growth Tracks</div>
+    <div class="section-title">The Three Tracks That Need an Owner</div>
+    <div class="section-sub">Each track needs one person responsible. Not a group effort — one name, one owner.</div>
+
+    <div class="track-grid">
+
+      <div class="track-card">
+        <div class="track-card-header">
+          <div class="track-num">1</div>
+          <div class="track-name">Client Acquisition</div>
+        </div>
+        <div class="track-card-body">
+          <p>Land the first 3 build retainer clients. Target: $4,500–$6,000 MRR added. This is outreach, conversations, and closing — not passive.</p>
+          <ul class="track-steps">
+            <li>List 10 warm contacts who have paid, referred, or expressed interest</li>
+            <li>Send a personal (not bulk) message to each — offer a 30-minute call</li>
+            <li>Quote from the Build package tiers</li>
+            <li>3 signed retainer agreements by Day 30</li>
+          </ul>
+          <div class="track-owner">
+            <span class="track-owner-label">Owner</span>
+            <span class="track-owner-name">Assign today</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="track-card">
+        <div class="track-card-header">
+          <div class="track-num">2</div>
+          <div class="track-name">Venue Produce Retainers</div>
+        </div>
+        <div class="track-card-body">
+          <p>Identify and pitch 5 venues for recurring production retainers. Target: $10,000–$15,000 MRR from 5 venues. This is the largest revenue lever in the plan.</p>
+          <ul class="track-steps">
+            <li>Identify 5 venue targets: churches, sports leagues, music venues, fitness studios, cultural events</li>
+            <li>Pitch: "Flat monthly rate = priority scheduling + consistent quality + simpler billing"</li>
+            <li>Show the math — retainer saves them money vs. per-event billing</li>
+            <li>First 2 signed by Day 60</li>
+          </ul>
+          <div class="track-owner">
+            <span class="track-owner-label">Owner</span>
+            <span class="track-owner-name">Assign today</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="track-card">
+        <div class="track-card-header">
+          <div class="track-num">3</div>
+          <div class="track-name">BlackMarker.TV Programming</div>
+        </div>
+        <div class="track-card-body">
+          <p>Lock 2–3 anchor shows with fixed weekly schedules. A show that runs every Thursday at 8PM for 6 months builds an audience. A show that runs when it's convenient does not.</p>
+          <ul class="track-steps">
+            <li>Identify 2–3 show concepts that can run consistently with current resources</li>
+            <li>Confirm a committed, reliable host for each</li>
+            <li>Publish the schedule publicly — commitment is the product</li>
+            <li>Running consistently by Day 30</li>
+          </ul>
+          <div class="track-owner">
+            <span class="track-owner-label">Owner</span>
+            <span class="track-owner-name">Assign today</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION: FOLLOW-UPS -->
+  <div class="section">
+    <div class="section-label">Open Conversations</div>
+    <div class="section-title">Follow-Ups That Need a Date</div>
+    <div class="section-sub">Don't let "they're considering" sit without a check-in on the calendar.</div>
+
+    <div class="deadline-box">
+      <div class="deadline-header">Who — What — By When</div>
+      <div class="deadline-row">
+        <div class="deadline-when">This Week</div>
+        <div class="deadline-what">
+          Follow up with IDVES — check on their decision, keep the conversation warm
+          <div class="who">Owner: _____________ &nbsp;|&nbsp; Date: _____________</div>
+        </div>
+      </div>
+      <div class="deadline-row">
+        <div class="deadline-when">This Week</div>
+        <div class="deadline-what">
+          Follow up with Studio Enterprise — check on options they're considering, probe for referrals
+          <div class="who">Owner: _____________ &nbsp;|&nbsp; Date: _____________</div>
+        </div>
+      </div>
+      <div class="deadline-row">
+        <div class="deadline-when">Today</div>
+        <div class="deadline-what">
+          Confirm build packages exist — if not, one person writes a draft by end of week. One day of work.
+          <div class="who">Owner: _____________ &nbsp;|&nbsp; Done by: Friday May 8</div>
+        </div>
+      </div>
+      <div class="deadline-row">
+        <div class="deadline-when">Day 30 (May 6)</div>
+        <div class="deadline-what">
+          3 build retainer clients signed — outreach needs to be happening now
+          <div class="who">Owner: _____________</div>
+        </div>
+      </div>
+      <div class="deadline-row">
+        <div class="deadline-when">Day 30 (May 6)</div>
+        <div class="deadline-what">
+          5 venue produce retainer targets identified and pitched
+          <div class="who">Owner: _____________</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION: THE CRITICAL ROLE -->
+  <div class="section">
+    <div class="section-label">Structural Risk</div>
+    <div class="section-title">The Role We Probably Don't Have</div>
+
+    <div class="callout">
+      <div class="callout-title">We need a dedicated business development point person.</div>
+      <div class="callout-body">Every item in this plan — outreach, follow-up, retainer pitches, programming — requires someone with dedicated bandwidth. The biggest risk to the BMM Growth plan is that all of this lands on one person who is also running production and NYC Parade Weekend simultaneously. Even part-time capacity focused exclusively on business development moves the needle faster than everyone doing a little of it. Name that person today.</div>
+    </div>
+
+    <div class="role-table" style="border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;">
+      <table class="role-table" style="border:none;">
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Responsible For</th>
+            <th>Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Business Development Lead
+              <div class="desc">Part-time or full-time</div>
+            </td>
+            <td style="color:#bbb; font-size:13px;">Client outreach, retainer pitches, follow-ups on IDVES and Studio Enterprise, pipeline management</td>
+            <td><span class="owner-blank">Assign today</span></td>
+          </tr>
+          <tr>
+            <td>
+              Programming Director
+              <div class="desc">BlackMarker.TV</div>
+            </td>
+            <td style="color:#bbb; font-size:13px;">Anchor show lineup, host commitments, weekly schedule, consistency enforcement</td>
+            <td><span class="owner-blank">Assign today</span></td>
+          </tr>
+          <tr>
+            <td>
+              PPV / Community Outreach
+              <div class="desc">Per event</div>
+            </td>
+            <td style="color:#bbb; font-size:13px;">Facebook group seeding, community posting, watch party promotion — their only job during event week</td>
+            <td><span class="owner-blank">Assign today</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION: REVENUE REMINDER -->
+  <div class="section">
+    <div class="section-label">The Numbers</div>
+    <div class="section-title">Why This Matters</div>
+    <div class="section-sub">From the BMM Growth Phase 1 plan.</div>
+
+    <div class="deadline-box">
+      <div class="deadline-header">Revenue Targets by Milestone</div>
+      <div class="deadline-row">
+        <div class="deadline-when" style="color:var(--muted);">Baseline</div>
+        <div class="deadline-what">~$60,600 ARR — where we started on April 6</div>
+      </div>
+      <div class="deadline-row">
+        <div class="deadline-when label-amber">IDVES Signed</div>
+        <div class="deadline-what">+$5,700–$11,700/year from one retainer conversation</div>
+      </div>
+      <div class="deadline-row">
+        <div class="deadline-when label-amber">3 Build Retainers</div>
+        <div class="deadline-what">+$54,000–$72,000 ARR — target: Day 30</div>
+      </div>
+      <div class="deadline-row">
+        <div class="deadline-when label-amber">5 Venue Retainers</div>
+        <div class="deadline-what">+$120,000–$180,000 ARR — target: Day 75</div>
+      </div>
+      <div class="deadline-row">
+        <div class="deadline-when label-green">Year 1 Target</div>
+        <div class="deadline-what" style="color:#5ddb8a; font-weight:700;">$270,000–$432,000 ARR</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Black Marker Media / BlackMarker.TV &nbsp;·&nbsp; BMM Growth Plan — Team Meeting May 3, 2026
+</div>
+
+</body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>East 116th Street — Tactical Festival Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a1a2e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 24px;
+    font-family: Arial, sans-serif;
+  }
+  svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  }
+  p {
+    color: #aaa;
+    font-size: 12px;
+    margin-top: 10px;
+    font-family: monospace;
+  }
+</style>
+</head>
+<body>
+
+<svg viewBox="0 0 1240 880" width="1240" height="880"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="Arial, Helvetica, sans-serif">
+
+  <defs>
+    <!-- Arrowhead for load-in route -->
+    <marker id="arrowGreen" markerWidth="10" markerHeight="8"
+            refX="9" refY="4" orient="auto">
+      <polygon points="0 0, 10 4, 0 8" fill="#16a34a"/>
+    </marker>
+    <!-- Arrowhead for walking paths -->
+    <marker id="arrowBlue" markerWidth="9" markerHeight="7"
+            refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <!-- Drop shadow filter -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="1" dy="1" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- BACKGROUND                                                  -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <rect width="1240" height="880" fill="#f4f0e6"/>
+  <rect x="12" y="12" width="1216" height="856" fill="none"
+        stroke="#8B7355" stroke-width="2"/>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- TITLE BAR                                                   -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <rect x="12" y="12" width="1216" height="62" fill="#1a1a2e"/>
+  <text x="620" y="41" text-anchor="middle" font-size="21"
+        font-weight="bold" fill="white" letter-spacing="2.5">
+    EAST 116TH STREET — TACTICAL FESTIVAL MAP
+  </text>
+  <text x="620" y="61" text-anchor="middle" font-size="12"
+        fill="#94a3b8" letter-spacing="1.5">
+    East Harlem, NYC  ·  Festival Crew Planning Reference  ·  April 2026
+  </text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- CITY BLOCK FILLS (grid background)                         -->
+  <!-- Avenues x: Park=148, Lex=368, 3rd=628, 2nd=888            -->
+  <!-- Streets y: 119=125, 118=198, 117=272, 116=420, 115=542    -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- 118th → 117th row -->
+  <rect x="153" y="202" width="210" height="65" fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="373" y="202" width="250" height="65" fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="633" y="202" width="250" height="65" fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="893" y="202" width="120" height="65" fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="23"  y="202" width="120" height="65" fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+
+  <!-- 117th → 116th row (festval-zone blocks slightly tinted) -->
+  <rect x="153" y="276" width="210" height="139" fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="373" y="276" width="250" height="139" fill="#e9e0cc" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="633" y="276" width="250" height="139" fill="#e9e0cc" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="893" y="276" width="120" height="139" fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="23"  y="276" width="120" height="139" fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+
+  <!-- 116th → 115th row (festival-zone blocks slightly tinted) -->
+  <rect x="153" y="428" width="210" height="109" fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="373" y="428" width="250" height="109" fill="#e9e0cc" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="633" y="428" width="250" height="109" fill="#e9e0cc" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="893" y="428" width="120" height="109" fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="23"  y="428" width="120" height="109" fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+
+  <!-- 115th → 114th row -->
+  <rect x="153" y="546" width="210" height="90"  fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="373" y="546" width="250" height="90"  fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="633" y="546" width="250" height="90"  fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="893" y="546" width="120" height="90"  fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+  <rect x="23"  y="546" width="120" height="90"  fill="#ede8da" stroke="#d4cfc0" stroke-width="0.8"/>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- FESTIVAL ZONE HIGHLIGHT                                     -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <rect x="363" y="404" width="530" height="32" fill="#fde68a" opacity="0.80"/>
+  <!-- Border dashes -->
+  <rect x="363" y="404" width="530" height="32" fill="none"
+        stroke="#d97706" stroke-width="2" stroke-dasharray="12,6"/>
+
+  <!-- Festival zone label (above the highlight band) -->
+  <rect x="395" y="388" width="420" height="18" fill="#fde68a" opacity="0.85" rx="3"/>
+  <text x="607" y="401" text-anchor="middle" font-size="12"
+        font-weight="bold" fill="#92400e" letter-spacing="1.2">
+    ★  116TH STREET FESTIVAL ZONE  ★
+  </text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- STREETS  (E–W horizontal lines)                            -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- E 119th St -->
+  <line x1="23" y1="125" x2="1217" y2="125" stroke="#c0bba8" stroke-width="1.5"/>
+  <!-- E 118th St -->
+  <line x1="23" y1="198" x2="1217" y2="198" stroke="#c0bba8" stroke-width="1.5"/>
+  <!-- E 117th St -->
+  <line x1="23" y1="272" x2="1217" y2="272" stroke="#8a8070" stroke-width="2"/>
+  <!-- E 116th St — MAIN -->
+  <line x1="23" y1="420" x2="1217" y2="420" stroke="#1a1a2e" stroke-width="9"/>
+  <!-- E 115th St -->
+  <line x1="23" y1="542" x2="1217" y2="542" stroke="#8a8070" stroke-width="2"/>
+  <!-- E 114th St -->
+  <line x1="23" y1="636" x2="1217" y2="636" stroke="#c0bba8" stroke-width="1.5"/>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- AVENUES  (N–S vertical lines)                              -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- Park Ave -->
+  <line x1="148" y1="82" x2="148" y2="780" stroke="#2d3748" stroke-width="5"/>
+  <!-- Lexington Ave -->
+  <line x1="368" y1="82" x2="368" y2="780" stroke="#2d3748" stroke-width="5"/>
+  <!-- 3rd Ave -->
+  <line x1="628" y1="82" x2="628" y2="780" stroke="#2d3748" stroke-width="5"/>
+  <!-- 2nd Ave -->
+  <line x1="888" y1="82" x2="888" y2="780" stroke="#2d3748" stroke-width="5"/>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- AVENUE LABELS (top of map)                                 -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <text x="148" y="112" text-anchor="middle" font-size="11.5"
+        font-weight="bold" fill="#1e293b">PARK AVE</text>
+  <text x="368" y="112" text-anchor="middle" font-size="11.5"
+        font-weight="bold" fill="#1e293b">LEXINGTON AVE</text>
+  <text x="628" y="112" text-anchor="middle" font-size="11.5"
+        font-weight="bold" fill="#1e293b">3RD AVE</text>
+  <text x="888" y="112" text-anchor="middle" font-size="11.5"
+        font-weight="bold" fill="#1e293b">2ND AVE</text>
+
+  <!-- Avenue labels bottom -->
+  <text x="148" y="798" text-anchor="middle" font-size="10" fill="#475569">PARK AVE</text>
+  <text x="368" y="798" text-anchor="middle" font-size="10" fill="#475569">LEXINGTON AVE</text>
+  <text x="628" y="798" text-anchor="middle" font-size="10" fill="#475569">3RD AVE</text>
+  <text x="888" y="798" text-anchor="middle" font-size="10" fill="#475569">2ND AVE</text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- STREET LABELS                                               -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- Right side -->
+  <text x="1222" y="129" font-size="10" fill="#888">E 119TH ST</text>
+  <text x="1222" y="202" font-size="10" fill="#888">E 118TH ST</text>
+  <text x="1222" y="276" font-size="10" fill="#666">E 117TH ST</text>
+  <text x="1222" y="424" font-size="12.5" font-weight="bold" fill="#1a1a2e">E 116TH ST</text>
+  <text x="1222" y="546" font-size="10" fill="#666">E 115TH ST</text>
+  <text x="1222" y="640" font-size="10" fill="#888">E 114TH ST</text>
+  <!-- Left side -->
+  <text x="18" y="424" text-anchor="end" font-size="12.5" font-weight="bold" fill="#1a1a2e">E 116TH ST</text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- LOAD-IN ROUTE — bold green arrow down Park Ave             -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- Thick green arrow body (Park Ave x=148, from ~y=135 to y=408) -->
+  <line x1="148" y1="136" x2="148" y2="408"
+        stroke="#16a34a" stroke-width="8"
+        marker-end="url(#arrowGreen)"/>
+
+  <!-- Rotated label alongside Park Ave -->
+  <text transform="translate(128,310) rotate(-90)"
+        text-anchor="middle" font-size="10.5" font-weight="bold"
+        fill="#15803d" letter-spacing="1.2">
+    ▼  RECOMMENDED LOAD-IN ROUTE
+  </text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- WALKING PATHS — dotted blue arrows to festival entrance    -->
+  <!-- Festival entrance = Lex Ave at 116th (368, 420)            -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- LAZ → east along 116th to Lex (drawn OVER the thick street) -->
+  <line x1="102" y1="420" x2="358" y2="420"
+        stroke="#60a5fa" stroke-width="3.5"
+        stroke-dasharray="10,6"
+        marker-end="url(#arrowBlue)"/>
+
+  <!-- SP+ → north on Park Ave → east on 116th (slightly below 116th center) -->
+  <polyline points="162,488 162,430 360,430"
+            fill="none" stroke="#60a5fa" stroke-width="3"
+            stroke-dasharray="8,5"
+            marker-end="url(#arrowBlue)"/>
+
+  <!-- Impark → south on Park Ave (overlaps load-in arrow) → east on 116th -->
+  <!-- Just show the eastward segment — the downward leg IS the load-in route -->
+  <line x1="156" y1="413" x2="360" y2="413"
+        stroke="#60a5fa" stroke-width="2.5"
+        stroke-dasharray="7,5" opacity="0.8"
+        marker-end="url(#arrowBlue)"/>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- STAGE MARKERS                                               -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- ── SECONDARY STAGE (116th & Lex Ave) ── -->
+  <rect x="350" y="407" width="36" height="26" rx="4"
+        fill="#dc2626" stroke="white" stroke-width="2" filter="url(#shadow)"/>
+  <text x="368" y="423" text-anchor="middle" font-size="8.5"
+        fill="white" font-weight="bold">STAGE</text>
+  <!-- Connector -->
+  <line x1="368" y1="282" x2="368" y2="405"
+        stroke="#dc2626" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+  <!-- Label in north block -->
+  <text x="368" y="296" text-anchor="middle" font-size="12"
+        font-weight="bold" fill="#dc2626">SECONDARY</text>
+  <text x="368" y="310" text-anchor="middle" font-size="12"
+        font-weight="bold" fill="#dc2626">STAGE</text>
+
+  <!-- ── MAIN STAGE (116th & 3rd Ave) ── -->
+  <rect x="608" y="405" width="40" height="30" rx="4"
+        fill="#dc2626" stroke="white" stroke-width="2" filter="url(#shadow)"/>
+  <text x="628" y="418" text-anchor="middle" font-size="8.5"
+        fill="white" font-weight="bold">MAIN</text>
+  <text x="628" y="430" text-anchor="middle" font-size="8.5"
+        fill="white" font-weight="bold">STAGE</text>
+  <!-- Connector -->
+  <line x1="628" y1="282" x2="628" y2="403"
+        stroke="#dc2626" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+  <!-- Label in north block -->
+  <text x="628" y="296" text-anchor="middle" font-size="12"
+        font-weight="bold" fill="#dc2626">MAIN STAGE</text>
+
+  <!-- ── COMMUNITY STAGE (mid-block between 3rd and 2nd, x≈756) ── -->
+  <rect x="740" y="407" width="36" height="26" rx="4"
+        fill="#dc2626" stroke="white" stroke-width="2" filter="url(#shadow)"/>
+  <text x="758" y="423" text-anchor="middle" font-size="8.5"
+        fill="white" font-weight="bold">STAGE</text>
+  <!-- Connector -->
+  <line x1="758" y1="282" x2="758" y2="405"
+        stroke="#dc2626" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+  <!-- Label in north block -->
+  <text x="758" y="296" text-anchor="middle" font-size="12"
+        font-weight="bold" fill="#dc2626">COMMUNITY</text>
+  <text x="758" y="310" text-anchor="middle" font-size="12"
+        font-weight="bold" fill="#dc2626">STAGE</text>
+
+  <!-- Stage labels BELOW 116th (confirmation callouts south of street) -->
+  <text x="368" y="455" text-anchor="middle" font-size="9.5"
+        fill="#991b1b">◂ Secondary Stage</text>
+  <text x="628" y="455" text-anchor="middle" font-size="9.5"
+        fill="#991b1b">◂ Main Stage ▸</text>
+  <text x="758" y="455" text-anchor="middle" font-size="9.5"
+        fill="#991b1b">Community Stage ▸</text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- PARKING MARKERS                                             -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- ── LAZ Parking (west of festival zone, on 116th) ── -->
+  <rect x="62" y="407" width="34" height="26" rx="4"
+        fill="#1e40af" stroke="white" stroke-width="2" filter="url(#shadow)"/>
+  <text x="79" y="425" text-anchor="middle" font-size="15"
+        fill="white" font-weight="bold">P</text>
+  <!-- Label below marker -->
+  <text x="79" y="445" text-anchor="middle" font-size="9.5"
+        font-weight="bold" fill="#1e3a8a">LAZ PARKING</text>
+  <text x="79" y="457" text-anchor="middle" font-size="8.5"
+        fill="#334155">49 W 116TH ST</text>
+
+  <!-- ── SP+ Parking (Park Ave & 116th, south) ── -->
+  <rect x="128" y="478" width="34" height="26" rx="4"
+        fill="#1e40af" stroke="white" stroke-width="2" filter="url(#shadow)"/>
+  <text x="145" y="496" text-anchor="middle" font-size="15"
+        fill="white" font-weight="bold">P</text>
+  <!-- Label right -->
+  <text x="166" y="492" font-size="9.5" font-weight="bold" fill="#1e3a8a">SP+ PARKING</text>
+  <text x="166" y="504" font-size="8.5" fill="#334155">1292 PARK AVE</text>
+
+  <!-- ── Impark Lot 73 (north on Park Ave) ── -->
+  <rect x="128" y="206" width="34" height="26" rx="4"
+        fill="#1e40af" stroke="white" stroke-width="2" filter="url(#shadow)"/>
+  <text x="145" y="224" text-anchor="middle" font-size="15"
+        fill="white" font-weight="bold">P</text>
+  <!-- Label right -->
+  <text x="166" y="218" font-size="9.5" font-weight="bold" fill="#1e3a8a">IMPARK LOT 73</text>
+  <text x="166" y="230" font-size="8.5" fill="#334155">1752 PARK AVE</text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- NORTH INDICATOR                                             -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <g transform="translate(1104, 724)">
+    <circle cx="0" cy="0" r="34" fill="white" stroke="#94a3b8"
+            stroke-width="1.5" opacity="0.95"/>
+    <!-- N arrow (solid pointing up = north) -->
+    <polygon points="0,-26 5,-8 0,-14 -5,-8" fill="#1a1a2e"/>
+    <polygon points="0,26 5,8 0,14 -5,8"    fill="#b0b8c8"/>
+    <!-- Cross lines -->
+    <line x1="0" y1="-26" x2="0" y2="26" stroke="#c8cdd4" stroke-width="1" opacity="0.4"/>
+    <line x1="-26" y1="0" x2="26" y2="0" stroke="#c8cdd4" stroke-width="1" opacity="0.4"/>
+    <!-- Cardinal labels -->
+    <text x="0"   y="-33" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a1a2e">N</text>
+    <text x="0"   y="44"  text-anchor="middle" font-size="10" fill="#888">S</text>
+    <text x="-44" y="4"   text-anchor="middle" font-size="10" fill="#888">W</text>
+    <text x="44"  y="4"   text-anchor="middle" font-size="10" fill="#888">E</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- LEGEND BOX                                                  -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <rect x="912" y="620" width="180" height="172" rx="6"
+        fill="white" stroke="#94a3b8" stroke-width="1.5" opacity="0.97"/>
+  <rect x="912" y="620" width="180" height="26" rx="6"
+        fill="#1a1a2e"/>
+  <rect x="912" y="634" width="180" height="12" fill="#1a1a2e"/>
+  <text x="1002" y="637" text-anchor="middle" font-size="11.5"
+        font-weight="bold" fill="white" letter-spacing="1.5">LEGEND</text>
+  <line x1="922" y1="650" x2="1082" y2="650" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Stage -->
+  <rect x="924" y="657" width="18" height="13" rx="2" fill="#dc2626"/>
+  <text x="948" y="668" font-size="10" fill="#1e293b">Stage Location</text>
+
+  <!-- Parking -->
+  <rect x="924" y="677" width="18" height="13" rx="2" fill="#1e40af"/>
+  <text x="948" y="688" font-size="10" fill="#1e293b">Parking Facility</text>
+
+  <!-- Festival Zone -->
+  <rect x="924" y="697" width="18" height="11" rx="1"
+        fill="#fde68a" stroke="#d97706" stroke-width="1"/>
+  <text x="948" y="707" font-size="10" fill="#1e293b">Festival Zone</text>
+
+  <!-- Walking path -->
+  <line x1="924" y1="723" x2="942" y2="723" stroke="#60a5fa"
+        stroke-width="2.5" stroke-dasharray="5,3"/>
+  <text x="948" y="727" font-size="10" fill="#1e293b">Walking Route</text>
+
+  <!-- Load-in route -->
+  <line x1="924" y1="743" x2="942" y2="743" stroke="#16a34a" stroke-width="5"/>
+  <text x="948" y="747" font-size="10" fill="#1e293b">Load-In Route</text>
+
+  <!-- 116th St line -->
+  <line x1="924" y1="763" x2="942" y2="763" stroke="#1a1a2e" stroke-width="5"/>
+  <text x="948" y="767" font-size="10" fill="#1e293b">E 116th St (Main)</text>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- SCALE BAR (approximate)                                    -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <g transform="translate(34, 760)">
+    <text x="60" y="-9" text-anchor="middle" font-size="9"
+          fill="#64748b" letter-spacing="0.5">APPROX. SCALE</text>
+    <line x1="0"   y1="0" x2="120" y2="0" stroke="#475569" stroke-width="1.8"/>
+    <line x1="0"   y1="-5" x2="0"   y2="5" stroke="#475569" stroke-width="1.8"/>
+    <line x1="60"  y1="-4" x2="60"  y2="4" stroke="#475569" stroke-width="1.5"/>
+    <line x1="120" y1="-5" x2="120" y2="5" stroke="#475569" stroke-width="1.8"/>
+    <text x="0"   y="16" text-anchor="middle" font-size="9" fill="#475569">0</text>
+    <text x="60"  y="16" text-anchor="middle" font-size="9" fill="#475569">~250 ft</text>
+    <text x="120" y="16" text-anchor="middle" font-size="9" fill="#475569">~500 ft</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- FOOTER NOTE                                                 -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <text x="620" y="844" text-anchor="middle" font-size="9" fill="#94a3b8">
+    For crew planning use only. Distances approximate. Confirm parking availability and load-in clearances before event day.
+  </text>
+
+</svg>
+
+<p>Open in browser · Print at 100% scale for full-size reference</p>
+</body>
+</html>
