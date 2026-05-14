@@ -12,20 +12,20 @@
 
 ### Core Values
 
-1. **Earn It Every Time**
-We own our results and show up ready to achieve them. No excuses before, during, or after. Reliability is how we prove it.
+1. **Brand Over Everything**
+No one is bigger than what we're building. Every role, every decision, every move feeds something greater.
 
-2. **Always Forward**
-We pursue what's next before it arrives. Cutting-edge isn't a style — it's a standard. Stagnation isn't an option.
+2. **Say the Hard Thing**
+We don't dance around it. Speak directly, address conflict in the open, and skip the politics.
 
-3. **Your Win Is Our Win**
-We're not vendors — we're vested in the result. We handle everything on our end completely so clients only feel the outcome, never the effort. We succeed when they do.
+3. **Protect the Room**
+Look out for your teammates and treat everyone — team, talent, audience — with real dignity. Respect isn't a perk, it's the standard.
 
-4. **Radical Honesty**
-We say what we mean and mean what we say. No yes-men, no filters, no politics. Feedback flows in every direction and everyone takes it without ego.
+4. **Hungry, Not Hourly**
+We're driven by growth, not just a paycheck. Do great work because it builds something — the money follows the mission.
 
-5. **Brand Before Self**
-We play for the team win, not personal credit. Individual missions don't override the collective goal — and alignment with this is a requirement for anyone who joins.
+5. **Break the Template**
+We challenge the default and own it. Find the better path, make the bold call when it counts, and never settle for running the same play everyone else is running.
 
 ---
 
@@ -90,7 +90,7 @@ Discovery → Blueprint → Scout → Build → Go Live → Debrief → Partners
 - Sign 3–5 retainer clients
 - Launch and stabilize the BMB website
 - Execute at least 2 PPV events with real audience traction
-- BlackMarker.tv — define the model and launch a beta version or pilot
+- BlackMarker.tv — full platform revamp live by late August 2026. Four-tier model: The Free Loop (free/ad-supported), BlackMarker+ ($7.99/mo or $79/yr), PPV ($10–$20/event), Brand Partner Subscription ($299–$599/mo flat rate). All 5 anchor shows running on a fixed weekly schedule at launch.
 - Hire or contract at least one core team member into a defined seat
 - Complete and document 3 core processes
 
@@ -100,20 +100,20 @@ Discovery → Blueprint → Scout → Build → Go Live → Debrief → Partners
 
 | Rock | Owner |
 |---|---|
-| Launch the BMB website — live, functional, and converting | Eric |
-| Sign the first retainer client | Eric |
-| Execute one PPV event with a real marketing push behind it | Eric |
-| Define the BlackMarker.tv model — business model, platform structure, and revenue approach documented | Eric |
-| Lock in Studio Enterprise Q2 schedule — all upcoming graduation streams confirmed and contracted | Eric |
+| Launch the BMB website — live, functional, and converting *(Start: week of May 19 · Target: by June 7 — must be done before NYC departure June 10)* | Eric |
+| Launch retainer sales & marketing effort — Felix (lead), Sandra & Bibi (commission structure) · Gameplan due from Felix by May 26 · First retainer client target TBD once effort is in place | Eric / Felix |
+| ~~Execute one PPV event with a real marketing push behind it~~ ✓ DONE — Freestyle Explosion 3, April 25, 2026 | Eric |
+| BlackMarker.tv full revamp — pricing model defined, platform build start by July 1, target completion late August 2026 | Eric |
+| Studio Enterprise scheduling — ongoing, reactive (2–4 week notice window). June 12 unavailable (NYC trip). July and August dates expected. Confirm and contract each gig as they come in. | Eric |
 
 ---
 
 ### Issues List
 
-1. No retainer clients signed yet — revenue is almost entirely project-based and dependent on Studio Enterprise
-2. BMB website not live — no inbound lead generation
-3. PPV events generating near-zero revenue — no audience development strategy in place yet
-4. BlackMarker.tv undefined — model, monetization, and platform structure unresolved
-5. No Integrator — founder is carrying all seats simultaneously
+1. No retainer clients signed yet — sales & marketing effort being stood up; Felix leading with Sandra and Bibi on commission. Felix gameplan due May 26. First client target to be set once effort is in place.
+2. BMB website not live — build starts week of May 19, target completion June 7 (hard deadline: before NYC departure June 10)
+3. PPV audience development still a work in progress — FE3 (April 25) generated $190 in PPV revenue. Strategy needed for next event to grow that number meaningfully.
+4. BlackMarker.tv model defined — full revamp in progress. Build starts July 1, target completion late August 2026. Four-tier model: The Free Loop (free/ad-supported) → BlackMarker+ ($7.99/mo or $79/yr) → PPV ($10–$20/event) → Brand Partner Subscription ($299–$599/mo flat rate).
+5. Integrator — Eric serving as Integrator for now while the team and revenue base grow into a dedicated hire.
 6. No documented core processes — delivery depends on tribal knowledge
 7. Team structure undefined — no Accountability Chart built yet

@@ -9,10 +9,39 @@
 | Deadline | Item | Action |
 |---|---|---|
 | ~~APRIL 30, 2026~~ | ~~Parade float application~~ | **DONE — registered + orientation scheduled** |
-| ASAP | 116th Street vendor app | Call 212-348-8272 — confirm if still open |
+| ~~MAY 12 (TODAY)~~ | ~~NPRDP Orientation~~ | **ATTENDING TODAY — capture all requirements + deadlines** |
+| **MAY 15 (FRI)** | Group shots, images & logos to designer | **HARD DEADLINE — float/campaign design starts this week** |
+| **WEEK OF MAY 12** | Reserve car rental (NYC) | Travel + lodging confirmed; car rental is the remaining gap |
+| **WEEK OF MAY 12** | Set up billboard account | Target smaller 3rd-party Times Square adjacent boards (low-rate) |
+| **BY MAY 18 (MON)** | Joselito delivers both vendor tables for 116th St | Confirmed — Joselito securing tables |
+| **JUNE 2–4** | Permit & wristband pickup — **MANDATORY** | 109 E 125th St, NYC — 6:00–8:00pm each night. Staging assignment included in packet. |
 | ASAP | Insurance certificate | $1M+ GL required by NPRDP |
 | 3 weeks before | Walking contingent shirts ordered | 50 + spares |
 | 2–4 weeks before | Billboard creative submitted | Per OOH company file specs |
+
+---
+
+## OFFICIAL CONTINGENT NAME & DESCRIPTION
+
+**Name:** Black Marker TV — Celebrating Puerto Rican Pioneers
+
+**Description:** Built by those who broke barriers. Black Marker TV honors the fearless Puerto Rican trailblazers who shaped the arts, music, fashion, and media — featuring DJ Charlie Chase, Joselito Da Puppet, and Thirstin Howl the 3rd.
+
+---
+
+## CURRENT STATUS — MAY 12, 2026
+
+### Confirmed ✓
+- **Sound system & generator for Parade (Sunday)** — confirmed and reserved
+- **Lodging & travel** — confirmed ✓ | Car rental still needed — reserve this week
+- **Joselito securing both vendor tables for 116th St booth** — by Monday May 18
+- **NPRDP orientation** — attending today
+
+### Next Up (This Week)
+- [ ] Production mapping and detailed run-of-show for both days (Saturday festival + Sunday parade)
+- [ ] Float design and branding — all weekend campaign materials
+- [ ] Set up account with Times Square 3rd-party billboard company (low-rate adjacent boards)
+- [ ] Collect group shots, images, and logos — **due by Friday May 15** so design can start
 
 ---
 
@@ -78,29 +107,54 @@
 ### Administrative
 - [x] **COMPLETE:** Float application submitted to National Puerto Rican Day Parade, Inc.
 - [x] **COMPLETE:** Registered for first orientation
-- [ ] Attend orientation — note all requirements and deadlines communicated by NPRDP
+- [x] **DONE (May 12):** Attending NPRDP committee orientation today — capture all requirements, deadlines, and staging info
 - [ ] **URGENT — CALL THIS WEEK:** Submit vendor application for 116th Street Festival (June 13, 2026)
   - Call: 212-348-8272
   - As of Aug 30, 2024: retail vendors no longer need DCWP temp permit — but must apply to festival organizer and pay fees
   - Food vendors still need TFSE permit ($70/year)
+- [x] **CONFIRMED:** Joselito securing both vendor tables at 116th St booth — delivery by Monday May 18
+- [ ] **BY MONDAY MAY 18:** Joselito + Wil Sweets completing 116th Street vendor application and payment
 - [ ] Submit vendor tent application to 116th Street Festival organizers
 - [ ] Secure $1M+ general liability insurance certificate (parade float requirement)
-- [ ] Book flights and hotel — prices rise significantly the closer to parade weekend
-- [ ] Reserve cargo van or vehicle capable of transporting equipment (NYC — Ryder/Enterprise cargo van)
-- [ ] Confirm Joselito DaPuppet availability and contractual details for both events
+- [x] **CONFIRMED:** Flights and hotel booked ✓
+- [ ] **THIS WEEK:** Reserve car rental for NYC ground transport (cargo van — Ryder/Enterprise; need capacity for equipment)
+- [ ] Confirm Joselito DaPuppet contractual details for both events
 - [ ] Confirm DJ Charlie Chase booking and contract for parade float
-- [ ] Book billboard: contact Outfront Media for Times Square adjacent digital package
-- [ ] Commission billboard creative (10-second animated ad)
+- [ ] **THIS WEEK:** Set up account with Times Square 3rd-party billboard company (smaller companies, low-rate adjacent boards)
+- [ ] Commission billboard creative (10-second animated ad) — collect assets by **Friday May 15**
 
 ### Equipment Decisions
 - [ ] Inventory all existing equipment — cameras, audio, cables, laptop, encoders
 - [ ] Identify gaps and decide rent vs. buy for each gap
 - [ ] Reserve cellular bonding device (LiveU Solo+ rental or Teradek) for weekend
-- [ ] Source generators: NYC rental or ship/bring own
+- [x] **CONFIRMED:** Sound system & generator for Parade (Sunday 1500) reserved ✓
+- [ ] Confirm generator for 116th St Festival (Saturday) — source locally or bring own
 - [ ] Order branded tablecloth, banners, tent sidewalls
 - [ ] Order walking contingent shirts (50 + spares) — confirm sizing, design, print deadline
 
+### Design & Print — Weekend Campaign
+> All items below must share the same theme: **Black Marker TV — Celebrating Puerto Rican Pioneers** (float design, colors, talent imagery)
+
+- [ ] **DESIGN: 3x5 Promo Card** — design and print for handout at both events (116th St + Parade)
+  - Content: contingent name, BlackMarker.TV, talent, QR code or tune-in CTA
+  - Print quantity: TBD — enough for both event days
+  - Source printer once design is approved
+- [ ] **DECISION + DESIGN: Shirts**
+  - Decide: in-house (Bibi prints and presses) vs. 3rd-party vendor
+  - If in-house: get design to Bibi once approved; confirm her capacity and timeline
+  - If 3rd party: source vendor, get quote, confirm turnaround for delivery before June 13
+  - Design must match weekend campaign theme
+  - Quantity: 50 walking contingent + crew + extras (TBD)
+- [ ] **DESIGN: Times Square Billboard Ad**
+  - 10-second animated spot — talent photos (DJ Charlie Chase, Joselito Da Puppet, Thirstin Howl the 3rd), BlackMarker.TV logo, parade date/tune-in CTA
+  - Must match float theme visually
+  - Target run: week of June 13 (116th St Festival) through June 14 (Parade)
+  - Deliver creative to billboard company per their file specs once booked
+  - Confirm specs with company before design starts
+
 ### Production Pre-Production
+- [ ] **THIS WEEK:** Map out detailed production plan for both days — hour-by-hour run-of-show, crew assignments, gear positions for Saturday festival and Sunday parade
+- [ ] **THIS WEEK:** Collect all assets for design — group shots, talent images, logos — **due Friday May 15**
 - [ ] Design branded graphics package: lower thirds, bumper, intermission card, talent name cards
 - [ ] Set up stream keys on BlackMarker.TV for both events
 - [ ] Set up stream keys on YouTube Live and Facebook Live (simulcast)
@@ -117,7 +171,7 @@
 - [ ] Float design finalized and approved — what does the float look like?
 - [ ] Float builder / fabricator contracted if doing custom build
 - [ ] Flatbed trailer reserved — confirm dimensions and delivery to staging area
-- [ ] Walking contingent shirts ordered and confirmed delivery date
+- [ ] Shirt decision made (Bibi in-house vs. 3rd party) and order placed — confirm delivery before June 13
 - [ ] Walking contingent list finalized — 50 names confirmed
 - [ ] Billboard creative submitted to OOH company — confirm file specs and deadline
 - [ ] Paid digital ad creative produced (still images + short video for IG/FB/YouTube)

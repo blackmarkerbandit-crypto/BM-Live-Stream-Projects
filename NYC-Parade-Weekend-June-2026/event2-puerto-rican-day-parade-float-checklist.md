@@ -13,9 +13,11 @@
 | **Date** | **Sunday, June 14, 2026** |
 | **Location** | Fifth Avenue, Manhattan — 35 city blocks |
 | **Expected Spectators** | 1–2 million along the route |
-| **Theme** | "Celebrating Puerto Rican Pioneers" |
+| **Theme** | Black Marker TV — Celebrating Puerto Rican Pioneers |
+| **Contingent Name** | Black Marker TV — Celebrating Puerto Rican Pioneers |
+| **Contingent Description** | Built by those who broke barriers. Black Marker TV honors the fearless Puerto Rican trailblazers who shaped the arts, music, fashion, and media — featuring DJ Charlie Chase, Joselito Da Puppet, and Thirstin Howl the 3rd. |
 | **BMB Role** | Official parade float — BlackMarker.TV branded |
-| **Talent** | Joselito DaPuppet + DJ Charlie Chase |
+| **Talent** | DJ Charlie Chase, Joselito Da Puppet, Thirstin Howl the 3rd |
 | **Walking Contingent** | 50 people in branded shirts |
 | **Stream** | BlackMarker.TV + YouTube Live + Facebook Live |
 | **APPLICATION DEADLINE** | **April 30, 2026 — 23 days away** |
@@ -29,11 +31,15 @@
 - [x] **Registered for first orientation**
 - [ ] Attend orientation — confirm date and location from NPRDP
 - [x] **Float package selected and paid: Custom Float — $6,500** (8' × 28' × 13', custom signage and graphics, driver insurance included)
-- [ ] Confirm float participant number and staging assignment from NPRDP
-- [ ] Receive wristbands and permits for walking contingent from NPRDP (issued upon completion)
+- [ ] Confirm float participant number and staging assignment from NPRDP (included in wristband packet)
+- [ ] **MANDATORY — Pick up wristbands and permits in person:**
+  - **Location:** 109 East 125th Street, New York, NY 10035
+  - **Dates:** Tuesday June 2, Wednesday June 3, or Thursday June 4 — 6:00pm to 8:00pm
+  - Staging area assignment and timing is included in this packet — **cannot be renegotiated**
+  - **Assigned to: Wil Sweets**
 
 ### Insurance (Required)
-- [ ] Obtain $1,000,000+ general liability insurance certificate
+- [ ] **Verify with NPRDP (Miguel Guadalupe):** Is a separate GL insurance certificate required? Not mentioned in orientation — confirm before acting.
   - **Estimated cost: $300–$800** depending on coverage scope and provider
   - **Fastest options:**
     - **Thimble** (thimble.com) — event GL by the day; ~$100–$300/day; get a quote online in minutes
@@ -73,13 +79,18 @@
 - [ ] Confirm trailer rental company + delivery logistics to NYC staging area
 - [ ] Confirm trailer pickup vehicle — tractor/heavy truck required for 40ft trailer
 - [ ] Reserve or hire experienced parade float driver (must be comfortable driving large vehicle through dense crowds at 2–5 mph for 3+ hours)
+- [x] **DONE:** Email sent to NPRDP requesting two vehicle permits
+- [x] **DONE:** Parking reservation booked for BMB vehicle at end of parade route (Madison Ave, 80th–84th Streets)
+- [ ] Confirm receipt of two vehicle permits from NPRDP
+- [ ] **NO CLOSED VEHICLES allowed on the route** — all vehicles must be open/exposed with valid NPRDP permit
+- [ ] **Float staging entry: 6th Avenue at 44th–48th Streets** (NOT Madison Ave — that's for marching/non-float vehicles)
 - [ ] Confirm flatbed trailer has tie-down rails/anchor points for all float elements
 
 ### Float Design
 - [ ] Finalize visual design concept for "Celebrating Puerto Rican Pioneers" theme:
   - Suggested elements: Puerto Rican flag colors (red, white, blue), Star symbol, imagery of pioneers (cultural icons, Bronx hip-hop era references for Charlie Chase tie-in)
   - BlackMarker.TV branding integrated prominently
-  - Joselito DaPuppet and DJ Charlie Chase positioned on float visually
+  - DJ Charlie Chase, Joselito Da Puppet, and Thirstin Howl the 3rd all represented on float visually
 - [ ] Engage float builder or fabricator if doing custom elements (foam, steel frame, fabric)
 - [ ] Alternatively: Heavy vinyl banner/graphic wraps on flat platform + simple elevated DJ booth structure
 - [ ] Confirm float height clearance (stay under 13–14 feet to be safe along the route)
@@ -109,8 +120,9 @@
 ### Float Branding Elements
 - [ ] Large "BlackMarker.TV" banner (center/side of float) — vinyl, weatherproof
 - [ ] "Celebrating Puerto Rican Pioneers" text banner
-- [ ] Joselito DaPuppet name/branding (photo banner or LED if budget allows)
+- [ ] Joselito Da Puppet name/branding (photo banner or LED if budget allows)
 - [ ] DJ Charlie Chase name/branding
+- [ ] Thirstin Howl the 3rd name/branding
 - [ ] Puerto Rican flag prominently displayed
 - [ ] Float accent: lights (LED strip) for visual impact — battery or generator powered
 
@@ -240,19 +252,17 @@
 
 | Time | Task |
 |---|---|
-| 5:00–6:00 AM | Float arrives at staging area (typically 40s on Fifth Avenue) |
-| 6:00–7:00 AM | BMB crew at staging area; begin float setup and equipment check |
-| 7:00–8:00 AM | Generator running; full tech stack powered on; cameras mounted |
-| 8:00–9:00 AM | Walking contingent arrives at staging; attendance taken; shirts distributed |
+| 5:00–6:00 AM | Float arrives at staging area — enter via 6th Avenue at 44th–48th Streets |
+| **8:00 AM** | **BMB crew + sound guys meet at staging area — begin full setup** |
+| 8:00–9:00 AM | Generator running; full tech stack powered on; cameras mounted; sound check begins |
+| 9:00 AM | Walking contingent arrives at staging; attendance taken; shirts distributed |
 | 9:00 AM | Sound check: DJ + PA speakers + commentary mics + stream audio |
 | 9:30 AM | Test stream (private) — verify connectivity from staging area |
 | 10:00 AM | Float inspection by parade officials (have insurance + permit docs on hand) |
-| ~11:00 AM (TBC) | Parade begins — stream goes live (public) |
-| Parade Route | ~3–4 hours at parade pace; stream runs continuously |
+| **11:15 AM** | Parade begins — stream goes live (public) |
+| Parade Route | ~5 hours at parade pace (11:15 AM – 5:00 PM); stream runs continuously |
 | End of Route (79th St) | Proper stream sign-off; stop recording; float exits route |
-| Post-Parade | Float returned to staging/pickup area; equipment breakdown; team debrief |
-
-*Confirm all times with National Puerto Rican Day Parade, Inc. — official parade start time and staging call time varies year to year*
+| Post-Parade | NYPD guides breakdown to Madison Avenue at 80th–84th Streets; equipment breakdown; team debrief |
 
 ---
 
@@ -285,6 +295,20 @@
 | Float inspection failure | Know the requirements in advance; pre-check all structural/electrical elements day before |
 | Rain | Equipment on float in Pelican cases until needed; rain covers for all exposed gear; Charlie Chase and Joselito have shelter plan |
 | Driver issue | Have backup driver contact on standby; confirm driver license and experience before event day |
+
+---
+
+## NPRDP OFFICIAL SOCIAL & HASHTAGS
+
+| Platform | Handle |
+|---|---|
+| Facebook | @NationalPuertoRicanParade |
+| Instagram | @prparade |
+| TikTok | @nationalprparade |
+
+**Official hashtags:** #SomosMasQue100x35 #PRParade #NationalPuertoRicanDayParade #NPRDP
+
+**NPRDP Contact:** Miguel Guadalupe, Vice Chair — contact via nprdpinc.org
 
 ---
 

@@ -147,17 +147,18 @@
 **Owner:** BMB  
 **Budget:** Minimal (time and commitment)  
 
-**Deliverable:** 2–3 shows with fixed schedules that will run every week without exception.
+**Deliverable:** Fixed schedules locked for all 5 confirmed shows. No show runs without a committed weekly slot.
 
-**Criteria for anchor shows:**
-- Can be produced consistently with current resources
-- Has a committed, reliable host
-- Serves a specific, identifiable audience
-- Differentiates from mainstream content
+**Confirmed Anchor Shows:**
+1. **Can You Dig It!? Live Music Review** — Hosts: Prez and Los Diggity
+2. **The Weekly Interrupt** — Hosts: Prez, Solo, and Los Diggity
+3. **Talking Tipsy** — Hosts: Bibi and Sandra
+4. **The Alien Podcast** — Hosts: Bibi, Prez, and Los Diggity
+5. **For The Record** — Hosts: Leo and Prez
 
 **The rule:** A show that runs every Thursday at 8pm for 6 months builds an audience. A show that runs when it's convenient does not. Consistency IS the product at this stage.
 
-**Success metric:** 2–3 shows scheduled, committed, and running by Day 30. Calendar published publicly.
+**Success metric:** All 5 shows have locked weekly time slots. Schedule published publicly on BlackMarker.tv.
 
 ---
 
@@ -182,21 +183,42 @@
 
 ---
 
-### C2 — Upgrade BlackMarker.tv Infrastructure
-**Deadline:** Day 60  
+### C2 — BlackMarker.tv Full Revamp
+**Build Start:** July 1, 2026  
+**Target Completion:** Late August 2026  
 **Budget:** $5,000–$10,000  
 
-**Priority improvements:**
-- Reliable, high-quality streaming delivery
+**Monetization Model (Confirmed):**
+
+| Tier | Price | What's Included |
+|---|---|---|
+| **The Free Loop** | Free | Scheduled live programming, on-demand replays, live chat — ad-supported. The audience builder. |
+| **BlackMarker+** | $7.99/mo or $79/yr | Everything in Free, ad-free, full on-demand library. Year 1: 20–25% off all PPV. Year 2+: all PPV included as catalog grows. |
+| **PPV** | $10–$20/event | Per-event purchase, available to all tiers and non-members. Priced based on talent and scale. |
+| **Brand Partner Subscription** | $299–$599/mo | Flat monthly ad rate. Starter ($299): rotating banner + one host mention/week on one show. Featured ($599): dedicated show sponsorship, recurring mentions across multiple shows, social media brand tags. |
+
+**Platform build priorities:**
+- Reliable high-quality streaming delivery
 - Clean, professional viewer interface
-- Functional subscription payment flow (monthly + annual options)
-- Functional PPV purchase flow (single event tickets)
+- Ad-supported free tier infrastructure
+- Subscription payment flow — monthly and annual (BlackMarker+)
+- PPV purchase flow — single event tickets
+- Brand partner ad management — flat rate, self-serve or managed
 - Mobile-friendly viewing experience
 - Email capture on every page and stream
 
 **Why this order:** Marketing spend before infrastructure is fixed is wasted money. Fix the conversion plumbing first.
 
-**Success metric:** Platform can accept subscriptions, sell PPV, and deliver a reliable viewing experience before any paid marketing begins.
+**Anchor shows launching on platform (5 confirmed):**
+1. Can You Dig It!? Live Music Review — Prez and Los Diggity
+2. The Weekly Interrupt — Prez, Solo, and Los Diggity
+3. Talking Tipsy — Bibi and Sandra
+4. The Alien Podcast — Bibi, Prez, and Los Diggity
+5. For The Record — Leo and Prez
+
+**Note:** Prez appears on 4 of 5 shows — schedule slots carefully to avoid conflicts.
+
+**Success metric:** Platform live by late August with all four revenue tiers functional. All 5 anchor shows have locked weekly time slots published on launch.
 
 ---
 
@@ -218,24 +240,27 @@
 
 ---
 
-### C4 — First Brand Sponsorship Conversations
-**Deadline:** Day 90  
+### C4 — Launch Brand Partner Subscription Program
+**Deadline:** Platform launch (late August 2026)  
 **Budget:** $1,000–$2,000 (pitch deck, outreach)  
 
-**Target sponsors:**
-- Local/regional brands aligned with independent entertainment, music, arts, current events
+**Model:** Flat monthly rate — no contract negotiation, no per-campaign pricing. Removes the friction that keeps local/regional businesses out.
+
+**Target advertisers:**
+- Local/regional brands aligned with independent entertainment, music, arts, and culture
 - Service businesses targeting the same demographic as BlackMarker.tv viewers
-- Brands that have already advertised on similar independent platforms
+- Brands that have advertised on similar independent platforms
 
-**Starter sponsorship package:**
-- Opening/closing billboard on all shows for the month
-- 1 host-read integration per week on flagship show
-- Social media brand mentions
-- **Price: $500–$1,500/month**
+**Brand Partner Tiers:**
 
-This is not the final price — it's the relationship-building rate that creates case studies for larger deals.
+| Tier | Price | What They Get |
+|---|---|---|
+| **Starter** | $299/mo | Rotating banner placement across the platform + one host mention per week on one show |
+| **Featured** | $599/mo | Dedicated show sponsorship + recurring weekly mentions across multiple shows + social media brand tags |
 
-**Success metric:** 2–3 sponsor conversations had. First sponsor signed by Day 90.
+**Pipeline target:** 3–5 brand partners signed at or before platform launch. These become the case studies for scaling the program.
+
+**Success metric:** At least 2 brand partners signed before late August launch. Program fully operational on day one of the revamped platform.
 
 ---
 
