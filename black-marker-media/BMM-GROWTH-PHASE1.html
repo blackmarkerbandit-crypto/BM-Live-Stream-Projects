@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMM GROWTH — PHASE 1</title>
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --surface: #1a1a1a;
+    --surface2: #242424;
+    --border: #2e2e2e;
+    --text: #f0f0f0;
+    --muted: #888;
+    --red: #e02020;
+    --red-dim: #7a1010;
+    --amber: #f5a623;
+    --green: #27ae60;
+    --blue: #2980b9;
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    padding-bottom: 60px;
+  }
+
+  /* HEADER */
+  .header {
+    background: #111;
+    border-bottom: 2px solid var(--red);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .logo { width: 36px; height: 36px; background: var(--red); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px; color: #fff; }
+  .header h1 { font-size: 18px; font-weight: 800; letter-spacing: 1px; color: #fff; }
+  .header h1 span { color: var(--red); }
+  .last-saved { font-size: 11px; color: var(--muted); }
+
+  /* DASHBOARD */
+  .dashboard {
+    padding: 24px 32px;
+    background: #111;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+  }
+  .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 6px; }
+  .stat-value { font-size: 26px; font-weight: 800; }
+  .stat-value.red { color: var(--red); }
+  .stat-value.amber { color: var(--amber); }
+  .stat-value.green { color: var(--green); }
+  .stat-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  .revenue-input-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .revenue-input-row label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+  .revenue-input-row input {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--green);
+    font-size: 20px;
+    font-weight: 800;
+    padding: 6px 10px;
+    width: 100%;
+  }
+  .revenue-input-row input:focus { outline: 1px solid var(--green); }
+
+  /* OVERALL PROGRESS BAR */
+  .overall-progress {
+    padding: 16px 32px 0;
+  }
+  .progress-header { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .progress-bar { height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--red); border-radius: 3px; transition: width 0.4s ease; }
+
+  /* MAIN CONTENT */
+  .content { padding: 28px 32px; max-width: 1100px; }
+
+  /* PHASE SECTION */
+  .phase-section { margin-bottom: 40px; }
+  .phase-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .phase-title-group { display: flex; align-items: center; gap: 12px; }
+  .phase-badge {
+    background: var(--red);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+  .phase-badge.amber { background: var(--amber); color: #000; }
+  .phase-badge.blue { background: var(--blue); }
+  .phase-title { font-size: 16px; font-weight: 700; }
+  .phase-subtitle { font-size: 12px; color: var(--muted); }
+  .phase-progress-wrap { display: flex; align-items: center; gap: 10px; }
+  .phase-progress-label { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .phase-bar { width: 120px; height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+  .phase-bar-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
+  .phase-bar-fill.red { background: var(--red); }
+  .phase-bar-fill.amber { background: var(--amber); }
+  .phase-bar-fill.blue { background: var(--blue); }
+
+  /* ACTION CARDS */
+  .action-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(460px, 1fr)); gap: 16px; }
+  .action-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .action-card.complete { border-color: var(--green); opacity: 0.75; }
+  .action-card.in-progress { border-color: var(--amber); }
+
+  .card-top {
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .card-top:hover { background: var(--surface2); }
+
+  .action-id {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--red);
+    min-width: 28px;
+    padding-top: 2px;
+  }
+  .action-id.amber { color: var(--amber); }
+  .action-id.blue { color: var(--blue); }
+
+  .card-main { flex: 1; }
+  .action-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .action-meta { font-size: 11px; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap; }
+  .meta-item { display: flex; align-items: center; gap: 4px; }
+  .meta-value { color: var(--green); font-weight: 600; }
+  .meta-value.amber { color: var(--amber); }
+
+  .card-right { display: flex; align-items: center; gap: 8px; }
+  .toggle-arrow { color: var(--muted); font-size: 12px; transition: transform 0.2s; }
+  .toggle-arrow.open { transform: rotate(90deg); }
+
+  /* STATUS SELECT */
+  .status-select {
+    appearance: none;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    cursor: pointer;
+    min-width: 110px;
+    text-align: center;
+  }
+  .status-select.not-started { color: var(--muted); }
+  .status-select.in-progress { color: var(--amber); border-color: var(--amber); }
+  .status-select.complete { color: var(--green); border-color: var(--green); }
+
+  /* CARD BODY (expandable) */
+  .card-body { display: none; padding: 0 16px 14px 56px; border-top: 1px solid var(--border); }
+  .card-body.open { display: block; }
+  .card-body-inner { padding-top: 12px; }
+
+  .detail-row { margin-bottom: 10px; }
+  .detail-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 4px; }
+  .detail-text { font-size: 13px; color: #ccc; line-height: 1.5; }
+  .detail-text ul { padding-left: 16px; }
+  .detail-text li { margin-bottom: 3px; }
+
+  .notes-area {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: inherit;
+    padding: 8px 10px;
+    resize: vertical;
+    min-height: 70px;
+    margin-top: 4px;
+  }
+  .notes-area:focus { outline: 1px solid var(--red); }
+  .notes-area::placeholder { color: var(--muted); }
+
+  .date-row { display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
+  .date-field { display: flex; flex-direction: column; gap: 4px; }
+  .date-field label { font-size: 11px; color: var(--muted); }
+  .date-field input[type="date"] {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+  .date-field input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6); }
+
+  /* FOOTER */
+  .save-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #111;
+    border-top: 1px solid var(--border);
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .save-note { font-size: 12px; color: var(--muted); }
+  .save-note span { color: var(--amber); }
+  .btn-save {
+    background: var(--red);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 9px 24px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+  }
+  .btn-save:hover { background: #c01818; }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    .header { padding: 14px 16px; }
+    .dashboard { padding: 16px; }
+    .content { padding: 20px 16px; }
+    .action-grid { grid-template-columns: 1fr; }
+    .save-bar { padding: 10px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="logo">B</div>
+    <h1>BMM GROWTH <span>— PHASE 1</span></h1>
+  </div>
+  <div class="last-saved" id="lastSaved">Not saved yet</div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard">
+  <div class="stat-card">
+    <div class="stat-label">Current ARR (Baseline)</div>
+    <div class="stat-value red">$60,600</div>
+    <div class="stat-sub">As of April 2026</div>
+  </div>
+  <div class="revenue-input-row">
+    <label>Current ARR (Live — update manually)</label>
+    <input type="text" id="currentARR" placeholder="$60,600" />
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Year 1 Conservative Target</div>
+    <div class="stat-value amber">$270,000</div>
+    <div class="stat-sub">From Phase 1 actions</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Year 1 Strong Target</div>
+    <div class="stat-value green">$432,000</div>
+    <div class="stat-sub">All retainers + network</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Phase 1 Budget</div>
+    <div class="stat-value" style="color:#aaa;">$14,500–$28,000</div>
+    <div class="stat-sub">of $100,000 total capital</div>
+  </div>
+</div>
+
+<!-- OVERALL PROGRESS -->
+<div class="overall-progress">
+  <div class="progress-header">
+    <span>Overall Phase 1 Progress</span>
+    <span id="overallPct">0% complete</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="overallFill" style="width:0%"></div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- PHASE A -->
+  <div class="phase-section">
+    <div class="phase-header">
+      <div class="phase-title-group">
+        <div class="phase-badge">Phase A</div>
+        <div>
+          <div class="phase-title">Right Now — This Week</div>
+          <div class="phase-subtitle">Zero capital required. Conversations and decisions only.</div>
+        </div>
+      </div>
+      <div class="phase-progress-wrap">
+        <div class="phase-progress-label" id="labelA">0 / 4 done</div>
+        <div class="phase-bar"><div class="phase-bar-fill red" id="barA" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="action-grid">
+
+      <div class="action-card" id="card-A1">
+        <div class="card-top" onclick="toggleCard('A1')">
+          <div class="action-id">A1</div>
+          <div class="card-main">
+            <div class="action-title">Call IDVES About a Retainer</div>
+            <div class="action-meta">
+              <span class="meta-item">Deadline: <span class="meta-value">End of Week 1</span></span>
+              <span class="meta-item">Value: <span class="meta-value">+$5,700–$11,700/yr</span></span>
+              <span class="meta-item">Cost: <span class="meta-value">$0</span></span>
+            </div>
+          </div>
+          <div class="card-right">
+            <select class="status-select not-started" id="status-A1" onclick="event.stopPropagation()" onchange="updateStatus('A1')">
+              <option value="not-started">Not Started</option>
+              <option value="in-progress">In Progress</option>
+              <option value="complete">Complete</option>
+            </select>
+            <div class="toggle-arrow" id="arrow-A1">▶</div>
+          </div>
+        </div>
+        <div class="card-body" id="body-A1">
+          <div class="card-body-inner">
+            <div class="detail-row">
+              <div class="detail-label">The Pitch</div>
+              <div class="detail-text">"We want to make sure you always have priority access to our crew. If you commit to a monthly minimum, we lock your slot and you get a better rate."</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Proposed Terms</div>
+              <div class="detail-text"><ul>
+                <li>$1,500–$2,000/month retainer</li>
+                <li>Priority scheduling and availability guarantee</li>
+                <li>Overage billed at standard rate</li>
+                <li>Current value: ~$12,300/yr → Retainer value: $18,000–$24,000/yr</li>
+              </ul></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Success Metric</div>
+              <div class="detail-text">Retainer proposal sent and conversation had. Signed agreement within 2 weeks.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Notes</div>
+              <textarea class="notes-area" id="notes-A1" placeholder="Add your notes, outcome, follow-up items..."></textarea>
+            </div>
+            <div class="date-row">
+              <div class="date-field"><label>Started</label><input type="date" id="start-A1"></div>
+              <div class="date-field"><label>Completed</label><input type="date" id="end-A1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-card" id="card-A2">
+        <div class="card-top" onclick="toggleCard('A2')">
+          <div class="action-id">A2</div>
+          <div class="card-main">
+            <div class="action-title">Growth Conversation with Studio Enterprise</div>
+            <div class="action-meta">
+              <span class="meta-item">Deadline: <span class="meta-value">End of Week 1</span></span>
+              <span class="meta-item">Upside: <span class="meta-value">+$12,000–$36,000/yr</span></span>
+              <span class="meta-item">Cost: <span class="meta-value">$0</span></span>
+            </div>
+          </div>
+          <div class="card-right">
+            <select class="status-select not-started" id="status-A2" onclick="event.stopPropagation()" onchange="updateStatus('A2')">
+              <option value="not-started">Not Started</option>
+              <option value="in-progress">In Progress</option>
+              <option value="complete">Complete</option>
+            </select>
+            <div class="toggle-arrow" id="arrow-A2">▶</div>
+          </div>
+        </div>
+        <div class="card-body" id="body-A2">
+          <div class="card-body-inner">
+            <div class="detail-row">
+              <div class="detail-label">Questions to Ask</div>
+              <div class="detail-text"><ul>
+                <li>Are there other universities or event organizers in your network who need this?</li>
+                <li>Are there other event types beyond graduations we could support?</li>
+                <li>Is there any way to get on more of your annual calendar?</li>
+              </ul></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Goal</div>
+              <div class="detail-text">Understand the ceiling of this relationship. One referral could be worth $15,000–$45,000/year. This conversation costs nothing.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Success Metric</div>
+              <div class="detail-text">Conversation had. Referral opportunities identified or ruled out.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Notes</div>
+              <textarea class="notes-area" id="notes-A2" placeholder="Add your notes, outcome, referrals mentioned..."></textarea>
+            </div>
+            <div class="date-row">
+              <div class="date-field"><label>Started</label><input type="date" id="start-A2"></div>
+              <div class="date-field"><label>Completed</label><input type="date" id="end-A2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-card" id="card-A3">
+        <div class="card-top" onclick="toggleCard('A3')">
+          <div class="action-id">A3</div>
+          <div class="card-main">
+            <div class="action-title">Write the Three Build Packages</div>
+            <div class="action-meta">
+              <span class="meta-item">Deadline: <span class="meta-value">End of Week 1</span></span>
+              <span class="meta-item">Value: <span class="meta-value">Unlocks entire Build leg</span></span>
+              <span class="meta-item">Cost: <span class="meta-value">$0</span></span>
+            </div>
+          </div>
+          <div class="card-right">
+            <select class="status-select not-started" id="status-A3" onclick="event.stopPropagation()" onchange="updateStatus('A3')">
+              <option value="not-started">Not Started</option>
+              <option value="in-progress">In Progress</option>
+              <option value="complete">Complete</option>
+            </select>
+            <div class="toggle-arrow" id="arrow-A3">▶</div>
+          </div>
+        </div>
+        <div class="card-body" id="body-A3">
+          <div class="card-body-inner">
+            <div class="detail-row">
+              <div class="detail-label">The Three Tiers</div>
+              <div class="detail-text"><ul>
+                <li><strong>Starter $1,000–$1,500/mo</strong> — Hosted streaming page, basic SEO, monthly report</li>
+                <li><strong>Growth $2,000–$2,500/mo</strong> — Custom platform, SEO + social management, analytics</li>
+                <li><strong>Pro $3,500–$5,000/mo</strong> — Full build, PPC + SEO, content strategy, priority support</li>
+              </ul></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Deliverable</div>
+              <div class="detail-text">One internal document with three clear tiers. Not a website. Not a brochure. Just a package structure you can quote from immediately.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Success Metric</div>
+              <div class="detail-text">Packages written, priced, and ready to quote. First outreach begins Week 2.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Notes</div>
+              <textarea class="notes-area" id="notes-A3" placeholder="Draft your packages here or link to the document..."></textarea>
+            </div>
+            <div class="date-row">
+              <div class="date-field"><label>Started</label><input type="date" id="start-A3"></div>
+              <div class="date-field"><label>Completed</label><input type="date" id="end-A3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-card" id="card-A4">
+        <div class="card-top" onclick="toggleCard('A4')">
+          <div class="action-id">A4</div>
+          <div class="card-main">
+            <div class="action-title">Pause PPV Until Audience Exists</div>
+            <div class="action-meta">
+              <span class="meta-item">Deadline: <span class="meta-value">Immediate Decision</span></span>
+              <span class="meta-item">Value: <span class="meta-value">Stops energy drain</span></span>
+              <span class="meta-item">Cost: <span class="meta-value">$0</span></span>
+            </div>
+          </div>
+          <div class="card-right">
+            <select class="status-select not-started" id="status-A4" onclick="event.stopPropagation()" onchange="updateStatus('A4')">
+              <option value="not-started">Not Started</option>
+              <option value="in-progress">In Progress</option>
+              <option value="complete">Complete</option>
+            </select>
+            <div class="toggle-arrow" id="arrow-A4">▶</div>
+          </div>
+        </div>
+        <div class="card-body" id="body-A4">
+          <div class="card-body-inner">
+            <div class="detail-row">
+              <div class="detail-label">The Decision</div>
+              <div class="detail-text">Do not schedule another PPV event until either BlackMarker.tv has a consistent weekly audience, OR a specific existing audience (client community, promoter fanbase) is identified as the buyer pool.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Exception Rule</div>
+              <div class="detail-text">If a promoter brings their own audience and wants to run PPV through BMB infrastructure, that is viable. Charge a production/platform fee and let their marketing drive buyers.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Success Metric</div>
+              <div class="detail-text">Next PPV event has a marketing plan and identified audience before it is scheduled. No more zero-audience events.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Notes</div>
+              <textarea class="notes-area" id="notes-A4" placeholder="Note any pending PPV commitments and your plan for each..."></textarea>
+            </div>
+            <div class="date-row">
+              <div class="date-field"><label>Started</label><input type="date" id="start-A4"></div>
+              <div class="date-field"><label>Completed</label><input type="date" id="end-A4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE B -->
+  <div class="phase-section">
+    <div class="phase-header">
+      <div class="phase-title-group">
+        <div class="phase-badge amber">Phase B</div>
+        <div>
+          <div class="phase-title">First 30 Days</div>
+          <div class="phase-subtitle">Light spend. Convert warm relationships into recurring revenue.</div>
+        </div>
+      </div>
+      <div class="phase-progress-wrap">
+        <div class="phase-progress-label" id="labelB">0 / 3 done</div>
+        <div class="phase-bar"><div class="phase-bar-fill amber" id="barB" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="action-grid">
+
+      <div class="action-card" id="card-B1">
+        <div class="card-top" onclick="toggleCard('B1')">
+          <div class="action-id amber">B1</div>
+          <div class="card-main">
+            <div class="action-title">Land First 3 Build Retainer Clients</div>
+            <div class="action-meta">
+              <span class="meta-item">Deadline: <span class="meta-value amber">Day 30</span></span>
+              <span class="meta-item">Value: <span class="meta-value">+$54,000–$72,000 ARR</span></span>
+              <span class="meta-item">Budget: <span class="meta-value amber">$500–$1,000</span></span>
+            </div>
+          </div>
+          <div class="card-right">
+            <select class="status-select not-started" id="status-B1" onclick="event.stopPropagation()" onchange="updateStatus('B1')">
+              <option value="not-started">Not Started</option>
+              <option value="in-progress">In Progress</option>
+              <option value="complete">Complete</option>
+            </select>
+            <div class="toggle-arrow" id="arrow-B1">▶</div>
+          </div>
+        </div>
+        <div class="card-body" id="body-B1">
+          <div class="card-body-inner">
+            <div class="detail-row">
+              <div class="detail-label">Process</div>
+              <div class="detail-text"><ul>
+                <li>List 10 warm contacts — anyone who has paid BMB, referred BMB, or expressed interest</li>
+                <li>Send a personal (not bulk) message to each</li>
+                <li>Offer a 30-minute call</li>
+                <li>Quote from the Build package tiers created in A3</li>
+              </ul></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Target Clients</div>
+              <div class="detail-text">Independent event promoters, music venues, podcasters/show hosts, local sports orgs, businesses with recurring online content needs.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Success Metric</div>
+              <div class="detail-text">3 signed retainer agreements by Day 30. Target: $1,500–$2,000/month each = $4,500–$6,000 MRR added.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Prospects List & Notes</div>
+              <textarea class="notes-area" id="notes-B1" placeholder="List your 10 warm contacts and track each conversation here..."></textarea>
+            </div>
+            <div class="date-row">
+              <div class="date-field"><label>Started</label><input type="date" id="start-B1"></div>
+              <div class="date-field"><label>Completed</label><input type="date" id="end-B1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-card" id="card-B2">
+        <div class="card-top" onclick="toggleCard('B2')">
+          <div class="action-id amber">B2</div>
+          <div class="card-main">
+            <div class="action-title">Identify & Pitch 5 Venue Produce Retainers</div>
+            <div class="action-meta">
+              <span class="meta-item">Deadline: <span class="meta-value amber">Day 30 (ID) / Day 60 (2 signed)</span></span>
+              <span class="meta-item">Value: <span class="meta-value">+$90,000–$180,000 ARR</span></span>
+            </div>
+          </div>
+          <div class="card-right">
+            <select class="status-select not-started" id="status-B2" onclick="event.stopPropagation()" onchange="updateStatus('B2')">
+              <option value="not-started">Not Started</option>
+              <option value="in-progress">In Progress</option>
+              <option value="complete">Complete</option>
+            </select>
+            <div class="toggle-arrow" id="arrow-B2">▶</div>
+          </div>
+        </div>
+        <div class="card-body" id="body-B2">
+          <div class="card-body-inner">
+            <div class="detail-row">
+              <div class="detail-label">Target Venue Types</div>
+              <div class="detail-text"><ul>
+                <li>Churches / ministries with weekly services</li>
+                <li>Youth or adult sports leagues</li>
+                <li>Music venues with weekly/bi-weekly shows</li>
+                <li>Fitness studios doing live classes</li>
+                <li>Recurring community or cultural events</li>
+              </ul></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">The Pitch Math (show this to the client)</div>
+              <div class="detail-text">"You're booking us 3×/month at $800 each = $2,400. For $2,000/month on retainer you get 4 slots, priority scheduling, and one simple invoice."</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Success Metric</div>
+              <div class="detail-text">5 venues identified and pitched by Day 30. First 2 signed by Day 60. Target: $2,000–$3,000/month each.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Venue Targets & Notes</div>
+              <textarea class="notes-area" id="notes-B2" placeholder="List your 5 venue targets and track each conversation here..."></textarea>
+            </div>
+            <div class="date-row">
+              <div class="date-field"><label>Started</label><input type="date" id="start-B2"></div>
+              <div class="date-field"><label>Completed</label><input type="date" id="end-B2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-card" id="card-B3">
+        <div class="card-top" onclick="toggleCard('B3')">
+          <div class="action-id amber">B3</div>
+          <div class="card-main">
+            <div class="action-title">Lock BlackMarker.tv Anchor Programming</div>
+            <div class="action-meta">
+              <span class="meta-item">Deadline: <span class="meta-value amber">Day 30</span></span>
+              <span class="meta-item">Value: <span class="meta-value">Foundation for all network revenue</span></span>
+              <span class="meta-item">Cost: <span class="meta-value amber">Time only</span></span>
+            </div>
+          </div>
+          <div class="card-right">
+            <select class="status-select not-started" id="status-B3" onclick="event.stopPropagation()" onchange="updateStatus('B3')">
+              <option value="not-started">Not Started</option>
+              <option value="in-progress">In Progress</option>
+              <option value="complete">Complete</option>
+            </select>
+            <div class="toggle-arrow" id="arrow-B3">▶</div>
+          </div>
+        </div>
+        <div class="card-body" id="body-B3">
+          <div class="card-body-inner">
+            <div class="detail-row">
+              <div class="detail-label">The Rule</div>
+              <div class="detail-text">A show that runs every Thursday at 8pm for 6 months builds an audience. A show that runs when it's convenient does not. Consistency IS the product at this stage.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Criteria for Anchor Shows</div>
+              <div class="detail-text"><ul>
+                <li>Can be produced consistently with current resources</li>
+                <li>Has a committed, reliable host</li>
+                <li>Serves a specific, identifiable audience</li>
+                <li>Differentiates from mainstream content</li>
+              </ul></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Success Metric</div>
+              <div class="detail-text">2–3 shows with locked schedules running every week by Day 30. Calendar published publicly on BlackMarker.tv.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Shows & Schedule Notes</div>
+              <textarea class="notes-area" id="notes-B3" placeholder="List your anchor shows, hosts, and scheduled times here..."></textarea>
+            </div>
+            <div class="date-row">
+              <div class="date-field"><label>Started</label><input type="date" id="start-B3"></div>
+              <div class="date-field"><label>Completed</label><input type="date" id="end-B3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE C -->
+  <div class="phase-section">
+    <div class="phase-header">
+      <div class="phase-title-group">
+        <div class="phase-badge blue">Phase C</div>
+        <div>
+          <div class="phase-title">First 90 Days</div>
+          <div class="phase-subtitle">Capital deployment. Infrastructure and audience growth.</div>
+        </div>
+      </div>
+      <div class="phase-progress-wrap">
+        <div class="phase-progress-label" id="labelC">0 / 4 done</div>
+        <div class="phase-bar"><div class="phase-bar-fill blue" id="barC" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="action-grid">
+
+      <div class="action-card" id="card-C1">
+        <div class="card-top" onclick="toggleCard('C1')">
+          <div class="action-id blue">C1</div>
+          <div class="card-main">
+            <div class="action-title">Upgrade Production Equipment</div>
+            <div class="action-meta">
+              <span class="meta-item">Deadline: <span class="meta-value" style="color:var(--blue)">Day 60</span></span>
+              <span class="meta-item">Budget: <span class="meta-value" style="color:var(--blue)">$5,000–$10,000</span></span>
+            </div>
+          </div>
+          <div class="card-right">
+            <select class="status-select not-started" id="status-C1" onclick="event.stopPropagation()" onchange="updateStatus('C1')">
+              <option value="not-started">Not Started</option>
+              <option value="in-progress">In Progress</option>
+              <option value="complete">Complete</option>
+            </select>
+            <div class="toggle-arrow" id="arrow-C1">▶</div>
+          </div>
+        </div>
+        <div class="card-body" id="body-C1">
+          <div class="card-body-inner">
+            <div class="detail-row">
+              <div class="detail-label">Priority Purchases</div>
+              <div class="detail-text"><ul>
+                <li>Encoding hardware or upgraded encoder software</li>
+                <li>Camera upgrade if current gear is limiting quality</li>
+                <li>Audio — the single most noticed quality indicator</li>
+                <li>Backup internet (cellular bonding or 4G failover) for venue work</li>
+              </ul></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Why Now</div>
+              <div class="detail-text">Owned gear pays back in 3–6 months through eliminated rental costs. Every job after payback runs at higher margin. With 5+ venue retainers, this is essential.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Success Metric</div>
+              <div class="detail-text">Core equipment owned. Rental costs reduced by 80%+.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Purchase List & Notes</div>
+              <textarea class="notes-area" id="notes-C1" placeholder="List equipment to purchase, prices, and purchase dates..."></textarea>
+            </div>
+            <div class="date-row">
+              <div class="date-field"><label>Started</label><input type="date" id="start-C1"></div>
+              <div class="date-field"><label>Completed</label><input type="date" id="end-C1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-card" id="card-C2">
+        <div class="card-top" onclick="toggleCard('C2')">
+          <div class="action-id blue">C2</div>
+          <div class="card-main">
+            <div class="action-title">Upgrade BlackMarker.tv Infrastructure</div>
+            <div class="action-meta">
+              <span class="meta-item">Deadline: <span class="meta-value" style="color:var(--blue)">Day 60</span></span>
+              <span class="meta-item">Budget: <span class="meta-value" style="color:var(--blue)">$5,000–$10,000</span></span>
+            </div>
+          </div>
+          <div class="card-right">
+            <select class="status-select not-started" id="status-C2" onclick="event.stopPropagation()" onchange="updateStatus('C2')">
+              <option value="not-started">Not Started</option>
+              <option value="in-progress">In Progress</option>
+              <option value="complete">Complete</option>
+            </select>
+            <div class="toggle-arrow" id="arrow-C2">▶</div>
+          </div>
+        </div>
+        <div class="card-body" id="body-C2">
+          <div class="card-body-inner">
+            <div class="detail-row">
+              <div class="detail-label">Priority Improvements</div>
+              <div class="detail-text"><ul>
+                <li>Reliable, high-quality streaming delivery</li>
+                <li>Clean, professional viewer interface</li>
+                <li>Functional subscription payment flow (monthly + annual)</li>
+                <li>Functional PPV purchase flow (single event tickets)</li>
+                <li>Mobile-friendly viewing experience</li>
+                <li>Email capture on every page and stream</li>
+              </ul></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Rule</div>
+              <div class="detail-text">Marketing spend before infrastructure is fixed is wasted money. Fix the conversion plumbing first — then pour traffic onto it.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Notes & Progress</div>
+              <textarea class="notes-area" id="notes-C2" placeholder="Track tech tasks, developer contacts, platform decisions..."></textarea>
+            </div>
+            <div class="date-row">
+              <div class="date-field"><label>Started</label><input type="date" id="start-C2"></div>
+              <div class="date-field"><label>Completed</label><input type="date" id="end-C2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-card" id="card-C3">
+        <div class="card-top" onclick="toggleCard('C3')">
+          <div class="action-id blue">C3</div>
+          <div class="card-main">
+            <div class="action-title">Launch PPV Marketing Funnel</div>
+            <div class="action-meta">
+              <span class="meta-item">Deadline: <span class="meta-value" style="color:var(--blue)">Day 75–90</span></span>
+              <span class="meta-item">Budget: <span class="meta-value" style="color:var(--blue)">$3,000–$5,000</span></span>
+              <span class="meta-item">Target: <span class="meta-value">500+ email list before first funded PPV</span></span>
+            </div>
+          </div>
+          <div class="card-right">
+            <select class="status-select not-started" id="status-C3" onclick="event.stopPropagation()" onchange="updateStatus('C3')">
+              <option value="not-started">Not Started</option>
+              <option value="in-progress">In Progress</option>
+              <option value="complete">Complete</option>
+            </select>
+            <div class="toggle-arrow" id="arrow-C3">▶</div>
+          </div>
+        </div>
+        <div class="card-body" id="body-C3">
+          <div class="card-body-inner">
+            <div class="detail-row">
+              <div class="detail-label">The Funnel (In Sequence)</div>
+              <div class="detail-text"><ul>
+                <li><strong>Step 1:</strong> Consistent anchor shows build weekly returning viewership</li>
+                <li><strong>Step 2:</strong> Email/SMS capture converts viewers to a direct contact list</li>
+                <li><strong>Step 3:</strong> PPV events marketed to the list — not cold audiences</li>
+                <li><strong>Step 4:</strong> Social clips from shows drive new viewer discovery</li>
+              </ul></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">The Math Once Built</div>
+              <div class="detail-text">2,000 person list × 10% conversion × $15 PPV = $3,000 from one email send. This is the target state.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Notes & Progress</div>
+              <textarea class="notes-area" id="notes-C3" placeholder="Track email platform, list size milestones, first PPV event plan..."></textarea>
+            </div>
+            <div class="date-row">
+              <div class="date-field"><label>Started</label><input type="date" id="start-C3"></div>
+              <div class="date-field"><label>Completed</label><input type="date" id="end-C3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-card" id="card-C4">
+        <div class="card-top" onclick="toggleCard('C4')">
+          <div class="action-id blue">C4</div>
+          <div class="card-main">
+            <div class="action-title">First Brand Sponsorship Conversations</div>
+            <div class="action-meta">
+              <span class="meta-item">Deadline: <span class="meta-value" style="color:var(--blue)">Day 90</span></span>
+              <span class="meta-item">Budget: <span class="meta-value" style="color:var(--blue)">$1,000–$2,000</span></span>
+              <span class="meta-item">Target: <span class="meta-value">First sponsor signed</span></span>
+            </div>
+          </div>
+          <div class="card-right">
+            <select class="status-select not-started" id="status-C4" onclick="event.stopPropagation()" onchange="updateStatus('C4')">
+              <option value="not-started">Not Started</option>
+              <option value="in-progress">In Progress</option>
+              <option value="complete">Complete</option>
+            </select>
+            <div class="toggle-arrow" id="arrow-C4">▶</div>
+          </div>
+        </div>
+        <div class="card-body" id="body-C4">
+          <div class="card-body-inner">
+            <div class="detail-row">
+              <div class="detail-label">Starter Sponsorship Package</div>
+              <div class="detail-text"><ul>
+                <li>Opening/closing billboard on all shows for the month</li>
+                <li>1 host-read integration per week on flagship show</li>
+                <li>Social media brand mentions</li>
+                <li><strong>Price: $500–$1,500/month</strong></li>
+              </ul></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Target Sponsors</div>
+              <div class="detail-text">Local/regional brands aligned with independent entertainment, music, arts, current events. Service businesses targeting the same demographic as BlackMarker.tv viewers.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Success Metric</div>
+              <div class="detail-text">2–3 sponsor conversations had by Day 90. First sponsor signed. This price is the relationship-building rate — not the final price.</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Sponsor Prospects & Notes</div>
+              <textarea class="notes-area" id="notes-C4" placeholder="List sponsor targets, conversations, and deal terms here..."></textarea>
+            </div>
+            <div class="date-row">
+              <div class="date-field"><label>Started</label><input type="date" id="start-C4"></div>
+              <div class="date-field"><label>Completed</label><input type="date" id="end-C4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- SAVE BAR -->
+<div class="save-bar">
+  <div class="save-note">All changes saved to <span>browser local storage</span> — data persists on this machine</div>
+  <button class="btn-save" onclick="saveAll()">Save Progress</button>
+</div>
+
+<script>
+  const ACTIONS = ['A1','A2','A3','A4','B1','B2','B3','C1','C2','C3','C4'];
+  const PHASES = {
+    A: ['A1','A2','A3','A4'],
+    B: ['B1','B2','B3'],
+    C: ['C1','C2','C3','C4']
+  };
+
+  function toggleCard(id) {
+    const body = document.getElementById('body-' + id);
+    const arrow = document.getElementById('arrow-' + id);
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    arrow.classList.toggle('open', !isOpen);
+  }
+
+  function updateStatus(id) {
+    const sel = document.getElementById('status-' + id);
+    const card = document.getElementById('card-' + id);
+    const val = sel.value;
+    sel.className = 'status-select ' + val.replace('-', '-');
+    card.className = 'action-card ' + (val === 'not-started' ? '' : val === 'in-progress' ? 'in-progress' : 'complete');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    let totalDone = 0;
+    ACTIONS.forEach(id => {
+      if (document.getElementById('status-' + id).value === 'complete') totalDone++;
+    });
+
+    const pct = Math.round((totalDone / ACTIONS.length) * 100);
+    document.getElementById('overallFill').style.width = pct + '%';
+    document.getElementById('overallPct').textContent = pct + '% complete (' + totalDone + ' / ' + ACTIONS.length + ' actions)';
+
+    Object.keys(PHASES).forEach(phase => {
+      const ids = PHASES[phase];
+      const done = ids.filter(id => document.getElementById('status-' + id).value === 'complete').length;
+      const phasePct = Math.round((done / ids.length) * 100);
+      document.getElementById('barA' === 'bar' + phase ? 'barA' : 'bar' + phase).style.width = phasePct + '%';
+      document.getElementById('label' + phase).textContent = done + ' / ' + ids.length + ' done';
+    });
+
+    // fix phase bars individually
+    ['A','B','C'].forEach(phase => {
+      const ids = PHASES[phase];
+      const done = ids.filter(id => document.getElementById('status-' + id).value === 'complete').length;
+      const pp = Math.round((done / ids.length) * 100);
+      document.getElementById('bar' + phase).style.width = pp + '%';
+      document.getElementById('label' + phase).textContent = done + ' / ' + ids.length + ' done';
+    });
+  }
+
+  function saveAll() {
+    const data = {};
+    ACTIONS.forEach(id => {
+      data['status-' + id] = document.getElementById('status-' + id).value;
+      data['notes-' + id] = document.getElementById('notes-' + id).value;
+      const s = document.getElementById('start-' + id);
+      const e = document.getElementById('end-' + id);
+      if (s) data['start-' + id] = s.value;
+      if (e) data['end-' + id] = e.value;
+    });
+    data['currentARR'] = document.getElementById('currentARR').value;
+    localStorage.setItem('bmm-growth-phase1', JSON.stringify(data));
+    const now = new Date();
+    document.getElementById('lastSaved').textContent = 'Saved ' + now.toLocaleDateString() + ' at ' + now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  }
+
+  function loadAll() {
+    const raw = localStorage.getItem('bmm-growth-phase1');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    ACTIONS.forEach(id => {
+      if (data['status-' + id]) {
+        document.getElementById('status-' + id).value = data['status-' + id];
+        updateStatus(id);
+      }
+      if (data['notes-' + id] !== undefined) document.getElementById('notes-' + id).value = data['notes-' + id];
+      if (data['start-' + id]) document.getElementById('start-' + id).value = data['start-' + id];
+      if (data['end-' + id]) document.getElementById('end-' + id).value = data['end-' + id];
+    });
+    if (data['currentARR']) document.getElementById('currentARR').value = data['currentARR'];
+    updateProgress();
+  }
+
+  // Auto-save on any input change
+  document.addEventListener('change', () => saveAll());
+  document.addEventListener('input', () => saveAll());
+
+  // Load on start
+  window.addEventListener('DOMContentLoaded', () => {
+    loadAll();
+    updateProgress();
+  });
+</script>
+</body>
+</html>

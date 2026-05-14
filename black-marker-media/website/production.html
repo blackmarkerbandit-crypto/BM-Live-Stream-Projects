@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Production Services — Stream Your Event | Black Marker Media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--red:#E8181C;--red-dark:#B01212;--bg:#080808;--surface:#111111;--surface2:#181818;--border:#222222;--text:#F0F0F0;--muted:#777777;--white:#FFFFFF;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-mark{width:32px;height:32px;background:var(--red);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;}
+.nav-logo-text{font-size:15px;font-weight:700;color:var(--white);}
+.nav-logo-text span{color:var(--red);}
+.nav-links{display:flex;align-items:center;gap:8px;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:4px;transition:color 0.2s,background 0.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--white);background:var(--surface2);}
+.nav-cta{background:var(--red);color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:8px 20px;border-radius:5px;transition:background 0.2s;}
+.nav-cta:hover{background:var(--red-dark);}
+
+/* HERO */
+.hero{padding:140px 40px 100px;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 40%,rgba(232,24,28,0.07) 0%,transparent 70%);pointer-events:none;}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(232,24,28,0.1);border:1px solid rgba(232,24,28,0.25);border-radius:20px;padding:6px 16px;font-size:12px;font-weight:600;color:var(--red);letter-spacing:1px;text-transform:uppercase;margin-bottom:28px;}
+.hero h1{font-size:clamp(36px,5vw,64px);font-weight:900;line-height:1.05;letter-spacing:-2px;color:var(--white);margin-bottom:24px;}
+.hero h1 span{color:var(--red);}
+.hero-sub{font-size:17px;color:var(--muted);line-height:1.65;margin-bottom:40px;}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;}
+.btn-primary{background:var(--red);color:#fff;text-decoration:none;font-size:15px;font-weight:700;padding:14px 32px;border-radius:6px;transition:background 0.2s,transform 0.1s;display:inline-block;}
+.btn-primary:hover{background:var(--red-dark);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text);text-decoration:none;font-size:15px;font-weight:600;padding:14px 32px;border-radius:6px;border:1px solid var(--border);transition:border-color 0.2s;display:inline-block;}
+.btn-secondary:hover{border-color:var(--muted);}
+.hero-visual{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:40px;display:flex;flex-direction:column;gap:20px;}
+.live-badge{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--red);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
+.live-text{font-size:12px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:1.5px;}
+.stream-title{font-size:18px;font-weight:800;color:var(--white);line-height:1.3;}
+.stream-meta{display:flex;gap:20px;flex-wrap:wrap;}
+.stream-meta-item{display:flex;flex-direction:column;gap:2px;}
+.stream-meta-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.stream-meta-value{font-size:20px;font-weight:800;color:var(--white);}
+.stream-divider{height:1px;background:var(--border);}
+.stream-platforms{display:flex;gap:8px;flex-wrap:wrap;}
+.platform-chip{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--muted);}
+
+/* SECTIONS */
+section{padding:100px 40px;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:16px;}
+.section-title{font-size:clamp(32px,4vw,52px);font-weight:900;line-height:1.1;letter-spacing:-1.5px;color:var(--white);margin-bottom:20px;}
+.section-sub{font-size:17px;color:var(--muted);max-width:580px;line-height:1.65;}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px;}
+.service-card{background:var(--surface);padding:40px 36px;position:relative;overflow:hidden;transition:background 0.3s;}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--border);transition:background 0.3s;}
+.service-card:hover{background:var(--surface2);}
+.service-card:hover::before{background:var(--red);}
+.service-num{font-size:11px;font-weight:700;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;}
+.service-title{font-size:20px;font-weight:800;color:var(--white);margin-bottom:14px;}
+.service-text{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;}
+.service-bullets{display:flex;flex-direction:column;gap:8px;}
+.service-bullet{font-size:13px;color:var(--muted);display:flex;align-items:flex-start;gap:8px;}
+.service-bullet::before{content:'—';color:var(--red);flex-shrink:0;}
+
+/* WHO WE SERVE */
+.serve{background:var(--surface);}
+.serve-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:56px;}
+.serve-card{background:var(--bg);padding:32px 28px;border:1px solid var(--border);transition:border-color 0.2s;}
+.serve-card:hover{border-color:rgba(232,24,28,0.3);}
+.serve-icon{width:40px;height:40px;background:rgba(232,24,28,0.08);border:1px solid rgba(232,24,28,0.15);border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+.serve-title{font-size:15px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.serve-text{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* RETAINER SECTION */
+.retainer{background:var(--bg);}
+.retainer-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:56px;}
+.retainer-benefits{display:flex;flex-direction:column;gap:24px;}
+.retainer-benefit{display:flex;gap:16px;align-items:flex-start;}
+.rb-icon{width:36px;height:36px;min-width:36px;background:rgba(232,24,28,0.1);border:1px solid rgba(232,24,28,0.2);border-radius:5px;display:flex;align-items:center;justify-content:center;}
+.rb-title{font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.rb-text{font-size:13px;color:var(--muted);line-height:1.65;}
+.retainer-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:48px;}
+.retainer-card h3{font-size:24px;font-weight:900;color:var(--white);letter-spacing:-0.5px;margin-bottom:8px;}
+.retainer-card p{font-size:14px;color:var(--muted);margin-bottom:32px;line-height:1.6;}
+.retainer-tiers{display:flex;flex-direction:column;gap:16px;margin-bottom:32px;}
+.retainer-tier{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:var(--bg);border:1px solid var(--border);border-radius:6px;}
+.rtier-label{font-size:13px;font-weight:600;color:var(--text);}
+.rtier-price{font-size:15px;font-weight:800;color:var(--white);}
+.rtier-price span{font-size:11px;color:var(--muted);font-weight:400;}</p>
+.retainer-note{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:24px;}
+
+/* CTA DUAL */
+.cta-dual{background:var(--surface);padding:100px 40px;}
+.cta-dual-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.cta-panel{padding:60px 48px;}
+.cta-panel.red{background:var(--red);}
+.cta-panel.dark{background:var(--bg);border:1px solid var(--border);}
+.cta-panel h3{font-size:clamp(24px,3vw,36px);font-weight:900;color:var(--white);letter-spacing:-0.8px;margin-bottom:14px;}
+.cta-panel p{font-size:15px;color:rgba(255,255,255,0.7);margin-bottom:32px;line-height:1.65;}
+.cta-panel.dark p{color:var(--muted);}
+.btn-white{background:#fff;color:var(--red);text-decoration:none;font-size:14px;font-weight:700;padding:13px 28px;border-radius:6px;display:inline-block;transition:opacity 0.2s;}
+.btn-white:hover{opacity:0.9;}
+.btn-outline-red{background:transparent;color:var(--red);text-decoration:none;font-size:14px;font-weight:700;padding:13px 28px;border-radius:6px;border:1px solid var(--red);display:inline-block;transition:background 0.2s,color 0.2s;}
+.btn-outline-red:hover{background:var(--red);color:#fff;}
+
+footer{background:var(--surface);border-top:1px solid var(--border);padding:48px 40px 32px;}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:13px;transition:color 0.2s;}
+.footer-links a:hover{color:var(--white);}
+.footer-copy{font-size:12px;color:var(--muted);}
+
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .hero-inner{grid-template-columns:1fr;}
+  section,.hero,.cta-dual{padding-left:20px;padding-right:20px;}
+  .services-grid,.serve-grid{grid-template-columns:1fr;}
+  .retainer-grid{grid-template-columns:1fr;gap:40px;}
+  .cta-dual-inner{grid-template-columns:1fr;}
+  footer{padding:40px 20px 24px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-mark">B</div>
+    <span class="nav-logo-text">Black Marker <span>Media</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="channelcast.html">ChannelCast</a>
+    <a href="production.html" class="active">Production</a>
+    <a href="network.html">BlackMarker.TV</a>
+    <a href="team.html">Company</a>
+  </div>
+  <a class="nav-cta" href="#book">Book Your Event</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">Live Production Services</div>
+      <h1>Professional Live Streaming.<br><span>On Location. On Point.</span></h1>
+      <p class="hero-sub">From single-camera venue streams to full multi-camera event broadcasts, we show up, set up, and deliver broadcast-quality live streaming — so your event reaches the audience it deserves.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#book">Book Your Event</a>
+        <a class="btn-secondary" href="#studio">Build Your Studio</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="live-badge">
+        <div class="live-dot"></div>
+        <span class="live-text">Live Broadcast</span>
+      </div>
+      <div class="stream-title">Multi-Camera Event Production<br>Wesley Chapel, FL</div>
+      <div class="stream-divider"></div>
+      <div class="stream-meta">
+        <div class="stream-meta-item">
+          <span class="stream-meta-label">Viewers Online</span>
+          <span class="stream-meta-value">1,247</span>
+        </div>
+        <div class="stream-meta-item">
+          <span class="stream-meta-label">Stream Quality</span>
+          <span class="stream-meta-value">1080p</span>
+        </div>
+        <div class="stream-meta-item">
+          <span class="stream-meta-label">Duration</span>
+          <span class="stream-meta-value">2:14:08</span>
+        </div>
+      </div>
+      <div class="stream-divider"></div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">Streaming To</div>
+      <div class="stream-platforms">
+        <div class="platform-chip">BlackMarker.TV</div>
+        <div class="platform-chip">YouTube</div>
+        <div class="platform-chip">Facebook</div>
+        <div class="platform-chip">Custom RTMP</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="services">
+  <div class="section-inner">
+    <div class="section-eyebrow">What We Do</div>
+    <h2 class="section-title">Three Ways We<br>Work With You</h2>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-title">Live Event Streaming</div>
+        <p class="service-text">We arrive with professional crew, cameras, encoders, and everything needed to deliver a broadcast-quality live stream of your event — concerts, graduations, conferences, sports, comedy shows, and more.</p>
+        <div class="service-bullets">
+          <div class="service-bullet">Multi-camera setup and live switching</div>
+          <div class="service-bullet">4K/1080p broadcast-quality output</div>
+          <div class="service-bullet">Multi-platform simultaneous streaming</div>
+          <div class="service-bullet">Backup internet / cellular bonding</div>
+          <div class="service-bullet">Archived recording delivered post-event</div>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-title">Monthly Venue Retainers</div>
+        <p class="service-text">For venues and organizations with regular programming — weekly services, recurring shows, monthly events — a retainer keeps your stream consistent, professional, and predictably priced.</p>
+        <div class="service-bullets">
+          <div class="service-bullet">Guaranteed crew availability every event</div>
+          <div class="service-bullet">Fixed monthly rate — no per-event surprises</div>
+          <div class="service-bullet">Priority scheduling for recurring clients</div>
+          <div class="service-bullet">Churches, venues, sports leagues welcome</div>
+          <div class="service-bullet">Archive library builds value over time</div>
+        </div>
+      </div>
+
+      <div class="service-card" id="studio">
+        <div class="service-num">03</div>
+        <div class="service-title">Studio Buildout & Consulting</div>
+        <p class="service-text">Ready to bring production in-house? We consult, design, and help you build a professional streaming studio or production setup tailored to your space, budget, and broadcast goals.</p>
+        <div class="service-bullets">
+          <div class="service-bullet">Space and workflow design</div>
+          <div class="service-bullet">Equipment specification and sourcing</div>
+          <div class="service-bullet">Installation and setup</div>
+          <div class="service-bullet">Staff training and SOPs</div>
+          <div class="service-bullet">Ongoing technical support retainer</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="serve">
+  <div class="section-inner">
+    <div class="section-eyebrow">Who We Serve</div>
+    <h2 class="section-title">Built for the People<br>Who Run Live Events</h2>
+    <div class="serve-grid">
+
+      <div class="serve-card">
+        <div class="serve-icon">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="serve-title">Churches & Ministries</div>
+        <p class="serve-text">Weekly service streaming, special events, and holiday broadcasts. We help your congregation connect from anywhere.</p>
+      </div>
+
+      <div class="serve-card">
+        <div class="serve-icon">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><path d="M9 19V6l12-3v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="15" r="3"/></svg>
+        </div>
+        <div class="serve-title">Music Venues & Promoters</div>
+        <p class="serve-text">Stream your shows live, build a digital audience, and sell PPV tickets for sold-out events that couldn't hold everyone.</p>
+      </div>
+
+      <div class="serve-card">
+        <div class="serve-icon">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="serve-title">Sports Leagues & Events</div>
+        <p class="serve-text">Youth sports, amateur leagues, and tournaments. Let families watch from anywhere — professionally streamed, reliably archived.</p>
+      </div>
+
+      <div class="serve-card">
+        <div class="serve-icon">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8M12 3v4"/></svg>
+        </div>
+        <div class="serve-title">AV Companies & Partners</div>
+        <p class="serve-text">We become your dedicated streaming department. White-label subcontracting and referral partnership programs available.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="retainer">
+  <div class="section-inner">
+    <div class="retainer-grid">
+      <div>
+        <div class="section-eyebrow">Monthly Retainer Programs</div>
+        <h2 class="section-title">Stop Scrambling.<br>Start Streaming.</h2>
+        <p class="section-sub" style="margin-bottom:40px;">The most successful organizations we work with converted per-event chaos into a simple monthly retainer. One price. Guaranteed crew. No surprises.</p>
+        <div class="retainer-benefits">
+          <div class="retainer-benefit">
+            <div class="rb-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div>
+              <div class="rb-title">Guaranteed availability every event</div>
+              <p class="rb-text">Your time slot is locked. No availability scrambles, no last-minute vendor searches.</p>
+            </div>
+          </div>
+          <div class="retainer-benefit">
+            <div class="rb-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div>
+              <div class="rb-title">One monthly invoice — fully predictable</div>
+              <p class="rb-text">Budget your streaming as infrastructure, not as an unpredictable variable cost.</p>
+            </div>
+          </div>
+          <div class="retainer-benefit">
+            <div class="rb-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div>
+              <div class="rb-title">Crew that knows your setup</div>
+              <p class="rb-text">We learn your space, your preferences, your audience. Quality improves over time, not just per event.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="retainer-card">
+        <h3>Retainer Pricing</h3>
+        <p>Rates based on event frequency and scope. Every retainer includes guaranteed availability, professional crew, and monthly delivery.</p>
+        <div class="retainer-tiers">
+          <div class="retainer-tier">
+            <span class="rtier-label">Weekly (Church / Venue)</span>
+            <span class="rtier-price">$1,500–$3,000 <span>/ mo</span></span>
+          </div>
+          <div class="retainer-tier">
+            <span class="rtier-label">Bi-Weekly (Sports / Events)</span>
+            <span class="rtier-price">$2,000–$4,000 <span>/ mo</span></span>
+          </div>
+          <div class="retainer-tier">
+            <span class="rtier-label">Corporate / Monthly Webinars</span>
+            <span class="rtier-price">$2,500–$6,000 <span>/ mo</span></span>
+          </div>
+        </div>
+        <p class="retainer-note">All retainers include a dedicated scheduling agreement and priority support. Custom scopes available for larger organizations.</p>
+        <a class="btn-primary" href="#" data-bmb-modal="lead" data-bmb-preset-interest="Live Production Services">Inquire About a Retainer</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-dual" id="book">
+  <div class="cta-dual-inner">
+    <div class="cta-panel red">
+      <h3>Book Us for Your Next Event</h3>
+      <p>Concerts, comedy shows, graduations, conferences, sports — if you need a professional live stream, we show up and deliver.</p>
+      <a class="btn-white" href="#" data-bmb-modal="booking">Book Your Event</a>
+    </div>
+    <div class="cta-panel dark">
+      <h3>Build Your Own Production Studio</h3>
+      <p>Ready to bring streaming in-house? Book a consultation and we'll design the setup that fits your space, team, and budget.</p>
+      <a class="btn-outline-red" href="#" data-bmb-modal="booking">Book a Consultation</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="channelcast.html">ChannelCast</a>
+      <a href="network.html">BlackMarker.TV</a>
+      <a href="team.html">Company</a>
+    </div>
+    <span class="footer-copy">© 2026 Black Marker Media LLC</span>
+  </div>
+</footer>
+
+<script src="forms.js"></script>
+<script src="animations.js"></script>
+<script src="editor.js"></script>
+</body>
+</html>

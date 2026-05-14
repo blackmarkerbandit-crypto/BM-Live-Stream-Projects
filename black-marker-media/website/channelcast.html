@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChannelCast — Your Streaming Platform, Built & Managed | Black Marker Media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--red:#E8181C;--red-dark:#B01212;--bg:#080808;--surface:#111111;--surface2:#181818;--border:#222222;--text:#F0F0F0;--muted:#777777;--white:#FFFFFF;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-mark{width:32px;height:32px;background:var(--red);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;}
+.nav-logo-text{font-size:15px;font-weight:700;color:var(--white);}
+.nav-logo-text span{color:var(--red);}
+.nav-links{display:flex;align-items:center;gap:8px;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:4px;transition:color 0.2s,background 0.2s;}
+.nav-links a:hover{color:var(--white);background:var(--surface2);}
+.nav-links a.active{color:var(--white);}
+.nav-cta{background:var(--red);color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:8px 20px;border-radius:5px;transition:background 0.2s;}
+.nav-cta:hover{background:var(--red-dark);}
+
+/* HERO */
+.hero{padding:140px 40px 100px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(232,24,28,0.07) 0%,transparent 70%);pointer-events:none;}
+.hero-inner{max-width:1100px;margin:0 auto;text-align:center;}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(232,24,28,0.1);border:1px solid rgba(232,24,28,0.25);border-radius:20px;padding:6px 16px;font-size:12px;font-weight:600;color:var(--red);letter-spacing:1px;text-transform:uppercase;margin-bottom:28px;}
+.hero h1{font-size:clamp(40px,6vw,76px);font-weight:900;line-height:1.05;letter-spacing:-2px;color:var(--white);margin-bottom:24px;}
+.hero h1 span{color:var(--red);}
+.hero-sub{font-size:18px;color:var(--muted);max-width:600px;margin:0 auto 48px;line-height:1.65;}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{background:var(--red);color:#fff;text-decoration:none;font-size:15px;font-weight:700;padding:15px 36px;border-radius:6px;transition:background 0.2s,transform 0.1s;display:inline-block;}
+.btn-primary:hover{background:var(--red-dark);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text);text-decoration:none;font-size:15px;font-weight:600;padding:15px 36px;border-radius:6px;border:1px solid var(--border);transition:border-color 0.2s,color 0.2s;display:inline-block;}
+.btn-secondary:hover{border-color:var(--muted);color:var(--white);}
+
+/* PLATFORM PREVIEW */
+.preview{padding:0 40px 100px;}
+.preview-inner{max-width:1100px;margin:0 auto;}
+.preview-frame{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.preview-bar{background:var(--surface2);padding:14px 20px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);}
+.preview-dot{width:10px;height:10px;border-radius:50%;}
+.preview-screen{padding:48px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;min-height:260px;}
+.preview-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;}
+.preview-card-bar{height:8px;border-radius:4px;background:var(--border);}
+.preview-card-bar.red{background:var(--red);width:60%;}
+.preview-card-bar.w80{width:80%;}
+.preview-card-bar.w50{width:50%;}
+.preview-card-bar.w70{width:70%;}
+.preview-card-stat{font-size:28px;font-weight:900;color:var(--white);}
+.preview-card-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.preview-live{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:1px;}
+.preview-live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+/* SECTIONS */
+section{padding:100px 40px;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:16px;}
+.section-title{font-size:clamp(32px,4vw,52px);font-weight:900;line-height:1.1;letter-spacing:-1.5px;color:var(--white);margin-bottom:20px;}
+.section-sub{font-size:17px;color:var(--muted);max-width:580px;line-height:1.65;}
+
+/* WHO IT'S FOR */
+.for-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px;}
+.for-card{background:var(--surface);padding:36px 32px;}
+.for-title{font-size:17px;font-weight:800;color:var(--white);margin-bottom:10px;}
+.for-text{font-size:13px;color:var(--muted);line-height:1.7;}
+
+/* FEATURES */
+.features{background:var(--surface);}
+.features-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:56px;}
+.feature-card{background:var(--bg);padding:40px 36px;border:1px solid var(--border);border-radius:0;transition:border-color 0.2s;}
+.feature-card:hover{border-color:rgba(232,24,28,0.3);}
+.feature-icon{width:44px;height:44px;background:rgba(232,24,28,0.1);border:1px solid rgba(232,24,28,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
+.feature-title{font-size:18px;font-weight:800;color:var(--white);margin-bottom:10px;}
+.feature-text{font-size:14px;color:var(--muted);line-height:1.7;}
+
+/* PRICING */
+.pricing{background:var(--bg);}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px;}
+.price-card{background:var(--surface);padding:40px 36px;position:relative;}
+.price-card.featured{background:var(--red);border-color:var(--red);}
+.price-card.featured .price-name{color:rgba(255,255,255,0.7);}
+.price-card.featured .price-amount{color:#fff;}
+.price-card.featured .price-period{color:rgba(255,255,255,0.6);}
+.price-card.featured .price-feature{color:#fff;border-color:rgba(255,255,255,0.15);}
+.price-card.featured .price-feature::before{background:#fff;}
+.price-card.featured .btn-price{background:#fff;color:var(--red);}
+.price-badge{position:absolute;top:20px;right:20px;background:#fff;color:var(--red);font-size:10px;font-weight:800;padding:3px 10px;border-radius:3px;letter-spacing:1px;text-transform:uppercase;}
+.price-name{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:20px;}
+.price-amount{font-size:48px;font-weight:900;color:var(--white);letter-spacing:-2px;line-height:1;}
+.price-period{font-size:14px;color:var(--muted);margin-top:4px;margin-bottom:28px;}
+.price-features{display:flex;flex-direction:column;gap:0;margin-bottom:32px;}
+.price-feature{font-size:13px;color:var(--muted);padding:10px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.price-feature::before{content:'';width:6px;height:6px;min-width:6px;border-radius:50%;background:var(--red);}
+.btn-price{display:block;text-align:center;background:var(--surface2);color:var(--white);text-decoration:none;font-size:14px;font-weight:700;padding:13px 24px;border-radius:6px;border:1px solid var(--border);transition:background 0.2s,border-color 0.2s;}
+.btn-price:hover{background:var(--red);border-color:var(--red);}
+
+/* CTA BLOCK */
+.cta-block{background:var(--surface);padding:100px 40px;}
+.cta-inner{max-width:680px;margin:0 auto;text-align:center;}
+.cta-inner h2{font-size:clamp(32px,4vw,52px);font-weight:900;letter-spacing:-1.5px;color:var(--white);margin-bottom:20px;}
+.cta-inner p{font-size:17px;color:var(--muted);margin-bottom:40px;line-height:1.65;}
+.cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:48px 40px 32px;}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:13px;transition:color 0.2s;}
+.footer-links a:hover{color:var(--white);}
+.footer-copy{font-size:12px;color:var(--muted);}
+
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .hero,.preview{padding-left:20px;padding-right:20px;}
+  section{padding:60px 20px;}
+  .for-grid,.features-grid,.pricing-grid{grid-template-columns:1fr;}
+  .preview-screen{grid-template-columns:1fr;}
+  footer{padding:40px 20px 24px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-mark">B</div>
+    <span class="nav-logo-text">Black Marker <span>Media</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="channelcast.html" class="active">ChannelCast</a>
+    <a href="production.html">Production</a>
+    <a href="network.html">BlackMarker.TV</a>
+    <a href="team.html">Company</a>
+  </div>
+  <a class="nav-cta" href="#pricing">Get Started</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">ChannelCast — Streaming Platform</div>
+    <h1>Your Streaming Platform.<br><span>Built. Branded. Managed.</span></h1>
+    <p class="hero-sub">Stop renting space on someone else's platform. ChannelCast gives you a fully custom streaming website, live channel, and SEO-driven marketing — all maintained monthly so you can focus on the content.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#pricing">See Plans & Pricing</a>
+      <a class="btn-secondary" href="#features">What's Included</a>
+    </div>
+  </div>
+</div>
+
+<div class="preview">
+  <div class="preview-inner">
+    <div class="preview-frame">
+      <div class="preview-bar">
+        <div class="preview-dot" style="background:#ff5f57;"></div>
+        <div class="preview-dot" style="background:#febc2e;"></div>
+        <div class="preview-dot" style="background:#28c840;"></div>
+        <span style="font-size:12px;color:var(--muted);margin-left:12px;">yourchannelname.com — powered by ChannelCast</span>
+      </div>
+      <div class="preview-screen">
+        <div class="preview-card">
+          <div class="preview-live">Live Now</div>
+          <div class="preview-card-bar red"></div>
+          <div class="preview-card-bar w80"></div>
+          <div class="preview-card-bar w50"></div>
+          <div style="margin-top:8px;font-size:12px;color:var(--muted);">Your show, your brand, your audience</div>
+        </div>
+        <div class="preview-card">
+          <div class="preview-card-label">Monthly Viewers</div>
+          <div class="preview-card-stat">12.4K</div>
+          <div class="preview-card-bar red"></div>
+          <div class="preview-card-bar w70"></div>
+        </div>
+        <div class="preview-card">
+          <div class="preview-card-label">Revenue This Month</div>
+          <div class="preview-card-stat">$2,840</div>
+          <div class="preview-card-bar red"></div>
+          <div class="preview-card-bar w50"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="who">
+  <div class="section-inner">
+    <div class="section-eyebrow">Who ChannelCast Is For</div>
+    <h2 class="section-title">Built for Creators<br>Who Mean Business</h2>
+    <div class="for-grid">
+      <div class="for-card">
+        <div class="for-title">Independent Creators & Podcasters</div>
+        <p class="for-text">Stop relying on algorithms that bury your content. Own your platform, your audience list, and your revenue. ChannelCast gives you a professional home base that looks like you hired a full agency.</p>
+      </div>
+      <div class="for-card">
+        <div class="for-title">Venues & Event Organizers</div>
+        <p class="for-text">Turn every event into a recurring digital revenue stream. Live stream to your audience, archive your library, sell PPV tickets, and build a subscriber base that pays you every month.</p>
+      </div>
+      <div class="for-card">
+        <div class="for-title">Businesses & Organizations</div>
+        <p class="for-text">Churches, sports leagues, media companies, and brands. If you produce recurring content, you need a home that grows with you — not a YouTube channel you don't control.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="features">
+  <div class="section-inner">
+    <div class="section-eyebrow">What's Included</div>
+    <h2 class="section-title">Everything You Need.<br>Nothing You Don't.</h2>
+    <p class="section-sub">Every ChannelCast plan comes fully built and managed. You don't touch the tech — we handle it.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div class="feature-title">Custom Streaming Website</div>
+        <p class="feature-text">A branded, professional streaming site built to your look and feel. Live player, VOD library, event calendar, and subscription management — all under your domain.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="feature-title">Live Streaming Channel</div>
+        <p class="feature-text">Multi-platform distribution ready — stream to your site, YouTube, Facebook, and any RTMP destination simultaneously. One stream, maximum reach.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+        </div>
+        <div class="feature-title">SEO & Search Visibility</div>
+        <p class="feature-text">Active monthly SEO management so your platform and content get discovered organically. We optimize for the terms your audience is actually searching for.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="feature-title">Subscription & PPV Systems</div>
+        <p class="feature-text">Built-in subscriber management, recurring billing, and pay-per-view event ticketing. Your content, your pricing, your revenue — deposited directly to you.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div class="feature-title">Analytics & Monthly Reporting</div>
+        <p class="feature-text">Monthly performance summaries — viewer counts, subscriber growth, revenue tracking, and SEO rankings. You always know what's working.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        </div>
+        <div class="feature-title">Social & PPC Marketing (Pro)</div>
+        <p class="feature-text">Pro tier includes active paid advertising management across Meta and Google, plus social media content strategy to keep your platform growing every month.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="pricing">
+  <div class="section-inner">
+    <div class="section-eyebrow">Plans & Pricing</div>
+    <h2 class="section-title">Simple Monthly Plans.<br>No Surprises.</h2>
+    <p class="section-sub">All plans include the initial platform build. No setup fee. No per-stream charges. One monthly payment covers everything.</p>
+    <div class="pricing-grid">
+
+      <div class="price-card">
+        <div class="price-name">Starter</div>
+        <div class="price-amount">$1,000</div>
+        <div class="price-period">/ month</div>
+        <div class="price-features">
+          <div class="price-feature">Hosted streaming page</div>
+          <div class="price-feature">Live channel setup</div>
+          <div class="price-feature">Basic SEO management</div>
+          <div class="price-feature">Monthly analytics report</div>
+          <div class="price-feature">Email & chat support</div>
+        </div>
+        <a class="btn-price" href="#" data-bmb-modal="lead" data-bmb-preset-interest="ChannelCast Starter">Get Started</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-name">Growth</div>
+        <div class="price-amount">$2,000</div>
+        <div class="price-period">/ month</div>
+        <div class="price-features">
+          <div class="price-feature">Custom branded platform build</div>
+          <div class="price-feature">Multi-platform distribution</div>
+          <div class="price-feature">Active SEO + social management</div>
+          <div class="price-feature">Subscription & PPV systems</div>
+          <div class="price-feature">Analytics + quarterly strategy call</div>
+        </div>
+        <a class="btn-price" href="#" data-bmb-modal="lead" data-bmb-preset-interest="ChannelCast Platform">Get Started</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-name">Pro</div>
+        <div class="price-amount">$3,500</div>
+        <div class="price-period">/ month</div>
+        <div class="price-features">
+          <div class="price-feature">Full custom build + design</div>
+          <div class="price-feature">Active PPC advertising management</div>
+          <div class="price-feature">Content strategy & calendar</div>
+          <div class="price-feature">Priority support & dedicated manager</div>
+          <div class="price-feature">BlackMarker.TV cross-promotion</div>
+        </div>
+        <a class="btn-price" href="#" data-bmb-modal="lead" data-bmb-preset-interest="ChannelCast Platform">Get Started</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="cta-block">
+  <div class="cta-inner">
+    <h2>Ready to Own Your Platform?</h2>
+    <p>Stop competing for attention on someone else's algorithm. Get a streaming platform built around your brand and managed so you can focus on the content.</p>
+    <div class="cta-actions">
+      <a class="btn-primary" href="#" data-bmb-modal="lead">Request a Demo</a>
+      <a class="btn-secondary" href="index.html">Back to Home</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="production.html">Production</a>
+      <a href="network.html">BlackMarker.TV</a>
+      <a href="team.html">Company</a>
+    </div>
+    <span class="footer-copy">© 2026 Black Marker Media LLC</span>
+  </div>
+</footer>
+
+<script src="forms.js"></script>
+<script src="animations.js"></script>
+<script src="editor.js"></script>
+</body>
+</html>

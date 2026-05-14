@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlackMarker.TV — Independent Broadcast Network | Black Marker Media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--red:#E8181C;--red-dark:#B01212;--bg:#080808;--surface:#111111;--surface2:#181818;--border:#222222;--text:#F0F0F0;--muted:#777777;--white:#FFFFFF;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-mark{width:32px;height:32px;background:var(--red);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;}
+.nav-logo-text{font-size:15px;font-weight:700;color:var(--white);}
+.nav-logo-text span{color:var(--red);}
+.nav-links{display:flex;align-items:center;gap:8px;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:4px;transition:color 0.2s,background 0.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--white);background:var(--surface2);}
+.nav-cta{background:var(--red);color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:8px 20px;border-radius:5px;transition:background 0.2s;}
+.nav-cta:hover{background:var(--red-dark);}
+
+/* HERO */
+.hero{padding:140px 40px 100px;position:relative;overflow:hidden;text-align:center;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(232,24,28,0.09) 0%,transparent 70%);pointer-events:none;}
+.hero-inner{max-width:900px;margin:0 auto;position:relative;}
+.tv-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(232,24,28,0.1);border:1px solid rgba(232,24,28,0.25);border-radius:20px;padding:6px 16px;font-size:12px;font-weight:600;color:var(--red);letter-spacing:1px;text-transform:uppercase;margin-bottom:28px;}
+.tv-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
+.hero h1{font-size:clamp(40px,7vw,88px);font-weight:900;line-height:1.0;letter-spacing:-3px;color:var(--white);margin-bottom:16px;}
+.hero h1 .tv{color:var(--red);}
+.hero-tagline{font-size:clamp(16px,2vw,22px);color:var(--muted);margin-bottom:16px;font-weight:400;}
+.hero-sub{font-size:16px;color:var(--muted);max-width:620px;margin:0 auto 48px;line-height:1.65;opacity:0.8;}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{background:var(--red);color:#fff;text-decoration:none;font-size:15px;font-weight:700;padding:14px 32px;border-radius:6px;transition:background 0.2s,transform 0.1s;display:inline-block;}
+.btn-primary:hover{background:var(--red-dark);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text);text-decoration:none;font-size:15px;font-weight:600;padding:14px 32px;border-radius:6px;border:1px solid var(--border);transition:border-color 0.2s;display:inline-block;}
+.btn-secondary:hover{border-color:var(--muted);}
+
+/* NETWORK STATS */
+.network-stats{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:48px 40px;}
+.stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:40px;}
+.stat-item{text-align:center;}
+.stat-value{font-size:40px;font-weight:900;color:var(--white);letter-spacing:-1.5px;line-height:1;}
+.stat-value span{color:var(--red);}
+.stat-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:6px;}
+
+/* SECTIONS */
+section{padding:100px 40px;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:16px;}
+.section-title{font-size:clamp(32px,4vw,52px);font-weight:900;line-height:1.1;letter-spacing:-1.5px;color:var(--white);margin-bottom:20px;}
+.section-sub{font-size:17px;color:var(--muted);max-width:580px;line-height:1.65;}
+
+/* PROGRAMMING */
+.programming{background:var(--bg);}
+.prog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:56px;}
+.prog-card{background:var(--surface);padding:32px 28px;transition:background 0.2s;}
+.prog-card:hover{background:var(--surface2);}
+.prog-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);margin-bottom:12px;}
+.prog-title{font-size:17px;font-weight:800;color:var(--white);margin-bottom:8px;}
+.prog-text{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* THREE AUDIENCES */
+.audiences{background:var(--surface);}
+.audience-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px;}
+.audience-tab{background:var(--bg);padding:48px 40px;border:1px solid var(--border);transition:border-color 0.3s;}
+.audience-tab:hover{border-color:rgba(232,24,28,0.3);}
+.aud-tag{display:inline-block;background:rgba(232,24,28,0.1);border:1px solid rgba(232,24,28,0.2);color:var(--red);font-size:10px;font-weight:700;padding:3px 10px;border-radius:3px;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;}
+.aud-title{font-size:24px;font-weight:900;color:var(--white);letter-spacing:-0.5px;margin-bottom:12px;}
+.aud-sub{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:28px;}
+.aud-list{display:flex;flex-direction:column;gap:10px;margin-bottom:32px;}
+.aud-item{font-size:13px;color:var(--muted);display:flex;align-items:flex-start;gap:8px;}
+.aud-item::before{content:'→';color:var(--red);flex-shrink:0;}
+.aud-cta{display:inline-block;background:var(--red);color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:11px 24px;border-radius:5px;transition:background 0.2s;}
+.aud-cta:hover{background:var(--red-dark);}
+
+/* AUDIENCE DATA */
+.aud-data{background:var(--bg);}
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:56px;}
+.data-bars{display:flex;flex-direction:column;gap:20px;}
+.data-bar-item{}
+.data-bar-label{display:flex;justify-content:space-between;margin-bottom:6px;}
+.data-bar-name{font-size:13px;color:var(--text);font-weight:500;}
+.data-bar-pct{font-size:13px;color:var(--red);font-weight:700;}
+.data-bar-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.data-bar-fill{height:100%;background:var(--red);border-radius:2px;}
+.data-notes{display:flex;flex-direction:column;gap:24px;}
+.data-note{padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:8px;}
+.data-note-title{font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px;}
+.data-note-text{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* CTA */
+.cta-block{background:var(--red);padding:100px 40px;}
+.cta-inner{max-width:700px;margin:0 auto;text-align:center;}
+.cta-inner h2{font-size:clamp(32px,4vw,52px);font-weight:900;letter-spacing:-1.5px;color:#fff;margin-bottom:16px;}
+.cta-inner p{font-size:17px;color:rgba(255,255,255,0.75);margin-bottom:40px;line-height:1.65;}
+.cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.btn-white{background:#fff;color:var(--red);text-decoration:none;font-size:15px;font-weight:700;padding:14px 32px;border-radius:6px;display:inline-block;transition:opacity 0.2s;}
+.btn-white:hover{opacity:0.9;}
+.btn-outline-white{background:transparent;color:#fff;text-decoration:none;font-size:15px;font-weight:600;padding:14px 32px;border-radius:6px;border:1px solid rgba(255,255,255,0.4);display:inline-block;transition:border-color 0.2s;}
+.btn-outline-white:hover{border-color:#fff;}
+
+footer{background:var(--surface);border-top:1px solid var(--border);padding:48px 40px 32px;}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:13px;transition:color 0.2s;}
+.footer-links a:hover{color:var(--white);}
+.footer-copy{font-size:12px;color:var(--muted);}
+
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .hero,.network-stats,section,.cta-block{padding-left:20px;padding-right:20px;}
+  .stats-inner,.prog-grid,.audience-tabs{grid-template-columns:1fr 1fr;}
+  .data-grid{grid-template-columns:1fr;gap:40px;}
+  footer{padding:40px 20px 24px;}
+}
+@media(max-width:600px){
+  .stats-inner,.prog-grid,.audience-tabs{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-mark">B</div>
+    <span class="nav-logo-text">Black Marker <span>Media</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="channelcast.html">ChannelCast</a>
+    <a href="production.html">Production</a>
+    <a href="network.html" class="active">BlackMarker.TV</a>
+    <a href="team.html">Company</a>
+  </div>
+  <a class="nav-cta" href="#audiences">Join the Network</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="tv-badge"><div class="tv-dot"></div>Live Network</div>
+    <h1>Black Marker<span class="tv">.TV</span></h1>
+    <p class="hero-tagline">The Independent Live Broadcast Network</p>
+    <p class="hero-sub">Live talk shows. Music events. Comedy. Podcasts. PPV. A platform built for independent creators, powered by professional infrastructure, and open to sponsors, advertisers, and content partners who want real audience engagement.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#audiences">Become a Sponsor</a>
+      <a class="btn-secondary" href="#creators">House Your Show</a>
+    </div>
+  </div>
+</div>
+
+<div class="network-stats">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-value">Live<span>+</span></div>
+      <div class="stat-label">Live Events Year-Round</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">PPV<span>+</span></div>
+      <div class="stat-label">Pay-Per-View Events</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">Free<span>+</span></div>
+      <div class="stat-label">Free Streaming Tier</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">100<span>%</span></div>
+      <div class="stat-label">Independent Programming</div>
+    </div>
+  </div>
+</div>
+
+<section class="programming">
+  <div class="section-inner">
+    <div class="section-eyebrow">What's On</div>
+    <h2 class="section-title">Programming Built for<br>Real Audiences</h2>
+    <p class="section-sub">BlackMarker.TV is home to original independent programming across comedy, music, talk, and current events — all streamed live, all interactive.</p>
+    <div class="prog-grid">
+      <div class="prog-card">
+        <div class="prog-type">Comedy</div>
+        <div class="prog-title">Live Stand-Up & Comedy Shows</div>
+        <p class="prog-text">Original comedy specials and recurring shows from independent comedians — with live interactive audience chat.</p>
+      </div>
+      <div class="prog-card">
+        <div class="prog-type">Music</div>
+        <div class="prog-title">Live Music & Freestyle Events</div>
+        <p class="prog-text">Live concerts, music reviews, and freestyle events broadcast to a global audience in real time.</p>
+      </div>
+      <div class="prog-card">
+        <div class="prog-type">Talk & Podcast</div>
+        <div class="prog-title">Talk Shows & Podcast Network</div>
+        <p class="prog-text">Weekly talk shows, opinion programming, and podcast recordings streamed live with audience interaction.</p>
+      </div>
+      <div class="prog-card">
+        <div class="prog-type">PPV Events</div>
+        <div class="prog-title">Pay-Per-View Specials</div>
+        <p class="prog-text">Ticketed live events — battles, competitions, and one-night specials available to viewers worldwide.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="audiences" id="audiences">
+  <div class="section-inner">
+    <div class="section-eyebrow">Partner With the Network</div>
+    <h2 class="section-title">Three Ways to Work<br>With BlackMarker.TV</h2>
+    <div class="audience-tabs">
+
+      <div class="audience-tab">
+        <div class="aud-tag">Sponsors</div>
+        <div class="aud-title">Sponsor a Show or Event</div>
+        <p class="aud-sub">Put your brand in front of an engaged, active audience during live programming. No passive scroll — viewers are watching, chatting, and participating in real time.</p>
+        <div class="aud-list">
+          <div class="aud-item">Opening/closing billboard integration</div>
+          <div class="aud-item">Host-read brand mentions</div>
+          <div class="aud-item">PPV event title sponsorship</div>
+          <div class="aud-item">Monthly show sponsorship packages</div>
+          <div class="aud-item">Social media cross-promotion</div>
+        </div>
+        <a class="aud-cta" href="#" data-bmb-modal="sponsor">Inquire About Sponsorship</a>
+      </div>
+
+      <div class="audience-tab">
+        <div class="aud-tag">Advertisers</div>
+        <div class="aud-title">Advertise on the Network</div>
+        <p class="aud-sub">Run targeted ad placements across BlackMarker.TV's growing library of live and on-demand content — reaching a culturally engaged Latino/Hispanic and independent entertainment audience.</p>
+        <div class="aud-list">
+          <div class="aud-item">Pre-roll and mid-roll video ads</div>
+          <div class="aud-item">Display placements across the platform</div>
+          <div class="aud-item">Audience: Latino/Hispanic 25–55</div>
+          <div class="aud-item">Genre targeting: Comedy, Music, Talk</div>
+          <div class="aud-item">CPM-based and flat-rate packages</div>
+        </div>
+        <a class="aud-cta" href="#" data-bmb-modal="sponsor">Get Ad Rates</a>
+      </div>
+
+      <div class="audience-tab" id="creators">
+        <div class="aud-tag">Content Creators</div>
+        <div class="aud-title">House Your Show Here</div>
+        <p class="aud-sub">Independent podcasters, show hosts, and live performers — bring your show to BlackMarker.TV and get a professional broadcast home with production support, built-in audience, and revenue sharing.</p>
+        <div class="aud-list">
+          <div class="aud-item">Professional broadcast platform for your show</div>
+          <div class="aud-item">Live streaming + VOD archive</div>
+          <div class="aud-item">Network cross-promotion to existing audience</div>
+          <div class="aud-item">Sponsorship and PPV revenue share</div>
+          <div class="aud-item">Optional production support from BMB</div>
+        </div>
+        <a class="aud-cta" href="#" data-bmb-modal="creator">Pitch Your Show</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="aud-data">
+  <div class="section-inner">
+    <div class="data-grid">
+      <div>
+        <div class="section-eyebrow">Audience Profile</div>
+        <h2 class="section-title">Who Watches<br>BlackMarker.TV</h2>
+        <p class="section-sub" style="margin-bottom:40px;">Our audience is active, engaged, and culturally connected — not passive scrollers. They show up live and come back for the programming, the community, and the interaction.</p>
+        <div class="data-bars">
+          <div class="data-bar-item">
+            <div class="data-bar-label"><span class="data-bar-name">Latino / Hispanic</span><span class="data-bar-pct">68%</span></div>
+            <div class="data-bar-track"><div class="data-bar-fill" style="width:68%;"></div></div>
+          </div>
+          <div class="data-bar-item">
+            <div class="data-bar-label"><span class="data-bar-name">Ages 25–54</span><span class="data-bar-pct">74%</span></div>
+            <div class="data-bar-track"><div class="data-bar-fill" style="width:74%;"></div></div>
+          </div>
+          <div class="data-bar-item">
+            <div class="data-bar-label"><span class="data-bar-name">Mobile Viewers</span><span class="data-bar-pct">61%</span></div>
+            <div class="data-bar-track"><div class="data-bar-fill" style="width:61%;"></div></div>
+          </div>
+          <div class="data-bar-item">
+            <div class="data-bar-label"><span class="data-bar-name">Florida / Southeast US</span><span class="data-bar-pct">55%</span></div>
+            <div class="data-bar-track"><div class="data-bar-fill" style="width:55%;"></div></div>
+          </div>
+          <div class="data-bar-item">
+            <div class="data-bar-label"><span class="data-bar-name">Live Interaction (Chat)</span><span class="data-bar-pct">82%</span></div>
+            <div class="data-bar-track"><div class="data-bar-fill" style="width:82%;"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="data-notes">
+        <div class="data-note">
+          <div class="data-note-title">Live + Interactive = Higher Engagement</div>
+          <p class="data-note-text">BlackMarker.TV viewers participate in real time through live chat — including direct interaction with performers and hosts. This drives engagement metrics that passive streaming platforms can't replicate.</p>
+        </div>
+        <div class="data-note">
+          <div class="data-note-title">The Network Backs Our Clients</div>
+          <p class="data-note-text">Every ChannelCast client and production partner can cross-promote through BlackMarker.TV — reaching our existing audience and building their own simultaneously.</p>
+        </div>
+        <div class="data-note">
+          <div class="data-note-title">A Growing Platform in a Growing Market</div>
+          <p class="data-note-text">The global OTT market grows at 20% CAGR toward $200B by 2030. Independent networks that build niche audiences now are positioned ahead of consolidation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-block">
+  <div class="cta-inner">
+    <h2>Your Brand. Our Audience.<br>Real Results.</h2>
+    <p>Sponsorships, advertising, and creator partnerships are open. Reach an engaged, growing, culturally connected audience — live.</p>
+    <div class="cta-actions">
+      <a class="btn-white" href="mailto:info@blackmarkermedia.com?subject=BlackMarker.TV Partnership">Get in Touch</a>
+      <a class="btn-outline-white" href="https://www.blackmarker.tv">Watch BlackMarker.TV</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="channelcast.html">ChannelCast</a>
+      <a href="production.html">Production</a>
+      <a href="team.html">Company</a>
+    </div>
+    <span class="footer-copy">© 2026 Black Marker Media LLC</span>
+  </div>
+</footer>
+
+<script src="forms.js"></script>
+<script src="animations.js"></script>
+<script src="editor.js"></script>
+</body>
+</html>

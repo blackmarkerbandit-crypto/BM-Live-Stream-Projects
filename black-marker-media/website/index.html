@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Black Marker Media — We Build. We Broadcast. We Operate.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E8181C;
+  --red-dark: #B01212;
+  --bg: #080808;
+  --surface: #111111;
+  --surface2: #181818;
+  --border: #222222;
+  --text: #F0F0F0;
+  --muted: #777777;
+  --white: #FFFFFF;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-mark{width:32px;height:32px;background:var(--red);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;letter-spacing:-1px;}
+.nav-logo-text{font-size:15px;font-weight:700;color:var(--white);letter-spacing:0.3px;}
+.nav-logo-text span{color:var(--red);}
+.nav-links{display:flex;align-items:center;gap:8px;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:4px;transition:color 0.2s,background 0.2s;}
+.nav-links a:hover{color:var(--white);background:var(--surface2);}
+.nav-links a.active{color:var(--white);}
+.nav-cta{background:var(--red);color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:8px 20px;border-radius:5px;transition:background 0.2s;white-space:nowrap;}
+.nav-cta:hover{background:var(--red-dark);}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 40px 80px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse 80% 60% at 60% 40%,rgba(232,24,28,0.08) 0%,transparent 70%);pointer-events:none;}
+.hero-grid{position:absolute;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;}
+.hero-inner{max-width:1100px;margin:0 auto;position:relative;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(232,24,28,0.1);border:1px solid rgba(232,24,28,0.25);border-radius:20px;padding:6px 16px;font-size:12px;font-weight:600;color:var(--red);letter-spacing:1px;text-transform:uppercase;margin-bottom:28px;}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.hero h1{font-size:clamp(42px,6vw,80px);font-weight:900;line-height:1.05;letter-spacing:-2px;color:var(--white);margin-bottom:24px;}
+.hero h1 span{color:var(--red);}
+.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--muted);max-width:620px;line-height:1.6;margin-bottom:48px;font-weight:400;}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;}
+.btn-primary{background:var(--red);color:#fff;text-decoration:none;font-size:15px;font-weight:700;padding:14px 32px;border-radius:6px;transition:background 0.2s,transform 0.1s;display:inline-block;}
+.btn-primary:hover{background:var(--red-dark);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text);text-decoration:none;font-size:15px;font-weight:600;padding:14px 32px;border-radius:6px;border:1px solid var(--border);transition:border-color 0.2s,color 0.2s;display:inline-block;}
+.btn-secondary:hover{border-color:var(--muted);color:var(--white);}
+.hero-stats{display:flex;gap:48px;margin-top:72px;padding-top:48px;border-top:1px solid var(--border);}
+.hero-stat-value{font-size:32px;font-weight:900;color:var(--white);letter-spacing:-1px;display:block;}
+.hero-stat-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
+
+/* SECTIONS */
+section{padding:100px 40px;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:16px;}
+.section-title{font-size:clamp(32px,4vw,52px);font-weight:900;line-height:1.1;letter-spacing:-1.5px;color:var(--white);margin-bottom:20px;}
+.section-sub{font-size:17px;color:var(--muted);max-width:580px;line-height:1.65;}
+
+/* FORMULA STRIP */
+.formula-strip{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 40px;}
+.formula-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;}
+.formula-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted);}
+.formula-item{display:flex;align-items:center;gap:12px;}
+.formula-pill{background:var(--red);color:#fff;font-size:13px;font-weight:800;padding:6px 18px;border-radius:4px;letter-spacing:0.5px;}
+.formula-plus{color:var(--border);font-size:20px;font-weight:300;}
+.formula-result{color:var(--white);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+
+/* THREE PILLARS */
+.pillars{background:var(--bg);}
+.pillars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:64px;}
+.pillar-card{background:var(--surface);padding:48px 40px;position:relative;overflow:hidden;transition:background 0.3s;}
+.pillar-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--border);transition:background 0.3s;}
+.pillar-card:hover{background:var(--surface2);}
+.pillar-card:hover::before{background:var(--red);}
+.pillar-number{font-size:11px;font-weight:700;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;}
+.pillar-icon{width:48px;height:48px;margin-bottom:24px;opacity:0.9;}
+.pillar-title{font-size:24px;font-weight:800;color:var(--white);letter-spacing:-0.5px;margin-bottom:16px;}
+.pillar-sub{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:32px;}
+.pillar-link{color:var(--red);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:0.5px;display:flex;align-items:center;gap:8px;transition:gap 0.2s;}
+.pillar-link:hover{gap:12px;}
+.pillar-tag{display:inline-block;background:rgba(232,24,28,0.1);border:1px solid rgba(232,24,28,0.2);color:var(--red);font-size:10px;font-weight:700;padding:3px 10px;border-radius:3px;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;}
+
+/* WHY BMM */
+.why{background:var(--surface);}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:64px;}
+.why-list{display:flex;flex-direction:column;gap:32px;}
+.why-item{display:flex;gap:20px;align-items:flex-start;}
+.why-item-icon{width:40px;height:40px;min-width:40px;background:rgba(232,24,28,0.1);border:1px solid rgba(232,24,28,0.2);border-radius:6px;display:flex;align-items:center;justify-content:center;margin-top:2px;}
+.why-item-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:6px;}
+.why-item-text{font-size:14px;color:var(--muted);line-height:1.65;}
+.why-visual{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:24px;}
+.why-visual-stat{display:flex;flex-direction:column;gap:4px;}
+.why-visual-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);}
+.why-visual-value{font-size:42px;font-weight:900;color:var(--white);letter-spacing:-1.5px;line-height:1;}
+.why-visual-value span{color:var(--red);}
+.why-divider{height:1px;background:var(--border);}
+
+/* INVESTORS STRIP */
+.investor-strip{background:var(--red);padding:80px 40px;}
+.investor-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+.investor-text h2{font-size:clamp(28px,3vw,40px);font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:10px;}
+.investor-text p{font-size:16px;color:rgba(255,255,255,0.75);}
+.btn-white{background:#fff;color:var(--red);text-decoration:none;font-size:15px;font-weight:800;padding:14px 36px;border-radius:6px;white-space:nowrap;transition:opacity 0.2s;display:inline-block;}
+.btn-white:hover{opacity:0.9;}
+
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:64px 40px 40px;}
+.footer-inner{max-width:1100px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:60px;}
+.footer-brand-name{font-size:16px;font-weight:800;color:var(--white);margin-bottom:12px;}
+.footer-brand-text{font-size:13px;color:var(--muted);line-height:1.7;max-width:260px;}
+.footer-col-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:20px;}
+.footer-col a{display:block;color:var(--muted);text-decoration:none;font-size:13px;margin-bottom:10px;transition:color 0.2s;}
+.footer-col a:hover{color:var(--white);}
+.footer-bottom{border-top:1px solid var(--border);padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-copy{font-size:12px;color:var(--muted);}
+.footer-mark{display:flex;align-items:center;gap:8px;}
+.footer-mark-dot{width:8px;height:8px;border-radius:50%;background:var(--red);}
+.footer-mark-text{font-size:12px;color:var(--muted);}
+
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .hero{padding:100px 20px 60px;}
+  .hero-stats{flex-wrap:wrap;gap:32px;}
+  section{padding:60px 20px;}
+  .pillars-grid{grid-template-columns:1fr;}
+  .why-grid{grid-template-columns:1fr;gap:40px;}
+  .footer-top{grid-template-columns:1fr 1fr;gap:40px;}
+  .investor-inner{flex-direction:column;text-align:center;}
+  .formula-inner{flex-direction:column;gap:12px;}
+  footer{padding:48px 20px 32px;}
+}
+</style>
+<style>@keyframes scanMove{from{background-position:0 0}to{background-position:0 40px}}.bmb-revealed{transition:opacity 0.55s ease,transform 0.55s cubic-bezier(0.22,1,0.36,1);}</style></head>
+<body>
+
+<nav style="">
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-mark">B</div>
+    <span class="nav-logo-text">Black Marker <span>Media</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="channelcast.html">ChannelCast</a>
+    <a href="production.html">Production</a>
+    <a href="network.html">BlackMarker.TV</a>
+    <a href="team.html">Company</a>
+  </div>
+  <a class="nav-cta" href="#" data-bmb-modal="lead">Get Started</a>
+</nav>
+
+<section class="hero"><canvas aria-hidden="true" width="1897" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; pointer-events: none; z-index: 0;" height="963"></canvas>
+  <div class="hero-grid" style="z-index: 1;"></div>
+  <div class="hero-inner" style="position: relative; z-index: 2;">
+    <div class="hero-eyebrow">Live Streaming &amp; Broadcast Technology</div>
+    <h1>We Build.<br>We Broadcast.<br><span>We Operate.</span></h1>
+    <p class="hero-sub">Black Marker Media delivers end-to-end live streaming infrastructure — custom platforms, professional production, and a live broadcast network — for creators, venues, and businesses ready to own their audience.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="channelcast.html">Explore ChannelCast</a>
+      <a class="btn-secondary" href="team.html">For Investors &amp; Partners</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <span class="hero-stat-value">3</span>
+        <div class="hero-stat-label">Business Divisions</div>
+      </div>
+      <div>
+        <span class="hero-stat-value">Live</span>
+        <div class="hero-stat-label">Broadcast Network</div>
+      </div>
+      <div>
+        <span class="hero-stat-value">Wesley Chapel, FL</span>
+        <div class="hero-stat-label">Headquartered</div>
+      </div>
+      <div>
+        <span class="hero-stat-value">BAM™</span>
+        <div class="hero-stat-label">Proprietary Formula</div>
+      </div>
+    </div>
+  </div>
+<div aria-hidden="true" style=""></div></section>
+
+<div class="formula-strip">
+  <div class="formula-inner">
+    <span class="formula-label">The BAM™ Formula</span>
+    <div class="formula-item"><div class="formula-pill">Build</div></div>
+    <span class="formula-plus">+</span>
+    <div class="formula-item"><div class="formula-pill">Amplify</div></div>
+    <span class="formula-plus">+</span>
+    <div class="formula-item"><div class="formula-pill">Monetize</div></div>
+    <span class="formula-plus">=</span>
+    <span class="formula-result">More Viewers. More Revenue. More Growth.</span>
+  </div>
+</div>
+
+<section class="pillars">
+  <div class="section-inner">
+    <div class="section-eyebrow">Three Divisions. One Vision.</div>
+    <h2 class="section-title">The Complete<br>Streaming Stack</h2>
+    <p class="section-sub">Every piece of the live streaming ecosystem — from the platform you stream on to the production that delivers it to the network that audiences watch — built and managed by one company.</p>
+    <div class="pillars-grid">
+
+      <div class="pillar-card" style="opacity: 0; transform: translateY(28px); will-change: opacity, transform;">
+        <div class="pillar-tag">SaaS Platform</div>
+        <div class="pillar-number">01 — Build</div>
+        <div class="pillar-title">ChannelCast</div>
+        <p class="pillar-sub">Your own branded streaming website, custom live platform, and active marketing management — built for you, maintained for you, and growing your audience every month.</p>
+        <a class="pillar-link" href="channelcast.html">Explore ChannelCast →</a>
+      </div>
+
+      <div class="pillar-card" style="opacity: 0; transform: translateY(28px); will-change: opacity, transform;">
+        <div class="pillar-tag">Production Services</div>
+        <div class="pillar-number">02 — Broadcast</div>
+        <div class="pillar-title">Live Production</div>
+        <p class="pillar-sub">Professional multi-camera live streaming production for events, venues, and organizations. On-site crew. Broadcast quality. Studio buildout consulting for those ready to build their own setup.</p>
+        <a class="pillar-link" href="production.html">Book Production →</a>
+      </div>
+
+      <div class="pillar-card" style="opacity: 0; transform: translateY(28px); will-change: opacity, transform;">
+        <div class="pillar-tag">Broadcast Network</div>
+        <div class="pillar-number">03 — Operate</div>
+        <div class="pillar-title">BlackMarker.TV</div>
+        <p class="pillar-sub">Our independent live broadcast network. Home to original programming, live events, PPV, and independent creators. The proof of concept for every platform we build for clients.</p>
+        <a class="pillar-link" href="network.html">Visit the Network →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="section-inner">
+    <div class="why-grid">
+      <div>
+        <div class="section-eyebrow">Why Black Marker Media</div>
+        <h2 class="section-title">One Company.<br>The Full Stack.</h2>
+        <div class="why-list" style="margin-top:40px;">
+          <div class="why-item" style="opacity: 0; transform: translateY(28px); will-change: opacity, transform;">
+            <div class="why-item-icon">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <div>
+              <div class="why-item-title">We own all three layers</div>
+              <p class="why-item-text">Platform, production, and a live network — most competitors serve only one. We connect all three, compounding the value of every client relationship.</p>
+            </div>
+          </div>
+          <div class="why-item" style="opacity: 0; transform: translateY(28px); will-change: opacity, transform;">
+            <div class="why-item-icon">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <div>
+              <div class="why-item-title">BlackMarker.TV is the live demo</div>
+              <p class="why-item-text">We don't just build streaming platforms — we operate one. Every system we offer clients is the same system running BlackMarker.TV right now.</p>
+            </div>
+          </div>
+          <div class="why-item" style="opacity: 0; transform: translateY(28px); will-change: opacity, transform;">
+            <div class="why-item-icon">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <div>
+              <div class="why-item-title">Mid-market pricing, enterprise execution</div>
+              <p class="why-item-text">The companies charging $10,000+ per event don't want your clients. The SaaS tools won't pick up the phone. We sit exactly in the gap.</p>
+            </div>
+          </div>
+          <div class="why-item" style="opacity: 0; transform: translateY(28px); will-change: opacity, transform;">
+            <div class="why-item-icon">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <div>
+              <div class="why-item-title">Relationships, not transactions</div>
+              <p class="why-item-text">Every division is built around recurring client partnerships. We're not here for one event — we're the streaming infrastructure you don't have to think about.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="why-visual" style="opacity: 0; transform: translateY(28px); will-change: opacity, transform;">
+          <div class="why-visual-stat">
+            <span class="why-visual-label">Global OTT Market by 2030</span>
+            <span class="why-visual-value">$200<span>B</span></span>
+          </div>
+          <div class="why-divider"></div>
+          <div class="why-visual-stat">
+            <span class="why-visual-label">Churches That Now Livestream</span>
+            <span class="why-visual-value">91<span>%</span></span>
+          </div>
+          <div class="why-divider"></div>
+          <div class="why-visual-stat">
+            <span class="why-visual-label">Market Growth (CAGR)</span>
+            <span class="why-visual-value">20<span>%</span></span>
+          </div>
+          <div class="why-divider"></div>
+          <div class="why-visual-stat">
+            <span class="why-visual-label">B2B Buying Starts With a Referral</span>
+            <span class="why-visual-value">84<span>%</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="investor-strip">
+  <div class="investor-inner">
+    <div class="investor-text">
+      <h2>Built for Growth.<br>Open to the Right Partners.</h2>
+      <p>We're actively building out all three divisions. If you're an investor, strategic partner, or AV company looking for a streaming infrastructure partner — let's talk.</p>
+    </div>
+    <a class="btn-white" href="#" data-bmb-modal="contact">Get in Touch →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">Black Marker Media LLC</div>
+        <p class="footer-brand-text">Live streaming infrastructure for the next generation of broadcasters. Build. Amplify. Monetize.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Divisions</div>
+        <a href="channelcast.html">ChannelCast Platform</a>
+        <a href="production.html">Live Production</a>
+        <a href="network.html">BlackMarker.TV</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <a href="team.html">Our Team</a>
+        <a href="team.html#investors">Investors</a>
+        <a href="team.html#partners">Partners</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <a href="mailto:info@blackmarkermedia.com">info@blackmarkermedia.com</a>
+        <a href="https://www.blackmarkermedia.com">blackmarkermedia.com</a>
+        <a href="#">Wesley Chapel, FL</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Black Marker Media LLC. All rights reserved.</span>
+      <div class="footer-mark">
+        <div class="footer-mark-dot"></div>
+        <span class="footer-mark-text">BAM™ is a trademark of Black Marker Media LLC</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="forms.js"></script>
+<script src="animations.js"></script>
+<script src="editor.js"></script>
+</body>
+</html>
+
+</body></html>

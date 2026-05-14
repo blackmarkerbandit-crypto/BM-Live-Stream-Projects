@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Team — Company & Investors | Black Marker Media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--red:#E8181C;--red-dark:#B01212;--bg:#080808;--surface:#111111;--surface2:#181818;--border:#222222;--text:#F0F0F0;--muted:#777777;--white:#FFFFFF;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-mark{width:32px;height:32px;background:var(--red);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;}
+.nav-logo-text{font-size:15px;font-weight:700;color:var(--white);}
+.nav-logo-text span{color:var(--red);}
+.nav-links{display:flex;align-items:center;gap:8px;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:4px;transition:color 0.2s,background 0.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--white);background:var(--surface2);}
+.nav-cta{background:var(--red);color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:8px 20px;border-radius:5px;transition:background 0.2s;}
+.nav-cta:hover{background:var(--red-dark);}
+
+/* HERO */
+.hero{padding:140px 40px 80px;}
+.hero-inner{max-width:1100px;margin:0 auto;}
+.eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:16px;}
+.hero h1{font-size:clamp(40px,5vw,72px);font-weight:900;line-height:1.05;letter-spacing:-2px;color:var(--white);margin-bottom:20px;}
+.hero-sub{font-size:18px;color:var(--muted);max-width:640px;line-height:1.65;margin-bottom:48px;}
+.hero-meta{display:flex;gap:48px;padding-top:48px;border-top:1px solid var(--border);flex-wrap:wrap;}
+.hero-meta-item{}
+.hero-meta-value{font-size:28px;font-weight:900;color:var(--white);letter-spacing:-1px;}
+.hero-meta-value span{color:var(--red);}
+.hero-meta-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+
+/* SECTIONS */
+section{padding:100px 40px;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:16px;}
+.section-title{font-size:clamp(32px,4vw,52px);font-weight:900;line-height:1.1;letter-spacing:-1.5px;color:var(--white);margin-bottom:20px;}
+.section-sub{font-size:17px;color:var(--muted);max-width:580px;line-height:1.65;}
+
+/* TEAM */
+.team{background:var(--bg);}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px;}
+.team-card{background:var(--surface);overflow:hidden;transition:background 0.2s;}
+.team-card:hover{background:var(--surface2);}
+.team-headshot{width:100%;aspect-ratio:1/1;background:var(--surface2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.headshot-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:linear-gradient(135deg,var(--surface2) 0%,var(--bg) 100%);}
+.headshot-initials{width:80px;height:80px;border-radius:50%;background:rgba(232,24,28,0.15);border:2px solid rgba(232,24,28,0.3);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:var(--red);}
+.headshot-note{font-size:11px;color:var(--muted);text-align:center;padding:0 20px;}
+.team-info{padding:32px 32px 36px;}
+.team-name{font-size:20px;font-weight:800;color:var(--white);margin-bottom:4px;}
+.team-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--red);margin-bottom:16px;}
+.team-bio{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:20px;}
+.team-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.team-tag{background:var(--surface2);border:1px solid var(--border);color:var(--muted);font-size:11px;font-weight:500;padding:3px 10px;border-radius:3px;}
+
+/* COMPANY STORY */
+.story{background:var(--surface);}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:56px;}
+.story-text p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:20px;}
+.story-text p strong{color:var(--white);}
+.story-milestones{display:flex;flex-direction:column;gap:0;}
+.milestone{display:flex;gap:20px;padding:24px 0;border-bottom:1px solid var(--border);}
+.milestone:last-child{border-bottom:none;}
+.milestone-year{font-size:12px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:1px;min-width:56px;padding-top:2px;}
+.milestone-text{font-size:14px;color:var(--muted);line-height:1.65;}
+.milestone-text strong{color:var(--text);}
+
+/* INVESTMENT / OPPORTUNITY */
+.opportunity{background:var(--bg);}
+.opp-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:56px;}
+.opp-points{display:flex;flex-direction:column;gap:32px;}
+.opp-point{padding-left:24px;border-left:2px solid var(--red);}
+.opp-point-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:6px;}
+.opp-point-text{font-size:14px;color:var(--muted);line-height:1.65;}
+.opp-numbers{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:28px;}
+.opp-num{}
+.opp-num-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px;}
+.opp-num-value{font-size:36px;font-weight:900;color:var(--white);letter-spacing:-1px;line-height:1;}
+.opp-num-value span{color:var(--red);}
+.opp-divider{height:1px;background:var(--border);}
+
+/* PARTNERSHIPS */
+.partnerships{background:var(--surface);}
+.partner-types{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px;}
+.partner-type{background:var(--bg);padding:40px 36px;border:1px solid var(--border);transition:border-color 0.2s;}
+.partner-type:hover{border-color:rgba(232,24,28,0.3);}
+.partner-type-tag{display:inline-block;background:rgba(232,24,28,0.1);border:1px solid rgba(232,24,28,0.2);color:var(--red);font-size:10px;font-weight:700;padding:3px 10px;border-radius:3px;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;}
+.partner-type-title{font-size:20px;font-weight:800;color:var(--white);margin-bottom:12px;}
+.partner-type-text{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;}
+.partner-type-list{display:flex;flex-direction:column;gap:8px;}
+.ptl-item{font-size:13px;color:var(--muted);display:flex;gap:8px;}
+.ptl-item::before{content:'—';color:var(--red);}
+
+/* CTA */
+.cta-block{background:var(--red);padding:100px 40px;}
+.cta-inner{max-width:700px;margin:0 auto;text-align:center;}
+.cta-inner h2{font-size:clamp(32px,4vw,52px);font-weight:900;letter-spacing:-1.5px;color:#fff;margin-bottom:16px;}
+.cta-inner p{font-size:17px;color:rgba(255,255,255,0.75);margin-bottom:40px;line-height:1.65;}
+.cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.btn-white{background:#fff;color:var(--red);text-decoration:none;font-size:15px;font-weight:700;padding:14px 32px;border-radius:6px;display:inline-block;transition:opacity 0.2s;}
+.btn-white:hover{opacity:0.9;}
+.btn-outline-white{background:transparent;color:#fff;text-decoration:none;font-size:15px;font-weight:600;padding:14px 32px;border-radius:6px;border:1px solid rgba(255,255,255,0.4);display:inline-block;transition:border-color 0.2s;}
+.btn-outline-white:hover{border-color:#fff;}
+
+footer{background:var(--surface);border-top:1px solid var(--border);padding:48px 40px 32px;}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:13px;transition:color 0.2s;}
+.footer-links a:hover{color:var(--white);}
+.footer-copy{font-size:12px;color:var(--muted);}
+
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .hero,section,.cta-block{padding-left:20px;padding-right:20px;}
+  .team-grid,.partner-types{grid-template-columns:1fr;}
+  .story-grid,.opp-grid{grid-template-columns:1fr;gap:40px;}
+  footer{padding:40px 20px 24px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-mark">B</div>
+    <span class="nav-logo-text">Black Marker <span>Media</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="channelcast.html">ChannelCast</a>
+    <a href="production.html">Production</a>
+    <a href="network.html">BlackMarker.TV</a>
+    <a href="team.html" class="active">Company</a>
+  </div>
+  <a class="nav-cta" href="#contact">Contact Us</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Our Team & Company</div>
+    <h1>The People Behind<br>the Signal</h1>
+    <p class="hero-sub">Black Marker Media was built by people who've been in the room — producing live events, building streaming infrastructure, and navigating the intersection of technology and entertainment. We're not a software company that stumbled into streaming. This is all we do.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="hero-meta-value">3</div>
+        <div class="hero-meta-label">Business Divisions</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-value">Wesley Chapel<span>,</span> FL</div>
+        <div class="hero-meta-label">Headquarters</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-value">$100<span>K+</span></div>
+        <div class="hero-meta-label">Deployed Capital</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-value">BAM<span>™</span></div>
+        <div class="hero-meta-label">Proprietary Growth Formula</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="team">
+  <div class="section-inner">
+    <div class="section-eyebrow">Leadership</div>
+    <h2 class="section-title">Meet the Founders</h2>
+    <p class="section-sub">Replace placeholder content below with real headshots, titles, and bios. Each card is designed for investor and partner-facing presentations.</p>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-headshot">
+          <div class="headshot-placeholder">
+            <div class="headshot-initials">F1</div>
+            <span class="headshot-note">Replace with professional headshot<br>Recommended: 800×800px</span>
+          </div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">[Founder Name]</div>
+          <div class="team-title">CEO & Co-Founder</div>
+          <p class="team-bio">A veteran of live event production with [X] years of experience spanning broadcast media, digital marketing, and streaming technology. Led the development of the BAM™ formula and oversees all three divisions of Black Marker Media. Previously [notable experience or background]. Known for building systems that convert live audiences into long-term digital revenue.</p>
+          <div class="team-tags">
+            <span class="team-tag">Live Production</span>
+            <span class="team-tag">Digital Strategy</span>
+            <span class="team-tag">Streaming Tech</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-headshot">
+          <div class="headshot-placeholder">
+            <div class="headshot-initials">F2</div>
+            <span class="headshot-note">Replace with professional headshot<br>Recommended: 800×800px</span>
+          </div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">[Founder Name]</div>
+          <div class="team-title">COO & Co-Founder</div>
+          <p class="team-bio">Operations and systems architect responsible for scaling Black Marker Media's production and platform infrastructure. [X] years of experience in [relevant field]. Leads client delivery across the ChannelCast platform and live production divisions. Known for translating complex technical requirements into repeatable, scaleable processes that serve clients at every size.</p>
+          <div class="team-tags">
+            <span class="team-tag">Operations</span>
+            <span class="team-tag">Platform Architecture</span>
+            <span class="team-tag">Client Growth</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-headshot">
+          <div class="headshot-placeholder">
+            <div class="headshot-initials">F3</div>
+            <span class="headshot-note">Replace with professional headshot<br>Recommended: 800×800px</span>
+          </div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">[Founder Name]</div>
+          <div class="team-title">Creative Director & Co-Founder</div>
+          <p class="team-bio">The creative force behind BlackMarker.TV and the brand identity of Black Marker Media. [X] years of experience in independent media, content production, and talent development. Built and programs the BlackMarker.TV network from the ground up — developing original shows, booking talent, and managing the growing creator partnership program that anchors the network's independent voice.</p>
+          <div class="team-tags">
+            <span class="team-tag">Content & Media</span>
+            <span class="team-tag">Talent Development</span>
+            <span class="team-tag">Brand Strategy</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="story">
+  <div class="section-inner">
+    <div class="section-eyebrow">Our Story</div>
+    <h2 class="section-title">Built From the Ground Up.<br>Intentionally.</h2>
+    <div class="story-grid">
+      <div class="story-text">
+        <p>Black Marker Media didn't start as a software company trying to enter streaming. It started as a <strong>live event production team</strong> that realized every client they served needed more than a great show — they needed a platform to build an audience that would come back.</p>
+        <p>That insight became the foundation of everything. <strong>The BAM™ formula</strong> — Build, Amplify, Monetize — is the framework that emerged from producing hundreds of live events and watching creators struggle to convert one-time audiences into recurring revenue.</p>
+        <p>BlackMarker.TV was built first — as the proof of concept. Before we sold a single ChannelCast subscription or production retainer, we built and operated the network ourselves. <strong>Every system we offer clients is the same system we run.</strong></p>
+        <p>Today, Black Marker Media operates three connected divisions that create a compounding loop — each leg strengthening the others, and each client relationship feeding the entire ecosystem.</p>
+      </div>
+      <div class="story-milestones">
+        <div class="milestone">
+          <div class="milestone-year">Founded</div>
+          <div class="milestone-text"><strong>Black Marker Media LLC established</strong> in Wesley Chapel, FL. Live production and streaming services launched.</div>
+        </div>
+        <div class="milestone">
+          <div class="milestone-year">Network</div>
+          <div class="milestone-text"><strong>BlackMarker.TV launched</strong> as the company's independent live broadcast network — home to original programming, PPV events, and the first proof of the BAM™ formula in action.</div>
+        </div>
+        <div class="milestone">
+          <div class="milestone-year">Platform</div>
+          <div class="milestone-text"><strong>ChannelCast productized</strong> as a standalone managed platform service — bringing the same infrastructure powering BlackMarker.TV to external clients.</div>
+        </div>
+        <div class="milestone">
+          <div class="milestone-year">2026</div>
+          <div class="milestone-text"><strong>Phase 1 growth plan activated</strong> — $100K capital deployed across all three divisions with Year 1 ARR target of $300K–$432K.</div>
+        </div>
+        <div class="milestone">
+          <div class="milestone-year">Next</div>
+          <div class="milestone-text"><strong>Active partner and investor conversations</strong> underway. Three-division expansion in progress across platform clients, production retainers, and network programming.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="opportunity" id="investors">
+  <div class="section-inner">
+    <div class="section-eyebrow">For Investors & Strategic Partners</div>
+    <h2 class="section-title">The Case for<br>Black Marker Media</h2>
+    <div class="opp-grid">
+      <div class="opp-points">
+        <div class="opp-point">
+          <div class="opp-point-title">A market growing at 20% CAGR toward $200B</div>
+          <p class="opp-point-text">The global OTT streaming market is expanding rapidly. Independent networks that establish niche audiences now will be positioned ahead of consolidation. We're in the right place at the right time, with the infrastructure already running.</p>
+        </div>
+        <div class="opp-point">
+          <div class="opp-point-title">Three compounding revenue streams</div>
+          <p class="opp-point-text">Platform subscription retainers, production service retainers, and network revenue (advertising, PPV, sponsorships) are three distinct ARR sources — each stable independently, each amplifying the others within the same company.</p>
+        </div>
+        <div class="opp-point">
+          <div class="opp-point-title">Proven, not theoretical</div>
+          <p class="opp-point-text">BlackMarker.TV is live and programming. Studio Enterprise has been a recurring production client for multiple years. ChannelCast is ready to sell. This is execution, not a pitch deck.</p>
+        </div>
+        <div class="opp-point">
+          <div class="opp-point-title">Underserved market with no dominant player</div>
+          <p class="opp-point-text">The enterprise players (Beverly Boy, Brightcove, Vimeo Enterprise) price out 90% of the market. The SaaS tools (Uscreen, Dacast) offer no service. BMB sits in the gap — and no one else has staked it.</p>
+        </div>
+      </div>
+      <div class="opp-numbers">
+        <div class="opp-num">
+          <div class="opp-num-label">Current ARR (Baseline)</div>
+          <div class="opp-num-value">$60<span>K</span></div>
+        </div>
+        <div class="opp-divider"></div>
+        <div class="opp-num">
+          <div class="opp-num-label">Year 1 Conservative Target</div>
+          <div class="opp-num-value">$270<span>K</span></div>
+        </div>
+        <div class="opp-divider"></div>
+        <div class="opp-num">
+          <div class="opp-num-label">Year 1 Strong Target</div>
+          <div class="opp-num-value">$432<span>K</span></div>
+        </div>
+        <div class="opp-divider"></div>
+        <div class="opp-num">
+          <div class="opp-num-label">Capital Deployed (Phase 1)</div>
+          <div class="opp-num-value">$100<span>K</span></div>
+        </div>
+        <div class="opp-divider"></div>
+        <div class="opp-num">
+          <div class="opp-num-label">OTT Market CAGR</div>
+          <div class="opp-num-value">20<span>%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="partnerships" id="partners">
+  <div class="section-inner">
+    <div class="section-eyebrow">Partnership Opportunities</div>
+    <h2 class="section-title">The Right Partners<br>Build Faster</h2>
+    <div class="partner-types">
+
+      <div class="partner-type">
+        <div class="partner-type-tag">Investors</div>
+        <div class="partner-type-title">Equity & Growth Investment</div>
+        <p class="partner-type-text">We are selectively open to investor conversations with partners who bring more than capital — industry relationships, distribution access, or market expertise that accelerates one or more divisions.</p>
+        <div class="partner-type-list">
+          <div class="ptl-item">Three-division ARR growth story</div>
+          <div class="ptl-item">$100K already deployed</div>
+          <div class="ptl-item">Proven operational baseline</div>
+          <div class="ptl-item">20% CAGR market tailwind</div>
+        </div>
+      </div>
+
+      <div class="partner-type">
+        <div class="partner-type-tag">AV & Production Companies</div>
+        <div class="partner-type-title">White-Label & Referral Partners</div>
+        <p class="partner-type-text">AV companies and event production firms become preferred streaming partners — we handle streaming delivery under your brand or through a referral agreement. You make more money per event without hiring a streaming team.</p>
+        <div class="partner-type-list">
+          <div class="ptl-item">White-label subcontract model</div>
+          <div class="ptl-item">Referral fee: 10–15% of contract</div>
+          <div class="ptl-item">First-right-of-refusal agreements</div>
+          <div class="ptl-item">Dedicated partner account management</div>
+        </div>
+      </div>
+
+      <div class="partner-type">
+        <div class="partner-type-tag">Strategic Partners</div>
+        <div class="partner-type-title">Distribution & Platform Partners</div>
+        <p class="partner-type-text">Organizations with large client bases in our target verticals — church management software, venue booking platforms, sports league networks — can refer clients to ChannelCast or production services with structured revenue sharing.</p>
+        <div class="partner-type-list">
+          <div class="ptl-item">Revenue share on referred subscriptions</div>
+          <div class="ptl-item">Co-branded offering options</div>
+          <div class="ptl-item">BlackMarker.TV co-promotion</div>
+          <div class="ptl-item">Custom partnership structures considered</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="cta-block" id="contact">
+  <div class="cta-inner">
+    <h2>Let's Build Something Together.</h2>
+    <p>Whether you're an investor, a strategic partner, or an AV company looking for a streaming infrastructure partner — we'd like to hear from you.</p>
+    <div class="cta-actions">
+      <a class="btn-white" href="#" data-bmb-modal="contact">Get in Touch</a>
+      <a class="btn-outline-white" href="index.html">Back to Home</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="channelcast.html">ChannelCast</a>
+      <a href="production.html">Production</a>
+      <a href="network.html">BlackMarker.TV</a>
+    </div>
+    <span class="footer-copy">© 2026 Black Marker Media LLC — Wesley Chapel, FL</span>
+  </div>
+</footer>
+
+<script src="forms.js"></script>
+<script src="animations.js"></script>
+<script src="editor.js"></script>
+</body>
+</html>

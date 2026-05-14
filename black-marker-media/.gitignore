@@ -1,0 +1,6 @@
+node_modules/
+db/submissions.json
+db/backups/
+*.bak
+.DS_Store
+Thumbs.db

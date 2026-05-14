@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMB Admin — Form Submissions</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #080808;
+      color: #e0e0e0;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 14px;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #0f0f0f;
+      border-bottom: 1px solid #1e1e1e;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    header .logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #fff;
+    }
+
+    header .logo span { color: #E8181C; }
+
+    header .badge {
+      background: #E8181C22;
+      color: #E8181C;
+      border: 1px solid #E8181C44;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      letter-spacing: 0.08em;
+    }
+
+    header .actions { margin-left: auto; display: flex; gap: 0.75rem; }
+
+    .btn {
+      padding: 0.45rem 1rem;
+      border-radius: 5px;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn:hover { opacity: 0.8; }
+    .btn-red { background: #E8181C; color: #fff; }
+    .btn-ghost { background: #1a1a1a; color: #aaa; border: 1px solid #2a2a2a; }
+
+    .toolbar {
+      padding: 1rem 2rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      border-bottom: 1px solid #141414;
+    }
+
+    .toolbar label { color: #777; font-size: 12px; }
+
+    select {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      color: #ccc;
+      padding: 0.4rem 0.75rem;
+      border-radius: 5px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .stats {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1.25rem 2rem;
+    }
+
+    .stat-card {
+      background: #0f0f0f;
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      padding: 1rem 1.5rem;
+      min-width: 140px;
+    }
+
+    .stat-card .num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #E8181C;
+      line-height: 1;
+    }
+
+    .stat-card .label {
+      font-size: 11px;
+      color: #555;
+      margin-top: 0.3rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .table-wrap {
+      padding: 0 2rem 2rem;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    thead th {
+      background: #0f0f0f;
+      border-bottom: 1px solid #1e1e1e;
+      color: #555;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #111;
+      transition: background 0.1s;
+    }
+
+    tbody tr:hover { background: #0d0d0d; }
+
+    tbody td {
+      padding: 0.8rem 1rem;
+      color: #ccc;
+      vertical-align: top;
+    }
+
+    td.email { color: #E8181C; }
+
+    .tag {
+      display: inline-block;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 4px;
+      color: #888;
+      font-size: 11px;
+      padding: 2px 8px;
+    }
+
+    .tag.lead { background: #E8181C22; border-color: #E8181C44; color: #E8181C; }
+    .tag.contact { background: #1a2a1a; border-color: #2a4a2a; color: #4caf50; }
+    .tag.signup { background: #1a1a2a; border-color: #2a2a4a; color: #5c8af5; }
+
+    .del-btn {
+      background: none;
+      border: 1px solid #2a2a2a;
+      color: #555;
+      border-radius: 4px;
+      padding: 3px 8px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.15s;
+    }
+    .del-btn:hover { border-color: #E8181C; color: #E8181C; }
+
+    .empty {
+      text-align: center;
+      color: #333;
+      padding: 4rem 1rem;
+      font-size: 15px;
+    }
+
+    .pagination {
+      padding: 1rem 2rem;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      color: #555;
+      font-size: 12px;
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      color: #ccc;
+      font-size: 13px;
+      padding: 0.75rem 1.25rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+      z-index: 999;
+    }
+    #toast.show { opacity: 1; }
+    #toast.success { border-color: #4caf5066; color: #4caf50; }
+    #toast.error { border-color: #E8181C66; color: #E8181C; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span>BLACK</span>MARKER<span>.</span></div>
+  <div class="badge">LOCAL ADMIN</div>
+  <div class="actions">
+    <a href="/" class="btn btn-ghost">← Back to Site</a>
+    <a href="/api/admin/export" class="btn btn-red" download>Export CSV</a>
+  </div>
+</header>
+
+<div class="toolbar">
+  <label>Filter by type:</label>
+  <select id="filterType" onchange="load()">
+    <option value="">All Forms</option>
+    <option value="lead">Lead</option>
+    <option value="contact">Contact</option>
+    <option value="signup">Signup</option>
+  </select>
+  <span id="totalLabel" style="margin-left:auto;color:#444;font-size:12px;"></span>
+</div>
+
+<div class="stats" id="stats"></div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Company</th>
+        <th>Message</th>
+        <th>Received</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+  <div class="empty" id="emptyMsg" style="display:none">No submissions yet.</div>
+</div>
+
+<div class="pagination" id="pagination"></div>
+<div id="toast"></div>
+
+<script>
+  let currentOffset = 0;
+  const PAGE_SIZE = 50;
+
+  function tagClass(type) {
+    if (type === 'lead') return 'tag lead';
+    if (type === 'contact') return 'tag contact';
+    if (type === 'signup') return 'tag signup';
+    return 'tag';
+  }
+
+  function fmt(dt) {
+    if (!dt) return '—';
+    const d = new Date(dt + 'Z');
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+      + ' ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function truncate(str, n = 60) {
+    if (!str) return '—';
+    return str.length > n ? str.slice(0, n) + '…' : str;
+  }
+
+  async function load(offset = 0) {
+    currentOffset = offset;
+    const type = document.getElementById('filterType').value;
+    const url = `/api/admin/submissions?limit=${PAGE_SIZE}&offset=${offset}${type ? '&form_type=' + type : ''}`;
+
+    const res = await fetch(url);
+    const { submissions, total } = await res.json();
+
+    document.getElementById('totalLabel').textContent = `${total} total submission${total !== 1 ? 's' : ''}`;
+
+    // Stats (only on first load / no filter)
+    if (!type && offset === 0) {
+      const allRes = await fetch('/api/admin/submissions?limit=10000');
+      const allData = await allRes.json();
+      const counts = {};
+      allData.submissions.forEach(s => { counts[s.form_type] = (counts[s.form_type] || 0) + 1; });
+      document.getElementById('stats').innerHTML = `
+        <div class="stat-card"><div class="num">${total}</div><div class="label">Total</div></div>
+        ${Object.entries(counts).map(([k, v]) =>
+          `<div class="stat-card"><div class="num">${v}</div><div class="label">${k}</div></div>`
+        ).join('')}
+      `;
+    }
+
+    const tbody = document.getElementById('tableBody');
+    const empty = document.getElementById('emptyMsg');
+
+    if (submissions.length === 0) {
+      tbody.innerHTML = '';
+      empty.style.display = '';
+    } else {
+      empty.style.display = 'none';
+      tbody.innerHTML = submissions.map(s => `
+        <tr>
+          <td style="color:#333">${s.id}</td>
+          <td><span class="${tagClass(s.form_type)}">${s.form_type}</span></td>
+          <td>${s.name || '—'}</td>
+          <td class="email">${s.email}</td>
+          <td>${s.phone || '—'}</td>
+          <td>${s.company || '—'}</td>
+          <td title="${(s.message || '').replace(/"/g, '&quot;')}">${truncate(s.message)}</td>
+          <td style="white-space:nowrap;color:#555">${fmt(s.created_at)}</td>
+          <td><button class="del-btn" onclick="del(${s.id}, this)">Delete</button></td>
+        </tr>
+      `).join('');
+    }
+
+    // Pagination
+    const pages = Math.ceil(total / PAGE_SIZE);
+    const currentPage = Math.floor(offset / PAGE_SIZE) + 1;
+    let pag = '';
+    if (pages > 1) {
+      if (currentPage > 1) pag += `<button class="btn btn-ghost" onclick="load(${offset - PAGE_SIZE})">← Prev</button>`;
+      pag += `<span>Page ${currentPage} of ${pages}</span>`;
+      if (currentPage < pages) pag += `<button class="btn btn-ghost" onclick="load(${offset + PAGE_SIZE})">Next →</button>`;
+    }
+    document.getElementById('pagination').innerHTML = pag;
+  }
+
+  async function del(id, btn) {
+    if (!confirm('Delete this submission?')) return;
+    btn.disabled = true;
+    const res = await fetch(`/api/admin/submissions/${id}`, { method: 'DELETE' });
+    if (res.ok) {
+      toast('Deleted.', 'success');
+      load(currentOffset);
+    } else {
+      toast('Error deleting.', 'error');
+      btn.disabled = false;
+    }
+  }
+
+  function toast(msg, type = '') {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'show ' + type;
+    setTimeout(() => el.className = '', 2500);
+  }
+
+  load();
+</script>
+</body>
+</html>

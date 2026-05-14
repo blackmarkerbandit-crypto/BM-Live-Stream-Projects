@@ -1,0 +1,14 @@
+{
+  "name": "black-marker-media-server",
+  "version": "1.0.0",
+  "description": "Local dev server for BlackMarkerMedia.com",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "open": "^9.1.0"
+  }
+}
