@@ -28,7 +28,10 @@
       "Bash(curl -s -X POST http://localhost:3000/api/submit-form -H 'Content-Type: application/json' -d '{\"form_type\":\"booking\",\"name\":\"John Smith\",\"email\":\"john@events.com\",\"phone\":\"555-0200\",\"company\":\"Events LLC\",\"event_type\":\"Corporate Event\",\"event_date\":\"2026-06-15\",\"message\":\"500 attendees, need 3 cameras\"}')",
       "Bash(curl -s -X POST http://localhost:3000/api/submit-form -H 'Content-Type: application/json' -d '{\"form_type\":\"signup\",\"name\":\"Alex\",\"email\":\"alex@example.com\"}')",
       "Bash(node -e ':*)",
-      "Read(//c/Users/imagi/**)"
+      "Read(//c/Users/imagi/**)",
+      "Bash(git pull *)",
+      "Bash(ls \"D:/Dropbox/WORK FILES/BMB/AI SHIT\")",
+      "Read(//d/Dropbox/WORK FILES/BMB/AI SHIT/**)"
     ]
   }
 }
