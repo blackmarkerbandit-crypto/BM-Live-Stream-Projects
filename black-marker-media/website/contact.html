@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact — Black Marker Media</title>
+<link rel="icon" type="image/png" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -14,10 +15,9 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.nav-logo-mark{width:32px;height:32px;background:var(--red);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;}
-.nav-logo-text{font-size:15px;font-weight:700;color:var(--white);}
-.nav-logo-text span{color:var(--red);}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo-img{height:36px;width:auto;display:block;}
+.nav-logo-text{font-size:14px;font-weight:700;color:var(--white);letter-spacing:0.3px;white-space:nowrap;}
 .nav-links{display:flex;align-items:center;gap:8px;}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:4px;transition:color 0.2s,background 0.2s;}
 .nav-links a:hover,.nav-links a.active{color:var(--white);background:var(--surface2);}
@@ -84,8 +84,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
 
 <nav>
   <a class="nav-logo" href="index.html">
-    <div class="nav-logo-mark">B</div>
-    <span class="nav-logo-text">Black Marker <span>Media</span></span>
+    <img src="icon.png" alt="" class="nav-logo-img">
+    <span class="nav-logo-text">Black Marker Media LLC</span>
   </a>
   <div class="nav-links">
     <a href="channelcast.html">ChannelCast</a>
@@ -241,6 +241,5 @@ document.querySelectorAll('.tab-btn').forEach(function(btn) {
 </script>
 <script src="forms.js"></script>
 <script src="animations.js"></script>
-<script src="editor.js"></script>
 </body>
 </html>

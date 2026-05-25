@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Team — Company & Investors | Black Marker Media</title>
+<link rel="icon" type="image/png" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -12,10 +13,9 @@
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.nav-logo-mark{width:32px;height:32px;background:var(--red);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;}
-.nav-logo-text{font-size:15px;font-weight:700;color:var(--white);}
-.nav-logo-text span{color:var(--red);}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo-img{height:36px;width:auto;display:block;}
+.nav-logo-text{font-size:14px;font-weight:700;color:var(--white);letter-spacing:0.3px;white-space:nowrap;}
 .nav-links{display:flex;align-items:center;gap:8px;}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:4px;transition:color 0.2s,background 0.2s;}
 .nav-links a:hover,.nav-links a.active{color:var(--white);background:var(--surface2);}
@@ -47,9 +47,8 @@ section{padding:100px 40px;}
 .team-card{background:var(--surface);overflow:hidden;transition:background 0.2s;}
 .team-card:hover{background:var(--surface2);}
 .team-headshot{width:100%;aspect-ratio:1/1;background:var(--surface2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
-.headshot-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:linear-gradient(135deg,var(--surface2) 0%,var(--bg) 100%);}
-.headshot-initials{width:80px;height:80px;border-radius:50%;background:rgba(232,24,28,0.15);border:2px solid rgba(232,24,28,0.3);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:var(--red);}
-.headshot-note{font-size:11px;color:var(--muted);text-align:center;padding:0 20px;}
+.headshot-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:end;background:linear-gradient(160deg,#1a1a1a 0%,#0d0d0d 100%);overflow:hidden;}
+.headshot-silhouette{width:62%;opacity:0.18;}
 .team-info{padding:32px 32px 36px;}
 .team-name{font-size:20px;font-weight:800;color:var(--white);margin-bottom:4px;}
 .team-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--red);margin-bottom:16px;}
@@ -57,17 +56,24 @@ section{padding:100px 40px;}
 .team-tags{display:flex;flex-wrap:wrap;gap:6px;}
 .team-tag{background:var(--surface2);border:1px solid var(--border);color:var(--muted);font-size:11px;font-weight:500;padding:3px 10px;border-radius:3px;}
 
+/* STAFF SECTION */
+.team-staff{background:var(--surface);}
+
 /* COMPANY STORY */
-.story{background:var(--surface);}
-.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:56px;}
-.story-text p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:20px;}
-.story-text p strong{color:var(--white);}
-.story-milestones{display:flex;flex-direction:column;gap:0;}
-.milestone{display:flex;gap:20px;padding:24px 0;border-bottom:1px solid var(--border);}
+.story{background:#0b2b1a;}
+.story .section-eyebrow{display:inline-block;background:#5cbd7e;color:#0b2b1a;padding:4px 14px;border-radius:4px;letter-spacing:1.5px;}
+.story .section-title{color:#fff;}
+.story .section-sub{color:#a8c9b8;}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;margin-top:56px;}
+.story-text p{font-size:15px;color:#a8c9b8;line-height:1.8;margin-bottom:20px;}
+.story-text p:last-child{margin-bottom:0;}
+.story-text p strong{color:#fff;}
+.story-milestones{display:flex;flex-direction:column;gap:0;background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 20px;}
+.milestone{display:flex;flex-direction:column;gap:5px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.07);}
 .milestone:last-child{border-bottom:none;}
-.milestone-year{font-size:12px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:1px;min-width:56px;padding-top:2px;}
-.milestone-text{font-size:14px;color:var(--muted);line-height:1.65;}
-.milestone-text strong{color:var(--text);}
+.milestone-year{font-size:10px;font-weight:700;color:#0b2b1a;background:#5cbd7e;text-transform:uppercase;letter-spacing:1px;padding:2px 8px;border-radius:3px;white-space:nowrap;align-self:flex-start;}
+.milestone-text{font-size:12px;color:#a8c9b8;line-height:1.6;}
+.milestone-text strong{color:#dff0e8;}
 
 /* INVESTMENT / OPPORTUNITY */
 .opportunity{background:var(--bg);}
@@ -84,10 +90,14 @@ section{padding:100px 40px;}
 .opp-divider{height:1px;background:var(--border);}
 
 /* PARTNERSHIPS */
-.partnerships{background:var(--surface);}
+.partnerships{position:relative;overflow:hidden;background:rgba(8,8,8,0.78);}
+.partnerships::before{content:'';position:absolute;inset:-12px;background:linear-gradient(rgba(8,8,8,0.75),rgba(8,8,8,0.75)),url('images/Partnerships02.jpg') center/cover no-repeat;background-attachment:fixed,fixed;filter:grayscale(100%);z-index:0;}
+.partnerships .section-inner{position:relative;z-index:1;}
+.partnerships .section-eyebrow,.partnerships .section-title,.partnerships .section-sub{text-shadow:0 2px 12px rgba(0,0,0,0.6);}
+.partnerships .section-sub{color:#C8C8C8;}
 .partner-types{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px;}
-.partner-type{background:var(--bg);padding:40px 36px;border:1px solid var(--border);transition:border-color 0.2s;}
-.partner-type:hover{border-color:rgba(232,24,28,0.3);}
+.partner-type{background:rgba(17,17,17,0.85);padding:40px 36px;border:1px solid var(--border);transition:border-color 0.2s;}
+.partner-type:hover{border-color:rgba(255,255,255,0.4);}
 .partner-type-tag{display:inline-block;background:rgba(232,24,28,0.1);border:1px solid rgba(232,24,28,0.2);color:var(--red);font-size:10px;font-weight:700;padding:3px 10px;border-radius:3px;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;}
 .partner-type-title{font-size:20px;font-weight:800;color:var(--white);margin-bottom:12px;}
 .partner-type-text{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;}
@@ -127,8 +137,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
 
 <nav>
   <a class="nav-logo" href="index.html">
-    <div class="nav-logo-mark">B</div>
-    <span class="nav-logo-text">Black Marker <span>Media</span></span>
+    <img src="icon.png" alt="" class="nav-logo-img">
+    <span class="nav-logo-text">Black Marker Media LLC</span>
   </a>
   <div class="nav-links">
     <a href="channelcast.html">ChannelCast</a>
@@ -154,8 +164,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
         <div class="hero-meta-label">Headquarters</div>
       </div>
       <div class="hero-meta-item">
-        <div class="hero-meta-value">$100<span>K+</span></div>
-        <div class="hero-meta-label">Deployed Capital</div>
+        <div class="hero-meta-value">1,200<span>%+</span></div>
+        <div class="hero-meta-label">Platform Growth (YoY)</div>
       </div>
       <div class="hero-meta-item">
         <div class="hero-meta-value">BAM<span>™</span></div>
@@ -169,20 +179,22 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
   <div class="section-inner">
     <div class="section-eyebrow">Leadership</div>
     <h2 class="section-title">Meet the Founders</h2>
-    <p class="section-sub">Replace placeholder content below with real headshots, titles, and bios. Each card is designed for investor and partner-facing presentations.</p>
+    <p class="section-sub">The team behind Black Marker Media brings hands-on experience in live production, platform operations, and independent media — built from doing the work, not theorizing about it.</p>
     <div class="team-grid">
 
       <div class="team-card">
         <div class="team-headshot">
           <div class="headshot-placeholder">
-            <div class="headshot-initials">F1</div>
-            <span class="headshot-note">Replace with professional headshot<br>Recommended: 800×800px</span>
+            <svg class="headshot-silhouette" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="100" cy="72" rx="46" ry="52" fill="white"/>
+              <path d="M4 220 C4 160 196 160 196 220" fill="white"/>
+            </svg>
           </div>
         </div>
         <div class="team-info">
-          <div class="team-name">[Founder Name]</div>
+          <div class="team-name">Coming Soon</div>
           <div class="team-title">CEO & Co-Founder</div>
-          <p class="team-bio">A veteran of live event production with [X] years of experience spanning broadcast media, digital marketing, and streaming technology. Led the development of the BAM™ formula and oversees all three divisions of Black Marker Media. Previously [notable experience or background]. Known for building systems that convert live audiences into long-term digital revenue.</p>
+          <p class="team-bio">A veteran of live event production with extensive experience spanning broadcast media, digital marketing, and streaming technology. Led the development of the BAM™ formula and oversees all three divisions of Black Marker Media. Known for building systems that convert live audiences into long-term digital revenue.</p>
           <div class="team-tags">
             <span class="team-tag">Live Production</span>
             <span class="team-tag">Digital Strategy</span>
@@ -194,14 +206,16 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
       <div class="team-card">
         <div class="team-headshot">
           <div class="headshot-placeholder">
-            <div class="headshot-initials">F2</div>
-            <span class="headshot-note">Replace with professional headshot<br>Recommended: 800×800px</span>
+            <svg class="headshot-silhouette" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="100" cy="72" rx="46" ry="52" fill="white"/>
+              <path d="M4 220 C4 160 196 160 196 220" fill="white"/>
+            </svg>
           </div>
         </div>
         <div class="team-info">
-          <div class="team-name">[Founder Name]</div>
+          <div class="team-name">Coming Soon</div>
           <div class="team-title">COO & Co-Founder</div>
-          <p class="team-bio">Operations and systems architect responsible for scaling Black Marker Media's production and platform infrastructure. [X] years of experience in [relevant field]. Leads client delivery across the ChannelCast platform and live production divisions. Known for translating complex technical requirements into repeatable, scaleable processes that serve clients at every size.</p>
+          <p class="team-bio">Operations and systems architect responsible for scaling Black Marker Media's production and platform infrastructure. Leads client delivery across the ChannelCast platform and live production divisions. Known for translating complex technical requirements into repeatable, scalable processes that serve clients at every size.</p>
           <div class="team-tags">
             <span class="team-tag">Operations</span>
             <span class="team-tag">Platform Architecture</span>
@@ -213,18 +227,151 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
       <div class="team-card">
         <div class="team-headshot">
           <div class="headshot-placeholder">
-            <div class="headshot-initials">F3</div>
-            <span class="headshot-note">Replace with professional headshot<br>Recommended: 800×800px</span>
+            <svg class="headshot-silhouette" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="100" cy="72" rx="46" ry="52" fill="white"/>
+              <path d="M4 220 C4 160 196 160 196 220" fill="white"/>
+            </svg>
           </div>
         </div>
         <div class="team-info">
-          <div class="team-name">[Founder Name]</div>
+          <div class="team-name">Coming Soon</div>
           <div class="team-title">Creative Director & Co-Founder</div>
-          <p class="team-bio">The creative force behind BlackMarker.TV and the brand identity of Black Marker Media. [X] years of experience in independent media, content production, and talent development. Built and programs the BlackMarker.TV network from the ground up — developing original shows, booking talent, and managing the growing creator partnership program that anchors the network's independent voice.</p>
+          <p class="team-bio">The creative force behind BlackMarker.TV and the brand identity of Black Marker Media. Built and programs the BlackMarker.TV network from the ground up — developing original shows, booking talent, and managing the growing creator partnership program that anchors the network's independent voice.</p>
           <div class="team-tags">
             <span class="team-tag">Content & Media</span>
             <span class="team-tag">Talent Development</span>
             <span class="team-tag">Brand Strategy</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="team-staff">
+  <div class="section-inner">
+    <div class="section-eyebrow">The Crew</div>
+    <h2 class="section-title">Meet the Team</h2>
+    <p class="section-sub">The people who keep the lights on, the stream running, and the content moving — every day.</p>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-headshot">
+          <div class="headshot-placeholder">
+            <svg class="headshot-silhouette" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="100" cy="72" rx="46" ry="52" fill="white"/>
+              <path d="M4 220 C4 160 196 160 196 220" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Coming Soon</div>
+          <div class="team-title">Technical Director</div>
+          <p class="team-bio">Oversees the technical infrastructure powering live streams, broadcast encoding, and platform uptime across all three divisions.</p>
+          <div class="team-tags">
+            <span class="team-tag">Broadcast Engineering</span>
+            <span class="team-tag">Live Infrastructure</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-headshot">
+          <div class="headshot-placeholder">
+            <svg class="headshot-silhouette" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="100" cy="72" rx="46" ry="52" fill="white"/>
+              <path d="M4 220 C4 160 196 160 196 220" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Coming Soon</div>
+          <div class="team-title">Senior Video Engineer</div>
+          <p class="team-bio">Leads camera, switching, and signal chain operations for live productions. Responsible for the picture quality our clients and viewers see on screen.</p>
+          <div class="team-tags">
+            <span class="team-tag">Video Production</span>
+            <span class="team-tag">Live Switching</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-headshot">
+          <div class="headshot-placeholder">
+            <svg class="headshot-silhouette" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="100" cy="72" rx="46" ry="52" fill="white"/>
+              <path d="M4 220 C4 160 196 160 196 220" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Coming Soon</div>
+          <div class="team-title">Production Coordinator</div>
+          <p class="team-bio">Manages event logistics, crew scheduling, and client communication from pre-production through post. The connective tissue between every moving part.</p>
+          <div class="team-tags">
+            <span class="team-tag">Event Logistics</span>
+            <span class="team-tag">Client Relations</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-headshot">
+          <div class="headshot-placeholder">
+            <svg class="headshot-silhouette" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="100" cy="72" rx="46" ry="52" fill="white"/>
+              <path d="M4 220 C4 160 196 160 196 220" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Coming Soon</div>
+          <div class="team-title">Content & Programming</div>
+          <p class="team-bio">Drives BlackMarker.TV's programming calendar — booking talent, scheduling shows, and developing the original content slate that keeps the network active.</p>
+          <div class="team-tags">
+            <span class="team-tag">Programming</span>
+            <span class="team-tag">Talent Booking</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-headshot">
+          <div class="headshot-placeholder">
+            <svg class="headshot-silhouette" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="100" cy="72" rx="46" ry="52" fill="white"/>
+              <path d="M4 220 C4 160 196 160 196 220" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Coming Soon</div>
+          <div class="team-title">Social Media Director</div>
+          <p class="team-bio">Manages the brand's presence across platforms — turning live event moments into clips, campaigns, and community growth that extends every broadcast's reach.</p>
+          <div class="team-tags">
+            <span class="team-tag">Social Strategy</span>
+            <span class="team-tag">Content Distribution</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-headshot">
+          <div class="headshot-placeholder">
+            <svg class="headshot-silhouette" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="100" cy="72" rx="46" ry="52" fill="white"/>
+              <path d="M4 220 C4 160 196 160 196 220" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Coming Soon</div>
+          <div class="team-title">Brand & Marketing</div>
+          <p class="team-bio">Owns the outward-facing story of Black Marker Media — from client acquisition campaigns to partner materials and the visual identity across all three divisions.</p>
+          <div class="team-tags">
+            <span class="team-tag">Brand Strategy</span>
+            <span class="team-tag">Growth Marketing</span>
           </div>
         </div>
       </div>
@@ -259,7 +406,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
         </div>
         <div class="milestone">
           <div class="milestone-year">2026</div>
-          <div class="milestone-text"><strong>Phase 1 growth plan activated</strong> — $100K capital deployed across all three divisions with Year 1 ARR target of $300K–$432K.</div>
+          <div class="milestone-text"><strong>Phase 1 growth plan activated</strong> — six-figure capital deployed across all three divisions with Year 1 ARR target of $270K–$432K.</div>
         </div>
         <div class="milestone">
           <div class="milestone-year">Next</div>
@@ -277,46 +424,46 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
     <div class="opp-grid">
       <div class="opp-points">
         <div class="opp-point">
-          <div class="opp-point-title">A market growing at 20% CAGR toward $200B</div>
-          <p class="opp-point-text">The global OTT streaming market is expanding rapidly. Independent networks that establish niche audiences now will be positioned ahead of consolidation. We're in the right place at the right time, with the infrastructure already running.</p>
+          <div class="opp-point-title">A platform already growing at 1,200%+ year-over-year</div>
+          <p class="opp-point-text">BlackMarker.TV went from 150 daily visitors to 2,000+ in twelve months — with 80%+ return visitor rates. The audience is already here, already engaged, and already coming back. This is the foundation an investor walks into, not a projection they're funding from scratch.</p>
         </div>
         <div class="opp-point">
-          <div class="opp-point-title">Three compounding revenue streams</div>
-          <p class="opp-point-text">Platform subscription retainers, production service retainers, and network revenue (advertising, PPV, sponsorships) are three distinct ARR sources — each stable independently, each amplifying the others within the same company.</p>
+          <div class="opp-point-title">Three compounding revenue streams, one company</div>
+          <p class="opp-point-text">ChannelCast platform retainers, production service contracts, and BlackMarker.TV network revenue — advertising, PPV, and sponsorships — are three distinct ARR sources that reinforce each other. Every new production client is a potential network partner. Every network viewer is a potential ChannelCast referral.</p>
         </div>
         <div class="opp-point">
-          <div class="opp-point-title">Proven, not theoretical</div>
-          <p class="opp-point-text">BlackMarker.TV is live and programming. Studio Enterprise has been a recurring production client for multiple years. ChannelCast is ready to sell. This is execution, not a pitch deck.</p>
+          <div class="opp-point-title">Execution, not a pitch deck</div>
+          <p class="opp-point-text">The network is live and programming. The infrastructure is running. The audience data is real and verified. Six figures of founder capital have already been deployed to get here — we are not asking partners to fund a concept. We are inviting them to accelerate a business that is already in motion.</p>
         </div>
         <div class="opp-point">
-          <div class="opp-point-title">Underserved market with no dominant player</div>
-          <p class="opp-point-text">The enterprise players (Beverly Boy, Brightcove, Vimeo Enterprise) price out 90% of the market. The SaaS tools (Uscreen, Dacast) offer no service. BMB sits in the gap — and no one else has staked it.</p>
+          <div class="opp-point-title">The gap no one else has claimed</div>
+          <p class="opp-point-text">Enterprise players like Brightcove and Vimeo Enterprise price out 90% of the market. SaaS tools like Uscreen and Dacast offer no managed service. Black Marker Media operates in the gap between them — and no one else has built what we've built in this space.</p>
         </div>
       </div>
       <div class="opp-numbers">
         <div class="opp-num">
-          <div class="opp-num-label">Current ARR (Baseline)</div>
-          <div class="opp-num-value">$60<span>K</span></div>
+          <div class="opp-num-label">Year 1 ARR Target</div>
+          <div class="opp-num-value">$270<span>K–$432K</span></div>
         </div>
         <div class="opp-divider"></div>
         <div class="opp-num">
-          <div class="opp-num-label">Year 1 Conservative Target</div>
-          <div class="opp-num-value">$270<span>K</span></div>
+          <div class="opp-num-label">Year 2 ARR Target</div>
+          <div class="opp-num-value">$750<span>K+</span></div>
         </div>
         <div class="opp-divider"></div>
         <div class="opp-num">
-          <div class="opp-num-label">Year 1 Strong Target</div>
-          <div class="opp-num-value">$432<span>K</span></div>
+          <div class="opp-num-label">Year 3 ARR Target</div>
+          <div class="opp-num-value">$1.5<span>M+</span></div>
         </div>
         <div class="opp-divider"></div>
         <div class="opp-num">
-          <div class="opp-num-label">Capital Deployed (Phase 1)</div>
-          <div class="opp-num-value">$100<span>K</span></div>
+          <div class="opp-num-label">OTT Market Size by 2030</div>
+          <div class="opp-num-value">$200<span>B</span></div>
         </div>
         <div class="opp-divider"></div>
         <div class="opp-num">
-          <div class="opp-num-label">OTT Market CAGR</div>
-          <div class="opp-num-value">20<span>%</span></div>
+          <div class="opp-num-label">Share of Internet Traffic That Is Video</div>
+          <div class="opp-num-value">82<span>%</span></div>
         </div>
       </div>
     </div>
@@ -332,22 +479,22 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
       <div class="partner-type">
         <div class="partner-type-tag">Investors</div>
         <div class="partner-type-title">Equity & Growth Investment</div>
-        <p class="partner-type-text">We are selectively open to investor conversations with partners who bring more than capital — industry relationships, distribution access, or market expertise that accelerates one or more divisions.</p>
+        <p class="partner-type-text">We are selectively open to investor conversations with partners who bring more than capital — industry relationships, distribution access, or market expertise that accelerates one or more divisions. The foundation is already built. We're looking for partners who want to reach the targets with us.</p>
         <div class="partner-type-list">
-          <div class="ptl-item">Three-division ARR growth story</div>
-          <div class="ptl-item">$100K already deployed</div>
-          <div class="ptl-item">Proven operational baseline</div>
-          <div class="ptl-item">20% CAGR market tailwind</div>
+          <div class="ptl-item">Three-division ARR growth story: Year 1–3 targets in place</div>
+          <div class="ptl-item">Six-figure founder capital already deployed</div>
+          <div class="ptl-item">1,200%+ platform growth — verified audience data</div>
+          <div class="ptl-item">20% CAGR market tailwind, $200B OTT market by 2030</div>
         </div>
       </div>
 
       <div class="partner-type">
         <div class="partner-type-tag">AV & Production Companies</div>
         <div class="partner-type-title">White-Label & Referral Partners</div>
-        <p class="partner-type-text">AV companies and event production firms become preferred streaming partners — we handle streaming delivery under your brand or through a referral agreement. You make more money per event without hiring a streaming team.</p>
+        <p class="partner-type-text">AV companies and event production firms become preferred streaming partners — we handle streaming delivery under your brand or as a referral. You add a high-margin service line without building the infrastructure or hiring a streaming team.</p>
         <div class="partner-type-list">
-          <div class="ptl-item">White-label subcontract model</div>
-          <div class="ptl-item">Referral fee: 10–15% of contract</div>
+          <div class="ptl-item">White-label subcontract model available</div>
+          <div class="ptl-item">Referral fee: 10–15% of contract value</div>
           <div class="ptl-item">First-right-of-refusal agreements</div>
           <div class="ptl-item">Dedicated partner account management</div>
         </div>
@@ -356,11 +503,11 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
       <div class="partner-type">
         <div class="partner-type-tag">Strategic Partners</div>
         <div class="partner-type-title">Distribution & Platform Partners</div>
-        <p class="partner-type-text">Organizations with large client bases in our target verticals — church management software, venue booking platforms, sports league networks — can refer clients to ChannelCast or production services with structured revenue sharing.</p>
+        <p class="partner-type-text">Organizations with established client bases in our target verticals — live entertainment venues, independent event promoters, sports league networks, event ticketing platforms — can refer clients to ChannelCast or production services through a structured revenue share agreement.</p>
         <div class="partner-type-list">
-          <div class="ptl-item">Revenue share on referred subscriptions</div>
-          <div class="ptl-item">Co-branded offering options</div>
-          <div class="ptl-item">BlackMarker.TV co-promotion</div>
+          <div class="ptl-item">Revenue share on referred platform subscriptions</div>
+          <div class="ptl-item">Co-branded offering options available</div>
+          <div class="ptl-item">Cross-promotion through BlackMarker.TV network</div>
           <div class="ptl-item">Custom partnership structures considered</div>
         </div>
       </div>
@@ -394,6 +541,5 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
 
 <script src="forms.js"></script>
 <script src="animations.js"></script>
-<script src="editor.js"></script>
 </body>
 </html>

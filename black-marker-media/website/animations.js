@@ -6,6 +6,12 @@
 (function () {
   'use strict';
 
+  // Detect editor/iframe context — site builders render pages inside iframes
+  // where IntersectionObserver never fires. Skip scroll-hiding so content stays visible.
+  var inEditor = (function () {
+    try { return window.self !== window.top; } catch (e) { return true; }
+  })();
+
   // ── CONFIG ──────────────────────────────────────────────────────────────────
   var RED        = 'rgba(232,24,28,';
   var WHITE      = 'rgba(255,255,255,';
@@ -176,7 +182,8 @@
   // 3. SCROLL REVEAL — fade + rise on cards and sections
   // ══════════════════════════════════════════════════════════════════════════
   function initScrollReveal() {
-    if (!window.IntersectionObserver) return;
+    // Skip entirely in editor iframes — elements must remain visible for editing.
+    if (inEditor) return;
 
     var selectors = [
       '.pillar-card',
@@ -192,39 +199,53 @@
     var elements = document.querySelectorAll(selectors);
     if (!elements.length) return;
 
-    // Sort into row groups by approximate top offset for staggered delays
+    function revealEl(el, delay) {
+      el.style.transition = [
+        'opacity 0.55s ease ' + (delay || 0) + 'ms',
+        'transform 0.55s cubic-bezier(0.22,1,0.36,1) ' + (delay || 0) + 'ms'
+      ].join(', ');
+      el.style.opacity   = '1';
+      el.style.transform = 'translateY(0)';
+    }
+
+    // No IntersectionObserver support — reveal everything immediately
+    if (!window.IntersectionObserver) {
+      elements.forEach(function (el) { revealEl(el, 0); });
+      return;
+    }
+
     elements.forEach(function (el) {
-      el.style.opacity   = '0';
-      el.style.transform = 'translateY(28px)';
+      el.style.opacity    = '0';
+      el.style.transform  = 'translateY(28px)';
       el.style.willChange = 'opacity, transform';
     });
 
-    // Group siblings for stagger
     function getDelay(el) {
       var siblings = el.parentElement ? el.parentElement.children : [];
       var idx = 0;
       for (var i = 0; i < siblings.length; i++) {
         if (siblings[i] === el) { idx = i; break; }
       }
-      return Math.min(idx * 90, 360); // max 360ms stagger
+      return Math.min(idx * 90, 360);
     }
 
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        var el    = entry.target;
-        var delay = getDelay(el);
-        el.style.transition = [
-          'opacity 0.55s ease ' + delay + 'ms',
-          'transform 0.55s cubic-bezier(0.22,1,0.36,1) ' + delay + 'ms'
-        ].join(', ');
-        el.style.opacity   = '1';
-        el.style.transform = 'translateY(0)';
-        observer.unobserve(el);
+        revealEl(entry.target, getDelay(entry.target));
+        observer.unobserve(entry.target);
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     elements.forEach(function (el) { observer.observe(el); });
+
+    // Safety fallback: reveal anything still hidden after 3 seconds
+    // (handles edge cases like slow-scrolling or partial IntersectionObserver support)
+    setTimeout(function () {
+      elements.forEach(function (el) {
+        if (el.style.opacity === '0') { revealEl(el, 0); }
+      });
+    }, 3000);
   }
 
 
@@ -291,6 +312,45 @@
 
 
   // ══════════════════════════════════════════════════════════════════════════
+  // 6. iOS PARALLAX FALLBACK
+  // background-attachment:fixed is ignored on iOS Safari. This detects iOS,
+  // removes fixed attachment, and drives the parallax manually on scroll.
+  // ══════════════════════════════════════════════════════════════════════════
+  function initIosParallax() {
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (!isIOS) return;
+
+    var sections = document.querySelectorAll('.pillars, .investor-strip, .features, .cta-block, .serve, .cta-dual, .programming, .aud-data');
+    if (!sections.length) return;
+
+    sections.forEach(function (el) {
+      // Drop fixed attachment so the background doesn't freeze
+      el.style.backgroundAttachment = 'scroll, scroll';
+    });
+
+    var ticking = false;
+
+    function update() {
+      sections.forEach(function (el) {
+        var rect    = el.getBoundingClientRect();
+        var visible = window.innerHeight + el.offsetHeight;
+        var pct     = Math.max(0, Math.min(1, 1 - (rect.top + el.offsetHeight) / visible));
+        var offset  = Math.round(pct * 80); // 80px total travel
+        el.style.backgroundPosition = 'center center, center calc(50% + ' + offset + 'px)';
+      });
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+
+    update();
+  }
+
+
+  // ══════════════════════════════════════════════════════════════════════════
   // INJECT KEYFRAMES (scanline movement, shared pulse)
   // ══════════════════════════════════════════════════════════════════════════
   function injectStyles() {
@@ -322,6 +382,7 @@
     initScrollReveal();
     initCounters();
     initNavScroll();
+    initIosParallax();
   }
 
   if (document.readyState === 'loading') {

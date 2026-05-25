@@ -43,7 +43,7 @@ a{color:var(--red);text-decoration:none;}
 
 /* ── PROGRESS OVERVIEW ── */
 .progress-bar-wrap{max-width:1100px;margin:0 auto;padding:20px 24px;}
-.progress-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.progress-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
 .progress-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
 .progress-card .label{font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
 .progress-card .pct{font-size:22px;font-weight:800;margin-bottom:6px;}
@@ -77,7 +77,77 @@ a{color:var(--red);text-decoration:none;}
 .team-card .tc-contact{font-size:12px;color:var(--muted);line-height:1.7;}
 .team-card .tc-del{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;line-height:1;padding:2px;}
 .team-card .tc-del:hover{color:var(--red);}
+.team-card .tc-edit{position:absolute;top:10px;right:32px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;line-height:1;padding:2px;}
+.team-card .tc-edit:hover{color:var(--blue);}
+.team-card .tc-edit-form{display:flex;flex-direction:column;gap:6px;margin-top:4px;}
+.team-card .tc-edit-form .field-input{font-size:12px;padding:5px 8px;}
+.team-card .tc-edit-actions{display:flex;gap:6px;margin-top:4px;}
+.team-card .tc-save{background:var(--red);color:#fff;border:none;border-radius:4px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.team-card .tc-cancel{background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:4px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;}
+.team-card .tc-cancel:hover{color:var(--text);}
 .team-empty{color:var(--muted);font-size:13px;font-style:italic;}
+.crew-badge{display:inline-block;font-size:10px;font-weight:700;border-radius:4px;padding:2px 8px;letter-spacing:.3px;margin-top:6px;text-transform:uppercase;}
+.crew-badge.bmtv{background:rgba(232,24,28,0.1);border:1px solid rgba(232,24,28,0.28);color:var(--red);}
+.crew-badge.joselito{background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.28);color:#8b5cf6;}
+.crew-badge.unassigned{background:var(--surface2);border:1px solid var(--border);color:var(--muted);}
+.crew-section{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;overflow:hidden;}
+.crew-section-header{padding:14px 20px 12px;border-bottom:1px solid var(--border);}
+.crew-section-title{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:14px;font-weight:700;}
+.crew-cap-bar-track{height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.crew-cap-bar-fill{height:100%;border-radius:3px;transition:width .3s;}
+.crew-cap-bar-fill.bmtv{background:var(--red);}
+.crew-cap-bar-fill.joselito{background:#8b5cf6;}
+.crew-cap-bar-fill.warn{background:#f59e0b!important;}
+.crew-cap-bar-fill.full{background:#ef4444!important;}
+.crew-spots{font-size:11px;color:var(--muted);margin-top:6px;}
+.crew-spots.warn{color:#f59e0b;font-weight:600;}
+.crew-spots.full{color:#ef4444;font-weight:700;}
+.plus-stepper{display:flex;align-items:center;gap:4px;justify-content:center;}
+.plus-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:4px;width:22px;height:22px;font-size:14px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;font-family:'Inter',sans-serif;}
+.plus-btn:hover{background:var(--border);}
+.plus-count{font-size:13px;font-weight:700;min-width:18px;text-align:center;}
+.plus-count.has-plus{color:var(--red);}
+
+/* ── CONTINGENT TAB ── */
+.cont-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.cont-toolbar h2{font-size:16px;font-weight:700;flex:1;margin:0;}
+.capacity-block{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:16px;}
+.capacity-numbers{display:flex;align-items:baseline;gap:8px;margin-bottom:10px;}
+.capacity-filled{font-size:28px;font-weight:800;}
+.capacity-of{font-size:14px;color:var(--muted);}
+.capacity-remaining{font-size:13px;font-weight:700;color:var(--green);margin-left:auto;}
+.capacity-remaining.warn{color:var(--yellow);}
+.capacity-remaining.full{color:var(--red);}
+.capacity-bar-track{height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.capacity-bar-fill{height:100%;background:var(--green);border-radius:3px;transition:width .3s;}
+.capacity-bar-fill.warn{background:var(--yellow);}
+.capacity-bar-fill.full{background:var(--red);}
+.cont-table-wrap{overflow-x:auto;margin-bottom:16px;}
+.cont-table{width:100%;border-collapse:collapse;min-width:680px;}
+.cont-table th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;padding:8px 12px;border-bottom:2px solid var(--border);white-space:nowrap;}
+.cont-table td{padding:9px 12px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle;}
+.cont-table tbody tr:hover td{background:var(--surface2);}
+.cont-num{color:var(--muted);font-size:12px;width:36px;text-align:center;}
+.cont-team-badge{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.25);color:var(--blue);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;letter-spacing:.3px;white-space:nowrap;}
+.cont-del-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:3px 5px;border-radius:4px;}
+.cont-del-btn:hover{color:var(--red);background:var(--red-dim);}
+.cont-edit-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:3px 5px;border-radius:4px;}
+.cont-edit-btn:hover{color:var(--blue);}
+.cont-add-row td{background:rgba(232,24,28,0.03);border-top:2px dashed var(--border);}
+.cont-add-input{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:5px;padding:6px 8px;font-family:'Inter',sans-serif;font-size:12px;width:100%;}
+.cont-add-input:focus{outline:none;border-color:var(--red);}
+.cont-add-select{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:5px;padding:6px 8px;font-family:'Inter',sans-serif;font-size:12px;width:100%;}
+.cont-add-select:focus{outline:none;border-color:var(--red);}
+.cont-save-btn{background:var(--red);color:#fff;border:none;border-radius:5px;padding:6px 14px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;}
+.cont-save-btn:hover{background:#c91014;}
+.captain-counts{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;}
+.captain-counts-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.captain-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.captain-pill{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:12px;display:flex;gap:8px;align-items:center;}
+.captain-pill .cp-name{font-weight:600;}
+.captain-pill .cp-count{background:var(--red-dim);color:var(--red);border-radius:4px;padding:1px 8px;font-size:11px;font-weight:700;}
+.cont-full-notice{background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);color:var(--yellow);border-radius:6px;padding:10px 14px;font-size:13px;font-weight:600;margin-bottom:12px;display:none;}
+.cont-full-notice.show{display:block;}
 
 /* ── TABS ── */
 .tabs-section{max-width:1100px;margin:0 auto;padding:0 24px;}
@@ -173,6 +243,29 @@ a{color:var(--red);text-decoration:none;}
   .print-assignee-label{font-size:11px;color:#666;display:block;}
 }
 .print-header{display:none;}
+.brief-chip{background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.3);color:var(--blue);border-radius:4px;padding:3px 8px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif;}
+.brief-chip:hover{background:rgba(59,130,246,0.22);}
+.brief-spec{font-size:11px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin-bottom:14px;letter-spacing:.2px;}
+.brief-content-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:14px 0 6px;}
+.brief-content-list{list-style:none;display:flex;flex-direction:column;gap:4px;margin-bottom:12px;}
+.brief-content-list li{font-size:12px;color:var(--text);display:flex;gap:8px;line-height:1.5;}
+.brief-content-list li::before{content:'—';color:var(--muted);flex-shrink:0;}
+.brief-note{font-size:12px;color:var(--yellow);background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.2);border-radius:5px;padding:8px 12px;margin-bottom:12px;}
+.linked-chip{background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.3);color:var(--yellow);border-radius:4px;padding:2px 7px;font-size:11px;font-weight:600;white-space:nowrap;cursor:default;}
+.next-due{font-size:11px;font-weight:700;color:var(--red);background:rgba(232,24,28,0.1);border:1px solid rgba(232,24,28,0.25);border-radius:4px;padding:2px 8px;letter-spacing:.3px;white-space:nowrap;margin-left:4px;}
+.next-due.overdue{background:rgba(232,24,28,0.22);border-color:rgba(232,24,28,0.5);}
+.tact{display:flex;gap:2px;align-items:center;flex-shrink:0;}
+.task-edit-btn,.task-del-btn{background:none;border:none;cursor:pointer;padding:3px 6px;border-radius:3px;font-size:12px;opacity:0;transition:opacity .15s;font-family:'Inter',sans-serif;}
+.task-item:hover .task-edit-btn,.task-item:hover .task-del-btn{opacity:1;}
+.task-edit-btn{color:var(--muted);}.task-edit-btn:hover{color:var(--blue);background:rgba(59,130,246,0.1);}
+.task-del-btn{color:var(--muted);}.task-del-btn:hover{color:var(--red);background:rgba(232,24,28,0.1);}
+.task-save-btn,.task-cancel-btn{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;padding:3px 10px;border-radius:3px;cursor:pointer;white-space:nowrap;}
+.task-save-btn{background:var(--red);color:#fff;border:none;}
+.task-cancel-btn{background:transparent;color:var(--muted);border:1px solid var(--border);}
+.task-cancel-btn:hover{color:var(--text);}
+.task-edit-input{background:var(--bg);border:1px solid var(--red);color:var(--text);border-radius:4px;padding:3px 8px;font-family:'Inter',sans-serif;font-size:13px;width:100%;min-width:200px;}
+.task-edit-input:focus{outline:none;}
+@media(max-width:900px){.progress-cards{grid-template-columns:repeat(2,1fr);}}
 </style>
 </head>
 <body>
@@ -210,6 +303,11 @@ a{color:var(--red);text-decoration:none;}
       <div class="pct" id="pctE2">0%</div>
       <div class="progress-track"><div class="progress-fill" id="fillE2" style="width:0%"></div></div>
     </div>
+    <div class="progress-card">
+      <div class="label">Design Brief</div>
+      <div class="pct" id="pctDesign">0%</div>
+      <div class="progress-track"><div class="progress-fill" id="fillDesign" style="width:0%"></div></div>
+    </div>
   </div>
 </div>
 
@@ -231,8 +329,16 @@ a{color:var(--red);text-decoration:none;}
           <input class="field-input" id="tmRole" placeholder="e.g. Stream Tech">
         </div>
         <div class="field-group">
+          <label>Crew</label>
+          <select class="field-input" id="tmCrew">
+            <option value="">— Unassigned —</option>
+            <option value="bmtv">BMTV Crew</option>
+            <option value="joselito">Joselito Crew</option>
+          </select>
+        </div>
+        <div class="field-group">
           <label>Phone</label>
-          <input class="field-input" id="tmPhone" placeholder="(xxx) xxx-xxxx">
+          <input class="field-input" id="tmPhone" placeholder="(xxx) xxx-xxxx" oninput="this.value=formatPhone(this.value)">
         </div>
         <div class="field-group">
           <label>Email</label>
@@ -253,6 +359,8 @@ a{color:var(--red);text-decoration:none;}
     <button class="tab-btn active" onclick="switchTab('overall',this)">Overall Weekend</button>
     <button class="tab-btn" onclick="switchTab('event1',this)">Event 1 — 116th St Festival (June 13)</button>
     <button class="tab-btn" onclick="switchTab('event2',this)">Event 2 — Parade Float (June 14)</button>
+    <button class="tab-btn" onclick="switchTab('design',this)" data-tab="design">Design Brief</button>
+    <button class="tab-btn" onclick="switchTab('contingent',this)">Walking Contingent</button>
   </div>
 
   <!-- ══ TAB: OVERALL ══ -->
@@ -268,6 +376,25 @@ a{color:var(--red);text-decoration:none;}
   <!-- ══ TAB: EVENT 2 ══ -->
   <div class="tab-content" id="tab-event2">
     <div class="print-header"><h2 style="margin-bottom:16px;">Event 2 — Puerto Rican Day Parade Float (June 14, 2026)</h2></div>
+  </div>
+
+  <!-- ══ TAB: DESIGN BRIEF ══ -->
+  <div class="tab-content" id="tab-design">
+    <div class="print-header"><h2 style="margin-bottom:16px;">Design Brief — NYC Parade Weekend</h2></div>
+  </div>
+
+  <!-- ══ TAB: WALKING CONTINGENT ══ -->
+  <div class="tab-content" id="tab-contingent">
+    <div class="print-header"><h2 style="margin-bottom:16px;">Walking Contingent — NPRDP Parade · June 14, 2026</h2></div>
+    <div class="cont-toolbar">
+      <h2>Walking Contingent &mdash; June 14, 2026</h2>
+      <button class="btn btn-outline btn-sm" onclick="exportContingentCSV()">&#8595; Export CSV</button>
+      <button class="btn btn-outline btn-sm" onclick="printContingentTab()">&#128438; Print</button>
+    </div>
+    <div id="capacity-block" class="capacity-block"></div>
+    <div id="cont-full-notice" class="cont-full-notice">Contingent is full — 50 / 50 spots filled. Remove a member to add someone new.</div>
+    <div id="crew-sections"></div>
+    <div id="captain-counts" class="captain-counts"></div>
   </div>
 </div>
 
@@ -286,6 +413,7 @@ a{color:var(--red);text-decoration:none;}
           <label class="radio-opt"><input type="radio" name="pSection" value="overall"> Overall Weekend only</label>
           <label class="radio-opt"><input type="radio" name="pSection" value="event1"> Event 1 — 116th St Festival only</label>
           <label class="radio-opt"><input type="radio" name="pSection" value="event2"> Event 2 — Parade Float only</label>
+          <label class="radio-opt"><input type="radio" name="pSection" value="design"> Design Brief only</label>
         </div>
       </div>
       <div class="modal-section">
@@ -314,6 +442,162 @@ a{color:var(--red);text-decoration:none;}
 
 <script>
 // ══════════════════════════════════════════
+// LINKED TASKS (duplicates across tabs — checking one checks all)
+// ══════════════════════════════════════════
+const LINKED_TASKS = {
+  'oa5':  ['e2a5'],  // Insurance certificate
+  'e2a5': ['oa5'],
+  'oa8':  ['e2g1'],  // DJ Charlie Chase contract
+  'e2g1': ['oa8'],
+  'oa9':  ['e2a8'],  // Wristbands & permits
+  'e2a8': ['oa9'],
+  'oa10': ['e2a7'],  // Float participant number & staging
+  'e2a7': ['oa10'],
+  'oc6':  ['e2f3'],  // Order contingent shirts
+  'e2f3': ['oc6'],
+  'ob1':  ['db3a'],  // Blip Billboards account
+  'db3a': ['ob1'],
+  'ob2':  ['db3b'],  // Billboard creative design
+  'db3b': ['ob2'],
+};
+
+// ══════════════════════════════════════════
+// DESIGN BRIEF DATA
+// ══════════════════════════════════════════
+const DESIGN_BRIEF = [
+  {
+    id: 'grp-db1', label: '1. Promo Postcards — Events (116th St Festival + Parade)',
+    spec: '3×5 in · One card, covers both events · Double-sided · 300 DPI · Bleed 0.125 in · Qty: 1,000',
+    front: ['BlackMarker.TV logo','Talent: Joselito Da Puppet | DJ Charlie Chase | Thirstin Howl the 3rd','Headline: "Celebrating Puerto Rican Pioneers"','Event 1: 116th Street Festival — Sat June 13, 2026 | East Harlem','Event 2: Puerto Rican Day Parade — Sun June 14, 2026 | Fifth Avenue','Tune-in CTA: "Watch Live at BlackMarker.TV"','QR code → www.blackmarker.tv (homepage)'],
+    back: ['Social handles','Short brand line (1 sentence max)','Logo lockup'],
+    tasks: [
+      { id: 'db1a', text: 'QR code destination confirmed: www.blackmarker.tv ✓' },
+      { id: 'db1b', text: 'Print quantity confirmed: 1,000 event cards ✓' },
+      { id: 'db1c', text: 'Submit to printer — must arrive before June 12' },
+    ]
+  },
+  {
+    id: 'grp-db2', label: '2. Promo Postcards — Corporate (Black Marker Media)',
+    spec: '3×5 in · Double-sided · 300 DPI · Bleed 0.125 in · General contact card — no names, for any team member · Qty: 250',
+    front: ['Black Marker Media LLC logo (not BlackMarker.TV)','Tagline: "We Build. We Broadcast. We Operate."','Sub-line: "Live streaming infrastructure for the next generation of broadcasters."','Clean professional layout — no event-specific content'],
+    back: ['Email: info@blackmarkermedia.com','Website: blackmarkermedia.com','Location: Wesley Chapel, FL — Serving clients nationwide','BAM™ formula callout: Build + Amplify + Monetize','Social handles'],
+    tasks: [
+      { id: 'db2a', text: 'Print quantity confirmed: 250 corporate cards ✓ — separate print run from event cards' },
+      { id: 'db2b', text: 'Submit to printer — must arrive before June 12' },
+    ]
+  },
+  {
+    id: 'grp-db3', label: '3. Times Square Billboard Ad',
+    spec: '15-second animated spot · Confirm exact pixel specs in Blip Billboards uploader BEFORE designing · Platform: blipbillboards.com/times-square',
+    front: ['Talent photos: DJ Charlie Chase + Joselito Da Puppet + Thirstin Howl the 3rd','"Celebrating Puerto Rican Pioneers"','National Puerto Rican Day Parade | June 14, 2026','BlackMarker.TV logo + "Watch Live" CTA'],
+    note: 'High-contrast design only — must be readable at distance. No small text.',
+    tasks: [
+      { id: 'db3a', text: 'Create Blip Billboards account — pull exact file specs before designing' },
+      { id: 'db3b', text: 'Design and upload creative to Blip — schedule for June 13–14 run' },
+      { id: 'db3c', text: 'Set daily budget in Blip ($200–$400 total recommended for 2 days)' },
+      { id: 'db3d', text: 'Send someone to Times Square to photograph ad running — social content' },
+    ]
+  },
+  {
+    id: 'grp-db4', label: '4. Laminates — Staff + Float Access',
+    spec: '4×3 in landscape or 3×4 in portrait · Names left blank — written on site with marker · Float Access must be visually distinct from Staff (different color or border)',
+    sections: [
+      { label: 'Staff Laminate', items: ['BlackMarker.TV logo','"STAFF" designation','NYC Parade Weekend | June 13–14, 2026','Blank name line'] },
+      { label: 'Float Access Laminate', items: ['BlackMarker.TV logo','"FLOAT ACCESS" — visually distinct from Staff (different color or bold border)','National Puerto Rican Day Parade | June 14, 2026','Blank name line'] },
+    ],
+    tasks: [
+      { id: 'db4a', text: 'Design Staff laminate' },
+      { id: 'db4b', text: 'Design Float Access laminate — visually distinct from Staff' },
+      { id: 'db4c', text: 'Print on card stock and laminate (locally or via Avery/GotPrint)' },
+      { id: 'db4d', text: 'Order lanyards — one per laminate' },
+      { id: 'db4e', text: 'Confirm quantity of each type once crew/contingent list is finalized' },
+    ]
+  },
+  {
+    id: 'grp-db5', label: '5. Walking Contingent Shirts',
+    spec: 'Quantity: 55 (50 + 5 spares) · Print method: Bibi in-house ✓ · Design timeline: First draft May 25 → Revisions May 27–28 → Final May 29 · Print material order deadline: May 29',
+    front: ['BlackMarker.TV logo + headline or graphic'],
+    back: ['"Celebrating Puerto Rican Pioneers" | NPRDP June 14, 2026'],
+    note: 'Colors confirmed: Red #CF142B · Blue #0038A8 · White #FFFFFF · Black #000000 · Yellow #F5C800. Print material must be ordered by May 29 for Bibi to press in time before June 14.',
+    tasks: [
+      { id: 'db5a', text: 'Shirt design timeline — First draft due Monday May 25 · Round 1 revisions due Wednesday May 27 · Round 2 revisions due Thursday May 28 · Final design delivery Thursday May 29.' },
+      { id: 'db5b', text: 'Print method confirmed: Bibi in-house ✓' },
+      { id: 'db5c', text: 'Collect size breakdown from contingent list' },
+      { id: 'db5d', text: 'Order print material for Bibi by Thursday May 29 — hard deadline for on-time pressing before June 14.' },
+      { id: 'db5e', text: 'Order 5–10 extra shirts above confirmed count' },
+      { id: 'db5f', text: 'Order stickers by Thursday May 29 — design already complete, just needs to go to print.' },
+    ]
+  },
+  {
+    id: 'grp-db6', label: '6. Float Design — Celebrating Puerto Rican Pioneers',
+    spec: 'Platform: 20\' long × 8\' wide · Back panel: 8\' wide × 11\'10" tall · Upper deck: 8\' × 8\' elevated · Skirt height: 21.5" · Files at 1/4 scale — edit DESIGN-FILE.ai only · Vendor: Bond Floats',
+    note: 'TIMELINE: Design sprint May 20–28 → Team Review #1 due May 30 → Review #2 due June 1 → Package + send to Bond Floats June 2–3 → NPRDP final approval by June 5. | BMM/BlackMarker.TV logo authorization confirmed by NPRDP rep ✓ — community/cultural branding is OK.',
+    sections: [
+      {
+        label: 'Theme Direction',
+        items: [
+          '"Somos Más Que 100x35" — Puerto Ricans are more than the 100×35-mile island. The theme celebrates the diaspora and cultural reach beyond the island\'s geography.',
+          'Our contingent angle: "Celebrating Puerto Rican Pioneers" — pioneers in music, culture, and entertainment represented by our talent.',
+          'Primary color palette confirmed ✓ — Red #CF142B · Blue #0038A8 · White #FFFFFF · Black #000000 · Yellow/Gold #F5C800. Aligns with official NPRDP parade colors and BMM brand. (BMM digital: #E8181C acceptable for digital assets.)',
+          'Parade theme visual cues to incorporate: vejigante mask, bomba drum, compass star, PR island silhouette, feather quill, mirror ball (from official NPRDP theme artwork).',
+        ]
+      },
+      {
+        label: 'Back Panel (8\' × 11\'10") — Primary Broadcast Surface',
+        items: [
+          'BlackMarker.TV logo — dominant, top or centered placement',
+          '"Celebrating Puerto Rican Pioneers" — large headline, readable at street distance',
+          'Talent: Joselito Da Puppet | DJ Charlie Chase | Thirstin Howl the 3rd',
+          '"Somos Más Que 100x35" — secondary line tying to parade theme',
+          'Puerto Rican flag — displayed with dignity, no alterations or caricatures (NPRDP Rule 8)',
+          'High contrast only — this is the TV broadcast-facing panel; no small text',
+        ]
+      },
+      {
+        label: 'Side Panels & Skirt (21.5" tall)',
+        items: [
+          'Repeating brand/theme pattern or campaign graphic — visible to street-level crowd',
+          '"Watch Live at BlackMarker.TV" CTA',
+          'BMM/BlackMarker.TV branding authorized by NPRDP rep ✓ — community/cultural branding is OK. No unregistered major brand sponsor logos.',
+        ]
+      },
+      {
+        label: 'Upper Deck (8\' × 8\' — Performance Area)',
+        items: [
+          'Rail/barrier front face: BlackMarker.TV branding',
+          'Confirm DJ booth setup and performer placement with Bond Floats — respect float capacity limits (Rule 15e)',
+          'No tall elements that block broadcast camera angles on the back panel',
+        ]
+      },
+      {
+        label: 'Audio & Compliance',
+        items: [
+          'Max 85dB at all times (NPRDP Rule 13c)',
+          'Lower volume + silence sound effects at 51st St / St. Patrick\'s Cathedral',
+          'No sirens, horns, or foghorn effects near the TV viewing stand/broadcast area',
+          'Chucheros, kitipos, or boom-style external audio systems not permitted (Rule 16i)',
+        ]
+      },
+    ],
+    tasks: [
+      { id: 'db6a', text: 'Design brief handed off to designer ✓ (May 22). Designer working from DESIGN-FILE.ai at 1/4 scale. Path: Bond Floats Option 1 FLOAT TEMPLATE/DESIGN-FILE.ai — do not rename files.' },
+      { id: 'db6b', text: 'BMM/BlackMarker.TV logo authorization confirmed by NPRDP rep ✓ — community/cultural branding is OK. Not classified as a major brand sponsor.' },
+      { id: 'db6c', text: 'Color palette confirmed ✓ — Red #CF142B (PR flag) · Blue #0038A8 (PR flag) · White #FFFFFF · Black #000000 · Yellow/Gold #F5C800. Apply consistently across all float surfaces, shirts, postcards, and stream graphics.' },
+      { id: 'db6d', text: 'Design back panel (8\' × 11\'10") — BlackMarker.TV logo + "Celebrating Puerto Rican Pioneers" + talent names + parade theme tie-in. High-contrast, broadcast-readable.' },
+      { id: 'db6e', text: 'Design side panels and skirt (21.5" tall) — brand/campaign wrap for street-level visibility' },
+      { id: 'db6f', text: 'Design upper deck rail/barrier front face — BlackMarker.TV branding' },
+      { id: 'db6g', text: 'Generate 3D preview using PREVIEW-FILE.ai and send to team for Review #1' },
+      { id: 'db6j', text: 'Team Review #1 — collect feedback, incorporate revisions. FLOAT DESIGN DUE.' },
+      { id: 'db6k', text: 'Apply Review #1 revisions and send updated design to team for Review #2' },
+      { id: 'db6l', text: 'Team Review #2 — final internal approval, lock all changes' },
+      { id: 'db6h', text: 'Final packaging day — assemble DESIGN-FILE.ai + PREVIEW-FILE.ai + PRINT-FILE.ai, confirm all files are correct and linked' },
+      { id: 'db6m', text: 'Submit packaged files to Bond Floats — starts 2-day approval window. NPRDP final approval due June 5.' },
+      { id: 'db6i', text: 'Confirm audio plan — max 85dB, volume lowered at 51st St, no sound effects near viewing stand/broadcast area' },
+    ]
+  }
+];
+
+// ══════════════════════════════════════════
 // TASK DEFINITIONS
 // ══════════════════════════════════════════
 const TASKS = {
@@ -325,8 +609,8 @@ const TASKS = {
         { id: 'oa2', text: 'Registered for first orientation with NPRDP', preComplete: true },
         { id: 'oa3', text: 'Custom Float package selected and paid — $6,500 (8\' × 28\' × 13\', custom signage/graphics, driver insurance included)', preComplete: true },
         { id: 'oa4', text: 'Attend NPRDP orientation — document all requirements, deadlines, float specs, and wristband process' },
-        { id: 'oa5', text: 'Obtain $1M+ General Liability Insurance certificate — name "National Puerto Rican Day Parade, Inc." as additional insured. Options: Thimble (thimble.com) ~$100–$300/day | NEXT Insurance (nextinsurance.com) ~$300–$800 | Existing business broker | Or ask NPRDP at orientation for preferred vendor. Confirm if one policy covers both event days (June 13–14).' },
-        { id: 'oa6', text: 'Submit vendor application for 116th Street Festival (June 13) — call 212-348-8272. As of Aug 2024: retail vendors no longer need DCWP permit, just organizer application + fee.' },
+        { id: 'oa5', text: 'Insurance confirmed NOT required by NPRDP — confirmed directly with parade rep. Float package + contingent registration covers this. No action needed. ✓' },
+        { id: 'oa6', text: '116th St vendor registration complete ✓ — application submitted, fee paid (Wil Sweets, May 21), vendor spot numbers confirmed, side-by-side placement confirmed.' },
         { id: 'oa7', text: 'Confirm Joselito DaPuppet contract for both events (June 13 + June 14)' },
         { id: 'oa8', text: 'Confirm DJ Charlie Chase contract for parade float (June 14) — confirm travel/accommodation covered by BMB or self?' },
         { id: 'oa9', text: 'Receive wristbands and permits for 50-person walking contingent from NPRDP (issued after application completion)' },
@@ -336,36 +620,38 @@ const TASKS = {
     {
       id: 'grp-ob', label: 'Billboard & Marketing',
       tasks: [
-        { id: 'ob1', text: 'Book Times Square area digital billboard — contact Outfront Media, Clear Channel Outdoor, or theadfocus.com. June = peak season ($20K–$50K+/wk marquee; $3K–$8K/wk secondary/adjacent boards). Secondary boards deliver same "Times Square" story at a fraction.' },
-        { id: 'ob2', text: 'Commission billboard creative — 10-second animated spot, min 1080p. Talent photos (Joselito, Charlie Chase), BlackMarker.TV logo, parade date, tune-in CTA. Get file specs from OOH company first.' },
-        { id: 'ob3', text: 'Announce float participation on all BMB/BlackMarker.TV channels' },
-        { id: 'ob4', text: 'Announce DJ Charlie Chase booking — this is newsworthy (NPRDP historical honoree, Cold Crush Brothers founder). Pitch to Puerto Rican media outlets.' },
-        { id: 'ob5', text: 'Coordinate Joselito DaPuppet cross-promotion — 500K+ followers / 2M+ weekly reach. Align post timing with BMB announcements.' },
+        { id: 'ob1', text: 'Set up Blip Billboards account and book Times Square digital billboard — blipbillboards.com/times-square. Pay-per-blip model: $20/blip minimum (15-sec display), only pay when ad plays. Set daily budget for June 13–14 ($200–$400 total recommended). Self-serve, no contract.', briefLink: 'grp-db3' },
+        { id: 'ob2', text: 'Design billboard creative — 15-second spot. Pull exact file specs from Blip uploader before designing. Content: DJ Charlie Chase + Joselito Da Puppet + Thirstin Howl the 3rd photos, "Celebrating Puerto Rican Pioneers", parade date, BlackMarker.TV logo + "Watch Live" CTA. High-contrast only — no small text.', briefLink: 'grp-db3' },
+        { id: 'ob3', text: 'Announce float participation on all BMB/BlackMarker.TV channels — creative slides ready, rolling out Sunday May 24. NPRDP parade started their campaign this week; riding the momentum.' },
+        { id: 'ob4', text: 'Announce DJ Charlie Chase booking — creative slides done, first posts Sunday May 24, full rollout Monday May 25. Pitch to Puerto Rican media outlets.' },
+        { id: 'ob5', text: 'Coordinate Joselito DaPuppet cross-promotion — meeting Friday May 22 to align. 500K+ followers / 2M+ weekly reach. Sync his post timing with BMB rollout starting Monday May 25.' },
         { id: 'ob6', text: 'Launch paid digital ad campaigns — Meta Ads Manager + Google Ads. Target: Puerto Rican community, NYC metro + FL + diaspora markets.' },
         { id: 'ob7', text: 'Schedule countdown social posts for both events leading up to parade weekend' },
         { id: 'ob8', text: 'Send team member to photograph Times Square billboard while it\'s running — pure social media gold' },
+        { id: 'ob9', text: 'Create GMAN community partnership proposal (shirts deal) — 3 tiers: (A) Basic: brand mentions in exchange for shirt discount, (B) Moderate: logo on live streams + shirts + promos for free shirts, (C) Full Partner: all of B + $500–$1K cash contribution. Present at Saturday May 23 morning meeting.', briefLink: 'grp-db5' },
       ]
     },
     {
       id: 'grp-oc', label: 'Equipment',
       tasks: [
-        { id: 'oc1', text: 'Inventory all existing equipment — cameras, audio kit, laptop, encoders, cables, adapters' },
-        { id: 'oc2', text: 'Identify equipment gaps and decide rent vs. buy for each item' },
-        { id: 'oc3', text: 'Reserve cellular bonding device for weekend — LiveU Solo+ or Teradek Bond. Must bond 3 carriers (AT&T + T-Mobile + Verizon). Rental ~$600–$1,000 for weekend.' },
+        { id: 'oc1', text: 'Equipment inventory — Eric Gomez responsible, due Monday May 25. Cameras, audio kit, laptop, encoders, cables, adapters.' },
+        { id: 'oc2', text: 'Equipment gap list — Eric Gomez responsible, due Monday May 25. Only rental needed: generator. All other gear (cameras, audio, bonding devices, encoders) already in-house.' },
+        { id: 'oc3', text: 'Cellular bonding — 2 devices already in-house ✓. No rental needed. One unit for 116th St Festival, one for parade float.' },
         { id: 'oc4', text: 'Source generator for Event 1 (Festival Tent) — Honda EU3000iS or equiv. 3,000–5,000W inverter generator. Quiet enough for tent environment.' },
         { id: 'oc5', text: 'Source generator for Event 2 (Parade Float) — Honda EU7000iS or equiv. 5,000–8,000W. Must be secured to float with steel straps.' },
-        { id: 'oc6', text: 'Order walking contingent branded shirts × 55 (50 + 5 spares) — 3 weeks minimum lead time before June 14. Black shirt, BlackMarker.TV logo front, "Celebrating Puerto Rican Pioneers" back.' },
+        { id: 'oc6', text: 'Order walking contingent branded shirts × 55 (50 + 5 spares) — 3 weeks minimum lead time before June 14. Black shirt, BlackMarker.TV logo front, "Celebrating Puerto Rican Pioneers" back.', briefLink: 'grp-db5' },
         { id: 'oc7', text: 'Order branded tablecloth + vertical banners × 2 for festival tent (Event 1)' },
-        { id: 'oc8', text: 'Order float banners — BlackMarker.TV main banner + "Celebrating Puerto Rican Pioneers" theme banner + PR flag. Weatherproof vinyl.' },
+        { id: 'oc8', text: 'Order float banners — BlackMarker.TV main banner + "Celebrating Puerto Rican Pioneers" theme banner + PR flag. Weatherproof vinyl. ORDER AFTER NPRDP design approval (June 6+).' },
+        { id: 'oc9', text: 'Build team equipment bring-list — catalog all items that need to come from individual team members (chairs, tarps, personal gear, etc.). Assign each item to a person. Complete before June 10 load-in.' },
       ]
     },
     {
       id: 'grp-od', label: 'Production Pre-Production',
       tasks: [
-        { id: 'od1', text: 'Design branded graphics package: intro bumper (10–15 sec animation), lower thirds ("LIVE FROM 116TH ST FESTIVAL" / "LIVE — PUERTO RICAN DAY PARADE"), talent name cards (Joselito, Charlie Chase, host names), intermission card' },
-        { id: 'od2', text: 'Set up stream keys on BlackMarker.TV RTMP for both events' },
-        { id: 'od3', text: 'Set up YouTube Live stream keys for both events (simulcast)' },
-        { id: 'od4', text: 'Set up Facebook Live stream keys for both events (simulcast)' },
+        { id: 'od1', text: 'Design branded graphics package: intro bumper (10–15 sec animation), lower thirds ("LIVE FROM 116TH ST FESTIVAL" / "LIVE — PUERTO RICAN DAY PARADE"), talent name cards (Joselito, Charlie Chase, host names), intermission card. Color palette and visual language must match float design — do not start until float palette is locked (see Design Brief §6).', briefLink: 'grp-db6' },
+        { id: 'od2', text: 'Stream keys set on BlackMarker.TV RTMP for both events ✓ — confirmed. Only destination is BlackMarker.TV.' },
+        { id: 'od3', text: 'YouTube Live — NOT streaming. BlackMarker.TV only. N/A ✓' },
+        { id: 'od4', text: 'Facebook Live — NOT streaming. BlackMarker.TV only. N/A ✓' },
         { id: 'od5', text: 'Full stream rig test before travel — run 1-hour test stream from studio to verify all systems' },
         { id: 'od6', text: 'Create show rundown for Event 1 (116th St Festival) — segment list, timing, transitions, host cues' },
         { id: 'od7', text: 'Create show rundown for Event 2 (Parade Float) — segment list, timing, Charlie Chase interview block, contingent walk segment' },
@@ -379,10 +665,10 @@ const TASKS = {
       tasks: [
         { id: 'oe1', text: 'Book flights for all traveling crew — round trip, arriving June 12. June = peak travel season, book early.' },
         { id: 'oe2', text: 'Book hotel — June 12–15, near Midtown Manhattan. Budget ~$300–$600/night.' },
-        { id: 'oe3', text: 'Reserve cargo van — Ryder or Enterprise. Must fit full equipment load including generators, canopy, cases, and float materials.' },
+        { id: 'oe3', text: 'Vehicle confirmed: Tahoe secured ✓ — pickup June 10, dropoff TBD. Verify cargo capacity fits generators, canopy, cases, and float materials.' },
         { id: 'oe4', text: 'Plan equipment transport logistics from hotel to Event 1 (116th St) on June 13, then to parade staging on June 14' },
         { id: 'oe5', text: 'Plan crew meals and per diem for each day (June 12–14 minimum)' },
-        { id: 'oe6', text: 'Build emergency contacts list: NPRDP organizer, 116th St Festival organizer, insurance provider, float driver, Joselito, Charlie Chase contacts' },
+        { id: 'oe6', text: 'Build emergency contacts list: NPRDP organizer, 116th St Festival organizer, Bond Floats contact, float driver, Joselito, Charlie Chase contacts' },
         { id: 'oe7', text: 'Confirm rain contingency plan — who makes the call, what changes for each event if weather is bad' },
       ]
     },
@@ -405,12 +691,12 @@ const TASKS = {
     {
       id: 'grp-e1a', label: 'Permitting & Applications',
       tasks: [
-        { id: 'e1a1', text: 'Call 116th Street Festival organizers — 212-348-8272 — to confirm vendor space availability for June 13 and submit application' },
-        { id: 'e1a2', text: 'Pay vendor registration/application fee (confirm amount when calling)' },
-        { id: 'e1a3', text: 'Confirm assigned space dimensions (standard: 10×10 or 10×20 ft)' },
-        { id: 'e1a4', text: 'Confirm generator policy — permitted? Any fuel type restrictions?' },
-        { id: 'e1a5', text: 'Confirm electrical hookup availability (some festivals offer it; reduces generator load)' },
-        { id: 'e1a6', text: 'Confirm load-in time and parking/cargo van access for the day' },
+        { id: 'e1a1', text: 'Vendor application submitted to 116th Street Festival organizers ✓ — Wil Sweets completed May 21.' },
+        { id: 'e1a2', text: 'Registration fee paid ✓ — Wil Sweets paid May 21.' },
+        { id: 'e1a3', text: 'Vendor space fully confirmed ✓ — 10×10 per spot, spot numbers confirmed, side-by-side placement confirmed (May 22).' },
+        { id: 'e1a4', text: 'Generator confirmed permitted ✓ — fire extinguisher in-hand ✓. Good to go.' },
+        { id: 'e1a5', text: 'No electrical hookup available ✓ — running fully off generator. Generator is the sole power source for the tent.' },
+        { id: 'e1a6', text: 'Confirm load-in time and Tahoe parking/vehicle access for the day' },
       ]
     },
     {
@@ -440,17 +726,17 @@ const TASKS = {
     {
       id: 'grp-e1d', label: 'Live Stream Tech Setup',
       tasks: [
-        { id: 'e1d1', text: 'Cellular bonding device configured — SIM cards active on AT&T + T-Mobile + Verizon. Target: 10+ Mbps stable upload. Stream at 6 Mbps for 1080p30.' },
+        { id: 'e1d1', text: 'Cellular bonding device — in-house unit ✓, no rental needed. Configure SIM cards (AT&T + T-Mobile + Verizon). Target: 10+ Mbps stable upload. Stream at 6 Mbps for 1080p30.' },
         { id: 'e1d2', text: 'vMix Pro loaded and licensed on production laptop' },
         { id: 'e1d3', text: 'Scene layout configured: main commentary cam, PIP with field cam, lower thirds, bumper' },
-        { id: 'e1d4', text: 'Stream keys entered: BlackMarker.TV RTMP + YouTube Live + Facebook Live' },
+        { id: 'e1d4', text: 'Stream keys set ✓ — BlackMarker.TV RTMP only. No YouTube or Facebook simulcast.' },
         { id: 'e1d5', text: 'vMix local recording enabled (always record locally as safety net)' },
         { id: 'e1d6', text: 'Backup: OBS on backup laptop as failsafe encoder' },
         { id: 'e1d7', text: 'Primary camera on tripod — frame: hosts at table, crowd/street visible behind. HDMI to capture card → laptop.' },
         { id: 'e1d8', text: 'Field camera (ZV-1 or GoPro on gimbal) charged and tested — for Host 2 roaming coverage' },
         { id: 'e1d9', text: 'Camera angles tested, white balance set, exposure locked' },
-        { id: 'e1d10', text: 'Private test stream (all 3 destinations active) run before day-of' },
-        { id: 'e1d11', text: 'Stream title configured on all platforms: "BlackMarker.TV LIVE | 116th Street Festival | feat. Joselito DaPuppet"' },
+        { id: 'e1d10', text: 'Private test stream to BlackMarker.TV run before day-of — verify bonding device upload, vMix encode, and RTMP connection are stable' },
+        { id: 'e1d11', text: 'Stream title set on BlackMarker.TV: "BlackMarker.TV LIVE | 116th Street Festival | feat. Joselito DaPuppet"' },
       ]
     },
     {
@@ -490,7 +776,7 @@ const TASKS = {
     {
       id: 'grp-e1h', label: 'Day-Of Execution',
       tasks: [
-        { id: 'e1h1', text: 'Arrive with cargo van at load-in time — all equipment unloaded' },
+        { id: 'e1h1', text: 'Arrive with Tahoe at load-in time — all equipment unloaded' },
         { id: 'e1h2', text: 'T–3 hrs: tent up, sandbags set, furniture placed' },
         { id: 'e1h3', text: 'T–2 hrs: generator running, all equipment powered on' },
         { id: 'e1h4', text: 'T–1.5 hrs: cameras positioned, audio tested, stream rig fully connected' },
@@ -498,7 +784,7 @@ const TASKS = {
         { id: 'e1h6', text: 'T–30 min: stream goes live (public, pre-show music + countdown)' },
         { id: 'e1h7', text: 'During event: monitor stream health, audio levels, generator fuel every 2 hrs' },
         { id: 'e1h8', text: 'Proper on-camera sign-off — stop stream, stop recording, begin breakdown' },
-        { id: 'e1h9', text: 'Post-event: load out all equipment into van, inventory all items before leaving' },
+        { id: 'e1h9', text: 'Post-event: load out all equipment into Tahoe, inventory all items before leaving' },
       ]
     },
   ],
@@ -511,8 +797,8 @@ const TASKS = {
         { id: 'e2a2', text: 'Registered for first NPRDP orientation', preComplete: true },
         { id: 'e2a3', text: 'Custom Float package paid — $6,500', preComplete: true },
         { id: 'e2a4', text: 'Attend NPRDP orientation — note all float spec requirements, deadlines, and wristband process' },
-        { id: 'e2a5', text: 'Obtain $1M+ GL insurance certificate — name NPRDP as additional insured. See Overall checklist for provider options and pricing.' },
-        { id: 'e2a6', text: 'Submit insurance certificate to NPRDP per their deadline' },
+        { id: 'e2a5', text: 'Insurance confirmed NOT required by NPRDP — confirmed directly with parade rep. No action needed. ✓' },
+        { id: 'e2a6', text: 'Insurance certificate submission — NOT APPLICABLE ✓. Confirmed with NPRDP rep: not required for this registration.' },
         { id: 'e2a7', text: 'Confirm float participant number and staging assignment from NPRDP' },
         { id: 'e2a8', text: 'Receive wristbands and permits for all 50 walking contingent members — required; no one marches without wristbands' },
       ]
@@ -520,10 +806,10 @@ const TASKS = {
     {
       id: 'grp-e2b', label: 'Float Build & Design',
       tasks: [
-        { id: 'e2b1', text: 'Finalize visual design concept for float — "Celebrating Puerto Rican Pioneers" theme. Include: PR flag colors (red/white/blue), star symbol, BlackMarker.TV branding, Joselito + Charlie Chase positioning.' },
-        { id: 'e2b2', text: 'Confirm float dimensions from NPRDP: max 8\' wide × 28\' long × 13\' tall (Custom package). Stay under 13 ft height clearance along route.' },
-        { id: 'e2b3', text: 'Float layout finalized — Joselito + Host 1 at front/crowd-facing, DJ Chase elevated booth mid/rear, tech station at rear, generator rear corner' },
-        { id: 'e2b4', text: 'All float branding elements ordered: BlackMarker.TV main banner, "Celebrating Puerto Rican Pioneers" banner, PR flag (weatherproof vinyl, secured to structure)' },
+        { id: 'e2b1', text: 'Float visual design — see Design Brief §6 for full scope. Timeline: design sprint ends May 28 → team Review #1 due May 30 → Review #2 June 1 → submit to Bond Floats June 3 → NPRDP design approval June 5. Do not order physical branding until design is approved.', briefLink: 'grp-db6' },
+        { id: 'e2b2', text: 'Float dimensions confirmed — platform: 20\' × 8\'. Back panel: 8\' × 11\'10". Upper deck: 8\' × 8\' elevated. Skirt: 21.5". Full vehicle: 8\' wide × 28\' long × 13\' max height — stay under 13 ft clearance along route.', briefLink: 'grp-db6' },
+        { id: 'e2b3', text: 'Float layout finalized — talent positioning, camera sight lines, DJ booth placement, tech station, generator corner. Confirm with Bond Floats that layout respects capacity limits (Rule 15e).' },
+        { id: 'e2b4', text: 'All float branding elements ordered: BlackMarker.TV main banner, "Celebrating Puerto Rican Pioneers" banner, PR flag (weatherproof vinyl, secured to structure). ORDER AFTER NPRDP design approval — no earlier than June 6.', briefLink: 'grp-db6' },
         { id: 'e2b5', text: 'DJ booth riser/platform on float confirmed (even 8-inch riser helps frame Chase on camera)' },
         { id: 'e2b6', text: 'PA speakers sourced and secured to float (minimum 2 × 15" powered speakers, facing outward L+R)' },
         { id: 'e2b7', text: 'LED accent lighting for float — battery or generator powered' },
@@ -545,12 +831,12 @@ const TASKS = {
     {
       id: 'grp-e2d', label: 'Live Stream Tech (Moving Vehicle)',
       tasks: [
-        { id: 'e2d1', text: 'Cellular bonding device — LiveU Solo+ or Teradek Bond with 3–4 SIM cards (AT&T + T-Mobile + Verizon). Mount securely on float, antennas pointing up and unobstructed. NYC Fifth Ave = heavy congestion on parade day; bonding is mandatory.' },
+        { id: 'e2d1', text: 'Cellular bonding device — in-house unit ✓, no rental needed. Mount securely on float, antennas pointing up and unobstructed. SIM cards active on AT&T + T-Mobile + Verizon. NYC Fifth Ave = heavy congestion on parade day; bonding is mandatory.' },
         { id: 'e2d2', text: 'Test connectivity while moving in a vehicle before parade day — simulate the moving environment' },
         { id: 'e2d3', text: 'Primary camera on vibration-dampening mount — rubber isolation between float structure and camera arm. Frame: Joselito + Host 1 with crowd/street behind.' },
         { id: 'e2d4', text: 'Field camera (GoPro Hero 12 or ZV-1 on gimbal) for walking contingent shots and crowd moments' },
         { id: 'e2d5', text: 'Production laptop secured on float tech station — laptop strap or lock, must not shift on bumps' },
-        { id: 'e2d6', text: 'vMix configured with all stream keys — BlackMarker.TV + YouTube + Facebook + local recording' },
+        { id: 'e2d6', text: 'vMix configured — BlackMarker.TV RTMP stream key set ✓ + local recording enabled. No YouTube or Facebook.' },
         { id: 'e2d7', text: 'Test stream from staging area 1 hour before parade begins' },
         { id: 'e2d8', text: 'Camera vibration mounts tested in moving vehicle before event day' },
       ]
@@ -570,8 +856,8 @@ const TASKS = {
       id: 'grp-e2f', label: 'Walking Contingent (50 People)',
       tasks: [
         { id: 'e2f1', text: 'Finalize list of exactly 50 walkers — all names registered with NPRDP application' },
-        { id: 'e2f2', text: 'Collect shirt sizes from all 50 participants' },
-        { id: 'e2f3', text: 'Order branded shirts × 55 (50 + 5 spares) — 3 weeks minimum lead time. Black shirt, BMB/BlackMarker.TV logo front, "Celebrating Puerto Rican Pioneers" back.' },
+        { id: 'e2f2', text: 'Collect shirt sizes from all 50 participants', briefLink: 'grp-db5' },
+        { id: 'e2f3', text: 'Order branded shirts × 55 (50 + 5 spares) — 3 weeks minimum lead time. Black shirt, BMB/BlackMarker.TV logo front, "Celebrating Puerto Rican Pioneers" back.', briefLink: 'grp-db5' },
         { id: 'e2f4', text: 'Confirm shirt distribution method: mail in advance OR distribute at staging area morning of parade' },
         { id: 'e2f5', text: 'Designate walking contingent Marshall/Captain (NPRDP requires a designated Marshall per contingent)' },
         { id: 'e2f6', text: 'Assign sub-captains for each row of 10 walkers' },
@@ -613,7 +899,7 @@ const TASKS = {
         { id: 'e2i4', text: '8–9 AM: Walking contingent arrives at staging. Marshall takes attendance. Shirts distributed if not pre-shipped.' },
         { id: 'e2i5', text: '9 AM: Sound check — DJ + PA + commentary mics + stream audio' },
         { id: 'e2i6', text: '9:30 AM: Private test stream from staging — confirm all destinations active and stable' },
-        { id: 'e2i7', text: '~10 AM: Float inspection by NPRDP officials — have insurance certificate and permit documents on hand' },
+        { id: 'e2i7', text: '~10 AM: Float inspection by NPRDP officials — have permit documents and contingent registration on hand' },
         { id: 'e2i8', text: 'Parade start (~11 AM TBC with NPRDP): stream goes live (public). "Celebrating Puerto Rican Pioneers" open.' },
         { id: 'e2i9', text: 'During route: stream tech monitors health + generator fuel; walking captain maintains formation' },
         { id: 'e2i10', text: 'End of route (79th St): proper on-camera sign-off. Stop recording. Float exits route.' },
@@ -631,6 +917,13 @@ const STORAGE_KEY = 'bmb_nyc_parade_2026';
 function loadState() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
   catch(e) { return {}; }
+}
+
+function formatPhone(val) {
+  const d = val.replace(/\D/g, '').slice(0, 10);
+  if (d.length <= 3) return d.length ? '(' + d : '';
+  if (d.length <= 6) return '(' + d.slice(0,3) + ') ' + d.slice(3);
+  return '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6);
 }
 
 function saveState(state) {
@@ -651,6 +944,7 @@ function setTaskState(id, key, value) {
   state.tasks[id][key] = value;
   saveState(state);
   updateAllProgress();
+  if (key === 'dueDate') liveResort(id);
 }
 
 // ══════════════════════════════════════════
@@ -661,16 +955,19 @@ function getTeam() { return state.team || []; }
 function addTeamMember() {
   const name = document.getElementById('tmName').value.trim();
   const role = document.getElementById('tmRole').value.trim();
+  const crew = document.getElementById('tmCrew').value;
   const phone = document.getElementById('tmPhone').value.trim();
   const email = document.getElementById('tmEmail').value.trim();
   if (!name) { alert('Please enter a name.'); return; }
   if (!state.team) state.team = [];
-  const member = { id: 'tm_' + Date.now(), name, role, phone, email };
+  const member = { id: 'tm_' + Date.now(), name, role, crew, phone, email };
   state.team.push(member);
   saveState(state);
   ['tmName','tmRole','tmPhone','tmEmail'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('tmCrew').value = '';
   renderTeam();
   updateAllAssigneeDropdowns();
+  if (document.getElementById('tab-contingent')?.classList.contains('active')) renderContingentTab();
 }
 
 function deleteTeamMember(id) {
@@ -682,9 +979,74 @@ function deleteTeamMember(id) {
       if (Array.isArray(t.assignees)) t.assignees = t.assignees.filter(aid => aid !== id);
     });
   }
+  // Clear contingent invitedBy references
+  if (state.contingent) {
+    state.contingent.forEach(c => { if (c.invitedBy === id) c.invitedBy = ''; });
+  }
   saveState(state);
   renderTeam();
   updateAllAssigneeDropdowns();
+  if (document.getElementById('tab-contingent')?.classList.contains('active')) renderContingentTab();
+}
+
+function renderTeamCardView(m) {
+  const crewLabel = m.crew === 'bmtv' ? 'BMTV Crew' : m.crew === 'joselito' ? 'Joselito Crew' : 'Unassigned';
+  const crewCls = m.crew || 'unassigned';
+  return `
+    <button class="tc-edit" onclick="editTeamMember('${m.id}')" title="Edit">✏</button>
+    <button class="tc-del" onclick="deleteTeamMember('${m.id}')" title="Remove">✕</button>
+    <div class="tc-name">${esc(m.name)}</div>
+    <div class="tc-role">${esc(m.role || '—')}</div>
+    <div class="tc-contact">
+      ${m.phone ? '&#128222; ' + esc(m.phone) + '<br>' : ''}
+      ${m.email ? '&#9993; ' + esc(m.email) : ''}
+    </div>
+    <div><span class="crew-badge ${crewCls}">${crewLabel}</span></div>`;
+}
+
+function editTeamMember(id) {
+  const m = (state.team || []).find(t => t.id === id);
+  if (!m) return;
+  const card = document.getElementById('tc-' + id);
+  if (!card) return;
+  card.innerHTML = `
+    <div class="tc-edit-form">
+      <input class="field-input tc-edit-name" placeholder="Name" value="${esc(m.name)}">
+      <input class="field-input tc-edit-role" placeholder="Role" value="${esc(m.role || '')}">
+      <select class="field-input tc-edit-crew">
+        <option value="" ${!m.crew ? 'selected' : ''}>— Unassigned —</option>
+        <option value="bmtv" ${m.crew === 'bmtv' ? 'selected' : ''}>BMTV Crew</option>
+        <option value="joselito" ${m.crew === 'joselito' ? 'selected' : ''}>Joselito Crew</option>
+      </select>
+      <input class="field-input tc-edit-phone" placeholder="Phone" value="${esc(m.phone || '')}" oninput="this.value=formatPhone(this.value)">
+      <input class="field-input tc-edit-email" placeholder="Email" value="${esc(m.email || '')}">
+      <div class="tc-edit-actions">
+        <button class="tc-save" onclick="saveTeamMember('${id}')">Save</button>
+        <button class="tc-cancel" onclick="cancelEditTeamMember('${id}')">Cancel</button>
+      </div>
+    </div>`;
+}
+
+function saveTeamMember(id) {
+  const card = document.getElementById('tc-' + id);
+  const m = (state.team || []).find(t => t.id === id);
+  if (!m || !card) return;
+  m.name  = card.querySelector('.tc-edit-name').value.trim()  || m.name;
+  m.role  = card.querySelector('.tc-edit-role').value.trim();
+  m.crew  = card.querySelector('.tc-edit-crew').value;
+  m.phone = card.querySelector('.tc-edit-phone').value.trim();
+  m.email = card.querySelector('.tc-edit-email').value.trim();
+  saveState(state);
+  card.innerHTML = renderTeamCardView(m);
+  updateAllAssigneeDropdowns();
+  if (document.getElementById('tab-contingent')?.classList.contains('active')) renderContingentTab();
+}
+
+function cancelEditTeamMember(id) {
+  const m = (state.team || []).find(t => t.id === id);
+  const card = document.getElementById('tc-' + id);
+  if (!m || !card) return;
+  card.innerHTML = renderTeamCardView(m);
 }
 
 function renderTeam() {
@@ -698,14 +1060,8 @@ function renderTeam() {
   team.forEach(m => {
     const card = document.createElement('div');
     card.className = 'team-card';
-    card.innerHTML = `
-      <button class="tc-del" onclick="deleteTeamMember('${m.id}')" title="Remove">✕</button>
-      <div class="tc-name">${esc(m.name)}</div>
-      <div class="tc-role">${esc(m.role || '—')}</div>
-      <div class="tc-contact">
-        ${m.phone ? '📞 ' + esc(m.phone) + '<br>' : ''}
-        ${m.email ? '✉ ' + esc(m.email) : ''}
-      </div>`;
+    card.id = 'tc-' + m.id;
+    card.innerHTML = renderTeamCardView(m);
     grid.appendChild(card);
   });
 }
@@ -802,7 +1158,14 @@ function renderAllChecklists() {
     // Clear existing groups
     container.querySelectorAll('.group').forEach(g => g.remove());
 
-    const groups = TASKS[section];
+    const groups = [...TASKS[section]].sort((a, b) => {
+      const da = getNextDueDate(a.id);
+      const db = getNextDueDate(b.id);
+      if (!da && !db) return 0;
+      if (!da) return 1;
+      if (!db) return -1;
+      return da - db;
+    });
     groups.forEach(grp => {
       const div = document.createElement('div');
       div.className = 'group';
@@ -816,17 +1179,33 @@ function renderAllChecklists() {
           <div class="group-title">
             ${esc(grp.label)}
             <span class="group-badge" id="badge-${grp.id}">0 / ${total}</span>
+            <span class="next-due" id="next-date-${grp.id}"></span>
           </div>
           <span id="toggle-${grp.id}" style="color:var(--muted);font-size:12px;">▼</span>
         </div>
-        <div class="group-body open" id="body-${grp.id}"></div>`;
+        <div class="group-body" id="body-${grp.id}"></div>`;
 
       const body = div.querySelector('.group-body');
 
-      grp.tasks.forEach(task => {
+      const sortedTasks = [...grp.tasks].sort((a, b) => {
+        const aTs = getTaskState(a.id), bTs = getTaskState(b.id);
+        const aDone = aTs.completed || (a.preComplete && aTs.completed !== false);
+        const bDone = bTs.completed || (b.preComplete && bTs.completed !== false);
+        if (aDone && !bDone) return 1;
+        if (!aDone && bDone) return -1;
+        const da = aTs.dueDate || '', db = bTs.dueDate || '';
+        if (!da && !db) return 0;
+        if (!da) return 1;
+        if (!db) return -1;
+        return da.localeCompare(db);
+      });
+
+      sortedTasks.forEach(task => {
         const ts = getTaskState(task.id);
+        if (ts.deleted) return;
         const isComplete = ts.completed || (task.preComplete && ts.completed !== false);
         const hasNotes = ts.notes && ts.notes.trim().length > 0;
+        const displayText = ts.customText || task.text;
 
         const row = document.createElement('div');
         row.className = 'task-item' + (isComplete ? ' completed' : '');
@@ -836,8 +1215,14 @@ function renderAllChecklists() {
           <div class="task-row">
             <input type="checkbox" class="task-cb" id="cb-${task.id}" ${isComplete ? 'checked' : ''}
               onchange="toggleTask('${task.id}', this.checked)">
-            <div class="task-text" onclick="document.getElementById('cb-${task.id}').click()">${esc(task.text)}</div>
+            <div class="task-text" id="tt-${task.id}" onclick="document.getElementById('cb-${task.id}').click()">${esc(displayText)}</div>
+            ${task.briefLink ? `<button class="brief-chip" onclick="goToBrief('${task.briefLink}')">📋 Brief</button>` : ''}
+            ${LINKED_TASKS[task.id] ? `<span class="linked-chip" title="Synced with a task on another tab">🔗 Synced</span>` : ''}
             <div class="task-meta">
+              <div class="tact" id="tact-${task.id}">
+                <button class="task-edit-btn" onclick="editTask('${task.id}')" title="Edit">✏</button>
+                <button class="task-del-btn" onclick="deleteTask('${task.id}')" title="Delete">✕</button>
+              </div>
               <div class="multi-select" id="ms-${task.id}" data-task-id="${task.id}">
                 <button type="button" class="ms-trigger" id="mst-${task.id}" onclick="toggleMSDropdown('${task.id}',event)">— Unassigned —</button>
                 <div class="ms-dropdown" id="msd-${task.id}"></div>
@@ -863,25 +1248,241 @@ function renderAllChecklists() {
       container.appendChild(div);
       updateGroupBadge(grp.id);
       // Update trigger labels AFTER the group is in the DOM
-      grp.tasks.forEach(t => updateMSTrigger(t.id));
+      sortedTasks.forEach(t => updateMSTrigger(t.id));
     });
   });
 }
 
-function toggleTask(id, checked) {
-  setTaskState(id, 'completed', checked);
-  const item = document.getElementById('task-' + id);
+function renderDesignBrief() {
+  const container = document.getElementById('tab-design');
+  const printHeader = container.querySelector('.print-header');
+  container.querySelectorAll('.group').forEach(g => g.remove());
+
+  const sortedBrief = [...DESIGN_BRIEF].sort((a, b) => {
+    const da = getNextDueDate(a.id);
+    const db = getNextDueDate(b.id);
+    if (!da && !db) return 0;
+    if (!da) return 1;
+    if (!db) return -1;
+    return da - db;
+  });
+  sortedBrief.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'group';
+    div.id = item.id;
+    const total = item.tasks.length;
+
+    let specHtml = item.spec ? `<div class="brief-spec">${esc(item.spec)}</div>` : '';
+    let noteHtml = item.note ? `<div class="brief-note">⚠ ${esc(item.note)}</div>` : '';
+
+    let contentHtml = '';
+    if (item.front) {
+      contentHtml += `<div class="brief-content-label">Front</div><ul class="brief-content-list">${item.front.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>`;
+    }
+    if (item.back) {
+      contentHtml += `<div class="brief-content-label">Back</div><ul class="brief-content-list">${item.back.map(f=>`<li>${esc(f)}</li>`).join('')}</ul>`;
+    }
+    if (item.sections) {
+      item.sections.forEach(s => {
+        contentHtml += `<div class="brief-content-label">${esc(s.label)}</div><ul class="brief-content-list">${s.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul>`;
+      });
+    }
+
+    div.innerHTML = `
+      <div class="group-header" onclick="toggleGroup('${item.id}')">
+        <div class="group-title">${esc(item.label)}<span class="group-badge" id="badge-${item.id}">0 / ${total}</span><span class="next-due" id="next-date-${item.id}"></span></div>
+        <span id="toggle-${item.id}" style="color:var(--muted);font-size:12px;">▼</span>
+      </div>
+      <div class="group-body" id="body-${item.id}">
+        <div style="padding:14px 18px 0;">${specHtml}${noteHtml}${contentHtml}${item.tasks.length ? '<div class="brief-content-label">Action Items</div>' : ''}</div>
+      </div>`;
+
+    const body = div.querySelector('.group-body');
+    const sortedItems = [...item.tasks].sort((a, b) => {
+      const aTs = getTaskState(a.id), bTs = getTaskState(b.id);
+      const aDone = aTs.completed || false, bDone = bTs.completed || false;
+      if (aDone && !bDone) return 1;
+      if (!aDone && bDone) return -1;
+      const da = aTs.dueDate || '', db = bTs.dueDate || '';
+      if (!da && !db) return 0;
+      if (!da) return 1;
+      if (!db) return -1;
+      return da.localeCompare(db);
+    });
+    sortedItems.forEach(task => {
+      const ts = getTaskState(task.id);
+      if (ts.deleted) return;
+      const isComplete = ts.completed || false;
+      const hasNotes = ts.notes && ts.notes.trim().length > 0;
+      const displayText = ts.customText || task.text;
+      const row = document.createElement('div');
+      row.className = 'task-item' + (isComplete ? ' completed' : '');
+      row.id = 'task-' + task.id;
+      row.innerHTML = `
+        <div class="task-row">
+          <input type="checkbox" class="task-cb" id="cb-${task.id}" ${isComplete ? 'checked' : ''}
+            onchange="toggleDesignTask('${item.id}','${task.id}',this.checked)">
+          <div class="task-text" id="tt-${task.id}" onclick="document.getElementById('cb-${task.id}').click()">${esc(displayText)}</div>
+          <div class="task-meta">
+            ${LINKED_TASKS[task.id] ? `<span class="linked-chip" title="Synced with a task on another tab">🔗 Synced</span>` : ''}
+            <div class="tact" id="tact-${task.id}">
+              <button class="task-edit-btn" onclick="editTask('${task.id}')" title="Edit">✏</button>
+              <button class="task-del-btn" onclick="deleteTask('${task.id}')" title="Delete">✕</button>
+            </div>
+            <button class="task-notes-btn ${hasNotes ? 'has-notes' : ''}" id="notesbtn-${task.id}"
+              onclick="toggleNotes('${task.id}')">📝 Notes</button>
+          </div>
+        </div>
+        <div class="task-notes-area" id="notes-${task.id}">
+          <textarea class="task-notes-input" placeholder="Add notes…"
+            onchange="setTaskState('${task.id}','notes',this.value)"
+            oninput="onNotesInput('${task.id}',this)">${esc(ts.notes || '')}</textarea>
+        </div>`;
+      body.appendChild(row);
+    });
+
+    container.appendChild(div);
+    updateDesignBadge(item.id);
+  });
+}
+
+function toggleDesignTask(groupId, taskId, checked) {
+  setTaskState(taskId, 'completed', checked);
+  const item = document.getElementById('task-' + taskId);
   if (checked) item.classList.add('completed');
   else item.classList.remove('completed');
-  // Find which group this task belongs to and update badge
+  updateDesignBadge(groupId);
+  updateAllProgress();
+  syncLinkedTasks(taskId, checked);
+}
+
+function updateDesignBadge(groupId) {
+  const item = DESIGN_BRIEF.find(i => i.id === groupId);
+  if (!item) return;
+  const done = item.tasks.filter(t => {
+    const ts = getTaskState(t.id);
+    return ts.completed || false;
+  }).length;
+  const badge = document.getElementById('badge-' + groupId);
+  if (badge) badge.textContent = done + ' / ' + item.tasks.length;
+}
+
+function goToBrief(sectionId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelector('[data-tab="design"]').classList.add('active');
+  document.getElementById('tab-design').classList.add('active');
+  setTimeout(() => {
+    const el = document.getElementById(sectionId);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+}
+
+// ══════════════════════════════════════════
+// TASK EDIT / DELETE
+// ══════════════════════════════════════════
+function findTaskText(taskId) {
   for (const section of Object.values(TASKS)) {
     for (const grp of section) {
-      if (grp.tasks.find(t => t.id === id)) {
-        updateGroupBadge(grp.id);
+      const t = grp.tasks.find(t => t.id === taskId);
+      if (t) return t.text;
+    }
+  }
+  for (const item of DESIGN_BRIEF) {
+    const t = item.tasks.find(t => t.id === taskId);
+    if (t) return t.text;
+  }
+  return '';
+}
+
+function findAndUpdateBadge(taskId) {
+  for (const section of Object.values(TASKS)) {
+    for (const grp of section) {
+      if (grp.tasks.find(t => t.id === taskId)) { updateGroupBadge(grp.id); return; }
+    }
+  }
+  for (const item of DESIGN_BRIEF) {
+    if (item.tasks.find(t => t.id === taskId)) { updateDesignBadge(item.id); return; }
+  }
+}
+
+function editTask(taskId) {
+  const ts = getTaskState(taskId);
+  const displayText = ts.customText || findTaskText(taskId);
+  const textEl = document.getElementById('tt-' + taskId);
+  const tactEl = document.getElementById('tact-' + taskId);
+  if (!textEl || !tactEl) return;
+  textEl.onclick = null;
+  textEl.innerHTML = `<input class="task-edit-input" id="ei-${taskId}" value="${esc(displayText)}">`;
+  tactEl.innerHTML = `
+    <button class="task-save-btn" onclick="saveTaskEdit('${taskId}')">Save</button>
+    <button class="task-cancel-btn" onclick="cancelTaskEdit('${taskId}')">Cancel</button>`;
+  document.getElementById('ei-' + taskId).focus();
+}
+
+function saveTaskEdit(taskId) {
+  const input = document.getElementById('ei-' + taskId);
+  const newText = input ? input.value.trim() : '';
+  if (newText) setTaskState(taskId, 'customText', newText);
+  restoreTaskView(taskId);
+}
+
+function cancelTaskEdit(taskId) {
+  restoreTaskView(taskId);
+}
+
+function restoreTaskView(taskId) {
+  const ts = getTaskState(taskId);
+  const displayText = ts.customText || findTaskText(taskId);
+  const textEl = document.getElementById('tt-' + taskId);
+  const tactEl = document.getElementById('tact-' + taskId);
+  if (!textEl || !tactEl) return;
+  textEl.innerHTML = esc(displayText);
+  textEl.onclick = () => document.getElementById('cb-' + taskId)?.click();
+  tactEl.innerHTML = `
+    <button class="task-edit-btn" onclick="editTask('${taskId}')" title="Edit">✏</button>
+    <button class="task-del-btn" onclick="deleteTask('${taskId}')" title="Delete">✕</button>`;
+}
+
+function deleteTask(taskId) {
+  if (!confirm('Remove this item from the list? This can\'t be undone.')) return;
+  setTaskState(taskId, 'deleted', true);
+  const row = document.getElementById('task-' + taskId);
+  if (row) row.style.display = 'none';
+  findAndUpdateBadge(taskId);
+  updateAllProgress();
+}
+
+function syncLinkedTasks(id, checked) {
+  const linked = LINKED_TASKS[id] || [];
+  linked.forEach(lid => {
+    setTaskState(lid, 'completed', checked);
+    const cb = document.getElementById('cb-' + lid);
+    const row = document.getElementById('task-' + lid);
+    if (cb) cb.checked = checked;
+    if (row) {
+      if (checked) row.classList.add('completed');
+      else row.classList.remove('completed');
+    }
+    findAndUpdateBadge(lid);
+    // Also update design badge if it's a design task
+    for (const item of DESIGN_BRIEF) {
+      if (item.tasks.find(t => t.id === lid)) {
+        updateDesignBadge(item.id);
         break;
       }
     }
-  }
+  });
+  updateAllProgress();
+}
+
+function toggleTask(id, checked) {
+  setTaskState(id, 'completed', checked);
+  // Immediate visual feedback before resort
+  const item = document.getElementById('task-' + id);
+  if (item) { if (checked) item.classList.add('completed'); else item.classList.remove('completed'); }
+  syncLinkedTasks(id, checked);
+  liveResort(id);
 }
 
 function toggleNotes(id) {
@@ -903,16 +1504,105 @@ function toggleGroup(id) {
   tog.textContent = body.classList.contains('open') ? '▼' : '▶';
 }
 
+// ── Live re-sort on task toggle / date change ──
+function captureOpenGroups() {
+  const open = new Set();
+  document.querySelectorAll('.group-body.open').forEach(b => open.add(b.id));
+  return open;
+}
+function restoreOpenGroups(open) {
+  open.forEach(bodyId => {
+    const body = document.getElementById(bodyId);
+    if (!body) return;
+    body.classList.add('open');
+    const grpId = bodyId.slice(5); // strip 'body-'
+    const tog = document.getElementById('toggle-' + grpId);
+    if (tog) tog.textContent = '▼';
+  });
+}
+function liveResort(id) {
+  const idsToCheck = new Set([id]);
+  (LINKED_TASKS[id] || []).forEach(lid => idsToCheck.add(lid));
+  let needsChecklist = false, needsDesign = false;
+  idsToCheck.forEach(tid => {
+    for (const groups of Object.values(TASKS)) {
+      for (const grp of groups) {
+        if (grp.tasks.find(t => t.id === tid)) { needsChecklist = true; }
+      }
+    }
+    for (const item of DESIGN_BRIEF) {
+      if (item.tasks.find(t => t.id === tid)) { needsDesign = true; }
+    }
+  });
+  const open = captureOpenGroups();
+  if (needsChecklist) renderAllChecklists();
+  if (needsDesign) renderDesignBrief();
+  restoreOpenGroups(open);
+  updateAllProgress();
+}
+
+function getNextDueDate(grpId) {
+  const today = new Date(); today.setHours(0,0,0,0);
+  let nearest = null;
+  const checkTasks = (tasks, isDesign) => {
+    tasks.forEach(t => {
+      const ts = getTaskState(t.id);
+      if (ts.deleted) return;
+      const done = isDesign ? ts.completed : (ts.completed || (t.preComplete && ts.completed !== false));
+      if (done) return;
+      const d = ts.dueDate;
+      if (!d) return;
+      const dt = new Date(d + 'T00:00:00');
+      if (!nearest || dt < nearest) nearest = dt;
+    });
+  };
+  for (const section of Object.values(TASKS)) {
+    for (const grp of section) {
+      if (grp.id === grpId) { checkTasks(grp.tasks, false); return nearest; }
+    }
+  }
+  for (const item of DESIGN_BRIEF) {
+    if (item.id === grpId) { checkTasks(item.tasks, true); return nearest; }
+  }
+  return nearest;
+}
+
+function updateNextDate(grpId) {
+  const el = document.getElementById('next-date-' + grpId);
+  if (!el) return;
+  const dt = getNextDueDate(grpId);
+  if (!dt) { el.textContent = ''; el.className = 'next-due'; return; }
+  const today = new Date(); today.setHours(0,0,0,0);
+  const diff = Math.round((dt - today) / 86400000);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const label = months[dt.getMonth()] + ' ' + dt.getDate();
+  let text;
+  if (diff < 0) text = label + ' — OVERDUE';
+  else if (diff === 0) text = 'Due Today';
+  else if (diff === 1) text = 'Due Tomorrow';
+  else text = 'Next: ' + label;
+  el.textContent = text;
+  el.className = 'next-due' + (diff < 0 ? ' overdue' : '');
+}
+
+function updateAllNextDates() {
+  const allIds = [];
+  Object.values(TASKS).forEach(s => s.forEach(g => allIds.push(g.id)));
+  DESIGN_BRIEF.forEach(i => allIds.push(i.id));
+  allIds.forEach(updateNextDate);
+}
+
 function updateGroupBadge(grpId) {
   for (const section of Object.values(TASKS)) {
     for (const grp of section) {
       if (grp.id === grpId) {
-        const done = grp.tasks.filter(t => {
+        const visible = grp.tasks.filter(t => !getTaskState(t.id).deleted);
+        const done = visible.filter(t => {
           const ts = getTaskState(t.id);
           return ts.completed || (t.preComplete && ts.completed !== false);
         }).length;
         const badge = document.getElementById('badge-' + grpId);
-        if (badge) badge.textContent = done + ' / ' + grp.tasks.length;
+        if (badge) badge.textContent = done + ' / ' + visible.length;
         return;
       }
     }
@@ -927,12 +1617,472 @@ function calcProgress(section) {
   let total = 0, done = 0;
   groups.forEach(grp => {
     grp.tasks.forEach(t => {
-      total++;
       const ts = getTaskState(t.id);
+      if (ts.deleted) return;
+      total++;
       if (ts.completed || (t.preComplete && ts.completed !== false)) done++;
     });
   });
   return total === 0 ? 0 : Math.round((done / total) * 100);
+}
+
+// ══════════════════════════════════════════
+// WALKING CONTINGENT
+// ══════════════════════════════════════════
+function getContingent() { return state.contingent || []; }
+
+function contingentTotal() { return getTeam().length + getContingent().length; }
+
+function renderContingentTab() {
+  renderCapacityBlock();
+  renderContingentTable();
+  renderCaptainCounts();
+  const notice = document.getElementById('cont-full-notice');
+  if (notice) notice.classList.toggle('show', crewCount('bmtv') >= 25 && crewCount('joselito') >= 25);
+}
+
+function crewCount(crew) {
+  const team = getTeam();
+  const guests = getContingent();
+  const coreCount = team
+    .filter(m => m.crew === crew)
+    .reduce((sum, m) => sum + 1 + (parseInt(m.plusCount) || 0), 0);
+  const guestCount = guests
+    .filter(g => { const inv = team.find(m => m.id === g.invitedBy); return inv && inv.crew === crew; })
+    .reduce((sum, g) => sum + 1 + (parseInt(g.plusCount) || 0), 0);
+  return coreCount + guestCount;
+}
+
+function adjustCorePlusCount(id, delta) {
+  const team = state.team || [];
+  const m = team.find(t => t.id === id);
+  if (!m) return;
+  const current = parseInt(m.plusCount) || 0;
+  const newVal  = Math.max(0, current + delta);
+  if (delta > 0 && m.crew) {
+    if (crewCount(m.crew) - current + newVal > 25) {
+      alert((m.crew === 'bmtv' ? 'BMTV Crew' : 'Joselito Crew') + ' is full (25/25).'); return;
+    }
+  }
+  m.plusCount = newVal;
+  saveState(state);
+  renderContingentTab();
+}
+
+function renderCapacityBlock() {
+  const el = document.getElementById('capacity-block');
+  if (!el) return;
+  const bmtv = crewCount('bmtv');
+  const jose = crewCount('joselito');
+  const total = bmtv + jose;
+  el.innerHTML = `
+    <div class="capacity-numbers">
+      <span class="capacity-filled">${total}</span>
+      <span class="capacity-of">&nbsp;/ 50 total spots filled</span>
+      <span style="font-size:12px;color:var(--muted);margin-left:12px;">
+        BMTV: ${bmtv}/25 &nbsp;·&nbsp; Joselito: ${jose}/25
+      </span>
+    </div>
+    <div class="capacity-bar-track">
+      <div class="capacity-bar-fill ${total >= 50 ? 'full' : total >= 40 ? 'warn' : ''}" style="width:${Math.min(100,Math.round(total/50*100))}%"></div>
+    </div>`;
+}
+
+function renderContingentTable() {
+  const container = document.getElementById('crew-sections');
+  if (!container) return;
+  container.innerHTML = '';
+  const team = getTeam();
+  const guests = getContingent();
+
+  ['bmtv','joselito'].forEach(crew => {
+    const label = crew === 'bmtv' ? 'BMTV Crew' : 'Joselito Crew';
+    const coreMembers = team.filter(m => m.crew === crew);
+    const crewGuests = guests.filter(g => {
+      const inv = team.find(m => m.id === g.invitedBy);
+      return inv && inv.crew === crew;
+    });
+    const total = coreMembers.length + crewGuests.length;
+    const remaining = 25 - total;
+    const pct = Math.min(100, Math.round((total / 25) * 100));
+    const cls = remaining <= 0 ? 'full' : remaining <= 5 ? 'warn' : '';
+    const spotsText = remaining <= 0 ? 'FULL — 25/25' : `${remaining} spot${remaining !== 1 ? 's' : ''} remaining`;
+
+    let rowNum = 1;
+    let rowsHtml = '';
+    coreMembers.forEach(m => {
+      const mPlus = parseInt(m.plusCount) || 0;
+      rowsHtml += `<tr id="core-row-${m.id}">
+        <td class="cont-num">${rowNum++}</td>
+        <td><strong>${esc(m.name)}</strong></td>
+        <td>${esc(m.role || '—')}</td>
+        <td>${esc(m.phone || '—')}</td>
+        <td>${esc(m.email || '—')}</td>
+        <td><span class="cont-team-badge">Core</span></td>
+        <td><div class="plus-stepper">
+          <button class="plus-btn" onclick="adjustCorePlusCount('${m.id}',-1)">−</button>
+          <span class="plus-count ${mPlus > 0 ? 'has-plus' : ''}">${mPlus}</span>
+          <button class="plus-btn" onclick="adjustCorePlusCount('${m.id}',1)">+</button>
+        </div></td>
+        <td>
+          <button class="cont-edit-btn" onclick="editCoreMember('${m.id}')" title="Edit">&#9998;</button>
+        </td></tr>`;
+    });
+    crewGuests.forEach(g => {
+      const inv = team.find(m => m.id === g.invitedBy);
+      const plus = parseInt(g.plusCount) || 0;
+      rowsHtml += `<tr id="cont-row-${g.id}">
+        <td class="cont-num">${rowNum++}</td>
+        <td>${esc(g.name || '—')}</td>
+        <td>${esc(g.role || '—')}</td>
+        <td>${esc(g.phone || '—')}</td>
+        <td>${esc(g.email || '—')}</td>
+        <td>${inv ? esc(inv.name) : '<span style="color:var(--muted)">—</span>'}</td>
+        <td><div class="plus-stepper">
+          <button class="plus-btn" onclick="adjustPlusCount('${g.id}',-1)">−</button>
+          <span class="plus-count ${plus > 0 ? 'has-plus' : ''}">${plus}</span>
+          <button class="plus-btn" onclick="adjustPlusCount('${g.id}',1)">+</button>
+        </div></td>
+        <td>
+          <button class="cont-edit-btn" onclick="editContingentGuest('${g.id}')" title="Edit">&#9998;</button>
+          <button class="cont-del-btn" onclick="deleteContingentGuest('${g.id}')" title="Remove">&#10005;</button>
+        </td></tr>`;
+    });
+
+    let addRowHtml = '';
+    if (remaining > 0 && coreMembers.length > 0) {
+      const opts = coreMembers.map(m => `<option value="${m.id}">${esc(m.name)}</option>`).join('');
+      addRowHtml = `<tr class="cont-add-row">
+        <td class="cont-num" style="color:var(--muted);">+</td>
+        <td><input class="cont-add-input" id="contName-${crew}" placeholder="Full name" /></td>
+        <td><input class="cont-add-input" id="contRole-${crew}" placeholder="Role / title" /></td>
+        <td><input class="cont-add-input" id="contPhone-${crew}" placeholder="Phone" oninput="this.value=formatPhone(this.value)" /></td>
+        <td><input class="cont-add-input" id="contEmail-${crew}" placeholder="Email" /></td>
+        <td><select class="cont-add-select" id="contInvitedBy-${crew}">
+          <option value="">— Invited by —</option>${opts}
+        </select></td>
+        <td><input type="number" class="cont-add-input" id="contPlus-${crew}" placeholder="+0" min="0" max="24" style="width:52px;text-align:center;" /></td>
+        <td><button class="cont-save-btn" onclick="addContingentGuest('${crew}')">Add</button></td>
+      </tr>`;
+    }
+
+    const section = document.createElement('div');
+    section.className = 'crew-section';
+    section.innerHTML = `
+      <div class="crew-section-header">
+        <div class="crew-section-title">
+          <span class="crew-badge ${crew}">${label}</span>
+          <span style="font-size:13px;font-weight:800;">${total} / 25</span>
+          <span class="crew-spots ${cls}">${spotsText}</span>
+        </div>
+        <div class="crew-cap-bar-track">
+          <div class="crew-cap-bar-fill ${crew} ${cls}" style="width:${pct}%"></div>
+        </div>
+      </div>
+      <div class="cont-table-wrap">
+        <table class="cont-table">
+          <thead><tr>
+            <th class="cont-num">#</th><th>Name</th><th>Role / Title</th>
+            <th>Phone</th><th>Email</th><th>Invited By</th>
+            <th style="width:70px;text-align:center;">+Guests</th>
+            <th style="width:70px;"></th>
+          </tr></thead>
+          <tbody>${rowsHtml}${addRowHtml}</tbody>
+        </table>
+      </div>`;
+    container.appendChild(section);
+  });
+
+  // Unassigned section (only if any exist)
+  const unassignedCore = team.filter(m => !m.crew);
+  const unassignedGuests = guests.filter(g => {
+    const inv = team.find(m => m.id === g.invitedBy);
+    return !inv || !inv.crew;
+  });
+  if (unassignedCore.length > 0 || unassignedGuests.length > 0) {
+    let rowNum = 1, rowsHtml = '';
+    unassignedCore.forEach(m => {
+      const mPlus = parseInt(m.plusCount) || 0;
+      rowsHtml += `<tr id="core-row-${m.id}"><td class="cont-num">${rowNum++}</td><td><strong>${esc(m.name)}</strong></td>
+        <td>${esc(m.role || '—')}</td><td>${esc(m.phone || '—')}</td><td>${esc(m.email || '—')}</td>
+        <td><span class="cont-team-badge">Core</span></td>
+        <td><div class="plus-stepper">
+          <button class="plus-btn" onclick="adjustCorePlusCount('${m.id}',-1)">−</button>
+          <span class="plus-count ${mPlus > 0 ? 'has-plus' : ''}">${mPlus}</span>
+          <button class="plus-btn" onclick="adjustCorePlusCount('${m.id}',1)">+</button>
+        </div></td>
+        <td>
+          <button class="cont-edit-btn" onclick="editCoreMember('${m.id}')" title="Edit">&#9998;</button>
+        </td></tr>`;
+    });
+    unassignedGuests.forEach(g => {
+      const inv = team.find(m => m.id === g.invitedBy);
+      const plus = parseInt(g.plusCount) || 0;
+      rowsHtml += `<tr id="cont-row-${g.id}"><td class="cont-num">${rowNum++}</td>
+        <td>${esc(g.name || '—')}</td><td>${esc(g.role || '—')}</td>
+        <td>${esc(g.phone || '—')}</td><td>${esc(g.email || '—')}</td>
+        <td>${inv ? esc(inv.name) : '<span style="color:var(--muted)">—</span>'}</td>
+        <td><div class="plus-stepper">
+          <button class="plus-btn" onclick="adjustPlusCount('${g.id}',-1)">−</button>
+          <span class="plus-count ${plus > 0 ? 'has-plus' : ''}">${plus}</span>
+          <button class="plus-btn" onclick="adjustPlusCount('${g.id}',1)">+</button>
+        </div></td>
+        <td>
+          <button class="cont-edit-btn" onclick="editContingentGuest('${g.id}')" title="Edit">&#9998;</button>
+          <button class="cont-del-btn" onclick="deleteContingentGuest('${g.id}')" title="Remove">&#10005;</button>
+        </td></tr>`;
+    });
+    const section = document.createElement('div');
+    section.className = 'crew-section';
+    section.style.borderColor = 'rgba(255,255,255,0.06)';
+    section.innerHTML = `
+      <div class="crew-section-header">
+        <div class="crew-section-title">
+          <span class="crew-badge unassigned">Unassigned</span>
+          <span style="font-size:12px;color:var(--muted);">Assign a crew to these members to count toward a cap</span>
+        </div>
+      </div>
+      <div class="cont-table-wrap">
+        <table class="cont-table">
+          <thead><tr>
+            <th class="cont-num">#</th><th>Name</th><th>Role / Title</th>
+            <th>Phone</th><th>Email</th><th>Invited By</th>
+            <th style="width:70px;text-align:center;">+Guests</th>
+            <th style="width:70px;"></th>
+          </tr></thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+      </div>`;
+    container.appendChild(section);
+  }
+}
+
+function renderCaptainCounts() {
+  const el = document.getElementById('captain-counts');
+  if (!el) return;
+  const team = getTeam();
+  const guests = getContingent();
+  const byCaptain = {};
+  guests.forEach(g => {
+    if (g.invitedBy) byCaptain[g.invitedBy] = (byCaptain[g.invitedBy] || 0) + 1;
+  });
+  const pills = Object.entries(byCaptain).map(([tid, count]) => {
+    const member = team.find(m => m.id === tid);
+    const name = member ? esc(member.name) : 'Unknown';
+    return `<div class="captain-pill"><span class="cp-name">${name}</span><span class="cp-count">${count} guest${count !== 1 ? 's' : ''}</span></div>`;
+  }).join('');
+  el.innerHTML = `<div class="captain-counts-label">Guests by Team Member</div><div class="captain-grid">${pills || '<span style="color:var(--muted);font-size:13px;">No guests assigned yet.</span>'}</div>`;
+}
+
+function addContingentGuest(crew) {
+  const name = document.getElementById('contName-' + crew)?.value.trim();
+  if (!name) { alert('Name is required.'); return; }
+  const plusCount = Math.max(0, parseInt(document.getElementById('contPlus-' + crew)?.value) || 0);
+  const slotsNeeded = 1 + plusCount;
+  const available = 25 - crewCount(crew);
+  if (slotsNeeded > available) {
+    alert(`Not enough spots. ${available} slot${available !== 1 ? 's' : ''} remaining in ${crew === 'bmtv' ? 'BMTV Crew' : 'Joselito Crew'}.`); return;
+  }
+  if (!state.contingent) state.contingent = [];
+  state.contingent.push({
+    id: 'cont_' + Date.now(),
+    name,
+    role: document.getElementById('contRole-' + crew)?.value.trim() || '',
+    phone: document.getElementById('contPhone-' + crew)?.value.trim() || '',
+    email: document.getElementById('contEmail-' + crew)?.value.trim() || '',
+    invitedBy: document.getElementById('contInvitedBy-' + crew)?.value || '',
+    plusCount
+  });
+  saveState(state);
+  renderContingentTab();
+}
+
+function adjustEditPlus(id, delta) {
+  const hidden  = document.getElementById('ce-plus-' + id);
+  const display = document.getElementById('ce-plus-display-' + id);
+  if (!hidden || !display) return;
+  const current = parseInt(hidden.value) || 0;
+  const newVal  = Math.max(0, current + delta);
+  if (delta > 0) {
+    const guest = (state.contingent || []).find(c => c.id === id);
+    if (guest) {
+      const inv = getTeam().find(m => m.id === guest.invitedBy);
+      if (inv && inv.crew) {
+        // crewCount already includes this guest's old plusCount;
+        // projected = crewCount − old + new
+        if (crewCount(inv.crew) - current + newVal > 25) {
+          alert((inv.crew === 'bmtv' ? 'BMTV Crew' : 'Joselito Crew') + ' is full — can\'t add more plus guests.'); return;
+        }
+      }
+    }
+  }
+  hidden.value = newVal;
+  display.textContent = newVal;
+  display.className = 'plus-count' + (newVal > 0 ? ' has-plus' : '');
+}
+
+function adjustEditCorePlus(id, delta) {
+  const hidden  = document.getElementById('cm-plus-' + id);
+  const display = document.getElementById('cm-plus-display-' + id);
+  if (!display) return;
+  const current = parseInt(hidden?.value) || 0;
+  const newVal  = Math.max(0, current + delta);
+  if (delta > 0) {
+    const m = (state.team || []).find(t => t.id === id);
+    if (m && m.crew) {
+      if (crewCount(m.crew) - current + newVal > 25) {
+        alert((m.crew === 'bmtv' ? 'BMTV Crew' : 'Joselito Crew') + ' is full — can\'t add more plus guests.'); return;
+      }
+    }
+  }
+  if (hidden)  hidden.value = newVal;
+  display.textContent = newVal;
+  display.className = 'plus-count' + (newVal > 0 ? ' has-plus' : '');
+}
+
+function editCoreMember(id) {
+  const m = (state.team || []).find(t => t.id === id);
+  if (!m) return;
+  const row = document.getElementById('core-row-' + id);
+  if (!row) return;
+  const num = row.querySelector('.cont-num')?.textContent || '';
+  row.innerHTML = `
+    <td class="cont-num">${num}</td>
+    <td><input class="cont-add-input" id="cm-name-${id}" value="${esc(m.name || '')}" /></td>
+    <td><input class="cont-add-input" id="cm-role-${id}" value="${esc(m.role || '')}" /></td>
+    <td><input class="cont-add-input" id="cm-phone-${id}" value="${esc(m.phone || '')}" oninput="this.value=formatPhone(this.value)" /></td>
+    <td><input class="cont-add-input" id="cm-email-${id}" value="${esc(m.email || '')}" /></td>
+    <td><select class="cont-add-select" id="cm-crew-${id}">
+      <option value="" ${!m.crew ? 'selected' : ''}>— Unassigned —</option>
+      <option value="bmtv" ${m.crew === 'bmtv' ? 'selected' : ''}>BMTV Crew</option>
+      <option value="joselito" ${m.crew === 'joselito' ? 'selected' : ''}>Joselito Crew</option>
+    </select></td>
+    <td><div class="plus-stepper">
+      <button class="plus-btn" type="button" onclick="adjustEditCorePlus('${id}',-1)">−</button>
+      <span class="plus-count ${(parseInt(m.plusCount)||0) > 0 ? 'has-plus' : ''}" id="cm-plus-display-${id}">${parseInt(m.plusCount)||0}</span>
+      <input type="hidden" id="cm-plus-${id}" value="${parseInt(m.plusCount)||0}">
+      <button class="plus-btn" type="button" onclick="adjustEditCorePlus('${id}',1)">+</button>
+    </div></td>
+    <td style="white-space:nowrap;">
+      <button class="cont-save-btn" onclick="saveCoreMember('${id}')">Save</button>
+      <button class="cont-del-btn" style="margin-left:4px;" onclick="renderContingentTab()" title="Cancel">&#10005;</button>
+    </td>`;
+}
+
+function saveCoreMember(id) {
+  const m = (state.team || []).find(t => t.id === id);
+  if (!m) return;
+  m.name     = document.getElementById('cm-name-'  + id)?.value.trim() || m.name;
+  m.role     = document.getElementById('cm-role-'  + id)?.value.trim();
+  m.phone    = document.getElementById('cm-phone-' + id)?.value.trim();
+  m.email    = document.getElementById('cm-email-' + id)?.value.trim();
+  m.crew     = document.getElementById('cm-crew-'  + id)?.value;
+  m.plusCount = Math.max(0, parseInt(document.getElementById('cm-plus-' + id)?.value) || 0);
+  saveState(state);
+  renderTeam();
+  updateAllAssigneeDropdowns();
+  renderContingentTab();
+}
+
+function deleteContingentGuest(id) {
+  if (!confirm('Remove this person from the contingent?')) return;
+  state.contingent = (state.contingent || []).filter(c => c.id !== id);
+  saveState(state);
+  renderContingentTab();
+}
+
+function adjustPlusCount(id, delta) {
+  const guests = state.contingent || [];
+  const g = guests.find(c => c.id === id);
+  if (!g) return;
+  const currentPlus = parseInt(g.plusCount) || 0;
+  const newPlus = Math.max(0, currentPlus + delta);
+  if (delta > 0) {
+    const inv = getTeam().find(m => m.id === g.invitedBy);
+    if (inv && inv.crew) {
+      if (crewCount(inv.crew) >= 25) {
+        alert((inv.crew === 'bmtv' ? 'BMTV Crew' : 'Joselito Crew') + ' is full (25/25).'); return;
+      }
+    }
+  }
+  g.plusCount = newPlus;
+  saveState(state);
+  renderContingentTab();
+}
+
+function editContingentGuest(id) {
+  const guest = (state.contingent || []).find(c => c.id === id);
+  if (!guest) return;
+  const team = getTeam();
+  const teamOpts = team.map(m => `<option value="${m.id}" ${m.id === guest.invitedBy ? 'selected' : ''}>${esc(m.name)}</option>`).join('');
+  const row = document.getElementById('cont-row-' + id);
+  if (!row) return;
+  const num = row.querySelector('.cont-num')?.textContent || '';
+  row.innerHTML = `
+    <td class="cont-num">${num}</td>
+    <td><input class="cont-add-input" id="ce-name-${id}" value="${esc(guest.name || '')}" /></td>
+    <td><input class="cont-add-input" id="ce-role-${id}" value="${esc(guest.role || '')}" /></td>
+    <td><input class="cont-add-input" id="ce-phone-${id}" value="${esc(guest.phone || '')}" oninput="this.value=formatPhone(this.value)" /></td>
+    <td><input class="cont-add-input" id="ce-email-${id}" value="${esc(guest.email || '')}" /></td>
+    <td><select class="cont-add-select" id="ce-inv-${id}">
+      <option value="">— None —</option>
+      ${teamOpts}
+    </select></td>
+    <td><div class="plus-stepper">
+      <button class="plus-btn" type="button" onclick="adjustEditPlus('${id}',-1)">−</button>
+      <span class="plus-count ${(parseInt(guest.plusCount)||0) > 0 ? 'has-plus' : ''}" id="ce-plus-display-${id}">${parseInt(guest.plusCount)||0}</span>
+      <input type="hidden" id="ce-plus-${id}" value="${parseInt(guest.plusCount)||0}">
+      <button class="plus-btn" type="button" onclick="adjustEditPlus('${id}',1)">+</button>
+    </div></td>
+    <td style="white-space:nowrap;">
+      <button class="cont-save-btn" onclick="saveContingentGuest('${id}')">Save</button>
+      <button class="cont-del-btn" style="margin-left:4px;" onclick="renderContingentTab()" title="Cancel">&#10005;</button>
+    </td>`;
+}
+
+function saveContingentGuest(id) {
+  const guest = (state.contingent || []).find(c => c.id === id);
+  if (!guest) return;
+  guest.name = document.getElementById('ce-name-' + id)?.value.trim() || guest.name;
+  guest.role = document.getElementById('ce-role-' + id)?.value.trim();
+  guest.phone = document.getElementById('ce-phone-' + id)?.value.trim();
+  guest.email = document.getElementById('ce-email-' + id)?.value.trim();
+  guest.invitedBy = document.getElementById('ce-inv-' + id)?.value;
+  guest.plusCount = Math.max(0, parseInt(document.getElementById('ce-plus-' + id)?.value) || 0);
+  saveState(state);
+  renderContingentTab();
+}
+
+function exportContingentCSV() {
+  const team = getTeam();
+  const guests = getContingent();
+  const crewLabel = c => c === 'bmtv' ? 'BMTV Crew' : c === 'joselito' ? 'Joselito Crew' : 'Unassigned';
+  const rows = [['#','Name','Role / Title','Phone','Email','Crew','Invited By','Type','+Guests']];
+  let i = 1;
+  team.forEach(m => {
+    rows.push([i++, m.name, m.role||'', m.phone||'', m.email||'', crewLabel(m.crew), 'Core Team', 'Team', '']);
+  });
+  guests.forEach(g => {
+    const inviter = team.find(m => m.id === g.invitedBy);
+    rows.push([i++, g.name, g.role||'', g.phone||'', g.email||'', crewLabel(inviter?.crew), inviter ? inviter.name : '', 'Guest', parseInt(g.plusCount) || 0]);
+  });
+  const csv = rows.map(r => r.map(v => '"' + String(v).replace(/"/g,'""') + '"').join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'BMB-Contingent-NYC-Parade-2026.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+function printContingentTab() {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.add('print-section-hide'));
+  document.getElementById('tab-contingent').classList.remove('print-section-hide');
+  window.print();
+  setTimeout(() => {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('print-section-hide'));
+  }, 500);
 }
 
 function updateAllProgress() {
@@ -944,10 +2094,22 @@ function updateAllProgress() {
     if (pctEl) { pctEl.textContent = pct + '%'; pctEl.className = 'pct' + (pct === 100 ? ' done' : ''); }
     if (fillEl) { fillEl.style.width = pct + '%'; fillEl.className = 'progress-fill' + (pct === 100 ? ' green' : ''); }
   });
-  // Update all group badges
+  // Design brief progress
+  let dTotal = 0, dDone = 0;
+  DESIGN_BRIEF.forEach(item => {
+    item.tasks.forEach(t => { dTotal++; if (getTaskState(t.id).completed) dDone++; });
+    updateDesignBadge(item.id);
+  });
+  const dPct = dTotal === 0 ? 0 : Math.round((dDone / dTotal) * 100);
+  const dPctEl = document.getElementById('pctDesign');
+  const dFillEl = document.getElementById('fillDesign');
+  if (dPctEl) { dPctEl.textContent = dPct + '%'; dPctEl.className = 'pct' + (dPct === 100 ? ' done' : ''); }
+  if (dFillEl) { dFillEl.style.width = dPct + '%'; dFillEl.className = 'progress-fill' + (dPct === 100 ? ' green' : ''); }
+  // Update all checklist group badges and next-due callouts
   Object.values(TASKS).forEach(section => {
     section.forEach(grp => updateGroupBadge(grp.id));
   });
+  updateAllNextDates();
 }
 
 // ══════════════════════════════════════════
@@ -958,6 +2120,8 @@ function switchTab(section, btn) {
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('tab-' + section).classList.add('active');
+  if (section === 'design' || section === 'contingent') window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (section === 'contingent') renderContingentTab();
 }
 
 // ══════════════════════════════════════════
@@ -1000,7 +2164,7 @@ function doPrint() {
   const memberVal = document.getElementById('printMemberFilter').value;
 
   // Show/hide tab sections
-  ['overall','event1','event2'].forEach(s => {
+  ['overall','event1','event2','design'].forEach(s => {
     const tab = document.getElementById('tab-' + s);
     if (sectionVal === 'all' || sectionVal === s) {
       tab.classList.remove('print-section-hide');
@@ -1087,11 +2251,161 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
+  // Pre-populate default due dates.
+  // Bump DEFAULT_DATES_VERSION any time you change dates in this block
+  // to force all dates to re-apply on next load. Manual UI changes persist
+  // until the version changes.
+  const DEFAULT_DATES_VERSION = 'v7';
+  const DEFAULT_DATES = {
+    // ── OVERALL: Administrative ──────────────────
+    oa5:'2026-05-23', oa6:'2026-05-21', oa7:'2026-05-26', oa8:'2026-05-26',
+    oa9:'2026-06-04', oa10:'2026-06-01',
+    // ── OVERALL: Billboard & Marketing ──────────
+    ob1:'2026-05-21', ob2:'2026-05-30', ob3:'2026-05-25', ob4:'2026-05-25',
+    ob5:'2026-05-22', ob6:'2026-06-01', ob7:'2026-05-25', ob8:'2026-06-14',
+    ob9:'2026-05-22',
+    // ── OVERALL: Equipment ───────────────────────
+    oc1:'2026-05-25', oc2:'2026-05-25', oc3:'2026-06-01', oc4:'2026-06-01',
+    oc5:'2026-06-01', oc6:'2026-05-23', oc7:'2026-06-01', oc8:'2026-06-06',
+    oc9:'2026-05-27',
+    // ── OVERALL: Production Pre-Production ──────
+    od1:'2026-06-05', od2:'2026-06-05', od3:'2026-06-05', od4:'2026-06-05',
+    od5:'2026-06-10', od6:'2026-06-12', od7:'2026-06-12', od8:'2026-06-12',
+    od9:'2026-06-05', od10:'2026-06-05',
+    // ── OVERALL: Travel & Logistics ─────────────
+    oe3:'2026-05-21', oe4:'2026-06-10', oe5:'2026-06-10',
+    oe6:'2026-06-10', oe7:'2026-06-10',
+    // ── OVERALL: Post-Event ──────────────────────
+    of1:'2026-06-16', of2:'2026-06-16', of3:'2026-06-16', of4:'2026-06-16',
+    of5:'2026-06-16', of6:'2026-06-16', of7:'2026-06-16', of8:'2026-06-16',
+    // ── EVENT 1: Permitting ──────────────────────
+    e1a1:'2026-05-21', e1a2:'2026-05-21', e1a3:'2026-05-26', e1a4:'2026-05-26',
+    e1a5:'2026-05-26', e1a6:'2026-06-05',
+    // ── EVENT 1: Tent & Physical ─────────────────
+    e1b1:'2026-06-01', e1b2:'2026-06-01', e1b3:'2026-06-01', e1b4:'2026-06-01',
+    e1b5:'2026-06-01', e1b6:'2026-06-01', e1b7:'2026-06-05', e1b8:'2026-06-05',
+    // ── EVENT 1: Power ───────────────────────────
+    e1c1:'2026-06-01', e1c2:'2026-06-12', e1c3:'2026-06-13', e1c4:'2026-06-01',
+    e1c5:'2026-06-01', e1c6:'2026-06-10',
+    // ── EVENT 1: Stream Tech ─────────────────────
+    e1d1:'2026-06-10', e1d2:'2026-06-05', e1d3:'2026-06-10', e1d4:'2026-06-05',
+    e1d5:'2026-06-10', e1d6:'2026-06-10', e1d7:'2026-06-10', e1d8:'2026-06-10',
+    e1d9:'2026-06-10', e1d10:'2026-06-11', e1d11:'2026-06-12',
+    // ── EVENT 1: Audio ───────────────────────────
+    e1e1:'2026-06-10', e1e2:'2026-06-10', e1e3:'2026-06-10', e1e4:'2026-06-10',
+    e1e5:'2026-06-11', e1e6:'2026-06-10',
+    // ── EVENT 1: Joselito Coordination ──────────
+    e1f1:'2026-06-01', e1f2:'2026-06-01', e1f3:'2026-06-10', e1f4:'2026-06-01',
+    e1f5:'2026-06-01', e1f6:'2026-06-07',
+    // ── EVENT 1: Staffing ────────────────────────
+    e1g1:'2026-06-12', e1g2:'2026-06-01', e1g3:'2026-06-01', e1g4:'2026-06-01',
+    e1g5:'2026-06-01', e1g6:'2026-06-10', e1g7:'2026-06-10',
+    // ── EVENT 1: Day-Of ──────────────────────────
+    e1h1:'2026-06-13', e1h2:'2026-06-13', e1h3:'2026-06-13', e1h4:'2026-06-13',
+    e1h5:'2026-06-13', e1h6:'2026-06-13', e1h7:'2026-06-13', e1h8:'2026-06-13',
+    e1h9:'2026-06-13',
+    // ── EVENT 2: Registration ────────────────────
+    e2a5:'2026-05-23', e2a6:'2026-05-26', e2a7:'2026-06-01', e2a8:'2026-06-04',
+    // ── EVENT 2: Float Build ─────────────────────
+    e2b1:'2026-05-28', e2b2:'2026-05-21', e2b3:'2026-05-28', e2b4:'2026-06-06',
+    e2b5:'2026-06-01', e2b6:'2026-06-01', e2b7:'2026-06-01', e2b8:'2026-06-10',
+    e2b9:'2026-06-12',
+    // ── EVENT 2: Power (Float) ───────────────────
+    e2c1:'2026-06-01', e2c2:'2026-06-12', e2c3:'2026-06-12', e2c4:'2026-06-13',
+    e2c5:'2026-06-10', e2c6:'2026-06-12',
+    // ── EVENT 2: Stream Tech (Moving) ────────────
+    e2d1:'2026-06-01', e2d2:'2026-06-10', e2d3:'2026-06-10', e2d4:'2026-06-10',
+    e2d5:'2026-06-12', e2d6:'2026-06-10', e2d7:'2026-06-14', e2d8:'2026-06-10',
+    // ── EVENT 2: Audio (Float) ───────────────────
+    e2e1:'2026-06-10', e2e2:'2026-06-10', e2e3:'2026-06-10', e2e4:'2026-06-14',
+    e2e5:'2026-06-01', e2e6:'2026-06-10',
+    // ── EVENT 2: Walking Contingent ──────────────
+    e2f1:'2026-06-01', e2f2:'2026-05-23', e2f3:'2026-05-23', e2f4:'2026-06-01',
+    e2f5:'2026-06-01', e2f6:'2026-06-07', e2f7:'2026-06-07', e2f8:'2026-06-14',
+    e2f9:'2026-06-14', e2f10:'2026-06-01',
+    // ── EVENT 2: DJ Charlie Chase ────────────────
+    e2g1:'2026-05-26', e2g2:'2026-05-26', e2g3:'2026-06-01', e2g4:'2026-06-10',
+    e2g5:'2026-06-10', e2g6:'2026-06-01', e2g7:'2026-06-14',
+    // ── EVENT 2: Staffing ────────────────────────
+    e2h1:'2026-06-12', e2h2:'2026-06-01', e2h3:'2026-06-01', e2h4:'2026-06-01',
+    e2h5:'2026-06-01', e2h6:'2026-06-01',
+    // ── EVENT 2: Day-Of ──────────────────────────
+    e2i1:'2026-06-14', e2i2:'2026-06-14', e2i3:'2026-06-14', e2i4:'2026-06-14',
+    e2i5:'2026-06-14', e2i6:'2026-06-14', e2i7:'2026-06-14', e2i8:'2026-06-14',
+    e2i9:'2026-06-14', e2i10:'2026-06-14', e2i11:'2026-06-14',
+    // ── DESIGN BRIEF ─────────────────────────────
+    db1a:'2026-05-22', db1b:'2026-05-22', db1c:'2026-06-05',
+    db2a:'2026-05-22', db2b:'2026-06-05',
+    db3a:'2026-05-21', db3b:'2026-05-30', db3c:'2026-05-30', db3d:'2026-06-14',
+    db4a:'2026-06-01', db4b:'2026-06-01', db4c:'2026-06-05', db4d:'2026-06-01',
+    db4e:'2026-06-01',
+    db5a:'2026-05-25', db5b:'2026-05-20', db5c:'2026-05-27', db5d:'2026-05-29',
+    db5e:'2026-05-29', db5f:'2026-05-29',
+    // ── FLOAT DESIGN ─────────────────────────────
+    // Timeline: design May 20–28 → Review #1 May 29–30 → Review #2 May 31–Jun 1 → package Jun 2 → submit Jun 3 → NPRDP approval Jun 5
+    db6a:'2026-05-20', db6b:'2026-05-20', db6c:'2026-05-20',
+    db6d:'2026-05-28', db6e:'2026-05-28', db6f:'2026-05-28',
+    db6g:'2026-05-29', db6j:'2026-05-30', db6k:'2026-05-31',
+    db6l:'2026-06-01', db6h:'2026-06-02', db6m:'2026-06-03',
+    db6i:'2026-06-10',
+  };
+  if (!state.tasks) state.tasks = {};
+  // DATE_FORCE overrides existing stored dates for tasks whose defaults changed.
+  // Add an ID here any time you correct a date that was already baked into localStorage.
+  const DATE_FORCE = {
+    'db5a':'2026-05-25', 'db5b':'2026-05-20', 'db5c':'2026-05-27',
+    'db5d':'2026-05-29', 'db5e':'2026-05-29', 'db5f':'2026-05-29',
+  };
+  Object.entries(DATE_FORCE).forEach(([id, date]) => {
+    if (!state.tasks[id]) state.tasks[id] = {};
+    state.tasks[id].dueDate = date;
+  });
+  if (state.defaultDatesVersion !== DEFAULT_DATES_VERSION) {
+    Object.entries(DEFAULT_DATES).forEach(([id, date]) => {
+      if (!state.tasks[id]) state.tasks[id] = {};
+      if (!state.tasks[id].dueDate) state.tasks[id].dueDate = date;
+    });
+    state.defaultDatesVersion = DEFAULT_DATES_VERSION;
+  }
+
+  // Text reset — clears customText overrides so updated task text in the JS shows through.
+  // Bump DEFAULT_TEXT_VERSION any time you update task text in the data arrays above.
+  const DEFAULT_TEXT_VERSION = 'v8';
+  const TEXT_RESET_IDS = [
+    'oa5','e2a5','e2a6',                    // insurance confirmed not required
+    'oe3',                                   // Tahoe secured
+    'e1a6','e1h1','e1h9',                   // Tahoe (was cargo van)
+    'oe6',                                   // emergency contacts (removed insurance provider)
+    'e2i7',                                  // float inspection (removed insurance certificate)
+    'db6a',                                  // design brief handed off ✓ May 22
+    'db6b','db6c',                           // logo auth confirmed; color palette confirmed
+    'db5b',                                  // print method confirmed: Bibi in-house
+    'db1a','db1b',                           // QR destination + event card qty confirmed
+    'db2a',                                  // corporate card qty confirmed
+    'oc1','oc2','oc3',                       // equipment: Eric Gomez; bonding in-house; generator only rental
+    'oa6','e1a1','e1a2','e1a3','e1a4','e1a5', // 116th St: fully confirmed — no hookup, generator only
+    'od2','od3','od4',                       // stream keys set; BlackMarker.TV only; no YT/FB
+    'e1d1','e1d4','e1d10','e1d11',          // Event 1: bonding in-house; keys BMB.TV only; test stream; title
+    'e2d1','e2d6',                           // Event 2: bonding in-house; vMix BMB.TV only
+    'ob3','ob4','ob5',                       // social posts timeline updated
+    'ob9',                                   // GMAN partnership proposal (new)
+    'oc9',                                   // team equipment bring-list (new)
+    'db5a','db5d',                           // shirt design timeline + print order deadline updated
+  ];
+  if (state.defaultTextVersion !== DEFAULT_TEXT_VERSION) {
+    TEXT_RESET_IDS.forEach(id => {
+      if (state.tasks[id]) delete state.tasks[id].customText;
+    });
+    state.defaultTextVersion = DEFAULT_TEXT_VERSION;
+  }
+
   saveState(state);
 
   renderTeam();
   renderAllChecklists();
+  renderDesignBrief();
   updateAllProgress();
+  // Contingent tab renders on-demand (switchTab) — no init render needed
 
   // Close multi-select dropdowns when clicking outside
   document.addEventListener('click', () => {

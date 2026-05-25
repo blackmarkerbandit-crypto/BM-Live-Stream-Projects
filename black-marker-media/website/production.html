@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Live Production Services — Stream Your Event | Black Marker Media</title>
+<link rel="icon" type="image/png" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -12,10 +13,9 @@
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.nav-logo-mark{width:32px;height:32px;background:var(--red);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;}
-.nav-logo-text{font-size:15px;font-weight:700;color:var(--white);}
-.nav-logo-text span{color:var(--red);}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo-img{height:36px;width:auto;display:block;}
+.nav-logo-text{font-size:14px;font-weight:700;color:var(--white);letter-spacing:0.3px;white-space:nowrap;}
 .nav-links{display:flex;align-items:center;gap:8px;}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:4px;transition:color 0.2s,background 0.2s;}
 .nav-links a:hover,.nav-links a.active{color:var(--white);background:var(--surface2);}
@@ -70,7 +70,8 @@ section{padding:100px 40px;}
 .service-bullet::before{content:'—';color:var(--red);flex-shrink:0;}
 
 /* WHO WE SERVE */
-.serve{background:var(--surface);}
+.serve{background:linear-gradient(rgba(8,8,8,0.72),rgba(8,8,8,0.72)),url('images/Production01.jpg') center/cover no-repeat;background-attachment:fixed,fixed;}
+.serve .section-eyebrow,.serve .section-title{text-shadow:0 2px 12px rgba(0,0,0,0.6);}
 .serve-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:56px;}
 .serve-card{background:var(--bg);padding:32px 28px;border:1px solid var(--border);transition:border-color 0.2s;}
 .serve-card:hover{border-color:rgba(232,24,28,0.3);}
@@ -93,11 +94,11 @@ section{padding:100px 40px;}
 .retainer-tier{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:var(--bg);border:1px solid var(--border);border-radius:6px;}
 .rtier-label{font-size:13px;font-weight:600;color:var(--text);}
 .rtier-price{font-size:15px;font-weight:800;color:var(--white);}
-.rtier-price span{font-size:11px;color:var(--muted);font-weight:400;}</p>
+.rtier-price span{font-size:11px;color:var(--muted);font-weight:400;}
 .retainer-note{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:24px;}
 
 /* CTA DUAL */
-.cta-dual{background:var(--surface);padding:100px 40px;}
+.cta-dual{background:linear-gradient(rgba(8,8,8,0.72),rgba(8,8,8,0.72)),url('images/Production02.jpg') center/cover no-repeat;background-attachment:fixed,fixed;padding:100px 40px;}
 .cta-dual-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:2px;}
 .cta-panel{padding:60px 48px;}
 .cta-panel.red{background:var(--red);}
@@ -133,8 +134,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
 
 <nav>
   <a class="nav-logo" href="index.html">
-    <div class="nav-logo-mark">B</div>
-    <span class="nav-logo-text">Black Marker <span>Media</span></span>
+    <img src="icon.png" alt="" class="nav-logo-img">
+    <span class="nav-logo-text">Black Marker Media LLC</span>
   </a>
   <div class="nav-links">
     <a href="channelcast.html">ChannelCast</a>
@@ -365,6 +366,5 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
 
 <script src="forms.js"></script>
 <script src="animations.js"></script>
-<script src="editor.js"></script>
 </body>
 </html>

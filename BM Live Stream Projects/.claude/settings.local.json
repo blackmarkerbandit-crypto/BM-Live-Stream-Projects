@@ -31,7 +31,9 @@
       "Read(//c/Users/imagi/**)",
       "Bash(git pull *)",
       "Bash(ls \"D:/Dropbox/WORK FILES/BMB/AI SHIT\")",
-      "Read(//d/Dropbox/WORK FILES/BMB/AI SHIT/**)"
+      "Read(//d/Dropbox/WORK FILES/BMB/AI SHIT/**)",
+      "Bash(Remove-Item -Recurse -Force \"D:/Dropbox/WORK FILES/BMB/AI SHIT/black-marker-media/.git\")",
+      "Bash(cmd /c \"rd /s /q \\\\\"D:\\\\Dropbox\\\\WORK FILES\\\\BMB\\\\AI SHIT\\\\black-marker-media\\\\.git\\\\\"\")"
     ]
   }
 }

@@ -10,10 +10,10 @@
 |---|---|---|
 | ~~APRIL 30, 2026~~ | ~~Parade float application~~ | **DONE — registered + orientation scheduled** |
 | ~~MAY 12 (TODAY)~~ | ~~NPRDP Orientation~~ | **ATTENDING TODAY — capture all requirements + deadlines** |
-| **MAY 15 (FRI)** | Group shots, images & logos to designer | **HARD DEADLINE — float/campaign design starts this week** |
+| ~~MAY 15 (FRI)~~ | ~~Group shots, images & logos to designer~~ | **DONE — assets received May 15** |
 | **WEEK OF MAY 12** | Reserve car rental (NYC) | Travel + lodging confirmed; car rental is the remaining gap |
-| **WEEK OF MAY 12** | Set up billboard account | Target smaller 3rd-party Times Square adjacent boards (low-rate) |
-| **BY MAY 18 (MON)** | Joselito delivers both vendor tables for 116th St | Confirmed — Joselito securing tables |
+| **STILL OPEN** | Set up billboard account | Researching — Blip Billboards self-serve recommended (see notes) |
+| **CHECK MAY 19 (5PM MEETING)** | Joselito vendor tables for 116th St | Following up in today's 5pm meeting |
 | **JUNE 2–4** | Permit & wristband pickup — **MANDATORY** | 109 E 125th St, NYC — 6:00–8:00pm each night. Staging assignment included in packet. |
 | ASAP | Insurance certificate | $1M+ GL required by NPRDP |
 | 3 weeks before | Walking contingent shirts ordered | 50 + spares |
@@ -29,19 +29,48 @@
 
 ---
 
-## CURRENT STATUS — MAY 12, 2026
+## CURRENT STATUS — MAY 19, 2026
 
 ### Confirmed ✓
 - **Sound system & generator for Parade (Sunday)** — confirmed and reserved
-- **Lodging & travel** — confirmed ✓ | Car rental still needed — reserve this week
-- **Joselito securing both vendor tables for 116th St booth** — by Monday May 18
-- **NPRDP orientation** — attending today
+- **Lodging & travel** — confirmed ✓ | Car rental still needed — reserve ASAP
+- **NPRDP orientation** — completed May 12
+- **Design assets** — received May 15 ✓ | Design in progress now (May 19–20)
 
-### Next Up (This Week)
-- [ ] Production mapping and detailed run-of-show for both days (Saturday festival + Sunday parade)
-- [ ] Float design and branding — all weekend campaign materials
-- [ ] Set up account with Times Square 3rd-party billboard company (low-rate adjacent boards)
-- [ ] Collect group shots, images, and logos — **due by Friday May 15** so design can start
+### In Progress
+- **Design sprint (May 19–20):** All items below in active design:
+  - [ ] 3x5 promo postcards — events version (116th St Festival + Parade)
+  - [ ] 3x5 promo postcards — corporate Black Marker Media version
+  - [ ] Times Square billboard ad (10-second animated spot)
+  - [ ] Staff laminates + float access laminates (specific contingent members)
+  - [ ] Walking contingent shirts design (50+ pieces)
+- **Run of Show** — target final by **June 12**
+
+### Pending / Check Today
+- [ ] **5PM MEETING (May 19):** Confirm Joselito vendor tables for 116th St Festival
+- [ ] Set up Blip Billboards self-serve account — recommended platform (see Billboard Notes below)
+- [ ] Car rental — reserve cargo van for NYC ground transport (still open)
+- [ ] General liability insurance ($1M+ for NPRDP float)
+
+---
+
+## BILLBOARD NOTES (Updated May 19, 2026)
+
+**Best budget options found — ranked cheapest to most expensive:**
+
+| Platform | Model | Times Square Cost | Notes |
+|---|---|---|---|
+| **[Blip Billboards](https://www.blipbillboards.com/times-square/)** | Pay-per-blip (15-sec display) | **$20/blip minimum bid** | Completely self-serve; set your own daily budget; only pay when ad plays; 1.9M impressions/day on TS board |
+| **[Blindspot](https://seeblindspot.com/new-york-digital-billboards-times-square/)** | Pay-per-play, hourly | From ~$0.50–$2/play | No contracts; book by the hour; upload creative and launch fast |
+| **[Fliphound](https://fliphound.com/billboard-advertising/New-York/Times-Square-NYC)** | Self-serve bid system | From $10/day (TS higher) | Real-time bidding; flexible time-of-day scheduling |
+| **Welcome to Times Square** (info@welcometotimessquare.com) | Personal display packages | $150 for 24 hrs (basic) | $250–$500 for standard business; $500–$1K for premium timing |
+| The Ad Focus / Outfront / Clear Channel | Traditional OOH | $300–$3,000+/day | Minimum commitments; better for larger budgets |
+
+**Recommendation: Start with [Blip Billboards](https://www.blipbillboards.com/times-square/) — self-serve, no minimums, pay only when ad plays.**
+- Set a daily budget for June 13–14 parade weekend
+- $20/blip = you control how much you spend; a $200–$400 campaign over 2 days is very achievable
+- Creative spec: 15-second spot (image or short video); check their uploader for exact dimensions
+- The $500/day option you found is likely Welcome to Times Square's business package — Blip is more flexible
 
 ---
 

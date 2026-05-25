@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ChannelCast — Your Streaming Platform, Built & Managed | Black Marker Media</title>
+<link rel="icon" type="image/png" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -12,10 +13,9 @@
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.nav-logo-mark{width:32px;height:32px;background:var(--red);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;}
-.nav-logo-text{font-size:15px;font-weight:700;color:var(--white);}
-.nav-logo-text span{color:var(--red);}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo-img{height:36px;width:auto;display:block;}
+.nav-logo-text{font-size:14px;font-weight:700;color:var(--white);letter-spacing:0.3px;white-space:nowrap;}
 .nav-links{display:flex;align-items:center;gap:8px;}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:4px;transition:color 0.2s,background 0.2s;}
 .nav-links a:hover{color:var(--white);background:var(--surface2);}
@@ -70,7 +70,9 @@ section{padding:100px 40px;}
 .for-text{font-size:13px;color:var(--muted);line-height:1.7;}
 
 /* FEATURES */
-.features{background:var(--surface);}
+.features{background:linear-gradient(rgba(8,8,8,0.82),rgba(8,8,8,0.82)),url('images/Tools01.jpg') center/cover no-repeat;background-attachment:fixed,fixed;}
+.features .section-eyebrow,.features .section-title,.features .section-sub{text-shadow:0 2px 12px rgba(0,0,0,0.6);}
+.cta-block h2,.cta-block p{text-shadow:0 2px 12px rgba(0,0,0,0.6);}
 .features-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:56px;}
 .feature-card{background:var(--bg);padding:40px 36px;border:1px solid var(--border);border-radius:0;transition:border-color 0.2s;}
 .feature-card:hover{border-color:rgba(232,24,28,0.3);}
@@ -100,7 +102,7 @@ section{padding:100px 40px;}
 .btn-price:hover{background:var(--red);border-color:var(--red);}
 
 /* CTA BLOCK */
-.cta-block{background:var(--surface);padding:100px 40px;}
+.cta-block{background:linear-gradient(rgba(8,8,8,0.72),rgba(8,8,8,0.72)),url('images/Platform2.jpg') center/cover no-repeat;background-attachment:fixed,fixed;padding:100px 40px;}
 .cta-inner{max-width:680px;margin:0 auto;text-align:center;}
 .cta-inner h2{font-size:clamp(32px,4vw,52px);font-weight:900;letter-spacing:-1.5px;color:var(--white);margin-bottom:20px;}
 .cta-inner p{font-size:17px;color:var(--muted);margin-bottom:40px;line-height:1.65;}
@@ -129,8 +131,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
 
 <nav>
   <a class="nav-logo" href="index.html">
-    <div class="nav-logo-mark">B</div>
-    <span class="nav-logo-text">Black Marker <span>Media</span></span>
+    <img src="icon.png" alt="" class="nav-logo-img">
+    <span class="nav-logo-text">Black Marker Media LLC</span>
   </a>
   <div class="nav-links">
     <a href="channelcast.html" class="active">ChannelCast</a>
@@ -211,8 +213,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
 <section id="features" class="features">
   <div class="section-inner">
     <div class="section-eyebrow">What's Included</div>
-    <h2 class="section-title">Everything You Need.<br>Nothing You Don't.</h2>
-    <p class="section-sub">Every ChannelCast plan comes fully built and managed. You don't touch the tech — we handle it.</p>
+    <h2 class="section-title" style="color:#C8C8C8;">Everything You Need.<br>Nothing You Don't.</h2>
+    <p class="section-sub" style="color:#C8C8C8;">Every ChannelCast plan comes fully built and managed. You don't touch the tech — we handle it.</p>
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-icon">
@@ -316,11 +318,11 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
 
 <div class="cta-block">
   <div class="cta-inner">
-    <h2>Ready to Own Your Platform?</h2>
-    <p>Stop competing for attention on someone else's algorithm. Get a streaming platform built around your brand and managed so you can focus on the content.</p>
+    <h2 style="color:#FFFFFF;">Ready to Own Your Platform?</h2>
+    <p style="color:#C8C8C8;">Stop competing for attention on someone else's algorithm. Get a streaming platform built around your brand and managed so you can focus on the content.</p>
     <div class="cta-actions">
       <a class="btn-primary" href="#" data-bmb-modal="lead">Request a Demo</a>
-      <a class="btn-secondary" href="index.html">Back to Home</a>
+      <a class="btn-secondary" href="index.html" style="border-color:#C8C8C8;color:#C8C8C8;">Back to Home</a>
     </div>
   </div>
 </div>
@@ -339,6 +341,5 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
 
 <script src="forms.js"></script>
 <script src="animations.js"></script>
-<script src="editor.js"></script>
 </body>
 </html>

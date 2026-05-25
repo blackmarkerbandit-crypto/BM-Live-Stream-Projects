@@ -12,7 +12,16 @@
 (function () {
   'use strict';
 
-  var ENDPOINT = '/api/submit-form';
+  var CONTACT_EMAIL = 'info@blackmarkermedia.com';
+
+  var FORM_LABELS = {
+    lead:    'General Inquiry',
+    contact: 'Contact Message',
+    signup:  'Newsletter Signup',
+    booking: 'Production Booking',
+    sponsor: 'Sponsorship Inquiry',
+    creator: 'Creator Pitch'
+  };
 
   // ── Form definitions ───────────────────────────────────────────────────────
   var CONFIGS = {
@@ -549,37 +558,33 @@
 
     // Collect form data
     var data = {};
-    var formData = new FormData(form);
-    formData.forEach(function (val, key) { data[key] = val; });
+    new FormData(form).forEach(function (val, key) { data[key] = val; });
 
-    // UI: loading state
+    // Build mailto: link
+    var formType  = data.form_type || 'lead';
+    var typeLabel = FORM_LABELS[formType] || 'Inquiry';
+    var subject   = 'BMB Website — ' + typeLabel;
+    var lines     = [];
+    Object.keys(data).forEach(function (k) {
+      if (k === 'form_type') return;
+      lines.push(k.replace(/_/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }) + ': ' + data[k]);
+    });
+    var mailto = 'mailto:' + CONTACT_EMAIL +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body='    + encodeURIComponent(lines.join('\n\n'));
+
     btn.disabled = true;
     btn.classList.add('loading');
-    var originalText = btn.firstChild.nodeValue || btn.textContent.replace('', '').trim();
 
-    fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    })
-    .then(function (r) { return r.json(); })
-    .then(function (res) {
+    window.location.href = mailto;
+
+    // Show success state after brief delay (email client opens in background)
+    setTimeout(function () {
       btn.disabled = false;
       btn.classList.remove('loading');
-      if (res.success) {
-        inner.style.display = 'none';
-        success.classList.add('show');
-      } else {
-        banner.textContent = res.error || 'Something went wrong. Please try again.';
-        banner.classList.add('show');
-      }
-    })
-    .catch(function () {
-      btn.disabled = false;
-      btn.classList.remove('loading');
-      banner.textContent = 'Network error — please check your connection and try again.';
-      banner.classList.add('show');
-    });
+      inner.style.display = 'none';
+      success.classList.add('show');
+    }, 800);
   }
 
   // ── Auto-init ─────────────────────────────────────────────────────────────

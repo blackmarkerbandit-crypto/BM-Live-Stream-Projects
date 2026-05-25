@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jae Rae Live 2026 — BMB Production Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #B76E79;
+  --gold-dim: rgba(183,110,121,0.15);
+  --bg: #080808;
+  --surface: #111111;
+  --surface2: #191919;
+  --border: #242424;
+  --text: #F0F0F0;
+  --muted: #666666;
+  --green: #22c55e;
+  --green-dim: rgba(34,197,94,0.12);
+  --yellow: #eab308;
+  --yellow-dim: rgba(234,179,8,0.12);
+  --blue: #3b82f6;
+  --blue-dim: rgba(59,130,246,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;}
+a{color:var(--gold);text-decoration:none;}
+
+/* ── HEADER ── */
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;}
+.header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:16px 0;}
+.logo{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--gold);text-transform:uppercase;}
+.header-title{flex:1;}
+.header-title h1{font-size:18px;font-weight:700;line-height:1.2;}
+.header-title .sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.header-actions{display:flex;gap:10px;align-items:center;}
+.save-status{font-size:11px;color:var(--muted);}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;transition:all .15s;}
+.btn-gold{background:var(--gold);color:#fff;}
+.btn-gold:hover{background:#9d5a64;}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text);}
+.btn-outline:hover{border-color:var(--muted);background:var(--surface2);}
+.btn-sm{padding:5px 10px;font-size:12px;}
+
+/* ── PROGRESS OVERVIEW ── */
+.progress-bar-wrap{max-width:1100px;margin:0 auto;padding:20px 24px;}
+.progress-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.progress-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+.progress-card .label{font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
+.progress-card .pct{font-size:22px;font-weight:800;margin-bottom:6px;}
+.progress-card .pct.done{color:var(--green);}
+.progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .3s;}
+.progress-fill.green{background:var(--green);}
+
+/* ── DATES BAR ── */
+.dates-bar{max-width:1100px;margin:0 auto;padding:0 24px 20px;}
+.dates-row{display:flex;gap:10px;flex-wrap:wrap;}
+.date-chip{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 16px;flex:1;min-width:200px;}
+.date-chip .dc-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.date-chip .dc-date{font-size:13px;font-weight:700;color:var(--gold);margin-bottom:2px;}
+.date-chip .dc-desc{font-size:12px;color:var(--text);}
+.date-chip.upcoming .dc-date{color:var(--yellow);}
+.date-chip.next .dc-date{color:var(--green);}
+
+/* ── TEAM ROSTER ── */
+.team-section{max-width:1100px;margin:0 auto;padding:0 24px 20px;}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;user-select:none;}
+.panel-header:hover{background:var(--surface2);}
+.panel-title{font-size:13px;font-weight:700;letter-spacing:.3px;display:flex;align-items:center;gap:8px;}
+.panel-toggle{font-size:12px;color:var(--muted);transition:transform .2s;}
+.panel-toggle.open{transform:rotate(180deg);}
+.panel-body{padding:18px;border-top:1px solid var(--border);display:none;}
+.panel-body.open{display:block;}
+.team-add{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:10px;margin-bottom:16px;align-items:end;}
+.field-group{display:flex;flex-direction:column;gap:4px;}
+.field-group label{font-size:11px;color:var(--muted);font-weight:500;}
+.field-input{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:'Inter',sans-serif;font-size:13px;width:100%;}
+.field-input:focus{outline:none;border-color:var(--gold);}
+.field-input::placeholder{color:var(--muted);}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;}
+.team-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;position:relative;}
+.team-card .tc-name{font-size:13px;font-weight:700;margin-bottom:2px;}
+.team-card .tc-role{font-size:11px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.team-card .tc-contact{font-size:12px;color:var(--muted);line-height:1.7;}
+.team-card .tc-del{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;line-height:1;padding:2px;}
+.team-card .tc-del:hover{color:var(--gold);}
+.team-empty{color:var(--muted);font-size:13px;font-style:italic;}
+
+/* ── TABS ── */
+.tabs-section{max-width:1100px;margin:0 auto;padding:0 24px;}
+.tab-nav{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:20px;flex-wrap:wrap;}
+.tab-btn{padding:10px 18px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+/* ── CHECKLIST GROUP ── */
+.group{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:12px;overflow:hidden;}
+.group-header{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;cursor:pointer;user-select:none;}
+.group-header:hover{background:var(--surface2);}
+.group-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.group-badge{font-size:11px;background:var(--surface2);border:1px solid var(--border);padding:2px 8px;border-radius:20px;color:var(--muted);}
+.group-body{border-top:1px solid var(--border);display:none;}
+.group-body.open{display:block;}
+
+/* ── TASK ITEM ── */
+.task-item{border-bottom:1px solid var(--border);transition:background .1s;}
+.task-item:last-child{border-bottom:none;}
+.task-item.completed .task-text{color:var(--muted);text-decoration:line-through;}
+.task-item.completed{background:rgba(34,197,94,0.04);}
+.task-row{display:flex;align-items:flex-start;gap:10px;padding:12px 18px;}
+.task-cb{margin-top:1px;width:16px;height:16px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;}
+.task-text{flex:1;font-size:13px;line-height:1.5;cursor:pointer;}
+.task-meta{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+.task-notes-btn{background:none;border:1px solid var(--border);color:var(--muted);border-radius:5px;padding:4px 8px;font-size:11px;cursor:pointer;white-space:nowrap;}
+.task-notes-btn:hover{border-color:var(--muted);color:var(--text);}
+.task-notes-btn.has-notes{border-color:var(--yellow);color:var(--yellow);}
+.task-notes-area{padding:0 18px 12px 44px;display:none;}
+.task-notes-area.open{display:block;}
+.task-notes-input{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:8px 10px;font-family:'Inter',sans-serif;font-size:12px;resize:vertical;min-height:56px;}
+.task-notes-input:focus{outline:none;border-color:var(--yellow);}
+.task-notes-input::placeholder{color:var(--muted);}
+.task-edit-btn,.task-del-btn{background:none;border:none;cursor:pointer;padding:3px 6px;border-radius:3px;font-size:12px;opacity:0;transition:opacity .15s;}
+.task-item:hover .task-edit-btn,.task-item:hover .task-del-btn{opacity:1;}
+.task-edit-btn{color:var(--muted);}.task-edit-btn:hover{color:var(--blue);background:rgba(59,130,246,0.1);}
+.task-del-btn{color:var(--muted);}.task-del-btn:hover{color:var(--gold);background:var(--gold-dim);}
+.task-edit-input{background:var(--bg);border:1px solid var(--gold);color:var(--text);border-radius:4px;padding:3px 8px;font-family:'Inter',sans-serif;font-size:13px;width:100%;min-width:200px;}
+.task-edit-input:focus{outline:none;}
+.task-save-btn,.task-cancel-btn{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;padding:3px 10px;border-radius:3px;cursor:pointer;white-space:nowrap;}
+.task-save-btn{background:var(--gold);color:#fff;border:none;}
+.task-cancel-btn{background:transparent;color:var(--muted);border:1px solid var(--border);}
+
+/* ── ADD TASK ROW ── */
+.add-task-row{display:flex;gap:8px;padding:10px 18px;border-top:1px dashed var(--border);}
+.add-task-input{flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:7px 10px;font-family:'Inter',sans-serif;font-size:13px;}
+.add-task-input:focus{outline:none;border-color:var(--gold);}
+.add-task-input::placeholder{color:var(--muted);}
+
+/* ── EQUIPMENT TABLE ── */
+.eq-table-wrap{overflow-x:auto;}
+.eq-table{width:100%;border-collapse:collapse;min-width:600px;}
+.eq-table th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;padding:10px 14px;border-bottom:2px solid var(--border);}
+.eq-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle;}
+.eq-table tbody tr:hover td{background:var(--surface2);}
+.eq-table tfoot td{padding:12px 14px;font-size:13px;font-weight:700;border-top:2px solid var(--border);}
+.status-badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.3px;white-space:nowrap;}
+.status-badge.needed{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(183,110,121,0.3);}
+.status-badge.ordered{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(59,130,246,0.3);}
+.status-badge.received{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,0.3);}
+.status-badge.owned{background:rgba(100,100,100,0.15);color:var(--muted);border:1px solid var(--border);}
+.status-select{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:5px;padding:4px 8px;font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;}
+.status-select:focus{outline:none;border-color:var(--gold);}
+.cost-total{color:var(--gold);font-size:15px;font-weight:800;}
+
+/* ── SHOW RUNDOWN TABLE ── */
+.rundown-table{width:100%;border-collapse:collapse;}
+.rundown-table th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;padding:10px 14px;border-bottom:2px solid var(--border);}
+.rundown-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:top;}
+.rundown-table tbody tr:hover td{background:var(--surface2);}
+.time-cell{font-weight:700;color:var(--gold);white-space:nowrap;width:90px;}
+.seg-name{font-weight:600;}
+.seg-detail{font-size:12px;color:var(--muted);margin-top:2px;}
+
+/* ── INFO PANELS ── */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.info-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
+.info-box h3{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.info-item{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.info-item:last-child{border-bottom:none;}
+.info-item .ii-label{color:var(--muted);}
+.info-item .ii-val{font-weight:600;color:var(--text);}
+.info-item .ii-val.gold{color:var(--gold);}
+.info-item .ii-val.green{color:var(--green);}
+.info-item .ii-val.yellow{color:var(--yellow);}
+.cam-zone{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;}
+.cam-zone:last-child{margin-bottom:0;}
+.cam-zone .cz-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.cam-zone .cz-title{font-size:13px;font-weight:700;margin-bottom:2px;}
+.cam-zone .cz-detail{font-size:12px;color:var(--muted);}
+
+/* ── NOTES AREA ── */
+.notes-area{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:12px;}
+.notes-area h3{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.notes-textarea{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:10px 12px;font-family:'Inter',sans-serif;font-size:13px;resize:vertical;min-height:90px;line-height:1.6;}
+.notes-textarea:focus{outline:none;border-color:var(--gold);}
+.notes-textarea::placeholder{color:var(--muted);}
+
+/* ── FOOTER ── */
+.footer{max-width:1100px;margin:30px auto 0;padding:0 24px 40px;text-align:center;color:var(--muted);font-size:11px;}
+
+@media(max-width:900px){
+  .progress-cards{grid-template-columns:repeat(2,1fr);}
+  .info-grid{grid-template-columns:1fr;}
+  .team-add{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">BMB</div>
+    <div class="header-title">
+      <h1>Jae Rae Live 2026 — Production Tracker</h1>
+      <div class="sub">First Live Stream: June 24, 2026 @ 8pm EST &nbsp;·&nbsp; jaeraeshow.com &nbsp;·&nbsp; Call In: 515-JAESHOW</div>
+    </div>
+    <div class="header-actions">
+      <span class="save-status" id="saveStatus">All changes auto-saved</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS OVERVIEW -->
+<div class="progress-bar-wrap">
+  <div class="progress-cards">
+    <div class="progress-card">
+      <div class="label">Overall Project</div>
+      <div class="pct" id="pctOverall">0%</div>
+      <div class="progress-track"><div class="progress-fill" id="fillOverall" style="width:0%"></div></div>
+    </div>
+    <div class="progress-card">
+      <div class="label">Equipment</div>
+      <div class="pct" id="pctEquip">0%</div>
+      <div class="progress-track"><div class="progress-fill" id="fillEquip" style="width:0%"></div></div>
+    </div>
+    <div class="progress-card">
+      <div class="label">Setup Day (Jun 19)</div>
+      <div class="pct" id="pctSetup">0%</div>
+      <div class="progress-track"><div class="progress-fill" id="fillSetup" style="width:0%"></div></div>
+    </div>
+    <div class="progress-card">
+      <div class="label">Go-Live Ready</div>
+      <div class="pct" id="pctLive">0%</div>
+      <div class="progress-track"><div class="progress-fill" id="fillLive" style="width:0%"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- KEY DATES -->
+<div class="dates-bar">
+  <div class="dates-row">
+    <div class="date-chip">
+      <div class="dc-label">Assessment</div>
+      <div class="dc-date">05-18-2026</div>
+      <div class="dc-desc">Eric on-site consult — shopping list</div>
+    </div>
+    <div class="date-chip upcoming">
+      <div class="dc-label">Setup Day</div>
+      <div class="dc-date">06-19-2026</div>
+      <div class="dc-desc">Eric + Los — room setup, wiring, test</div>
+    </div>
+    <div class="date-chip next">
+      <div class="dc-label">First Live Show</div>
+      <div class="dc-date">06-24-2026 @ 8pm EST</div>
+      <div class="dc-desc">First call-in live stream — JaeRae.com</div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM ROSTER -->
+<div class="team-section">
+  <div class="panel">
+    <div class="panel-header" onclick="togglePanel('teamPanel','teamPanelToggle')">
+      <div class="panel-title">Team &amp; Contacts</div>
+      <div class="panel-toggle" id="teamPanelToggle">▼</div>
+    </div>
+    <div class="panel-body" id="teamPanel">
+      <div class="team-add">
+        <div class="field-group">
+          <label>Name</label>
+          <input class="field-input" id="tmName" placeholder="Full name">
+        </div>
+        <div class="field-group">
+          <label>Role</label>
+          <input class="field-input" id="tmRole" placeholder="e.g. Stream Tech">
+        </div>
+        <div class="field-group">
+          <label>Phone</label>
+          <input class="field-input" id="tmPhone" placeholder="(xxx) xxx-xxxx">
+        </div>
+        <div class="field-group">
+          <label>Email</label>
+          <input class="field-input" id="tmEmail" placeholder="email@example.com">
+        </div>
+        <button class="btn btn-gold" onclick="addTeamMember()">+ Add</button>
+      </div>
+      <div class="team-grid" id="teamGrid">
+        <div class="team-empty" id="teamEmpty">No team members added yet.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-section">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('overview',this)">Overview</button>
+    <button class="tab-btn" onclick="switchTab('equipment',this)">Equipment</button>
+    <button class="tab-btn" onclick="switchTab('setup',this)">Setup Day — Jun 19</button>
+    <button class="tab-btn" onclick="switchTab('golive',this)">Go-Live — Jun 24</button>
+    <button class="tab-btn" onclick="switchTab('show',this)">Show Rundown</button>
+    <button class="tab-btn" onclick="switchTab('tech',this)">Tech Notes</button>
+    <button class="tab-btn" onclick="switchTab('graphics',this)">vMix Graphics</button>
+  </div>
+
+  <!-- ══ TAB: OVERVIEW ══ -->
+  <div class="tab-content active" id="tab-overview">
+
+    <div class="info-grid">
+      <div class="info-box">
+        <h3>Project Details</h3>
+        <div class="info-item"><span class="ii-label">Client</span><span class="ii-val">Jae Rae</span></div>
+        <div class="info-item"><span class="ii-label">Show Name</span><span class="ii-val gold">The Jae Rae Show</span></div>
+        <div class="info-item"><span class="ii-label">Website</span><span class="ii-val gold">www.jaeraeshow.com</span></div>
+        <div class="info-item"><span class="ii-label">Call-In Number</span><span class="ii-val gold">515-JAESHOW &nbsp;(515-523-7469)</span></div>
+        <div class="info-item"><span class="ii-label">Tagline</span><span class="ii-val">Real Talk. Real Connections. Real You.</span></div>
+        <div class="info-item"><span class="ii-label">Show Type</span><span class="ii-val">Live call-in stream + radio show</span></div>
+        <div class="info-item"><span class="ii-label">First Show</span><span class="ii-val gold">Jun 24, 2026 @ 8pm EST</span></div>
+        <div class="info-item"><span class="ii-label">Internet</span><span class="ii-val green">1 Gbps / 1 Gbps on-site</span></div>
+        <div class="info-item"><span class="ii-label">Production SW</span><span class="ii-val">vMix (already licensed)</span></div>
+        <div class="info-item"><span class="ii-label">Audio</span><span class="ii-val">RØDECaster Pro II (on-site)</span></div>
+        <div class="info-item"><span class="ii-label">Cam Control</span><span class="ii-val">Bitfocus Companion + Stream Deck</span></div>
+      </div>
+
+      <div class="info-box">
+        <h3>Camera Plan</h3>
+        <div class="cam-zone">
+          <div class="cz-label">Cam A — Main</div>
+          <div class="cz-title">FoMako K820N</div>
+          <div class="cz-detail">4K 60fps · Eye-level, facing talent — main host chair / Zone 1</div>
+        </div>
+        <div class="cam-zone">
+          <div class="cz-label">Cam B — Side Profile</div>
+          <div class="cz-title">FoMako K820N</div>
+          <div class="cz-detail">4K 60fps · 45-degree cinematic angle — Zone 1 / Zone 2</div>
+        </div>
+        <div class="cam-zone">
+          <div class="cz-label">Cam C — Overhead (Fixed)</div>
+          <div class="cz-title">Marshall CV370</div>
+          <div class="cz-detail">NDI HX3 · Fixed mount on C-Stand above card/ritual table</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-box">
+        <h3>Studio Zones</h3>
+        <div class="info-item"><span class="ii-label">Zone 1</span><span class="ii-val">Main host chair — tarot, astrology, storytelling</span></div>
+        <div class="info-item"><span class="ii-label">Zone 2</span><span class="ii-val">Mystic desk — vintage props, astrology materials</span></div>
+        <div class="info-item"><span class="ii-label">Zone 3</span><span class="ii-val">Short-form content wall — TikTok / Reels</span></div>
+      </div>
+      <div class="info-box">
+        <h3>Branding</h3>
+        <div class="info-item"><span class="ii-label">Primary Color</span><span class="ii-val" style="color:#B76E79;">Rose Gold #B76E79</span></div>
+        <div class="info-item"><span class="ii-label">Base</span><span class="ii-val">Black + Beige + Soft Blush</span></div>
+        <div class="info-item"><span class="ii-label">Headlines</span><span class="ii-val">Playfair Display</span></div>
+        <div class="info-item"><span class="ii-label">Body</span><span class="ii-val">Montserrat</span></div>
+        <div class="info-item"><span class="ii-label">Aesthetic</span><span class="ii-val">Soft Goddess Meets Wild Mystic</span></div>
+        <div class="info-item"><span class="ii-label">Tagline</span><span class="ii-val gold">Welcome to the frequency</span></div>
+      </div>
+    </div>
+
+    <div class="notes-area">
+      <h3>Project Notes</h3>
+      <textarea class="notes-textarea" id="overviewNotes" placeholder="Add overall project notes here..." onchange="saveNotes('overviewNotes')"></textarea>
+    </div>
+
+  </div>
+
+  <!-- ══ TAB: EQUIPMENT ══ -->
+  <div class="tab-content" id="tab-equipment">
+
+    <div class="group" style="overflow:visible;">
+      <div class="group-header" onclick="toggleGroup('eqGroup')">
+        <div class="group-title">Shopping List</div>
+        <div class="group-badge" id="eqGroupBadge">0 / 6 items</div>
+      </div>
+      <div class="group-body open" id="eqGroup">
+        <div class="eq-table-wrap">
+          <table class="eq-table" id="eqTable">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Model</th>
+                <th>Est. Cost</th>
+                <th>Status</th>
+                <th>Buy</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="eqBody">
+              <!-- Rows injected by JS -->
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2" style="color:var(--muted);">Estimated Total (to-buy items)</td>
+                <td class="cost-total" id="eqTotal">—</td>
+                <td colspan="3"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-header" onclick="toggleGroup('ownedGroup')">
+        <div class="group-title">Already Owned / Handled</div>
+        <div class="group-badge">3 items</div>
+      </div>
+      <div class="group-body" id="ownedGroup">
+        <div class="eq-table-wrap">
+          <table class="eq-table">
+            <thead><tr><th>Item</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td>vMix License</td><td style="color:var(--muted);font-size:12px;">Already licensed and configured</td></tr>
+              <tr><td>RØDECaster Pro II</td><td style="color:var(--muted);font-size:12px;">On-site at Jae Rae's location</td></tr>
+              <tr><td>Stream Deck</td><td style="color:var(--muted);font-size:12px;">For Bitfocus Companion camera control</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-header" onclick="toggleGroup('tbdGroup')">
+        <div class="group-title">Still TBD — Not Yet on Purchase List</div>
+        <div class="group-badge">3 items</div>
+      </div>
+      <div class="group-body" id="tbdGroup">
+        <div class="eq-table-wrap">
+          <table class="eq-table">
+            <thead><tr><th>Item</th><th>Est. Cost</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td>Overhead Camera (Marshall CV370 or similar)</td><td>~$719</td><td style="color:var(--muted);font-size:12px;">NDI HX3, fixed mount above card/ritual table. Not on current buy list.</td></tr>
+              <tr><td>PTZ Floor Stands (x2)</td><td>~$506</td><td style="color:var(--muted);font-size:12px;">Proaim 3-stage, $253/unit. For the 2x FoMako K820N cameras. TBD.</td></tr>
+              <tr><td>C-Stand Overhead Shot Kit</td><td>~$175</td><td style="color:var(--muted);font-size:12px;">For mounting overhead cam above card table. TBD.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="notes-area">
+      <h3>Equipment Notes</h3>
+      <textarea class="notes-textarea" id="equipNotes" placeholder="Vendor links, purchase orders, delivery info..." onchange="saveNotes('equipNotes')"></textarea>
+    </div>
+
+  </div>
+
+  <!-- ══ TAB: SETUP DAY ══ -->
+  <div class="tab-content" id="tab-setup">
+    <div id="setupChecklist"></div>
+    <div class="notes-area" style="margin-top:4px;">
+      <h3>Setup Day Notes</h3>
+      <textarea class="notes-textarea" id="setupNotes" placeholder="Day-of notes, issues, cable map..." onchange="saveNotes('setupNotes')"></textarea>
+    </div>
+  </div>
+
+  <!-- ══ TAB: GO-LIVE ══ -->
+  <div class="tab-content" id="tab-golive">
+    <div id="goliveChecklist"></div>
+    <div class="notes-area" style="margin-top:4px;">
+      <h3>Go-Live Notes</h3>
+      <textarea class="notes-textarea" id="goliveNotes" placeholder="Notes for show day..." onchange="saveNotes('goliveNotes')"></textarea>
+    </div>
+  </div>
+
+  <!-- ══ TAB: SHOW RUNDOWN ══ -->
+  <div class="tab-content" id="tab-show">
+    <div class="group" style="overflow:visible;">
+      <div class="group-header" onclick="toggleGroup('rundownGroup')">
+        <div class="group-title">1-Hour Show Structure — The Jae Rae Show</div>
+        <div class="group-badge">9 segments</div>
+      </div>
+      <div class="group-body open" id="rundownGroup">
+        <table class="rundown-table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Segment</th>
+              <th>Details / Cam Notes</th>
+              <th style="width:120px;">vMix Graphic</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="time-cell">0:00 – 3:00</td>
+              <td><div class="seg-name">Show Opening</div></td>
+              <td><div class="seg-detail">Intro music + animated logo. Camera slowly pushes in on JaeRae at desk/mic. Welcome viewers, explain the vibe, encourage call-ins, introduce "Card of the Night" theme.</div></td>
+              <td><div class="seg-detail" style="color:var(--gold);">Intro Screen + VO</div></td>
+            </tr>
+            <tr>
+              <td class="time-cell">3:00 – 8:00</td>
+              <td><div class="seg-name">Real Talk Segment</div></td>
+              <td><div class="seg-detail">Trending emotional/spiritual/life topic — relationships, healing, intuition, burnout, energy shifts. Personal stories, humor, audience reflection questions. Cam A main, Cam B cutaways.</div></td>
+              <td><div class="seg-detail" style="color:var(--gold);">Real Talk Stinger</div></td>
+            </tr>
+            <tr>
+              <td class="time-cell">8:00 – 15:00</td>
+              <td><div class="seg-name">Live Call-In Q&amp;A</div></td>
+              <td><div class="seg-detail">First callers enter queue. Quick tarot pulls or intuitive insights. Life, love, career, purpose, timing, healing questions. Fast-paced and emotionally engaging. Display call-in number on lower third: 515-JAESHOW.</div></td>
+              <td><div class="seg-detail" style="color:var(--gold);">Call-In Stinger</div></td>
+            </tr>
+            <tr>
+              <td class="time-cell">15:00 – 20:00</td>
+              <td><div class="seg-name">Card of the Night</div></td>
+              <td><div class="seg-detail">Pull one tarot card live. Explain symbolism, lesson, energetic meaning. Tie to current astrology and audience emotions. Ask viewers to comment how card resonates. Cam C overhead for card pull.</div></td>
+              <td><div class="seg-detail" style="color:var(--gold);">Card of the Night Stinger</div></td>
+            </tr>
+            <tr>
+              <td class="time-cell">20:00 – 32:00</td>
+              <td><div class="seg-name">Horoscopes — All 12 Signs</div></td>
+              <td><div class="seg-detail">~1 min per sign. Love, money, healing, intuition themes. Order: Aries → Taurus → Gemini → Cancer → Leo → Virgo → Libra → Scorpio → Sagittarius → Capricorn → Aquarius → Pisces. Cam A, zodiac lower thirds in vMix.</div></td>
+              <td><div class="seg-detail" style="color:var(--gold);">Horoscopes Stinger</div></td>
+            </tr>
+            <tr>
+              <td class="time-cell">32:00 – 40:00</td>
+              <td><div class="seg-name">Deeper Live Readings</div></td>
+              <td><div class="seg-detail">Select 2–3 audience members for deeper readings. Mix tarot, intuition, astrology, pendulum, or mediumship. Focus on transformation and empowerment. Cam A + Cam C overhead as needed.</div></td>
+              <td><div class="seg-detail" style="color:var(--gold);">Readings Stinger</div></td>
+            </tr>
+            <tr>
+              <td class="time-cell">40:00 – 48:00</td>
+              <td><div class="seg-name">Hot Topic / Spiritual Teaching</div></td>
+              <td><div class="seg-detail">Teach a spiritual concept in a grounded, relatable way. Examples: claircognizance, intuition opening, energy vampires &amp; boundaries, manifestation myths. Cam A primary, Cam B cinematic cuts.</div></td>
+              <td><div class="seg-detail" style="color:var(--gold);">Hot Topic Stinger</div></td>
+            </tr>
+            <tr>
+              <td class="time-cell">48:00 – 55:00</td>
+              <td><div class="seg-name">Rapid Fire Questions</div></td>
+              <td><div class="seg-detail">Fast audience questions. Pull one card per question. Keep energy upbeat and entertaining. Cam A tight close-up. High energy pace.</div></td>
+              <td><div class="seg-detail" style="color:var(--gold);">Rapid Fire Stinger</div></td>
+            </tr>
+            <tr>
+              <td class="time-cell">55:00 – 60:00</td>
+              <td><div class="seg-name">Closing &amp; Outro</div></td>
+              <td><div class="seg-detail">Recap the night's energy. Thank viewers and callers. Mention upcoming shows and website. Invite social follows. End with signature outro tagline + VO. Outro screen overlay in vMix.</div></td>
+              <td><div class="seg-detail" style="color:var(--gold);">Outro Screen + VO</div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-header" onclick="toggleGroup('scriptGroup')">
+        <div class="group-title">Intro &amp; Outro Taglines</div>
+        <div class="group-badge">8 taglines</div>
+      </div>
+      <div class="group-body" id="scriptGroup">
+        <div style="padding:16px 18px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Intro Taglines</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="font-size:13px;line-height:1.6;color:var(--text);font-style:italic;border-left:2px solid var(--gold);padding-left:10px;">"Welcome to The Jae Rae Show — where intuition meets real life."</div>
+              <div style="font-size:13px;line-height:1.6;color:var(--text);font-style:italic;border-left:2px solid var(--border);padding-left:10px;">"This is your space for real talk, real healing, and real connection."</div>
+              <div style="font-size:13px;line-height:1.6;color:var(--text);font-style:italic;border-left:2px solid var(--border);padding-left:10px;">"Tonight we're opening the phones, opening the energy, and opening the conversation."</div>
+              <div style="font-size:13px;line-height:1.6;color:var(--text);font-style:italic;border-left:2px solid var(--border);padding-left:10px;">"You're live with JaeRae — let's vibe together."</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Outro Taglines</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="font-size:13px;line-height:1.6;color:var(--text);font-style:italic;border-left:2px solid var(--gold);padding-left:10px;">"This is JaeRae reminding you to trust your intuition and vibe your life."</div>
+              <div style="font-size:13px;line-height:1.6;color:var(--text);font-style:italic;border-left:2px solid var(--border);padding-left:10px;">"Be heard. Be seen. Be you."</div>
+              <div style="font-size:13px;line-height:1.6;color:var(--text);font-style:italic;border-left:2px solid var(--border);padding-left:10px;">"Until next time — protect your peace, trust your gifts, and stay connected."</div>
+              <div style="font-size:13px;line-height:1.6;color:var(--text);font-style:italic;border-left:2px solid var(--border);padding-left:10px;">"Goodnight everybody, and I'll see you on the next Jae Rae Show."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-header" onclick="toggleGroup('bonusGroup')">
+        <div class="group-title">Bonus Show Ideas (Future Episodes)</div>
+        <div class="group-badge">8 ideas</div>
+      </div>
+      <div class="group-body" id="bonusGroup">
+        <div style="padding:14px 18px;display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;">
+          <div style="font-size:13px;padding:6px 0;border-bottom:1px solid var(--border);">Celebrity energy readings</div>
+          <div style="font-size:13px;padding:6px 0;border-bottom:1px solid var(--border);">Psychic hotline night</div>
+          <div style="font-size:13px;padding:6px 0;border-bottom:1px solid var(--border);">Couples compatibility readings</div>
+          <div style="font-size:13px;padding:6px 0;border-bottom:1px solid var(--border);">Full moon specials</div>
+          <div style="font-size:13px;padding:6px 0;border-bottom:1px solid var(--border);">Ask JaeRae Anything nights</div>
+          <div style="font-size:13px;padding:6px 0;border-bottom:1px solid var(--border);">Mediumship connection episodes</div>
+          <div style="font-size:13px;padding:6px 0;border-bottom:1px solid var(--border);">"Truth or Tarot" game segment</div>
+          <div style="font-size:13px;padding:6px 0;border-bottom:1px solid var(--border);">Audience manifestation success stories</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notes-area">
+      <h3>Show Notes</h3>
+      <textarea class="notes-textarea" id="showNotes" placeholder="Show-day notes, cue cards, graphics list..." onchange="saveNotes('showNotes')"></textarea>
+    </div>
+  </div>
+
+  <!-- ══ TAB: TECH NOTES ══ -->
+  <div class="tab-content" id="tab-tech">
+
+    <div class="info-grid">
+      <div class="info-box">
+        <h3>Network / Connectivity</h3>
+        <div class="info-item"><span class="ii-label">Internet Speed</span><span class="ii-val green">1 Gbps / 1 Gbps</span></div>
+        <div class="info-item"><span class="ii-label">Stream PC</span><span class="ii-val">Wired Ethernet only — no Wi-Fi</span></div>
+        <div class="info-item"><span class="ii-label">Cameras</span><span class="ii-val">CAT6 to managed switch (same LAN)</span></div>
+        <div class="info-item"><span class="ii-label">NDI Requirement</span><span class="ii-val">All devices on same subnet</span></div>
+        <div class="info-item"><span class="ii-label">Switch</span><span class="ii-val">Managed GbE 8-port</span></div>
+        <div class="info-item"><span class="ii-label">4K Stream BW</span><span class="ii-val">~51 Mbps needed — well within 1 Gbps</span></div>
+      </div>
+      <div class="info-box">
+        <h3>vMix Configuration</h3>
+        <div class="info-item"><span class="ii-label">Inputs</span><span class="ii-val">3x NDI camera sources</span></div>
+        <div class="info-item"><span class="ii-label">Audio Input</span><span class="ii-val">RØDECaster Pro II (USB)</span></div>
+        <div class="info-item"><span class="ii-label">Switcher</span><span class="ii-val">vMix handles all switching — no ATEM</span></div>
+        <div class="info-item"><span class="ii-label">Output</span><span class="ii-val">RTMP → YouTube / Facebook / platform TBD</span></div>
+        <div class="info-item"><span class="ii-label">Resolution Target</span><span class="ii-val gold">4K (confirm license supports 4K)</span></div>
+        <div class="info-item"><span class="ii-label">Encoder</span><span class="ii-val">vMix NVENC (GPU-accelerated)</span></div>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-box">
+        <h3>Camera Config</h3>
+        <div class="info-item"><span class="ii-label">Cam A NDI Name</span><span class="ii-val" id="camAName">—</span></div>
+        <div class="info-item"><span class="ii-label">Cam A IP</span><span class="ii-val" id="camAIP">TBD on setup day</span></div>
+        <div class="info-item"><span class="ii-label">Cam B NDI Name</span><span class="ii-val" id="camBName">—</span></div>
+        <div class="info-item"><span class="ii-label">Cam B IP</span><span class="ii-val" id="camBIP">TBD on setup day</span></div>
+        <div class="info-item"><span class="ii-label">Cam C NDI Name</span><span class="ii-val" id="camCName">—</span></div>
+        <div class="info-item"><span class="ii-label">Cam C IP</span><span class="ii-val" id="camCIP">TBD on setup day</span></div>
+      </div>
+      <div class="info-box">
+        <h3>Stream Output</h3>
+        <div class="info-item"><span class="ii-label">Platform</span><span class="ii-val" id="streamPlatform">TBD</span></div>
+        <div class="info-item"><span class="ii-label">Stream Key</span><span class="ii-val" style="color:var(--muted);">stored securely</span></div>
+        <div class="info-item"><span class="ii-label">Bitrate (4K)</span><span class="ii-val">40,000 – 51,000 kbps</span></div>
+        <div class="info-item"><span class="ii-label">Backup Encoder</span><span class="ii-val">YoloBox Ultra (standby)</span></div>
+        <div class="info-item"><span class="ii-label">Audio Bitrate</span><span class="ii-val">320 kbps stereo</span></div>
+        <div class="info-item"><span class="ii-label">Keyframe Interval</span><span class="ii-val">2 seconds</span></div>
+      </div>
+    </div>
+
+    <div class="notes-area">
+      <h3>Tech Notes</h3>
+      <textarea class="notes-textarea" id="techNotes" placeholder="Camera IP addresses, NDI stream names, RTMP keys, vMix scene list, Companion button layout..." onchange="saveNotes('techNotes')"></textarea>
+    </div>
+
+  </div>
+
+  <!-- ══ TAB: VMIX GRAPHICS ══ -->
+  <div class="tab-content" id="tab-graphics">
+
+    <div style="background:rgba(183,110,121,0.07);border:1px solid rgba(183,110,121,0.25);border-radius:10px;padding:14px 18px;margin-bottom:16px;font-size:13px;line-height:1.6;">
+      <strong style="color:var(--gold);">Pre-Production Note:</strong> All screens below need to be built in vMix before the Jun 19 setup day. Jae's VO for the intro and outro will be recorded separately — leave audio placeholder in those scenes and swap in the final file once received. Stingers should be 3–5 seconds, branded with rose gold / black / blush palette, and include the animated show logo.
+    </div>
+
+    <div class="group" style="overflow:visible;">
+      <div class="group-header" onclick="toggleGroup('gfxIntroOutro')">
+        <div class="group-title">Intro &amp; Outro Screens</div>
+        <div class="group-badge" id="gfxIntroOutroBadge">0 / 2 built</div>
+      </div>
+      <div class="group-body open" id="gfxIntroOutro">
+        <div id="gfxChecklist1"></div>
+      </div>
+    </div>
+
+    <div class="group" style="overflow:visible;">
+      <div class="group-header" onclick="toggleGroup('gfxStingers')">
+        <div class="group-title">Segment Stingers (7 screens)</div>
+        <div class="group-badge" id="gfxStingersBadge">0 / 7 built</div>
+      </div>
+      <div class="group-body open" id="gfxStingers">
+        <div id="gfxChecklist2"></div>
+      </div>
+    </div>
+
+    <div class="group" style="overflow:visible;">
+      <div class="group-header" onclick="toggleGroup('gfxLowerThirds')">
+        <div class="group-title">Lower Thirds &amp; Overlays</div>
+        <div class="group-badge" id="gfxLowerThirdsBadge">0 / 5 built</div>
+      </div>
+      <div class="group-body open" id="gfxLowerThirds">
+        <div id="gfxChecklist3"></div>
+      </div>
+    </div>
+
+    <div class="info-grid" style="margin-top:16px;">
+      <div class="info-box">
+        <h3>Design Specs — All Screens</h3>
+        <div class="info-item"><span class="ii-label">Resolution</span><span class="ii-val">3840×2160 (4K)</span></div>
+        <div class="info-item"><span class="ii-label">Primary Color</span><span class="ii-val" style="color:#B76E79;">Rose Gold #B76E79</span></div>
+        <div class="info-item"><span class="ii-label">Background</span><span class="ii-val">Black #000000 or deep navy</span></div>
+        <div class="info-item"><span class="ii-label">Accent</span><span class="ii-val">Soft Blush #F8E8E8 / Beige #F5F5DC</span></div>
+        <div class="info-item"><span class="ii-label">Headline Font</span><span class="ii-val">Playfair Display</span></div>
+        <div class="info-item"><span class="ii-label">Body Font</span><span class="ii-val">Montserrat</span></div>
+        <div class="info-item"><span class="ii-label">Show Logo</span><span class="ii-val yellow">Required on all screens</span></div>
+        <div class="info-item"><span class="ii-label">Stinger Duration</span><span class="ii-val">3–5 seconds (animated)</span></div>
+      </div>
+      <div class="info-box">
+        <h3>Intro Screen — Content Elements</h3>
+        <div class="info-item"><span class="ii-label">Show Logo</span><span class="ii-val gold">Animated (push in / reveal)</span></div>
+        <div class="info-item"><span class="ii-label">Tagline</span><span class="ii-val">Real Talk. Real Connections. Real You.</span></div>
+        <div class="info-item"><span class="ii-label">Show Name</span><span class="ii-val">The Jae Rae Show</span></div>
+        <div class="info-item"><span class="ii-label">VO Slot</span><span class="ii-val yellow">Placeholder — awaiting Jae's recording</span></div>
+        <div class="info-item"><span class="ii-label">Duration</span><span class="ii-val">~3 min (Show Opening segment)</span></div>
+        <div class="info-item"><span class="ii-label">Music</span><span class="ii-val">Intro music track (TBD)</span></div>
+        <div class="info-item"><span class="ii-label">Website</span><span class="ii-val">www.jaeraeshow.com</span></div>
+        <div class="info-item"><span class="ii-label">Call-In</span><span class="ii-val">515-JAESHOW</span></div>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-box">
+        <h3>Outro Screen — Content Elements</h3>
+        <div class="info-item"><span class="ii-label">Show Logo</span><span class="ii-val gold">Static or slow animation</span></div>
+        <div class="info-item"><span class="ii-label">VO Slot</span><span class="ii-val yellow">Placeholder — awaiting Jae's recording</span></div>
+        <div class="info-item"><span class="ii-label">Website</span><span class="ii-val">www.jaeraeshow.com</span></div>
+        <div class="info-item"><span class="ii-label">Call-In Number</span><span class="ii-val">515-JAESHOW (515-523-7469)</span></div>
+        <div class="info-item"><span class="ii-label">Social Handles</span><span class="ii-val">IG / TikTok / YouTube / Facebook</span></div>
+        <div class="info-item"><span class="ii-label">Tagline</span><span class="ii-val">Be heard. Be seen. Be you.</span></div>
+        <div class="info-item"><span class="ii-label">Duration</span><span class="ii-val">~5 min (Closing segment)</span></div>
+      </div>
+      <div class="info-box">
+        <h3>VO Status</h3>
+        <div class="info-item"><span class="ii-label">Intro VO</span><span class="ii-val yellow">In progress — Jae recording</span></div>
+        <div class="info-item"><span class="ii-label">Outro VO</span><span class="ii-val yellow">In progress — Jae recording</span></div>
+        <div class="info-item"><span class="ii-label">File Format</span><span class="ii-val">WAV or MP3, 48kHz / 320kbps</span></div>
+        <div class="info-item"><span class="ii-label">Delivery</span><span class="ii-val">TBD — from Jae directly</span></div>
+        <div class="info-item"><span class="ii-label">Integration</span><span class="ii-val">Swap into vMix audio layer on intro/outro scene</span></div>
+      </div>
+    </div>
+
+    <div class="notes-area">
+      <h3>Graphics Notes</h3>
+      <textarea class="notes-textarea" id="graphicsNotes" placeholder="File names, asset locations, vMix scene names, VO delivery status..." onchange="saveNotes('graphicsNotes')"></textarea>
+    </div>
+
+  </div>
+
+</div><!-- /tabs-section -->
+
+<div class="footer">BMB Production &nbsp;·&nbsp; The Jae Rae Show 2026 &nbsp;·&nbsp; First Show Jun 24, 2026 @ 8pm EST &nbsp;·&nbsp; jaeraeshow.com</div>
+
+<script>
+const STORE = 'jrTracker_v1';
+
+const DEFAULT_EQUIPMENT = [
+  { id:'eq1', name:'4K FoMako PTZ Cameras (x2)', model:'K820N — qty: 2', cost:1998, status:'needed', link:'https://www.amazon.com/gp/product/B0BJNHLK7C', notes:'$999/unit. 4K 60fps, 20x, NDI 6 & HX3, AI tracking, PoE.' },
+  { id:'eq2', name:'TRENDnet 8-Port 2.5G PoE++ Switch', model:'TPE-BG380', cost:239.99, status:'needed', link:'https://www.amazon.com/gp/product/B0DBMWNMMM', notes:'2.5G ports — great headroom for 4K NDI. PoE++ powers all cameras over ethernet.' },
+  { id:'eq3', name:'FoMaKo NDI PTZ Controller KC608N', model:'KC608N — hardware PTZ keyboard', cost:499, status:'needed', link:'https://www.amazon.com/gp/product/B0C9J6H6RF', notes:'Dedicated hardware PTZ controller for FoMako cameras.' },
+  { id:'eq4', name:'Ethernet Cable — 7ft (x3)', model:'Cat6 patch cable', cost:23.97, status:'needed', link:'https://www.amazon.com/gp/product/B08MTCNS9S', notes:'$7.99/unit x3. Short runs — switch to PC or nearby devices.' },
+  { id:'eq5', name:'Ethernet Cable — 35ft (x2)', model:'Cat6 patch cable', cost:26.98, status:'needed', link:'https://www.amazon.com/gp/product/B00B3UR496', notes:'$13.49/unit x2. Longer runs to camera positions.' },
+  { id:'eq6', name:'Monitor Holder', model:'Monitor mount/holder', cost:8.99, status:'needed', link:'https://www.amazon.com/dp/B0BTDHQJ6X', notes:'Confidence monitor or reference display mount.' },
+];
+
+const GFX_GROUPS_1 = [
+  { id:'gx1', text:'Intro Screen built in vMix — animated logo, tagline, show name', done:false },
+  { id:'gx2', text:'Intro VO audio placeholder added — label "SWAP: Jae Intro VO"', done:false },
+  { id:'gx3', text:'Intro music track sourced and added to intro scene', done:false },
+  { id:'gx4', text:'Outro Screen built in vMix — logo, website, call-in, socials', done:false },
+  { id:'gx5', text:'Outro VO audio placeholder added — label "SWAP: Jae Outro VO"', done:false },
+  { id:'gx6', text:'Intro VO received from Jae — swap into vMix intro scene', done:false },
+  { id:'gx7', text:'Outro VO received from Jae — swap into vMix outro scene', done:false },
+  { id:'gx8', text:'Full intro + outro test run in vMix — confirm transitions', done:false },
+];
+
+const GFX_GROUPS_2 = [
+  { id:'gx9',  text:'Real Talk Stinger — built and added to vMix scene list', done:false },
+  { id:'gx10', text:'Live Call-In Q&A Stinger — includes 515-JAESHOW lower third', done:false },
+  { id:'gx11', text:'Card of the Night Stinger — tarot-themed graphic', done:false },
+  { id:'gx12', text:'Horoscopes Stinger — zodiac themed, built in vMix', done:false },
+  { id:'gx13', text:'Deeper Live Readings Stinger — built in vMix', done:false },
+  { id:'gx14', text:'Hot Topic / Spiritual Teaching Stinger — built in vMix', done:false },
+  { id:'gx15', text:'Rapid Fire Questions Stinger — high energy, built in vMix', done:false },
+];
+
+const GFX_GROUPS_3 = [
+  { id:'gx16', text:'Call-In Lower Third — "Call In: 515-JAESHOW / 515-523-7469"', done:false },
+  { id:'gx17', text:'Website Lower Third — "www.jaeraeshow.com"', done:false },
+  { id:'gx18', text:'Zodiac Sign Lower Thirds — all 12 signs, ready in vMix', done:false },
+  { id:'gx19', text:'Caller Name Lower Third template — editable live on-air', done:false },
+  { id:'gx20', text:'Social Media Bug / Persistent overlay — corner logo + handles', done:false },
+];
+
+const SETUP_GROUPS = [
+  {
+    id:'sg1', label:'Pre-Arrival', tasks:[
+      { id:'s1', text:'Confirm gear list finalized and all items received', done:false },
+      { id:'s2', text:'Confirm location address and access time with Jae Rae', done:false },
+      { id:'s3', text:'Pack: 3 cameras, switch, CAT6, Stream Deck, laptop/PC', done:false },
+      { id:'s4', text:'Download + update vMix to latest version', done:false },
+      { id:'s5', text:'Download + update Bitfocus Companion + PTZOptics module', done:false },
+      { id:'s5b', text:'Confirm all vMix graphics / stingers are built before this day', done:false },
+    ]
+  },
+  {
+    id:'sg2', label:'Room Assessment & Cable Run', tasks:[
+      { id:'s6', text:'Walk all 3 zones — confirm camera mounting positions', done:false },
+      { id:'s7', text:'Identify power outlets for each camera position', done:false },
+      { id:'s8', text:'Run CAT6 from switch location to Cam A position', done:false },
+      { id:'s9', text:'Run CAT6 from switch location to Cam B position', done:false },
+      { id:'s10', text:'Run CAT6 from switch location to overhead cam (Cam C)', done:false },
+      { id:'s11', text:'Run CAT6 from switch to stream PC', done:false },
+      { id:'s12', text:'Label all cable runs at both ends', done:false },
+    ]
+  },
+  {
+    id:'sg3', label:'Camera Setup & NDI Config', tasks:[
+      { id:'s13', text:'Mount Cam A (Main) — eye-level facing host chair', done:false },
+      { id:'s14', text:'Mount Cam B (Side) — 45-degree cinematic position', done:false },
+      { id:'s15', text:'Mount Cam C (Overhead OTF) — above card/ritual table', done:false },
+      { id:'s16', text:'Power all 3 cameras and confirm network connection', done:false },
+      { id:'s17', text:'Set static IPs on each camera — document in Tech Notes', done:false },
+      { id:'s18', text:'Name each NDI stream (e.g. JR-Cam-A, JR-Cam-B, JR-Cam-C)', done:false },
+      { id:'s19', text:'Confirm all 3 cameras appear in NDI finder / vMix input list', done:false },
+    ]
+  },
+  {
+    id:'sg4', label:'vMix & Audio Setup', tasks:[
+      { id:'s20', text:'Add all 3 NDI sources into vMix', done:false },
+      { id:'s21', text:'Set each input to correct label and shortcut key', done:false },
+      { id:'s22', text:'Connect RØDECaster Pro II via USB — confirm audio input in vMix', done:false },
+      { id:'s23', text:'Set audio levels and test monitoring', done:false },
+      { id:'s24', text:'Build vMix show layout (overlays, lower thirds, end card)', done:false },
+      { id:'s25', text:'Configure stream output settings (platform, RTMP URL, bitrate)', done:false },
+    ]
+  },
+  {
+    id:'sg5', label:'Bitfocus Companion Setup', tasks:[
+      { id:'s26', text:'Configure PTZOptics module in Companion (IP addresses)', done:false },
+      { id:'s27', text:'Map Stream Deck buttons: Cam A, Cam B, Cam C, Overhead', done:false },
+      { id:'s28', text:'Add PTZ preset positions (home, medium, close-up) per camera', done:false },
+      { id:'s29', text:'Test all button mappings — confirm camera moves respond', done:false },
+    ]
+  },
+  {
+    id:'sg6', label:'Full Tech Run & Sign-Off', tasks:[
+      { id:'s30', text:'Do a private test stream to YouTube — confirm 4K output', done:false },
+      { id:'s31', text:'Check stream on separate device (phone/tablet)', done:false },
+      { id:'s32', text:'Run through all camera positions at show pace', done:false },
+      { id:'s33', text:'Test YoloBox Ultra backup encoder — confirm it can take over', done:false },
+      { id:'s34', text:'Brief Jae Rae on show flow + what to expect on Jun 24', done:false },
+      { id:'s35', text:'Document final IP addresses, NDI names, stream settings', done:false },
+      { id:'s36', text:'Leave cable map and tech notes on-site', done:false },
+    ]
+  },
+];
+
+const GOLIVE_GROUPS = [
+  {
+    id:'gl1', label:'Day-Of Prep (Jun 24)', tasks:[
+      { id:'g1', text:'Arrive at location by 5:00pm — 3 hours before show', done:false },
+      { id:'g2', text:'Power on all cameras — confirm NDI feeds in vMix', done:false },
+      { id:'g3', text:'Confirm internet speed at location (run speed test)', done:false },
+      { id:'g4', text:'Confirm audio levels on RØDECaster — check host mic', done:false },
+      { id:'g5', text:'Load vMix show layout — verify all scenes / overlays', done:false },
+      { id:'g6', text:'Confirm stream key and RTMP destination is correct', done:false },
+      { id:'g7', text:'Start private/unlisted test stream — confirm platform receiving', done:false },
+      { id:'g8', text:'Check stream from viewer perspective on phone', done:false },
+    ]
+  },
+  {
+    id:'gl2', label:'Pre-Show (1 hour out)', tasks:[
+      { id:'g9', text:'Camera walkthrough — all PTZ presets confirmed', done:false },
+      { id:'g10', text:'Jae Rae on-site — mic check and monitor check', done:false },
+      { id:'g11', text:'Confirm show props are in position (cards, phone, candles)', done:false },
+      { id:'g12', text:'Lighting check — all zones lit correctly', done:false },
+      { id:'g13', text:'Full run-through of intro sequence', done:false },
+      { id:'g14', text:'Start stream 5-10 min early with countdown slate', done:false },
+    ]
+  },
+  {
+    id:'gl3', label:'Live Show — 8:00pm EST', tasks:[
+      { id:'g15', text:'Go live on platform — confirm active', done:false },
+      { id:'g16', text:'Monitor stream health in vMix throughout show', done:false },
+      { id:'g17', text:'YoloBox Ultra on standby — ready to switch if needed', done:false },
+      { id:'g18', text:'Monitor audio levels throughout', done:false },
+      { id:'g19', text:'Hit all camera cues per show rundown', done:false },
+    ]
+  },
+  {
+    id:'gl4', label:'Post-Show', tasks:[
+      { id:'g20', text:'End stream cleanly — confirm recording saved', done:false },
+      { id:'g21', text:'Download local vMix recording for post-production', done:false },
+      { id:'g22', text:'Note any tech issues for next show', done:false },
+      { id:'g23', text:'Confirm with Jae Rae — debrief on what worked', done:false },
+    ]
+  },
+];
+
+// ── STATE ──────────────────────────────────────────────
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch(e) { return {}; }
+}
+function saveState(s) {
+  localStorage.setItem(STORE, JSON.stringify(s));
+  flashSave();
+}
+function flashSave() {
+  const el = document.getElementById('saveStatus');
+  el.textContent = 'Saved';
+  el.style.color = 'var(--green)';
+  setTimeout(() => { el.textContent = 'All changes auto-saved'; el.style.color = ''; }, 1500);
+}
+
+let STATE = loadState();
+// Always sync equipment from DEFAULT_EQUIPMENT — preserves status/notes per ID but picks up any name/model/link/cost changes
+STATE.equipment = DEFAULT_EQUIPMENT.map(def => {
+  const existing = (STATE.equipment || []).find(e => e.id === def.id);
+  return existing ? { ...def, status: existing.status, notes: existing.notes } : { ...def };
+});
+if (!STATE.setupTasks) {
+  STATE.setupTasks = {};
+  SETUP_GROUPS.forEach(g => g.tasks.forEach(t => { STATE.setupTasks[t.id] = { done: t.done, notes: '' }; }));
+}
+if (!STATE.goliveTasks) {
+  STATE.goliveTasks = {};
+  GOLIVE_GROUPS.forEach(g => g.tasks.forEach(t => { STATE.goliveTasks[t.id] = { done: t.done, notes: '' }; }));
+}
+if (!STATE.team) STATE.team = [];
+if (!STATE.notes) STATE.notes = {};
+if (!STATE.openGroups) STATE.openGroups = {};
+if (!STATE.gfxTasks) {
+  STATE.gfxTasks = {};
+  [...GFX_GROUPS_1, ...GFX_GROUPS_2, ...GFX_GROUPS_3].forEach(t => { STATE.gfxTasks[t.id] = { done: false, notes: '' }; });
+}
+
+// ── TAB SWITCH ─────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+// ── PANEL TOGGLE ───────────────────────────────────────
+function togglePanel(bodyId, toggleId) {
+  const body = document.getElementById(bodyId);
+  const tog = document.getElementById(toggleId);
+  const open = body.classList.toggle('open');
+  if(tog) tog.classList.toggle('open', open);
+}
+
+// ── GROUP TOGGLE ───────────────────────────────────────
+function toggleGroup(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const open = el.classList.toggle('open');
+  STATE.openGroups[id] = open;
+  saveState(STATE);
+}
+
+// ── NOTES ──────────────────────────────────────────────
+function saveNotes(key) {
+  STATE.notes[key] = document.getElementById(key).value;
+  saveState(STATE);
+}
+function restoreNotes() {
+  Object.keys(STATE.notes).forEach(key => {
+    const el = document.getElementById(key);
+    if (el) el.value = STATE.notes[key];
+  });
+}
+
+// ── TEAM ───────────────────────────────────────────────
+function addTeamMember() {
+  const name = document.getElementById('tmName').value.trim();
+  if (!name) return;
+  const member = {
+    id: 'tm_' + Date.now(),
+    name,
+    role: document.getElementById('tmRole').value.trim(),
+    phone: document.getElementById('tmPhone').value.trim(),
+    email: document.getElementById('tmEmail').value.trim(),
+  };
+  STATE.team.push(member);
+  saveState(STATE);
+  ['tmName','tmRole','tmPhone','tmEmail'].forEach(id => document.getElementById(id).value = '');
+  renderTeam();
+}
+function deleteTeamMember(id) {
+  STATE.team = STATE.team.filter(m => m.id !== id);
+  saveState(STATE);
+  renderTeam();
+}
+function renderTeam() {
+  const grid = document.getElementById('teamGrid');
+  const empty = document.getElementById('teamEmpty');
+  if (!STATE.team.length) {
+    grid.innerHTML = '';
+    grid.appendChild(empty);
+    empty.style.display = '';
+    return;
+  }
+  empty.style.display = 'none';
+  grid.innerHTML = STATE.team.map(m => `
+    <div class="team-card" id="tc_${m.id}">
+      <button class="tc-del" onclick="deleteTeamMember('${m.id}')" title="Remove">×</button>
+      <div class="tc-name">${esc(m.name)}</div>
+      ${m.role ? `<div class="tc-role">${esc(m.role)}</div>` : ''}
+      <div class="tc-contact">
+        ${m.phone ? `📞 ${esc(m.phone)}<br>` : ''}
+        ${m.email ? `✉ ${esc(m.email)}` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── EQUIPMENT ──────────────────────────────────────────
+const STATUS_OPTS = ['needed','ordered','received'];
+const STATUS_LABELS = { needed:'Needed', ordered:'Ordered', received:'Received', owned:'Owned' };
+
+function renderEquipment() {
+  const tbody = document.getElementById('eqBody');
+  tbody.innerHTML = STATE.equipment.map(item => `
+    <tr>
+      <td style="font-weight:600;">${esc(item.name)}</td>
+      <td style="color:var(--muted);font-size:12px;">${esc(item.model)}</td>
+      <td style="font-weight:600;">$${item.cost.toLocaleString()}</td>
+      <td>
+        <select class="status-select" onchange="updateEqStatus('${item.id}', this.value)">
+          ${STATUS_OPTS.map(s => `<option value="${s}" ${item.status===s?'selected':''}>${STATUS_LABELS[s]}</option>`).join('')}
+        </select>
+      </td>
+      <td style="white-space:nowrap;">
+        ${item.link ? `<a href="${esc(item.link)}" target="_blank" style="color:var(--gold);font-size:12px;font-weight:600;text-decoration:none;border:1px solid rgba(183,110,121,0.35);border-radius:4px;padding:3px 8px;white-space:nowrap;">Buy ↗</a>` : '<span style="color:var(--muted);font-size:12px;">—</span>'}
+      </td>
+      <td>
+        <input class="field-input" style="font-size:12px;padding:5px 8px;" value="${esc(item.notes)}" placeholder="Notes..." onchange="updateEqNotes('${item.id}', this.value)">
+      </td>
+    </tr>
+  `).join('');
+
+  const received = STATE.equipment.filter(i => i.status === 'received').length;
+  document.getElementById('eqGroupBadge').textContent = `${received} / ${STATE.equipment.length} received`;
+
+  const toBuy = STATE.equipment.filter(i => i.status !== 'owned');
+  const total = toBuy.reduce((s, i) => s + i.cost, 0);
+  document.getElementById('eqTotal').textContent = '$' + total.toLocaleString();
+
+  updateProgress();
+}
+function updateEqStatus(id, val) {
+  const item = STATE.equipment.find(i => i.id === id);
+  if (item) { item.status = val; saveState(STATE); renderEquipment(); }
+}
+function updateEqNotes(id, val) {
+  const item = STATE.equipment.find(i => i.id === id);
+  if (item) { item.notes = val; saveState(STATE); }
+}
+
+// ── CHECKLISTS ─────────────────────────────────────────
+function renderChecklist(containerId, groups, stateKey, prefix) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = groups.map(g => {
+    const tasks = g.tasks;
+    const done = tasks.filter(t => STATE[stateKey][t.id]?.done).length;
+    const groupOpen = STATE.openGroups[g.id] !== false;
+    return `
+      <div class="group">
+        <div class="group-header" onclick="toggleGroup('${prefix}_${g.id}')">
+          <div class="group-title">${esc(g.label)}</div>
+          <div class="group-badge" id="${prefix}_badge_${g.id}">${done} / ${tasks.length} done</div>
+        </div>
+        <div class="group-body ${groupOpen ? 'open' : ''}" id="${prefix}_${g.id}">
+          ${tasks.map(t => renderTaskItem(t, stateKey, prefix)).join('')}
+          <div class="add-task-row">
+            <input class="add-task-input" placeholder="Add a task..." id="${prefix}_add_${g.id}" onkeydown="if(event.key==='Enter')addTaskToGroup('${g.id}','${stateKey}','${prefix}')">
+            <button class="btn btn-outline btn-sm" onclick="addTaskToGroup('${g.id}','${stateKey}','${prefix}')">+ Add</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderTaskItem(t, stateKey, prefix) {
+  const ts = STATE[stateKey][t.id] || { done: false, notes: '' };
+  return `
+    <div class="task-item ${ts.done ? 'completed' : ''}" id="${prefix}_ti_${t.id}">
+      <div class="task-row">
+        <input type="checkbox" class="task-cb" ${ts.done ? 'checked' : ''} onchange="toggleTask('${t.id}','${stateKey}','${prefix}',this)">
+        <span class="task-text" onclick="toggleTaskByClick('${t.id}','${stateKey}','${prefix}')">${esc(t.text)}</span>
+        <div class="task-meta">
+          <button class="task-notes-btn ${ts.notes ? 'has-notes' : ''}" onclick="toggleTaskNotes('${prefix}_notes_${t.id}',this)" id="${prefix}_notebtn_${t.id}">Notes</button>
+          <button class="task-del-btn" onclick="deleteTask('${t.id}','${stateKey}','${prefix}')" title="Delete">✕</button>
+        </div>
+      </div>
+      <div class="task-notes-area" id="${prefix}_notes_${t.id}">
+        <textarea class="task-notes-input" placeholder="Add notes..." onchange="saveTaskNotes('${t.id}','${stateKey}','${prefix}_notebtn_${t.id}',this)">${esc(ts.notes)}</textarea>
+      </div>
+    </div>
+  `;
+}
+
+function toggleTask(taskId, stateKey, prefix, cb) {
+  if (!STATE[stateKey][taskId]) STATE[stateKey][taskId] = { done: false, notes: '' };
+  STATE[stateKey][taskId].done = cb.checked;
+  saveState(STATE);
+  const ti = document.getElementById(`${prefix}_ti_${taskId}`);
+  if (ti) ti.classList.toggle('completed', cb.checked);
+  updateProgress();
+  refreshGroupBadges(stateKey, prefix);
+}
+
+function toggleTaskByClick(taskId, stateKey, prefix) {
+  const cb = document.querySelector(`#${prefix}_ti_${taskId} .task-cb`);
+  if (cb) { cb.checked = !cb.checked; toggleTask(taskId, stateKey, prefix, cb); }
+}
+
+function toggleTaskNotes(areaId, btn) {
+  const area = document.getElementById(areaId);
+  if (!area) return;
+  area.classList.toggle('open');
+}
+
+function saveTaskNotes(taskId, stateKey, btnId, ta) {
+  if (!STATE[stateKey][taskId]) STATE[stateKey][taskId] = { done: false, notes: '' };
+  STATE[stateKey][taskId].notes = ta.value;
+  saveState(STATE);
+  const btn = document.getElementById(btnId);
+  if (btn) btn.classList.toggle('has-notes', !!ta.value);
+}
+
+function deleteTask(taskId, stateKey, prefix) {
+  if (!confirm('Delete this task?')) return;
+  delete STATE[stateKey][taskId];
+  // Remove from group data structure
+  const groups = stateKey === 'setupTasks' ? SETUP_GROUPS : GOLIVE_GROUPS;
+  groups.forEach(g => { g.tasks = g.tasks.filter(t => t.id !== taskId); });
+  saveState(STATE);
+  const containerId = stateKey === 'setupTasks' ? 'setupChecklist' : 'goliveChecklist';
+  renderChecklist(containerId, groups, stateKey, prefix);
+  updateProgress();
+}
+
+function addTaskToGroup(groupId, stateKey, prefix) {
+  const input = document.getElementById(`${prefix}_add_${groupId}`);
+  if (!input || !input.value.trim()) return;
+  const groups = stateKey === 'setupTasks' ? SETUP_GROUPS : GOLIVE_GROUPS;
+  const group = groups.find(g => g.id === groupId);
+  if (!group) return;
+  const newTask = { id: `custom_${Date.now()}`, text: input.value.trim(), done: false };
+  group.tasks.push(newTask);
+  STATE[stateKey][newTask.id] = { done: false, notes: '' };
+  saveState(STATE);
+  input.value = '';
+  const containerId = stateKey === 'setupTasks' ? 'setupChecklist' : 'goliveChecklist';
+  renderChecklist(containerId, groups, stateKey, prefix);
+  updateProgress();
+}
+
+function refreshGroupBadges(stateKey, prefix) {
+  const groups = stateKey === 'setupTasks' ? SETUP_GROUPS : GOLIVE_GROUPS;
+  groups.forEach(g => {
+    const badge = document.getElementById(`${prefix}_badge_${g.id}`);
+    if (!badge) return;
+    const done = g.tasks.filter(t => STATE[stateKey][t.id]?.done).length;
+    badge.textContent = `${done} / ${g.tasks.length} done`;
+  });
+}
+
+// ── PROGRESS ───────────────────────────────────────────
+function updateProgress() {
+  const setupIds = SETUP_GROUPS.flatMap(g => g.tasks.map(t => t.id));
+  const setupDone = setupIds.filter(id => STATE.setupTasks[id]?.done).length;
+  const goliveIds = GOLIVE_GROUPS.flatMap(g => g.tasks.map(t => t.id));
+  const goliveDone = goliveIds.filter(id => STATE.goliveTasks[id]?.done).length;
+  const eqReceived = STATE.equipment.filter(i => i.status === 'received').length;
+  const eqTotal = STATE.equipment.length;
+  const gfxIds = [...GFX_GROUPS_1, ...GFX_GROUPS_2, ...GFX_GROUPS_3].map(t => t.id);
+  const gfxDone = gfxIds.filter(id => STATE.gfxTasks[id]?.done).length;
+
+  const setupPct = setupIds.length ? Math.round(setupDone / setupIds.length * 100) : 0;
+  const golivePct = goliveIds.length ? Math.round(goliveDone / goliveIds.length * 100) : 0;
+  const eqPct = eqTotal ? Math.round(eqReceived / eqTotal * 100) : 0;
+  const gfxPct = gfxIds.length ? Math.round(gfxDone / gfxIds.length * 100) : 0;
+  const overall = Math.round((setupPct + golivePct + eqPct + gfxPct) / 4);
+
+  setProgress('Overall', overall);
+  setProgress('Equip', eqPct);
+  setProgress('Setup', setupPct);
+  setProgress('Live', golivePct);
+}
+function setProgress(key, pct) {
+  const pctEl = document.getElementById('pct' + key);
+  const fillEl = document.getElementById('fill' + key);
+  if (pctEl) { pctEl.textContent = pct + '%'; pctEl.className = 'pct' + (pct === 100 ? ' done' : ''); }
+  if (fillEl) fillEl.style.width = pct + '%';
+}
+
+// ── UTIL ───────────────────────────────────────────────
+function esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── GFX FLAT CHECKLISTS ────────────────────────────────
+function renderGfxList(containerId, items, badgeId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = items.map(t => {
+    const ts = STATE.gfxTasks[t.id] || { done: false, notes: '' };
+    return `
+      <div class="task-item ${ts.done ? 'completed' : ''}" id="gfx_ti_${t.id}">
+        <div class="task-row">
+          <input type="checkbox" class="task-cb" ${ts.done ? 'checked' : ''} onchange="toggleGfxTask('${t.id}','${badgeId}',this)">
+          <span class="task-text" onclick="toggleGfxTaskClick('${t.id}','${badgeId}')">${esc(t.text)}</span>
+          <div class="task-meta">
+            <button class="task-notes-btn ${ts.notes ? 'has-notes' : ''}" onclick="toggleTaskNotes('gfxnotes_${t.id}',this)">Notes</button>
+          </div>
+        </div>
+        <div class="task-notes-area" id="gfxnotes_${t.id}">
+          <textarea class="task-notes-input" placeholder="Add notes..." onchange="saveGfxTaskNotes('${t.id}',this)">${esc(ts.notes)}</textarea>
+        </div>
+      </div>
+    `;
+  }).join('');
+  updateGfxBadge(badgeId, items);
+}
+
+function toggleGfxTask(taskId, badgeId, cb) {
+  if (!STATE.gfxTasks[taskId]) STATE.gfxTasks[taskId] = { done: false, notes: '' };
+  STATE.gfxTasks[taskId].done = cb.checked;
+  saveState(STATE);
+  const ti = document.getElementById(`gfx_ti_${taskId}`);
+  if (ti) ti.classList.toggle('completed', cb.checked);
+  const allItems = [...GFX_GROUPS_1, ...GFX_GROUPS_2, ...GFX_GROUPS_3];
+  const group = allItems.filter(t =>
+    (badgeId === 'gfxIntroOutroBadge' && GFX_GROUPS_1.find(x => x.id === t.id)) ||
+    (badgeId === 'gfxStingersBadge' && GFX_GROUPS_2.find(x => x.id === t.id)) ||
+    (badgeId === 'gfxLowerThirdsBadge' && GFX_GROUPS_3.find(x => x.id === t.id))
+  );
+  const items = badgeId === 'gfxIntroOutroBadge' ? GFX_GROUPS_1 : badgeId === 'gfxStingersBadge' ? GFX_GROUPS_2 : GFX_GROUPS_3;
+  updateGfxBadge(badgeId, items);
+  updateProgress();
+}
+
+function toggleGfxTaskClick(taskId, badgeId) {
+  const cb = document.querySelector(`#gfx_ti_${taskId} .task-cb`);
+  if (cb) { cb.checked = !cb.checked; toggleGfxTask(taskId, badgeId, cb); }
+}
+
+function saveGfxTaskNotes(taskId, ta) {
+  if (!STATE.gfxTasks[taskId]) STATE.gfxTasks[taskId] = { done: false, notes: '' };
+  STATE.gfxTasks[taskId].notes = ta.value;
+  saveState(STATE);
+}
+
+function updateGfxBadge(badgeId, items) {
+  const badge = document.getElementById(badgeId);
+  if (!badge) return;
+  const done = items.filter(t => STATE.gfxTasks[t.id]?.done).length;
+  badge.textContent = `${done} / ${items.length} built`;
+}
+
+// ── INIT ───────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  renderTeam();
+  renderEquipment();
+  renderChecklist('setupChecklist', SETUP_GROUPS, 'setupTasks', 'su');
+  renderChecklist('goliveChecklist', GOLIVE_GROUPS, 'goliveTasks', 'gl');
+  renderGfxList('gfxChecklist1', GFX_GROUPS_1, 'gfxIntroOutroBadge');
+  renderGfxList('gfxChecklist2', GFX_GROUPS_2, 'gfxStingersBadge');
+  renderGfxList('gfxChecklist3', GFX_GROUPS_3, 'gfxLowerThirdsBadge');
+  restoreNotes();
+  updateProgress();
+});
+</script>
+</body>
+</html>

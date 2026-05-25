@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BlackMarker.TV — Independent Broadcast Network | Black Marker Media</title>
+<link rel="icon" type="image/png" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -12,10 +13,9 @@
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.nav-logo-mark{width:32px;height:32px;background:var(--red);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;}
-.nav-logo-text{font-size:15px;font-weight:700;color:var(--white);}
-.nav-logo-text span{color:var(--red);}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo-img{height:36px;width:auto;display:block;}
+.nav-logo-text{font-size:14px;font-weight:700;color:var(--white);letter-spacing:0.3px;white-space:nowrap;}
 .nav-links{display:flex;align-items:center;gap:8px;}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:4px;transition:color 0.2s,background 0.2s;}
 .nav-links a:hover,.nav-links a.active{color:var(--white);background:var(--surface2);}
@@ -55,7 +55,8 @@ section{padding:100px 40px;}
 .section-sub{font-size:17px;color:var(--muted);max-width:580px;line-height:1.65;}
 
 /* PROGRAMMING */
-.programming{background:var(--bg);}
+.programming{background:linear-gradient(rgba(8,8,8,0.72),rgba(8,8,8,0.72)),url('images/BMTV_BG.jpg') top center/cover no-repeat;background-attachment:fixed,fixed;}
+.programming .section-eyebrow,.programming .section-title,.programming .section-sub{text-shadow:0 2px 12px rgba(0,0,0,0.6);}
 .prog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:56px;}
 .prog-card{background:var(--surface);padding:32px 28px;transition:background 0.2s;}
 .prog-card:hover{background:var(--surface2);}
@@ -78,7 +79,11 @@ section{padding:100px 40px;}
 .aud-cta:hover{background:var(--red-dark);}
 
 /* AUDIENCE DATA */
-.aud-data{background:var(--bg);}
+.aud-data{position:relative;overflow:hidden;background:rgba(8,8,8,0.85);}
+.aud-data::before{content:'';position:absolute;inset:-12px;background:url('images/BMTV03.jpg') center/cover no-repeat;background-attachment:fixed;filter:blur(4px);z-index:0;}
+.aud-data .section-inner{position:relative;z-index:1;}
+.aud-data .section-eyebrow,.aud-data .section-title,.aud-data .section-sub{text-shadow:0 2px 12px rgba(0,0,0,0.6);color:#C8C8C8;}
+.aud-data .data-bar-name,.aud-data .data-bar-pct{text-shadow:0 1px 8px rgba(0,0,0,0.7);color:#C8C8C8;}
 .data-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:56px;}
 .data-bars{display:flex;flex-direction:column;gap:20px;}
 .data-bar-item{}
@@ -127,8 +132,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
 
 <nav>
   <a class="nav-logo" href="index.html">
-    <div class="nav-logo-mark">B</div>
-    <span class="nav-logo-text">Black Marker <span>Media</span></span>
+    <img src="icon.png" alt="" class="nav-logo-img">
+    <span class="nav-logo-text">Black Marker Media LLC</span>
   </a>
   <div class="nav-links">
     <a href="channelcast.html">ChannelCast</a>
@@ -177,7 +182,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
   <div class="section-inner">
     <div class="section-eyebrow">What's On</div>
     <h2 class="section-title">Programming Built for<br>Real Audiences</h2>
-    <p class="section-sub">BlackMarker.TV is home to original independent programming across comedy, music, talk, and current events — all streamed live, all interactive.</p>
+    <p class="section-sub" style="color:#C8C8C8;">BlackMarker.TV is home to original independent programming across comedy, music, talk, and current events — all streamed live, all interactive.</p>
     <div class="prog-grid">
       <div class="prog-card">
         <div class="prog-type">Comedy</div>
@@ -261,42 +266,42 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
       <div>
         <div class="section-eyebrow">Audience Profile</div>
         <h2 class="section-title">Who Watches<br>BlackMarker.TV</h2>
-        <p class="section-sub" style="margin-bottom:40px;">Our audience is active, engaged, and culturally connected — not passive scrollers. They show up live and come back for the programming, the community, and the interaction.</p>
+        <p class="section-sub" style="margin-bottom:40px;">Our audience is verified, growing, and national — not passive scrollers. They show up live, return week after week, and our platform has grown 1,200%+ year-over-year to prove it.</p>
         <div class="data-bars">
           <div class="data-bar-item">
-            <div class="data-bar-label"><span class="data-bar-name">Latino / Hispanic</span><span class="data-bar-pct">68%</span></div>
-            <div class="data-bar-track"><div class="data-bar-fill" style="width:68%;"></div></div>
+            <div class="data-bar-label"><span class="data-bar-name">United States Audience</span><span class="data-bar-pct">93%</span></div>
+            <div class="data-bar-track"><div class="data-bar-fill" style="width:93%;"></div></div>
           </div>
           <div class="data-bar-item">
-            <div class="data-bar-label"><span class="data-bar-name">Ages 25–54</span><span class="data-bar-pct">74%</span></div>
-            <div class="data-bar-track"><div class="data-bar-fill" style="width:74%;"></div></div>
-          </div>
-          <div class="data-bar-item">
-            <div class="data-bar-label"><span class="data-bar-name">Mobile Viewers</span><span class="data-bar-pct">61%</span></div>
-            <div class="data-bar-track"><div class="data-bar-fill" style="width:61%;"></div></div>
-          </div>
-          <div class="data-bar-item">
-            <div class="data-bar-label"><span class="data-bar-name">Florida / Southeast US</span><span class="data-bar-pct">55%</span></div>
+            <div class="data-bar-label"><span class="data-bar-name">Audience Outside Florida</span><span class="data-bar-pct">55%</span></div>
             <div class="data-bar-track"><div class="data-bar-fill" style="width:55%;"></div></div>
           </div>
           <div class="data-bar-item">
-            <div class="data-bar-label"><span class="data-bar-name">Live Interaction (Chat)</span><span class="data-bar-pct">82%</span></div>
-            <div class="data-bar-track"><div class="data-bar-fill" style="width:82%;"></div></div>
+            <div class="data-bar-label"><span class="data-bar-name">Core Viewing Age: 25–54</span><span class="data-bar-pct">74%</span></div>
+            <div class="data-bar-track"><div class="data-bar-fill" style="width:74%;"></div></div>
+          </div>
+          <div class="data-bar-item">
+            <div class="data-bar-label"><span class="data-bar-name">Return Visitor Rate</span><span class="data-bar-pct">80%+</span></div>
+            <div class="data-bar-track"><div class="data-bar-fill" style="width:80%;"></div></div>
+          </div>
+          <div class="data-bar-item">
+            <div class="data-bar-label"><span class="data-bar-name">Year-Over-Year Platform Growth</span><span class="data-bar-pct">1,200%+</span></div>
+            <div class="data-bar-track"><div class="data-bar-fill" style="width:100%;"></div></div>
           </div>
         </div>
       </div>
       <div class="data-notes">
         <div class="data-note">
-          <div class="data-note-title">Live + Interactive = Higher Engagement</div>
-          <p class="data-note-text">BlackMarker.TV viewers participate in real time through live chat — including direct interaction with performers and hosts. This drives engagement metrics that passive streaming platforms can't replicate.</p>
+          <div class="data-note-title">Born in Tampa Bay. Built for Everyone.</div>
+          <p class="data-note-text">BlackMarker.TV launched from the Tampa Bay market, but 55% of our verified audience is already outside Florida — spanning the U.S. and reaching viewers in 10+ countries. The home base is the origin story, not the ceiling.</p>
         </div>
         <div class="data-note">
-          <div class="data-note-title">The Network Backs Our Clients</div>
-          <p class="data-note-text">Every ChannelCast client and production partner can cross-promote through BlackMarker.TV — reaching our existing audience and building their own simultaneously.</p>
+          <div class="data-note-title">Viewers Who Come Back</div>
+          <p class="data-note-text">80%+ of our May 2026 traffic is returning visitors. That's not viral luck — it's a built audience with a habit. Live programming creates routines, and our viewers show up on schedule.</p>
         </div>
         <div class="data-note">
-          <div class="data-note-title">A Growing Platform in a Growing Market</div>
-          <p class="data-note-text">The global OTT market grows at 20% CAGR toward $200B by 2030. Independent networks that build niche audiences now are positioned ahead of consolidation.</p>
+          <div class="data-note-title">The Growth Is Real</div>
+          <p class="data-note-text">From 150 daily visitors in May 2025 to 2,000+ in May 2026 — that's 1,200%+ year-over-year growth. Brands that partner now are getting in front of an audience that is still accelerating.</p>
         </div>
       </div>
     </div>
@@ -328,6 +333,5 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
 
 <script src="forms.js"></script>
 <script src="animations.js"></script>
-<script src="editor.js"></script>
 </body>
 </html>
