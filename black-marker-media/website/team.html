@@ -116,12 +116,19 @@ section{padding:100px 40px;}
 .btn-outline-white{background:transparent;color:#fff;text-decoration:none;font-size:15px;font-weight:600;padding:14px 32px;border-radius:6px;border:1px solid rgba(255,255,255,0.4);display:inline-block;transition:border-color 0.2s;}
 .btn-outline-white:hover{border-color:#fff;}
 
-footer{background:var(--surface);border-top:1px solid var(--border);padding:48px 40px 32px;}
-.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
-.footer-links{display:flex;gap:24px;}
-.footer-links a{color:var(--muted);text-decoration:none;font-size:13px;transition:color 0.2s;}
-.footer-links a:hover{color:var(--white);}
+footer{background:var(--surface);border-top:1px solid var(--border);padding:64px 40px 40px;}
+.footer-inner{max-width:1100px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:60px;}
+.footer-brand-name{font-size:16px;font-weight:800;color:var(--white);margin-bottom:12px;}
+.footer-brand-text{font-size:13px;color:var(--muted);line-height:1.7;max-width:260px;}
+.footer-col-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:20px;}
+.footer-col a{display:block;color:var(--muted);text-decoration:none;font-size:13px;margin-bottom:10px;transition:color 0.2s;}
+.footer-col a:hover{color:var(--white);}
+.footer-bottom{border-top:1px solid var(--border);padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 .footer-copy{font-size:12px;color:var(--muted);}
+.footer-mark{display:flex;align-items:center;gap:8px;}
+.footer-mark-dot{width:8px;height:8px;border-radius:50%;background:var(--red);}
+.footer-mark-text{font-size:12px;color:var(--muted);}
 
 @media(max-width:900px){
   nav{padding:0 20px;}
@@ -129,7 +136,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
   .hero,section,.cta-block{padding-left:20px;padding-right:20px;}
   .team-grid,.partner-types{grid-template-columns:1fr;}
   .story-grid,.opp-grid{grid-template-columns:1fr;gap:40px;}
-  footer{padding:40px 20px 24px;}
+  .footer-top{grid-template-columns:1fr 1fr;gap:40px;}
+  footer{padding:48px 20px 32px;}
 }
 </style>
 </head>
@@ -192,13 +200,16 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
           </div>
         </div>
         <div class="team-info">
-          <div class="team-name">Coming Soon</div>
-          <div class="team-title">CEO & Co-Founder</div>
-          <p class="team-bio">A veteran of live event production with extensive experience spanning broadcast media, digital marketing, and streaming technology. Led the development of the BAM™ formula and oversees all three divisions of Black Marker Media. Known for building systems that convert live audiences into long-term digital revenue.</p>
+          <div class="team-name">Eric Gomez</div>
+          <div class="team-title">Co-Owner | Dev & Operations</div>
+          <p class="team-bio">Eric Gomez co-founded Black Marker Media with roots in sound engineering, music production, design, and IT — a combination that shapes every system and production standard the company operates by. He leads production engineering and platform development, driving the technical direction of the business while overseeing large-scale live broadcasts that push the boundaries of what independent broadcasts can deliver.</p>
           <div class="team-tags">
+            <span class="team-tag">Sound Engineering</span>
             <span class="team-tag">Live Production</span>
-            <span class="team-tag">Digital Strategy</span>
-            <span class="team-tag">Streaming Tech</span>
+            <span class="team-tag">Front-End Dev</span>
+            <span class="team-tag">IT & Infrastructure</span>
+            <span class="team-tag">Design</span>
+            <span class="team-tag">Broadcast Ops</span>
           </div>
         </div>
       </div>
@@ -213,13 +224,16 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
           </div>
         </div>
         <div class="team-info">
-          <div class="team-name">Coming Soon</div>
-          <div class="team-title">COO & Co-Founder</div>
-          <p class="team-bio">Operations and systems architect responsible for scaling Black Marker Media's production and platform infrastructure. Leads client delivery across the ChannelCast platform and live production divisions. Known for translating complex technical requirements into repeatable, scalable processes that serve clients at every size.</p>
+          <div class="team-name">Felix Rivera</div>
+          <div class="team-title">Co-Owner | Administration</div>
+          <p class="team-bio">Felix Rivera co-founded Black Marker Media with decades of experience in IT database infrastructure, music, and community development. He drives the company's administrative and marketing direction — drawing on an extensive industry network to build strategic partnerships, unlock funding opportunities, and expand the resources that keep Black Marker Media moving forward.</p>
           <div class="team-tags">
-            <span class="team-tag">Operations</span>
-            <span class="team-tag">Platform Architecture</span>
-            <span class="team-tag">Client Growth</span>
+            <span class="team-tag">Database Infrastructure</span>
+            <span class="team-tag">Administration</span>
+            <span class="team-tag">Marketing</span>
+            <span class="team-tag">Strategic Partnerships</span>
+            <span class="team-tag">Community Development</span>
+            <span class="team-tag">Business Development</span>
           </div>
         </div>
       </div>
@@ -234,13 +248,16 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
           </div>
         </div>
         <div class="team-info">
-          <div class="team-name">Coming Soon</div>
-          <div class="team-title">Creative Director & Co-Founder</div>
-          <p class="team-bio">The creative force behind BlackMarker.TV and the brand identity of Black Marker Media. Built and programs the BlackMarker.TV network from the ground up — developing original shows, booking talent, and managing the growing creator partnership program that anchors the network's independent voice.</p>
+          <div class="team-name">Carlos Mendes</div>
+          <div class="team-title">Co-Owner | Sales Dept</div>
+          <p class="team-bio">Carlos Mendes — known throughout the industry as DJ Charlie Chase — co-founded Black Marker Media with a career built at the foundation of hip-hop culture. His decades of relationships across music, entertainment, and media give the company direct access to strategic connections in key industry verticals, while his hands-on experience drives the sales approach behind Black Marker Media's largest client partnerships and ongoing service agreements.</p>
           <div class="team-tags">
-            <span class="team-tag">Content & Media</span>
-            <span class="team-tag">Talent Development</span>
-            <span class="team-tag">Brand Strategy</span>
+            <span class="team-tag">Music Industry</span>
+            <span class="team-tag">Hip-Hop Pioneer</span>
+            <span class="team-tag">Sales Strategy</span>
+            <span class="team-tag">Industry Relations</span>
+            <span class="team-tag">Partnership Development</span>
+            <span class="team-tag">Entertainment Networks</span>
           </div>
         </div>
       </div>
@@ -266,12 +283,15 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
           </div>
         </div>
         <div class="team-info">
-          <div class="team-name">Coming Soon</div>
-          <div class="team-title">Technical Director</div>
-          <p class="team-bio">Oversees the technical infrastructure powering live streams, broadcast encoding, and platform uptime across all three divisions.</p>
+          <div class="team-name">Carlos Sanchez</div>
+          <div class="team-title">Producer / Show Host</div>
+          <p class="team-bio">Carlos Sanchez — known on the network as Los Diggity — brings a sharp comedic edge and deep music industry roots to Black Marker Media as a show host and production team member. Currently touring stand-up comedy across multiple states, he also serves as VP of Sky IV Records, keeping the team directly connected to the independent music world.</p>
           <div class="team-tags">
-            <span class="team-tag">Broadcast Engineering</span>
-            <span class="team-tag">Live Infrastructure</span>
+            <span class="team-tag">Live Production</span>
+            <span class="team-tag">Stand-Up Comedy</span>
+            <span class="team-tag">Music Industry</span>
+            <span class="team-tag">Show Host</span>
+            <span class="team-tag">Entertainment</span>
           </div>
         </div>
       </div>
@@ -286,12 +306,15 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
           </div>
         </div>
         <div class="team-info">
-          <div class="team-name">Coming Soon</div>
-          <div class="team-title">Senior Video Engineer</div>
-          <p class="team-bio">Leads camera, switching, and signal chain operations for live productions. Responsible for the picture quality our clients and viewers see on screen.</p>
+          <div class="team-name">Georgia Martinez</div>
+          <div class="team-title">Design & Planning / Show Host / Sales</div>
+          <p class="team-bio">Georgia Martinez — known on the network as Bibi — handles the visual identity of Black Marker Media's productions, from graphic design and promotional materials to set design and event décor. As co-host of Talking Tipsy and a member of the sales team, she brings both creative and client-facing energy to everything she touches.</p>
           <div class="team-tags">
-            <span class="team-tag">Video Production</span>
-            <span class="team-tag">Live Switching</span>
+            <span class="team-tag">Graphic Design</span>
+            <span class="team-tag">Set Design</span>
+            <span class="team-tag">Event Planning</span>
+            <span class="team-tag">Show Host</span>
+            <span class="team-tag">Sales</span>
           </div>
         </div>
       </div>
@@ -306,12 +329,15 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
           </div>
         </div>
         <div class="team-info">
-          <div class="team-name">Coming Soon</div>
-          <div class="team-title">Production Coordinator</div>
-          <p class="team-bio">Manages event logistics, crew scheduling, and client communication from pre-production through post. The connective tissue between every moving part.</p>
+          <div class="team-name">Sandra Bermudez</div>
+          <div class="team-title">Show Host / Admin / Sales</div>
+          <p class="team-bio">Sandra Bermudez brings a professional advertising background — with experience at iHeart Radio and Sinclair — to her roles in administration and sales at Black Marker Media. As co-host of Talking Tipsy alongside Bibi, she blends media industry credibility with on-screen presence both behind the scenes and on the network.</p>
           <div class="team-tags">
-            <span class="team-tag">Event Logistics</span>
-            <span class="team-tag">Client Relations</span>
+            <span class="team-tag">Advertising</span>
+            <span class="team-tag">iHeart Radio</span>
+            <span class="team-tag">Administration</span>
+            <span class="team-tag">Sales</span>
+            <span class="team-tag">Show Host</span>
           </div>
         </div>
       </div>
@@ -326,12 +352,15 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
           </div>
         </div>
         <div class="team-info">
-          <div class="team-name">Coming Soon</div>
-          <div class="team-title">Content & Programming</div>
-          <p class="team-bio">Drives BlackMarker.TV's programming calendar — booking talent, scheduling shows, and developing the original content slate that keeps the network active.</p>
+          <div class="team-name">Orlando Perez</div>
+          <div class="team-title">Show Host / Artist</div>
+          <p class="team-bio">Orlando Perez — known as Solo on The Weekly Interrupt — brings a music industry background and a growing presence in the streaming world to Black Marker Media. Through his brand Tunnel Vision, he develops faith-based music and podcast content, adding an independent creative voice and community-driven perspective to the network's programming.</p>
           <div class="team-tags">
-            <span class="team-tag">Programming</span>
-            <span class="team-tag">Talent Booking</span>
+            <span class="team-tag">Music Industry</span>
+            <span class="team-tag">Show Host</span>
+            <span class="team-tag">Faith-Based Media</span>
+            <span class="team-tag">Podcasting</span>
+            <span class="team-tag">Content Creation</span>
           </div>
         </div>
       </div>
@@ -346,32 +375,15 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
           </div>
         </div>
         <div class="team-info">
-          <div class="team-name">Coming Soon</div>
-          <div class="team-title">Social Media Director</div>
-          <p class="team-bio">Manages the brand's presence across platforms — turning live event moments into clips, campaigns, and community growth that extends every broadcast's reach.</p>
+          <div class="team-name">Emmanuel Gomez</div>
+          <div class="team-title">Show Host / Music Producer</div>
+          <p class="team-bio">Emmanuel Gomez — known across the network as EmanDrums — is a music producer and performer recognized for his signature finger drumming sets on Can You Dig It!? Live Music Review. Beyond the network, he works with community-driven organizations and non-profits, bringing a music production background and a genuine commitment to community impact to the team.</p>
           <div class="team-tags">
-            <span class="team-tag">Social Strategy</span>
-            <span class="team-tag">Content Distribution</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="team-card">
-        <div class="team-headshot">
-          <div class="headshot-placeholder">
-            <svg class="headshot-silhouette" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="100" cy="72" rx="46" ry="52" fill="white"/>
-              <path d="M4 220 C4 160 196 160 196 220" fill="white"/>
-            </svg>
-          </div>
-        </div>
-        <div class="team-info">
-          <div class="team-name">Coming Soon</div>
-          <div class="team-title">Brand & Marketing</div>
-          <p class="team-bio">Owns the outward-facing story of Black Marker Media — from client acquisition campaigns to partner materials and the visual identity across all three divisions.</p>
-          <div class="team-tags">
-            <span class="team-tag">Brand Strategy</span>
-            <span class="team-tag">Growth Marketing</span>
+            <span class="team-tag">Music Production</span>
+            <span class="team-tag">Finger Drumming</span>
+            <span class="team-tag">Show Host</span>
+            <span class="team-tag">Community Outreach</span>
+            <span class="team-tag">Non-Profit</span>
           </div>
         </div>
       </div>
@@ -393,15 +405,15 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
       </div>
       <div class="story-milestones">
         <div class="milestone">
-          <div class="milestone-year">Founded</div>
+          <div class="milestone-year">2022</div>
           <div class="milestone-text"><strong>Black Marker Media LLC established</strong> in Wesley Chapel, FL. Live production and streaming services launched.</div>
         </div>
         <div class="milestone">
-          <div class="milestone-year">Network</div>
+          <div class="milestone-year">2023</div>
           <div class="milestone-text"><strong>BlackMarker.TV launched</strong> as the company's independent live broadcast network — home to original programming, PPV events, and the first proof of the BAM™ formula in action.</div>
         </div>
         <div class="milestone">
-          <div class="milestone-year">Platform</div>
+          <div class="milestone-year">2025</div>
           <div class="milestone-text"><strong>ChannelCast productized</strong> as a standalone managed platform service — bringing the same infrastructure powering BlackMarker.TV to external clients.</div>
         </div>
         <div class="milestone">
@@ -529,13 +541,37 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:48px
 
 <footer>
   <div class="footer-inner">
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="channelcast.html">ChannelCast</a>
-      <a href="production.html">Production</a>
-      <a href="network.html">BlackMarker.TV</a>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">Black Marker Media LLC</div>
+        <p class="footer-brand-text">Live streaming infrastructure for the next generation of broadcasters. Build. Amplify. Monetize.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Divisions</div>
+        <a href="channelcast.html">ChannelCast Platform</a>
+        <a href="production.html">Live Production</a>
+        <a href="network.html">BlackMarker.TV</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <a href="team.html">Our Team</a>
+        <a href="team.html#investors">Investors</a>
+        <a href="team.html#partners">Partners</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <a href="mailto:info@blackmarkermedia.com">info@blackmarkermedia.com</a>
+        <a href="https://www.blackmarkermedia.com">blackmarkermedia.com</a>
+        <a href="contact.html">Wesley Chapel, FL</a>
+      </div>
     </div>
-    <span class="footer-copy">© 2026 Black Marker Media LLC — Wesley Chapel, FL</span>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Black Marker Media LLC. All rights reserved.</span>
+      <div class="footer-mark">
+        <div class="footer-mark-dot"></div>
+        <span class="footer-mark-text">BAM&#x2122; is a trademark of Black Marker Media LLC</span>
+      </div>
+    </div>
   </div>
 </footer>
 

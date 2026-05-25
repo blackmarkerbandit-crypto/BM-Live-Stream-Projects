@@ -1,7 +1,7 @@
 /**
  * forms.js — BMB Form System
  * Renders lead, contact, signup, and booking forms.
- * Inline or modal. Submits to local server at /api/submit-form.
+ * Inline or modal. Submits via mailto: — no server required.
  *
  * Auto-init via data attributes:
  *   <div data-bmb-form="lead"></div>              → inline form
