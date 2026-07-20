@@ -1,0 +1,14 @@
+# Secrets — never commit API tokens
+BM Live Stream Projects/channelcast-loop-builder/config.json
+
+# Claude Code local settings / temp files
+**/.claude/settings.local.json
+**/.claude/settings.local.json.tmp.*
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+
+# Python cache
+**/__pycache__/
+*.pyc

@@ -1,0 +1,4742 @@
+{
+  "channel": {
+    "id": "019eba4d-bb24-746e-afa6-19f8fea1e9aa",
+    "name": "Black Marker TV"
+  },
+  "intro_clip": {
+    "id": "019f2680-700f-7005-aa18-e04c811d4b71",
+    "title": "IA Interrupt PluggedIn",
+    "duration": 20
+  },
+  "mv_pool": [
+    {
+      "id": "019f2680-c63b-762a-9beb-fa200165dc14",
+      "title": "MV GATS Stuntman",
+      "duration": 226,
+      "artists": [
+        "GATS"
+      ]
+    },
+    {
+      "id": "019f2680-979f-7fb7-b937-360421def510",
+      "title": "MV SidartaNSaske 925",
+      "duration": 157,
+      "artists": [
+        "SidartaNSaske"
+      ]
+    },
+    {
+      "id": "019f2680-8d60-7057-8a31-6e124c01aa6d",
+      "title": "MV MethodManftCarltonFiskXChunkBizza KingofNewYork",
+      "duration": 149,
+      "artists": [
+        "MethodMan",
+        "CarltonFisk",
+        "ChunkBizza"
+      ]
+    },
+    {
+      "id": "019f2680-82e3-76ea-80eb-88138c8c6b73",
+      "title": "MV HBKBoogey OkayLetsGo",
+      "duration": 107,
+      "artists": [
+        "HBKBoogey"
+      ]
+    },
+    {
+      "id": "019f2680-7bdd-7853-afdb-f0e10d491388",
+      "title": "MV Cambatta TheShaman",
+      "duration": 198,
+      "artists": [
+        "Cambatta"
+      ]
+    },
+    {
+      "id": "019f2680-e6d4-7760-a9ae-1126079355a3",
+      "title": "MV YaHSinFTGhostfaceKillah BikiniWax",
+      "duration": 193,
+      "artists": [
+        "YaHSin",
+        "GhostfaceKillah"
+      ]
+    },
+    {
+      "id": "019f2680-e6aa-7dda-b495-57c1b9a0d893",
+      "title": "MV WiseboyJeremyFTNeyj FloState",
+      "duration": 224,
+      "artists": [
+        "WiseboyJeremy",
+        "Neyj"
+      ]
+    },
+    {
+      "id": "019f2680-e67b-7dd7-8146-5eccbd653ef3",
+      "title": "MV TalibKweliXJRawls NativeSons",
+      "duration": 180,
+      "artists": [
+        "TalibKweli",
+        "JRawls"
+      ]
+    },
+    {
+      "id": "019f2680-e65a-7216-a588-ab694565f5d9",
+      "title": "MV SnowThaProduct Hopeful",
+      "duration": 154,
+      "artists": [
+        "SnowThaProduct"
+      ]
+    },
+    {
+      "id": "019f2680-e636-7e30-af3d-1a9f654e81f4",
+      "title": "MV SkinnyFlex Dubai",
+      "duration": 150,
+      "artists": [
+        "SkinnyFle"
+      ]
+    },
+    {
+      "id": "019f2680-e601-7745-ab3b-971a59c152ca",
+      "title": "MV SkinnyFlex Beldia",
+      "duration": 162,
+      "artists": [
+        "SkinnyFle"
+      ]
+    },
+    {
+      "id": "019f2680-e5cf-7a03-90a1-3f98b0a9ab04",
+      "title": "MV SamaraCyn RollingStone",
+      "duration": 168,
+      "artists": [
+        "SamaraCyn"
+      ]
+    },
+    {
+      "id": "019f2680-e58a-747c-87c9-df2f9bce9e2f",
+      "title": "MV SaRoc AmazingGrace",
+      "duration": 189,
+      "artists": [
+        "SaRoc"
+      ]
+    },
+    {
+      "id": "019f2680-e536-7ba6-804e-92aed544c386",
+      "title": "MV Protoje BarrelBun",
+      "duration": 229,
+      "artists": [
+        "Protoje"
+      ]
+    },
+    {
+      "id": "019f2680-e50e-7c0f-9329-15af618cc2b1",
+      "title": "MV PROFFTimbabytate Butter",
+      "duration": 230,
+      "artists": [
+        "PROF",
+        "imbabytate"
+      ]
+    },
+    {
+      "id": "019f2680-e4d2-7087-a975-5ff9eca2c4a0",
+      "title": "MV LordSkoXStatikSelektah LessonLearned",
+      "duration": 148,
+      "artists": [
+        "LordSko",
+        "StatikSelektah"
+      ]
+    },
+    {
+      "id": "019f2680-e4a3-756e-af5f-36a8ab892fb3",
+      "title": "MV LadyLondon Summertime",
+      "duration": 148,
+      "artists": [
+        "LadyLondon"
+      ]
+    },
+    {
+      "id": "019f2680-e474-7e76-84b8-71cf5456f5de",
+      "title": "MV KillahPriestFTNeru PerfectPlace",
+      "duration": 247,
+      "artists": [
+        "KillahPriest",
+        "Neru"
+      ]
+    },
+    {
+      "id": "019f2680-e45e-79b1-9133-fbe2695ca4ca",
+      "title": "MV KhantrastxDeeBillz WhereTheHoes",
+      "duration": 162,
+      "artists": [
+        "Khantrast",
+        "DeeBillz"
+      ]
+    },
+    {
+      "id": "019f2680-e43a-7a8d-800a-680494eb3c33",
+      "title": "MV Khantrast WordIsBond",
+      "duration": 264,
+      "artists": [
+        "Khantrast"
+      ]
+    },
+    {
+      "id": "019f2680-e419-71df-9fd2-bd5ff212ba3c",
+      "title": "MV KamauuFTSiimbiieLakewXTrapCellist Weidamineh",
+      "duration": 203,
+      "artists": [
+        "Kamauu",
+        "SiimbiieLakew",
+        "TrapCellist"
+      ]
+    },
+    {
+      "id": "019f2680-e3f6-79b1-9cee-3e68870691bb",
+      "title": "MV IsmaelTejada Color",
+      "duration": 182,
+      "artists": [
+        "IsmaelTejada"
+      ]
+    },
+    {
+      "id": "019f2680-e0bc-7109-af0e-82a8d405f8cc",
+      "title": "MV HeavyLyricsFTIceCold414 WipeDown",
+      "duration": 164,
+      "artists": [
+        "HeavyLyrics",
+        "IceCold414"
+      ]
+    },
+    {
+      "id": "019f2680-e056-710b-b1e1-0186c5ed2229",
+      "title": "MV HaviahMighty PursuitFreestyle",
+      "duration": 150,
+      "artists": [
+        "HaviahMighty"
+      ]
+    },
+    {
+      "id": "019f2680-e00f-739b-81b8-566639e8463d",
+      "title": "MV HaviahMighty DoubleTheFun",
+      "duration": 192,
+      "artists": [
+        "HaviahMighty"
+      ]
+    },
+    {
+      "id": "019f2680-dfd9-728f-b0a3-5d54f157252b",
+      "title": "MV FleeLord SnakesInDisguise",
+      "duration": 217,
+      "artists": [
+        "FleeLord"
+      ]
+    },
+    {
+      "id": "019f2680-dfb1-7e22-a177-cb3c50bce269",
+      "title": "MV DaveEastXaraabMUZIKFTOTTheReal JoeJackson",
+      "duration": 219,
+      "artists": [
+        "DaveEast",
+        "araabMUZIK",
+        "OTTheReal"
+      ]
+    },
+    {
+      "id": "019f2680-df7e-7a22-8404-53c2c9270dae",
+      "title": "MV DaveEastXaraabMUZIKFTFabolous BussDown",
+      "duration": 259,
+      "artists": [
+        "DaveEast",
+        "araabMUZIK",
+        "Fabolous"
+      ]
+    },
+    {
+      "id": "019f2680-def0-738f-a025-5c5d5caf8f71",
+      "title": "MV BlackMoss WeGotThat",
+      "duration": 272,
+      "artists": [
+        "BlackMoss"
+      ]
+    },
+    {
+      "id": "019f2680-de68-71cc-b342-9d10c3540231",
+      "title": "MV BenjaminEarlTurner HeadspaceBent",
+      "duration": 324,
+      "artists": [
+        "BenjaminEarlTurner"
+      ]
+    },
+    {
+      "id": "019f2680-de2c-7039-ab18-a60525758412",
+      "title": "MV Acoupstix Adios",
+      "duration": 245,
+      "artists": [
+        "Acoupsti"
+      ]
+    },
+    {
+      "id": "019f2680-dd87-7517-a607-4891c1430966",
+      "title": "MV TokyoFTJuliannoSosa Trankila",
+      "duration": 149,
+      "artists": [
+        "Tokyo",
+        "JuliannoSosa"
+      ]
+    },
+    {
+      "id": "019f2680-dd0e-7c0f-b205-7d4447abd530",
+      "title": "MV Tokyo SCENDI",
+      "duration": 115,
+      "artists": [
+        "Tokyo"
+      ]
+    },
+    {
+      "id": "019f2680-dcd0-7134-b418-117e277b8237",
+      "title": "MV SnowThaProduct MAMA",
+      "duration": 144,
+      "artists": [
+        "SnowThaProduct"
+      ]
+    },
+    {
+      "id": "019f2680-dc0a-7a21-b486-ae06abe2c1e0",
+      "title": "MV SamaraCyn VitaminsNMinerals",
+      "duration": 151,
+      "artists": [
+        "SamaraCyn"
+      ]
+    },
+    {
+      "id": "019f2680-da9b-702f-aaf0-5bd779b48e37",
+      "title": "MV LecraexMEEZO BrickForBrick",
+      "duration": 158,
+      "artists": [
+        "Lecrae",
+        "MEEZO"
+      ]
+    },
+    {
+      "id": "019f2680-da39-7f94-8270-04ab3a5ea1a0",
+      "title": "MV Khantrast ADD",
+      "duration": 159,
+      "artists": [
+        "Khantrast"
+      ]
+    },
+    {
+      "id": "019f2680-d9d5-7319-b887-44616eac9852",
+      "title": "MV KembeXxAb Soul HerbalPlots",
+      "duration": 212,
+      "artists": [
+        "Kembe",
+        "Ab Soul"
+      ]
+    },
+    {
+      "id": "019f2680-d992-7ca5-8440-9445215350a7",
+      "title": "MV KembeX NationalAnthem",
+      "duration": 122,
+      "artists": [
+        "Kembe"
+      ]
+    },
+    {
+      "id": "019f2680-d965-7062-a692-cdec0f3e1e58",
+      "title": "MV JoeyBadass SUPAFLEE",
+      "duration": 194,
+      "artists": [
+        "JoeyBadass"
+      ]
+    },
+    {
+      "id": "019f2680-d935-7043-ba14-9021a283127a",
+      "title": "MV DoriaxTokyo Moto",
+      "duration": 184,
+      "artists": [
+        "Doria",
+        "Tokyo"
+      ]
+    },
+    {
+      "id": "019f2680-d8fd-7a34-bd40-2285377b8119",
+      "title": "MV CoryGunzFTNEMSxWhispers FishFry",
+      "duration": 223,
+      "artists": [
+        "CoryGunz",
+        "NEMS",
+        "Whispers"
+      ]
+    },
+    {
+      "id": "019f2680-d8d5-7ea0-b62a-788469b577b2",
+      "title": "MV ConnorPricexBigSean Mula",
+      "duration": 196,
+      "artists": [
+        "ConnorPrice",
+        "BigSean"
+      ]
+    },
+    {
+      "id": "019f2680-d88c-78bb-93cd-4f7f49591881",
+      "title": "MV CoastContra DontWorry",
+      "duration": 284,
+      "artists": [
+        "CoastContra"
+      ]
+    },
+    {
+      "id": "019f2680-d866-7e8b-bede-4263d5253dc2",
+      "title": "MV AesopRock FullHousePinball",
+      "duration": 214,
+      "artists": [
+        "AesopRock"
+      ]
+    },
+    {
+      "id": "019f2680-d83b-7bcd-b3c9-dea3de438f88",
+      "title": "MV WilliamSinge Honest",
+      "duration": 161,
+      "artists": [
+        "WilliamSinge"
+      ]
+    },
+    {
+      "id": "019f2680-d811-73d4-8628-81faeeaa3c28",
+      "title": "MV ValiantxCjthechemist AllOva",
+      "duration": 169,
+      "artists": [
+        "Valiant",
+        "Cjthechemist"
+      ]
+    },
+    {
+      "id": "019f2680-d7e9-7779-9688-33b83202b2ea",
+      "title": "MV TomGFTJTMoney StepDaddy",
+      "duration": 281,
+      "artists": [
+        "TomG",
+        "JTMoney"
+      ]
+    },
+    {
+      "id": "019f2680-d7bd-7c40-b06d-9b8f16fddeee",
+      "title": "MV TeoGlacierxWilliamSinge SomethingBoutYou",
+      "duration": 192,
+      "artists": [
+        "TeoGlacier",
+        "WilliamSinge"
+      ]
+    },
+    {
+      "id": "019f2680-d78e-7d1d-bdbb-9da997dc4c4d",
+      "title": "MV Spiros DevilInARedDress",
+      "duration": 362,
+      "artists": [
+        "Spiros"
+      ]
+    },
+    {
+      "id": "019f2680-d718-706e-8a8d-2948c6e5a063",
+      "title": "MV Spida YourMan",
+      "duration": 158,
+      "artists": [
+        "Spida"
+      ]
+    },
+    {
+      "id": "019f2680-d6d8-76e6-9221-473fc3affbde",
+      "title": "MV SnowThaProduct Sabado",
+      "duration": 220,
+      "artists": [
+        "SnowThaProduct"
+      ]
+    },
+    {
+      "id": "019f2680-d6a6-7b06-93d5-e5cfd98b6230",
+      "title": "MV SnowThaProduct Anyone",
+      "duration": 144,
+      "artists": [
+        "SnowThaProduct"
+      ]
+    },
+    {
+      "id": "019f2680-d680-7303-be58-058697f74c0c",
+      "title": "MV ScarLip RunawayLoveFreestyle",
+      "duration": 196,
+      "artists": [
+        "ScarLip"
+      ]
+    },
+    {
+      "id": "019f2680-d657-76b0-bce3-5f984ed936ea",
+      "title": "MV SamaraCynxSmino BrandNewTeeth",
+      "duration": 327,
+      "artists": [
+        "SamaraCyn",
+        "Smino"
+      ]
+    },
+    {
+      "id": "019f2680-d5eb-75fd-af52-d2d0744b4ee9",
+      "title": "MV SamaraCynxSherwyn PopNOlive",
+      "duration": 185,
+      "artists": [
+        "SamaraCyn",
+        "Sherwyn"
+      ]
+    },
+    {
+      "id": "019f2680-d5b8-713d-adc5-85504faebf4a",
+      "title": "MV RedmanFTMelanieRutherford SoopamanLuva7",
+      "duration": 283,
+      "artists": [
+        "Redman",
+        "MelanieRutherford"
+      ]
+    },
+    {
+      "id": "019f2680-d58d-74b8-bbbe-595eb288a081",
+      "title": "MV PROF DirtyWork",
+      "duration": 162,
+      "artists": [
+        "PROF"
+      ]
+    },
+    {
+      "id": "019f2680-d467-7b1d-817b-04607be4855b",
+      "title": "MV OddSquadFamilyFTDizzyWright SmilingBack",
+      "duration": 183,
+      "artists": [
+        "OddSquadFamily",
+        "DizzyWright"
+      ]
+    },
+    {
+      "id": "019f2680-d435-708d-9f5b-3472b0f6e939",
+      "title": "MV OTTheRealx38Spesh ForTheFace",
+      "duration": 102,
+      "artists": [
+        "OTTheReal",
+        "38Spesh"
+      ]
+    },
+    {
+      "id": "019f2680-d409-73db-b8e5-b138e32f3607",
+      "title": "MV NemsFTTonyTouch Afuera",
+      "duration": 194,
+      "artists": [
+        "Nems",
+        "TonyTouch"
+      ]
+    },
+    {
+      "id": "019f2680-d3df-75d3-8de8-9e339228abb4",
+      "title": "MV MsBanksFTEfosa Silhouette",
+      "duration": 160,
+      "artists": [
+        "MsBanks",
+        "Efosa"
+      ]
+    },
+    {
+      "id": "019f2680-d3ad-7fe6-a6c0-f8ff89ff6688",
+      "title": "MV MikeTeezy ForgiveEm",
+      "duration": 149,
+      "artists": [
+        "MikeTeezy"
+      ]
+    },
+    {
+      "id": "019f2680-d36c-7382-940a-93668fd478a6",
+      "title": "MV Lyrivelli Love",
+      "duration": 193,
+      "artists": [
+        "Lyrivelli"
+      ]
+    },
+    {
+      "id": "019f2680-d32e-7483-9f2c-3615432a8bf8",
+      "title": "MV Lyrivelli DayOnes",
+      "duration": 204,
+      "artists": [
+        "Lyrivelli"
+      ]
+    },
+    {
+      "id": "019f2680-d308-7a53-9cde-338bae2d6688",
+      "title": "MV LoyolaBoyz HardToDigest",
+      "duration": 207,
+      "artists": [
+        "LoyolaBoyz"
+      ]
+    },
+    {
+      "id": "019f2680-d2dc-7770-bdec-e6f4d7ebe791",
+      "title": "MV LocksmithxMysonne CulturePart2",
+      "duration": 255,
+      "artists": [
+        "Locksmith",
+        "Mysonne"
+      ]
+    },
+    {
+      "id": "019f2680-d292-7c7b-b8cd-cd0cf104835c",
+      "title": "MV LalaMancipe Inseguro",
+      "duration": 137,
+      "artists": [
+        "LalaMancipe"
+      ]
+    },
+    {
+      "id": "019f2680-d1f9-7f3d-868f-6e6b8d6f5c62",
+      "title": "MV JoeyBadassFTAbSoulxRapsody Still",
+      "duration": 206,
+      "artists": [
+        "JoeyBadass",
+        "AbSoul",
+        "Rapsody"
+      ]
+    },
+    {
+      "id": "019f2680-d1b8-7d3a-b93e-c9f03f576d5f",
+      "title": "MV JoeyBadass DarkAura",
+      "duration": 201,
+      "artists": [
+        "JoeyBadass"
+      ]
+    },
+    {
+      "id": "019f2680-d134-7b72-b5ee-f3f0ea93ea32",
+      "title": "MV HaviahMighty OK",
+      "duration": 134,
+      "artists": [
+        "HaviahMighty"
+      ]
+    },
+    {
+      "id": "019f2680-d0e3-7a4a-bb09-dc049eb69f3b",
+      "title": "MV GatsFTChaseTheMoney CheapSkate",
+      "duration": 113,
+      "artists": [
+        "Gats",
+        "ChaseTheMoney"
+      ]
+    },
+    {
+      "id": "019f2680-d024-79f2-b05b-fe4172731e94",
+      "title": "MV Gats WhatYouOn",
+      "duration": 158,
+      "artists": [
+        "Gats"
+      ]
+    },
+    {
+      "id": "019f2680-cf7b-72da-a6ec-8139d3dad50f",
+      "title": "MV FleeLordxEto ZipOfBadu",
+      "duration": 121,
+      "artists": [
+        "FleeLord",
+        "Eto"
+      ]
+    },
+    {
+      "id": "019f2680-cf54-735f-90fb-b7732ab0e528",
+      "title": "MV FaennaxBadB FumandoFlores",
+      "duration": 219,
+      "artists": [
+        "Faenna",
+        "BadB"
+      ]
+    },
+    {
+      "id": "019f2680-cf2d-7d23-bee1-c34fe2d45de0",
+      "title": "MV EnzoMcFly KeepGoinIn",
+      "duration": 209,
+      "artists": [
+        "EnzoMcFly"
+      ]
+    },
+    {
+      "id": "019f2680-cefe-7a05-ba03-acbd98bd2f4f",
+      "title": "MV EddieKane 1995Freestyle",
+      "duration": 127,
+      "artists": [
+        "EddieKane"
+      ]
+    },
+    {
+      "id": "019f2680-ced5-774e-8db6-bbd6e1de760a",
+      "title": "MV DycePaysoxJuelzSantana PlugMotivation",
+      "duration": 155,
+      "artists": [
+        "DycePayso",
+        "JuelzSantana"
+      ]
+    },
+    {
+      "id": "019f2680-cea1-77d5-ada2-128f66787621",
+      "title": "MV DaveEastxYoungChris ISmellTheMoney",
+      "duration": 200,
+      "artists": [
+        "DaveEast",
+        "YoungChris"
+      ]
+    },
+    {
+      "id": "019f2680-ce72-7cc3-b169-a088a8c15d55",
+      "title": "MV DVAliasKhrystFTDreWonda NewJackCity",
+      "duration": 307,
+      "artists": [
+        "DVAliasKhryst",
+        "DreWonda"
+      ]
+    },
+    {
+      "id": "019f2680-ce2f-74e7-8131-988fcac16506",
+      "title": "MV CoastContra RULAZ",
+      "duration": 201,
+      "artists": [
+        "CoastContra"
+      ]
+    },
+    {
+      "id": "019f2680-cdfc-77bd-b2e3-f45a3f5b2ec7",
+      "title": "MV Chucky73xLETA 777.73",
+      "duration": 140,
+      "artists": [
+        "Chucky73",
+        "LETA"
+      ]
+    },
+    {
+      "id": "019f2680-cdb6-7c95-94c0-a4c9766bd3e7",
+      "title": "MV BraulioFogon KelokePa",
+      "duration": 89,
+      "artists": [
+        "BraulioFogon"
+      ]
+    },
+    {
+      "id": "019f2680-cd89-7a5d-b2e4-52120f41db42",
+      "title": "MV BowWow MuttFreestyle",
+      "duration": 193,
+      "artists": [
+        "BowWow"
+      ]
+    },
+    {
+      "id": "019f2680-cd56-79f2-990b-d6e4a4ce3ff3",
+      "title": "MV BayCxBountyKiller BadmanTown",
+      "duration": 205,
+      "artists": [
+        "BayC",
+        "BountyKiller"
+      ]
+    },
+    {
+      "id": "019f2680-cd23-7b21-9efb-985d42d19cb0",
+      "title": "MV BayC StuntDouble",
+      "duration": 171,
+      "artists": [
+        "BayC"
+      ]
+    },
+    {
+      "id": "019f2680-ccdf-7564-baab-1e0066aab54e",
+      "title": "MV Alejo EnLaOrilla",
+      "duration": 197,
+      "artists": [
+        "Alejo"
+      ]
+    },
+    {
+      "id": "019f2680-cc8e-7a8c-ae56-122df5ea0d4c",
+      "title": "MV AfromanxAKTAktionxBrandonRodelo AriSmokazona",
+      "duration": 203,
+      "artists": [
+        "Afroman",
+        "AKTAktion",
+        "BrandonRodelo"
+      ]
+    },
+    {
+      "id": "019f2680-cc02-7ada-8b7e-4e4a09d8844c",
+      "title": "MV WordLife TrustIssues",
+      "duration": 115,
+      "artists": [
+        "WordLife"
+      ]
+    },
+    {
+      "id": "019f2680-cbb8-7384-9667-af69008a5282",
+      "title": "MV WordLife MagicCity",
+      "duration": 165,
+      "artists": [
+        "WordLife"
+      ]
+    },
+    {
+      "id": "019f2680-cb57-7eb8-97d4-b7fa06b10926",
+      "title": "MV WiseboyJeremy TempleDoors",
+      "duration": 190,
+      "artists": [
+        "WiseboyJeremy"
+      ]
+    },
+    {
+      "id": "019f2680-cad7-792e-93df-7389c109a9f0",
+      "title": "MV TheUceXEto Wolves",
+      "duration": 186,
+      "artists": [
+        "TheUce",
+        "Eto"
+      ]
+    },
+    {
+      "id": "019f2680-ca9b-7e28-9327-f8c6c97dbc75",
+      "title": "MV SnowThaProduct Nah",
+      "duration": 101,
+      "artists": [
+        "SnowThaProduct"
+      ]
+    },
+    {
+      "id": "019f2680-ca26-7738-9c15-1f79fd8d4694",
+      "title": "MV SnowThaProduct Jump",
+      "duration": 153,
+      "artists": [
+        "SnowThaProduct"
+      ]
+    },
+    {
+      "id": "019f2680-c9d3-7718-a0b8-503b3f593d37",
+      "title": "MV SnowThaProduct DrunkLove",
+      "duration": 126,
+      "artists": [
+        "SnowThaProduct"
+      ]
+    },
+    {
+      "id": "019f2680-c984-7bc3-a981-004f2f1d2084",
+      "title": "MV Smif N Wessun FiftyFifty",
+      "duration": 145,
+      "artists": [
+        "Smif N Wessun"
+      ]
+    },
+    {
+      "id": "019f2680-c945-7e6e-a831-b1b4f72313e1",
+      "title": "MV SamaraCyn Katana",
+      "duration": 176,
+      "artists": [
+        "SamaraCyn"
+      ]
+    },
+    {
+      "id": "019f2680-c901-72fb-8be3-fb388c2a599e",
+      "title": "MV RonEXFabolous WorstWay",
+      "duration": 171,
+      "artists": [
+        "RonE",
+        "Fabolous"
+      ]
+    },
+    {
+      "id": "019f2680-c89f-71ef-9ad5-2605a5dd902d",
+      "title": "MV RakimXNasFTMultiple TheGods",
+      "duration": 250,
+      "artists": [
+        "Rakim",
+        "Nas",
+        "Multiple"
+      ]
+    },
+    {
+      "id": "019f2680-c877-76c6-b699-ea31708bbd74",
+      "title": "MV PushaPremeXWldChldBeatzFTMilliMoonIndieIndigo GiveUpOnMe",
+      "duration": 189,
+      "artists": [
+        "PushaPreme",
+        "WldChldBeatz",
+        "MilliMoonIndieIndigo"
+      ]
+    },
+    {
+      "id": "019f2680-c534-7a4b-81d7-cab0d2721829",
+      "title": "MV Anike PrayForMe",
+      "duration": 220,
+      "artists": [
+        "Anike"
+      ]
+    },
+    {
+      "id": "019f2680-c502-72d9-9a71-c8fbb0b6c643",
+      "title": "MV AleshaDixon Ransom",
+      "duration": 219,
+      "artists": [
+        "AleshaDi"
+      ]
+    },
+    {
+      "id": "019f2680-c4e3-785a-a726-a5c449c13a4c",
+      "title": "MV AlbeeAlXDaveEastXMillyz TriangleOffense",
+      "duration": 221,
+      "artists": [
+        "AlbeeAl",
+        "DaveEast",
+        "Millyz"
+      ]
+    },
+    {
+      "id": "019f2680-c0f7-7bd9-a8ef-6d0723fd71e7",
+      "title": "MV AkapellahFTPirlo MundoDeLoAjeno",
+      "duration": 204,
+      "artists": [
+        "Akapellah",
+        "Pirlo"
+      ]
+    },
+    {
+      "id": "019f2680-c0cc-7f5c-90f6-d5b987e5f31d",
+      "title": "MV AkapellahFTJackRussellXZenPXSabue GuardaSilencio",
+      "duration": 280,
+      "artists": [
+        "Akapellah",
+        "JackRussell",
+        "ZenP",
+        "Sabue"
+      ]
+    },
+    {
+      "id": "019f2680-c09c-7366-8e01-b14a96cf0a9c",
+      "title": "MV AesopRock Pigeonometry",
+      "duration": 84,
+      "artists": [
+        "AesopRock"
+      ]
+    },
+    {
+      "id": "019f2680-c03b-7fa0-a31b-c8e271db079f",
+      "title": "MV AOAliente FearOfPski",
+      "duration": 131,
+      "artists": [
+        "AOAliente"
+      ]
+    },
+    {
+      "id": "019f2680-b4ee-7ae5-a52e-cae63ab3d269",
+      "title": "MV AnaTijouxXHordatoj EnLaMia",
+      "duration": 172,
+      "artists": [
+        "AnaTijou",
+        "Hordatoj"
+      ]
+    },
+    {
+      "id": "019f2680-b4db-75d9-821e-b3aaf21e1156",
+      "title": "MV AesopRock Checkers",
+      "duration": 239,
+      "artists": [
+        "AesopRock"
+      ]
+    },
+    {
+      "id": "019f2680-b4c6-7f94-826f-790517ece642",
+      "title": "MV ALU MAMIWATA",
+      "duration": 175,
+      "artists": [
+        "ALU"
+      ]
+    },
+    {
+      "id": "019f2680-b0ab-79db-98ce-cb7bc7bb36c5",
+      "title": "MV Aable Sheesh",
+      "duration": 119,
+      "artists": [
+        "Aable"
+      ]
+    },
+    {
+      "id": "019f2680-a9c1-7129-a0b2-53289fe7c93a",
+      "title": "MV AdamSnow WDYW",
+      "duration": 207,
+      "artists": [
+        "AdamSnow"
+      ]
+    },
+    {
+      "id": "019f2680-a5c9-77c6-b68c-daa20c6c1dd2",
+      "title": "MV AlF HP",
+      "duration": 184,
+      "artists": [
+        "AlF"
+      ]
+    },
+    {
+      "id": "019f2680-a5b8-749a-941f-d568c70e35f7",
+      "title": "MV AkapellahFTAl2ElAldeano NiConMoney",
+      "duration": 247,
+      "artists": [
+        "Akapellah",
+        "Al2ElAldeano"
+      ]
+    },
+    {
+      "id": "019f2680-a5a4-7fb7-a9b4-12522224973f",
+      "title": "MV Achal Piritu",
+      "duration": 153,
+      "artists": [
+        "Achal"
+      ]
+    },
+    {
+      "id": "019f2680-7ae1-76a0-a67e-90a48158f551",
+      "title": "MV Aych LoudFreestyle",
+      "duration": 67,
+      "artists": [
+        "Aych"
+      ]
+    },
+    {
+      "id": "019f2680-7acd-7af7-9222-a546c7fdc95d",
+      "title": "MV Aych BiggieFreestyle",
+      "duration": 92,
+      "artists": [
+        "Aych"
+      ]
+    },
+    {
+      "id": "019f2680-7abd-7a32-98bc-7dc7db956080",
+      "title": "MV Atwaters NoticeMe",
+      "duration": 172,
+      "artists": [
+        "Atwaters"
+      ]
+    },
+    {
+      "id": "019f2680-7ab0-72e0-8927-f1e2e3d1ec22",
+      "title": "MV AsianDoll Obsessed",
+      "duration": 146,
+      "artists": [
+        "AsianDoll"
+      ]
+    },
+    {
+      "id": "019f2680-7aa2-7d2c-8da4-fe4700effb2c",
+      "title": "MV Ashafar MDLR",
+      "duration": 166,
+      "artists": [
+        "Ashafar"
+      ]
+    },
+    {
+      "id": "019f2680-7a94-7736-8861-7a3cf21c1507",
+      "title": "MV Asaru Underdog",
+      "duration": 188,
+      "artists": [
+        "Asaru"
+      ]
+    },
+    {
+      "id": "019f2680-7a88-7750-a4e5-ec4d64c7ead7",
+      "title": "MV Asaru TopTier",
+      "duration": 191,
+      "artists": [
+        "Asaru"
+      ]
+    },
+    {
+      "id": "019f2680-7a7e-7125-b7d5-2730be9ed833",
+      "title": "MV Asaru SinceISeenYou",
+      "duration": 104,
+      "artists": [
+        "Asaru"
+      ]
+    },
+    {
+      "id": "019f2680-7a70-7109-91a2-b046a6c396a6",
+      "title": "MV Asaru ManOfTheCity",
+      "duration": 151,
+      "artists": [
+        "Asaru"
+      ]
+    },
+    {
+      "id": "019f2680-7a5a-720e-8bc7-bf50639637b5",
+      "title": "MV Asaru AllPraisesDue",
+      "duration": 172,
+      "artists": [
+        "Asaru"
+      ]
+    },
+    {
+      "id": "019f2680-7a41-7ba7-a0ad-1dc4c89972ec",
+      "title": "MV Asaru 95Esco",
+      "duration": 213,
+      "artists": [
+        "Asaru"
+      ]
+    },
+    {
+      "id": "019f2680-7a2c-710d-8ac3-dc8f20ca1f7b",
+      "title": "MV ArmaniCaesar SurvivalOfTheLittest",
+      "duration": 141,
+      "artists": [
+        "ArmaniCaesar"
+      ]
+    },
+    {
+      "id": "019f2680-7a1c-765c-a213-1859750fc425",
+      "title": "MV ArdAdzXShoShallow StillWindy",
+      "duration": 120,
+      "artists": [
+        "ArdAdz",
+        "ShoShallow"
+      ]
+    },
+    {
+      "id": "019f2680-7a0a-721b-95ea-53d576b479da",
+      "title": "MV Annex TrashTalk 2MinuteWindowEp2",
+      "duration": 82,
+      "artists": [
+        "Anne",
+        "TrashTalk"
+      ]
+    },
+    {
+      "id": "019f2680-79fc-7e63-b81d-e84dd56b3951",
+      "title": "MV Annex PickItUp",
+      "duration": 144,
+      "artists": [
+        "Anne"
+      ]
+    },
+    {
+      "id": "019f2680-79ed-7f1d-a1a6-24dcd0679e40",
+      "title": "MV Anier Nanai",
+      "duration": 171,
+      "artists": [
+        "Anier"
+      ]
+    },
+    {
+      "id": "019f2680-79dd-7e67-8887-671e541ec52b",
+      "title": "MV Anier Colapso",
+      "duration": 178,
+      "artists": [
+        "Anier"
+      ]
+    },
+    {
+      "id": "019f2680-79cf-7981-86ff-2936a7d120ca",
+      "title": "MV Anier Andromeda",
+      "duration": 207,
+      "artists": [
+        "Anier"
+      ]
+    },
+    {
+      "id": "019f2680-79c1-7534-893c-863dfe702b4c",
+      "title": "MV AliahSheffield EarthIsGhetto",
+      "duration": 222,
+      "artists": [
+        "AliahSheffield"
+      ]
+    },
+    {
+      "id": "019f2680-79b2-75ba-a25d-d00cd88a460b",
+      "title": "MV AlexMack SumnLight",
+      "duration": 144,
+      "artists": [
+        "Ale",
+        "Mack"
+      ]
+    },
+    {
+      "id": "019f2680-79a6-78df-b65a-610f0d6e43d5",
+      "title": "MV AlexJean SkressBoutDat",
+      "duration": 222,
+      "artists": [
+        "Ale",
+        "Jean"
+      ]
+    },
+    {
+      "id": "019f2680-7998-7244-ab81-8d6eeb74384e",
+      "title": "MV AleksaSafiya NobodyKnows",
+      "duration": 214,
+      "artists": [
+        "AleksaSafiya"
+      ]
+    },
+    {
+      "id": "019f2680-7984-7033-937e-6f4b256c82f5",
+      "title": "MV AleksaSafiya Day1",
+      "duration": 146,
+      "artists": [
+        "AleksaSafiya"
+      ]
+    },
+    {
+      "id": "019f2680-7974-79e3-9c65-aebc0badfbc9",
+      "title": "MV Alejo UnPoquito",
+      "duration": 166,
+      "artists": [
+        "Alejo"
+      ]
+    },
+    {
+      "id": "019f2680-7965-7731-8498-f80fdb402133",
+      "title": "MV Alejo TrajecitoXS",
+      "duration": 220,
+      "artists": [
+        "Alejo"
+      ]
+    },
+    {
+      "id": "019f2680-7955-7769-85a3-a8cb58a92af7",
+      "title": "MV Alejo TeLeo",
+      "duration": 159,
+      "artists": [
+        "Alejo"
+      ]
+    },
+    {
+      "id": "019f2680-7944-75af-b31c-7418075e9bc2",
+      "title": "MV Alejo Mascara",
+      "duration": 166,
+      "artists": [
+        "Alejo"
+      ]
+    },
+    {
+      "id": "019f2680-792f-7bc1-94e3-6aede36b1340",
+      "title": "MV Alejo GatitaPretty",
+      "duration": 156,
+      "artists": [
+        "Alejo"
+      ]
+    },
+    {
+      "id": "019f2680-791c-7618-8b9d-d60145e3ef4a",
+      "title": "MV Alejo Estrella",
+      "duration": 218,
+      "artists": [
+        "Alejo"
+      ]
+    },
+    {
+      "id": "019f2680-790b-776f-8b94-f4779608ea31",
+      "title": "MV AlSkratch AlSkratchPreemo",
+      "duration": 72,
+      "artists": [
+        "AlSkratch"
+      ]
+    },
+    {
+      "id": "019f2680-78f6-7105-bcbc-fd108c817bf9",
+      "title": "MV AjentO Energy",
+      "duration": 227,
+      "artists": [
+        "AjentO"
+      ]
+    },
+    {
+      "id": "019f2680-78e3-7853-a482-31a6040f490f",
+      "title": "MV AesopRock NoneShallPass",
+      "duration": 242,
+      "artists": [
+        "AesopRock"
+      ]
+    },
+    {
+      "id": "019f2680-78cf-7b8d-b3bf-7319bae04c04",
+      "title": "MV AesopRock MindfulSolutionism",
+      "duration": 223,
+      "artists": [
+        "AesopRock"
+      ]
+    },
+    {
+      "id": "019f2680-78bd-7d78-b60d-88c42ac7ec51",
+      "title": "MV AesopRock JumpingCoffin",
+      "duration": 219,
+      "artists": [
+        "AesopRock"
+      ]
+    },
+    {
+      "id": "019f2680-78a8-76dd-8247-e549c5b59953",
+      "title": "MV AesopRock InfinityFillGooseDown",
+      "duration": 223,
+      "artists": [
+        "AesopRock"
+      ]
+    },
+    {
+      "id": "019f2680-7899-7fe4-a4cd-1516f383f62d",
+      "title": "MV AcoupstixftKayoDaBeast UTBMUsedToBeMe",
+      "duration": 177,
+      "artists": [
+        "Acoupsti",
+        "KayoDaBeast"
+      ]
+    },
+    {
+      "id": "019f2680-788c-79f8-af2e-ef0eb650cf9b",
+      "title": "MV AceG BlessingsFromTheTrenches",
+      "duration": 219,
+      "artists": [
+        "AceG"
+      ]
+    },
+    {
+      "id": "019f2680-7873-7471-bad7-4ddf0d5514c8",
+      "title": "MV AZ Goat",
+      "duration": 125,
+      "artists": [
+        "AZ"
+      ]
+    },
+    {
+      "id": "019f2680-7864-7405-9bac-c112a578ca29",
+      "title": "MV ASARUftMichaelaPaladioNDJSandman Everyday",
+      "duration": 173,
+      "artists": [
+        "ASARU",
+        "MichaelaPaladioNDJSandman"
+      ]
+    },
+    {
+      "id": "019f2680-7854-77a7-b1e5-3fc2413a0183",
+      "title": "MV ASAPTwelvyy PassTheTorch",
+      "duration": 176,
+      "artists": [
+        "ASAPTwelvyy"
+      ]
+    },
+    {
+      "id": "019f2680-7845-72b6-811b-0ea03ba5fad8",
+      "title": "MV ASAPTwelvyy AsIAm",
+      "duration": 113,
+      "artists": [
+        "ASAPTwelvyy"
+      ]
+    },
+    {
+      "id": "019f2680-7834-7499-86de-1c46359bc4eb",
+      "title": "MV AK YooHoo",
+      "duration": 196,
+      "artists": [
+        "AK"
+      ]
+    },
+    {
+      "id": "019f2680-7826-717d-ac3e-72a6be2d3251",
+      "title": "MV AK Crazy",
+      "duration": 144,
+      "artists": [
+        "AK"
+      ]
+    },
+    {
+      "id": "019f2680-7817-744c-baf2-bdf5f14393de",
+      "title": "MV AITheAnomaly Facts",
+      "duration": 216,
+      "artists": [
+        "AITheAnomaly"
+      ]
+    },
+    {
+      "id": "019f2680-780a-7f92-8139-bd7f232867b9",
+      "title": "MV AFactor Meta",
+      "duration": 210,
+      "artists": [
+        "AFactor"
+      ]
+    },
+    {
+      "id": "019f2680-c54e-76f2-a682-c263e54442bd",
+      "title": "MV Berwyn WhoAmI",
+      "duration": 176,
+      "artists": [
+        "Berwyn"
+      ]
+    },
+    {
+      "id": "019f2680-c147-7f99-a5db-dd3964f25b3b",
+      "title": "MV BoogEBryant Rap4Yall",
+      "duration": 244,
+      "artists": [
+        "BoogEBryant"
+      ]
+    },
+    {
+      "id": "019f2680-b502-798f-be43-f375f97d83df",
+      "title": "MV BigTwins Dreamin",
+      "duration": 161,
+      "artists": [
+        "BigTwins"
+      ]
+    },
+    {
+      "id": "019f2680-a9e8-7f77-868c-f208ba3a1e4f",
+      "title": "MV BillyDanzeMOPftBReal LetItBe",
+      "duration": 185,
+      "artists": [
+        "BillyDanzeMOP",
+        "BReal"
+      ]
+    },
+    {
+      "id": "019f2680-7bae-72b8-9d53-1741e448a603",
+      "title": "MV Bulin47xPressyRD MiHistoria",
+      "duration": 168,
+      "artists": [
+        "Bulin47",
+        "PressyRD"
+      ]
+    },
+    {
+      "id": "019f2680-7ba3-7dd7-8197-99f5900deeec",
+      "title": "MV BubbaSparxxx WeDontCare",
+      "duration": 136,
+      "artists": [
+        "BubbaSpar"
+      ]
+    },
+    {
+      "id": "019f2680-7b95-7c20-980e-3af408103010",
+      "title": "MV Borrero 321",
+      "duration": 167,
+      "artists": [
+        "Borrero"
+      ]
+    },
+    {
+      "id": "019f2680-7b89-7826-9355-9ffe2a4818be",
+      "title": "MV BootCampClik WotchaCallStrength",
+      "duration": 335,
+      "artists": [
+        "BootCampClik"
+      ]
+    },
+    {
+      "id": "019f2680-7b7e-7c0a-954f-9f0ef6a730a3",
+      "title": "MV BlackPegasus PopRocks",
+      "duration": 170,
+      "artists": [
+        "BlackPegasus"
+      ]
+    },
+    {
+      "id": "019f2680-7b72-7e54-aba6-7997c2d4178d",
+      "title": "MV BlackMagik Yahawashi",
+      "duration": 286,
+      "artists": [
+        "BlackMagik"
+      ]
+    },
+    {
+      "id": "019f2680-7b66-7340-90c0-36ff86df4f3d",
+      "title": "MV Bizzle NoLs",
+      "duration": 191,
+      "artists": [
+        "Bizzle"
+      ]
+    },
+    {
+      "id": "019f2680-7b59-763b-a677-34d3763d2bea",
+      "title": "MV BizarreftNemsNYoungZee 25",
+      "duration": 199,
+      "artists": [
+        "Bizarre",
+        "NemsNYoungZee"
+      ]
+    },
+    {
+      "id": "019f2680-7b4e-7fa0-96ef-bb1b613488f5",
+      "title": "MV BigalowDaHotshot OnaRoad",
+      "duration": 134,
+      "artists": [
+        "BigalowDaHotshot"
+      ]
+    },
+    {
+      "id": "019f2680-7b43-7fdb-860d-0af642da51b0",
+      "title": "MV BigSoto Prendia",
+      "duration": 268,
+      "artists": [
+        "BigSoto"
+      ]
+    },
+    {
+      "id": "019f2680-7b37-738d-97f8-a70cb2678b3c",
+      "title": "MV Beselfliss Skye",
+      "duration": 202,
+      "artists": [
+        "Beselfliss"
+      ]
+    },
+    {
+      "id": "019f2680-7b28-72a6-936a-cb5def30d743",
+      "title": "MV Beselfliss HalleysComet",
+      "duration": 194,
+      "artists": [
+        "Beselfliss"
+      ]
+    },
+    {
+      "id": "019f2680-7b1c-71c1-8c44-10ebf77bab14",
+      "title": "MV BennyTheButcherxHeemxRickHydexDJPremier TimesIsRough",
+      "duration": 214,
+      "artists": [
+        "BennyTheButcher",
+        "Heem",
+        "RickHyde",
+        "DJPremier"
+      ]
+    },
+    {
+      "id": "019f2680-7b11-7f74-a3ea-2db6cdce1eac",
+      "title": "MV Beanz Crackin",
+      "duration": 147,
+      "artists": [
+        "Beanz"
+      ]
+    },
+    {
+      "id": "019f2680-7b05-750d-a134-827f5827769a",
+      "title": "MV Beanz CantBelieve",
+      "duration": 66,
+      "artists": [
+        "Beanz"
+      ]
+    },
+    {
+      "id": "019f2680-7af8-7f76-b6d0-cdb17aac35bf",
+      "title": "MV BSFFuegoBase WhiteLivesMatter",
+      "duration": 160,
+      "artists": [
+        "BSFFuegoBase"
+      ]
+    },
+    {
+      "id": "019f2680-7aec-7f44-9991-7a95ece65510",
+      "title": "MV BEAM FU",
+      "duration": 181,
+      "artists": [
+        "BEAM"
+      ]
+    },
+    {
+      "id": "019f2680-c174-734a-805d-695924c02c83",
+      "title": "MV ChenayderXMAVI Colors",
+      "duration": 201,
+      "artists": [
+        "Chenayder",
+        "MAVI"
+      ]
+    },
+    {
+      "id": "019f2680-b54a-7fa5-a1e8-3e4b31b6b580",
+      "title": "MV ConnorPricexNicD TooEasy",
+      "duration": 136,
+      "artists": [
+        "ConnorPrice",
+        "NicD"
+      ]
+    },
+    {
+      "id": "019f2680-b52c-79e6-8cf6-f451fc3d105c",
+      "title": "MV ConnorPricexForrestFrank UP",
+      "duration": 136,
+      "artists": [
+        "ConnorPrice",
+        "ForrestFrank"
+      ]
+    },
+    {
+      "id": "019f2680-b518-786b-8ed0-30b7bd0f7de1",
+      "title": "MV Chucky73 LaRosaWTB",
+      "duration": 166,
+      "artists": [
+        "Chucky73"
+      ]
+    },
+    {
+      "id": "019f2680-b0f4-7f46-8924-dec00e004160",
+      "title": "MV CrownyGambino Chance",
+      "duration": 150,
+      "artists": [
+        "CrownyGambino"
+      ]
+    },
+    {
+      "id": "019f2680-aacf-73df-906e-e9bd5f6a59eb",
+      "title": "MV ConnorPrice Top10",
+      "duration": 146,
+      "artists": [
+        "ConnorPrice"
+      ]
+    },
+    {
+      "id": "019f2680-aa8f-738f-a806-aff7c4f84ee6",
+      "title": "MV ChicoMaestro IDOL",
+      "duration": 126,
+      "artists": [
+        "ChicoMaestro"
+      ]
+    },
+    {
+      "id": "019f2680-aa5a-79a7-9fb8-4d307bd7b3cf",
+      "title": "MV CharlesHerron ForeignJays",
+      "duration": 106,
+      "artists": [
+        "CharlesHerron"
+      ]
+    },
+    {
+      "id": "019f2680-aa07-76e0-aa5d-7d48aa9cd3ed",
+      "title": "MV CasablancaTheGawd PriceTag",
+      "duration": 188,
+      "artists": [
+        "CasablancaTheGawd"
+      ]
+    },
+    {
+      "id": "019f2680-a616-70f4-b2ce-4d86ea163558",
+      "title": "MV ConnorPriceXHaviahMighty Trendsetter",
+      "duration": 142,
+      "artists": [
+        "ConnorPrice",
+        "HaviahMighty"
+      ]
+    },
+    {
+      "id": "019f2680-a605-73de-a51a-f30408477015",
+      "title": "MV Chenayder ForOneLastTime",
+      "duration": 139,
+      "artists": [
+        "Chenayder"
+      ]
+    },
+    {
+      "id": "019f2680-a5f0-7535-89f9-4d67dc6ecce0",
+      "title": "MV CalebGordonFTAlanoAdan RockyRoadPt2",
+      "duration": 170,
+      "artists": [
+        "CalebGordon",
+        "AlanoAdan"
+      ]
+    },
+    {
+      "id": "019f2680-a5db-75c6-a4b2-17c42ba63696",
+      "title": "MV C4Crotona UseTo",
+      "duration": 130,
+      "artists": [
+        "C4Crotona"
+      ]
+    },
+    {
+      "id": "019f2680-7cdf-77e7-b465-eb1517bd03d5",
+      "title": "MV CruchCalhoun OneOfAKind",
+      "duration": 151,
+      "artists": [
+        "CruchCalhoun"
+      ]
+    },
+    {
+      "id": "019f2680-7cd3-7971-b1ba-5317643dc73a",
+      "title": "MV Cristale Antisocial",
+      "duration": 208,
+      "artists": [
+        "Cristale"
+      ]
+    },
+    {
+      "id": "019f2680-7cc6-7376-9594-2a773643f4e1",
+      "title": "MV Coke Brooklyn",
+      "duration": 166,
+      "artists": [
+        "Coke"
+      ]
+    },
+    {
+      "id": "019f2680-7cb7-7f4a-9c82-19e66b02baf2",
+      "title": "MV CoastContra Contradictions",
+      "duration": 349,
+      "artists": [
+        "CoastContra"
+      ]
+    },
+    {
+      "id": "019f2680-7ca8-7364-834d-74350dbe01b8",
+      "title": "MV CoastContra Ayo",
+      "duration": 464,
+      "artists": [
+        "CoastContra"
+      ]
+    },
+    {
+      "id": "019f2680-7c9a-7364-af28-0a19ae6b9a5e",
+      "title": "MV CoastContra AF1",
+      "duration": 139,
+      "artists": [
+        "CoastContra"
+      ]
+    },
+    {
+      "id": "019f2680-7c8b-7acb-a9d3-a19db4818132",
+      "title": "MV CoastContra 505",
+      "duration": 178,
+      "artists": [
+        "CoastContra"
+      ]
+    },
+    {
+      "id": "019f2680-7c7b-7754-a5a0-0357ea829a36",
+      "title": "MV Clou9ftCarinaBarrios SoHigh",
+      "duration": 177,
+      "artists": [
+        "Clou9",
+        "CarinaBarrios"
+      ]
+    },
+    {
+      "id": "019f2680-7c6e-7387-bcbb-ee06814f7f36",
+      "title": "MV Clou9 Basement",
+      "duration": 196,
+      "artists": [
+        "Clou9"
+      ]
+    },
+    {
+      "id": "019f2680-7c61-79a1-af8e-d08f1999ecb0",
+      "title": "MV Chucky73XNTG Yakuza",
+      "duration": 149,
+      "artists": [
+        "Chucky73",
+        "NTG"
+      ]
+    },
+    {
+      "id": "019f2680-7c50-72cc-8b9b-41a8bb1c56ab",
+      "title": "MV Chucky73 V2",
+      "duration": 136,
+      "artists": [
+        "Chucky73"
+      ]
+    },
+    {
+      "id": "019f2680-7c44-7056-b2b6-f65876f9f45d",
+      "title": "MV Chucky73 LaNata",
+      "duration": 167,
+      "artists": [
+        "Chucky73"
+      ]
+    },
+    {
+      "id": "019f2680-7c23-7062-b7cd-6999394193f5",
+      "title": "MV ChildlikeCiCi EveryKneeGoneBow",
+      "duration": 177,
+      "artists": [
+        "ChildlikeCiCi"
+      ]
+    },
+    {
+      "id": "019f2680-7c15-7365-b44c-258411ccb020",
+      "title": "MV CheNoirXBigGhostLTD QuietMoves",
+      "duration": 109,
+      "artists": [
+        "CheNoir",
+        "BigGhostLTD"
+      ]
+    },
+    {
+      "id": "019f2680-7c0a-713f-a2ed-46248efb310e",
+      "title": "MV CharlesHerron 1988Dreams",
+      "duration": 132,
+      "artists": [
+        "CharlesHerron"
+      ]
+    },
+    {
+      "id": "019f2680-7bf8-73b4-8360-a0c543cd0962",
+      "title": "MV Cephas Jawbone",
+      "duration": 193,
+      "artists": [
+        "Cephas"
+      ]
+    },
+    {
+      "id": "019f2680-7bea-7b8e-bcba-4bc4b4e3a77c",
+      "title": "MV Cassidy WhatIf",
+      "duration": 373,
+      "artists": [
+        "Cassidy"
+      ]
+    },
+    {
+      "id": "019f2680-7bd2-7ef6-99a1-d1b82bc32c27",
+      "title": "MV Cambatta Beautiful",
+      "duration": 215,
+      "artists": [
+        "Cambatta"
+      ]
+    },
+    {
+      "id": "019f2680-7bc4-7d81-b5bd-ca869cc2f2cc",
+      "title": "MV CSFranklin ISaidWhatISaid",
+      "duration": 170,
+      "artists": [
+        "CSFranklin"
+      ]
+    },
+    {
+      "id": "019f2680-7bba-79fd-a1ff-3bd480ead821",
+      "title": "MV C4Crotona RoadRage",
+      "duration": 164,
+      "artists": [
+        "C4Crotona"
+      ]
+    },
+    {
+      "id": "019f2680-c5a2-7415-935b-c8af178e59f6",
+      "title": "MV DoechiiXJT AlterEgo",
+      "duration": 209,
+      "artists": [
+        "Doechii"
+      ]
+    },
+    {
+      "id": "019f2680-c571-7328-acda-b955c9707912",
+      "title": "MV Doechii CatfishSwampSessions",
+      "duration": 90,
+      "artists": [
+        "Doechii"
+      ]
+    },
+    {
+      "id": "019f2680-c227-7ac1-8823-6eb3131fdbbd",
+      "title": "MV DuffleBagDollazz Snapping",
+      "duration": 136,
+      "artists": [
+        "DuffleBagDollazz"
+      ]
+    },
+    {
+      "id": "019f2680-c1e9-7666-8ba0-6515a41992ff",
+      "title": "MV DestinyyNicole Anxiety",
+      "duration": 140,
+      "artists": [
+        "DestinyyNicole"
+      ]
+    },
+    {
+      "id": "019f2680-c1c2-7e9e-9d5f-8b5221c5f642",
+      "title": "MV DaveEastXMikeNKeysFTStacyBarthe SoMuchChanged",
+      "duration": 195,
+      "artists": [
+        "DaveEast",
+        "MikeNKeys",
+        "StacyBarthe"
+      ]
+    },
+    {
+      "id": "019f2680-c1a4-7c50-b21e-c5d42d77cab2",
+      "title": "MV DaveEast LivingSingle",
+      "duration": 160,
+      "artists": [
+        "DaveEast"
+      ]
+    },
+    {
+      "id": "019f2680-b5dc-7abe-91c1-708984af49b7",
+      "title": "MV DopeDODxDjFastcutxDjYaner Untouchable",
+      "duration": 187,
+      "artists": [
+        "DopeDOD",
+        "DjFastcut",
+        "DjYaner"
+      ]
+    },
+    {
+      "id": "019f2680-b5ba-7003-8618-5ea1301bf325",
+      "title": "MV Doechii Anxiety",
+      "duration": 252,
+      "artists": [
+        "Doechii"
+      ]
+    },
+    {
+      "id": "019f2680-b57f-766f-a6d1-5e540e0ffb28",
+      "title": "MV DaveEastxNeekBucks Desperation",
+      "duration": 171,
+      "artists": [
+        "DaveEast",
+        "NeekBucks"
+      ]
+    },
+    {
+      "id": "019f2680-b56d-7d29-8faa-51fc5d3f4c48",
+      "title": "MV DRealxDominantOneFTGnarty SeasonsChange",
+      "duration": 192,
+      "artists": [
+        "DReal",
+        "DominantOne",
+        "Gnarty"
+      ]
+    },
+    {
+      "id": "019f2680-b1a4-75ec-8a5b-a156d3dc70cf",
+      "title": "MV DonMack RunItUp",
+      "duration": 268,
+      "artists": [
+        "DonMack"
+      ]
+    },
+    {
+      "id": "019f2680-b176-71d5-ae74-0c5862490b29",
+      "title": "MV DinaAyada WhatUWant",
+      "duration": 98,
+      "artists": [
+        "DinaAyada"
+      ]
+    },
+    {
+      "id": "019f2680-ac33-799f-8bb7-63d2dd42d6f1",
+      "title": "MV DycexTheLimba UGotta",
+      "duration": 129,
+      "artists": [
+        "Dyce",
+        "TheLimba"
+      ]
+    },
+    {
+      "id": "019f2680-ac00-7786-a056-83ca46b51478",
+      "title": "MV DycexChrisPalace ToMalo",
+      "duration": 126,
+      "artists": [
+        "Dyce",
+        "ChrisPalace"
+      ]
+    },
+    {
+      "id": "019f2680-abcc-7df5-a4d0-f019140a4e7b",
+      "title": "MV Dyce HowManyTimes",
+      "duration": 170,
+      "artists": [
+        "Dyce"
+      ]
+    },
+    {
+      "id": "019f2680-ab8b-7bdf-b911-b418f36660ca",
+      "title": "MV DonMackFTTomG GetEmGone",
+      "duration": 122,
+      "artists": [
+        "DonMack",
+        "TomG"
+      ]
+    },
+    {
+      "id": "019f2680-ab4d-7eaf-a831-09c2d562b67e",
+      "title": "MV Desiigner AmericasBaby",
+      "duration": 173,
+      "artists": [
+        "Desiigner"
+      ]
+    },
+    {
+      "id": "019f2680-ab12-7938-a590-8c14ec4535a5",
+      "title": "MV DeniroFarrarxChildActor KineticSand",
+      "duration": 193,
+      "artists": [
+        "DeniroFarrar",
+        "ChildActor"
+      ]
+    },
+    {
+      "id": "019f2680-a669-7246-8d92-e60ccc227ee0",
+      "title": "MV DonMack CgYB",
+      "duration": 246,
+      "artists": [
+        "DonMack"
+      ]
+    },
+    {
+      "id": "019f2680-a656-7883-93ab-b0ba01ce421d",
+      "title": "MV DinaAyada LoveMe",
+      "duration": 130,
+      "artists": [
+        "DinaAyada"
+      ]
+    },
+    {
+      "id": "019f2680-a640-779f-885c-3e484f533efb",
+      "title": "MV DestinyyNicole Links",
+      "duration": 145,
+      "artists": [
+        "DestinyyNicole"
+      ]
+    },
+    {
+      "id": "019f2680-a62b-7053-b432-53fc480221b5",
+      "title": "MV DCDaGeneral RealDealHolyfield",
+      "duration": 177,
+      "artists": [
+        "DCDaGeneral"
+      ]
+    },
+    {
+      "id": "019f2680-7eb8-75a3-8437-1f00e0cf9423",
+      "title": "MV Doxian MirameAhora",
+      "duration": 177,
+      "artists": [
+        "ian"
+      ]
+    },
+    {
+      "id": "019f2680-7ea7-7363-936a-31a7d82bb7b6",
+      "title": "MV Doobie TalkIsCheap",
+      "duration": 199,
+      "artists": [
+        "Doobie"
+      ]
+    },
+    {
+      "id": "019f2680-7e96-7e2f-b9c1-34d45c5f4776",
+      "title": "MV Doobie PainHasAPurpose",
+      "duration": 175,
+      "artists": [
+        "Doobie"
+      ]
+    },
+    {
+      "id": "019f2680-7e86-7905-bc4c-2db735d8766e",
+      "title": "MV DonGunna WelcomeToTheHardknocks",
+      "duration": 308,
+      "artists": [
+        "DonGunna"
+      ]
+    },
+    {
+      "id": "019f2680-7e71-7c33-b2d0-83fe23cb71c5",
+      "title": "MV DomDirtee BreakingNews",
+      "duration": 149,
+      "artists": [
+        "DomDirtee"
+      ]
+    },
+    {
+      "id": "019f2680-7e63-7ce6-a5b6-32ae12183deb",
+      "title": "MV Doechii YuckyBluckyFruitcake",
+      "duration": 366,
+      "artists": [
+        "Doechii"
+      ]
+    },
+    {
+      "id": "019f2680-7e56-7c11-bab6-d77106da3d8c",
+      "title": "MV Doechii Pacer",
+      "duration": 180,
+      "artists": [
+        "Doechii"
+      ]
+    },
+    {
+      "id": "019f2680-7e3f-756e-96b0-67233e42ac57",
+      "title": "MV DezzyHollow RollThru",
+      "duration": 308,
+      "artists": [
+        "DezzyHollow"
+      ]
+    },
+    {
+      "id": "019f2680-7e26-7f2f-a2f5-dc23e0de4821",
+      "title": "MV DeniroFerrar SpookByTheDoor",
+      "duration": 182,
+      "artists": [
+        "DeniroFerrar"
+      ]
+    },
+    {
+      "id": "019f2680-7e18-79d5-b73a-1c987d80971f",
+      "title": "MV DeniroFarrar WuTang",
+      "duration": 150,
+      "artists": [
+        "DeniroFarrar"
+      ]
+    },
+    {
+      "id": "019f2680-7e0b-78f2-aad6-4c9fccf24f0f",
+      "title": "MV DeniroFarrar TaxFree",
+      "duration": 152,
+      "artists": [
+        "DeniroFarrar"
+      ]
+    },
+    {
+      "id": "019f2680-7dfb-7137-ab6a-2bfbc64a4fb1",
+      "title": "MV Dee 1 HappyAndHumbleFreestyle",
+      "duration": 127,
+      "artists": [
+        "Dee 1"
+      ]
+    },
+    {
+      "id": "019f2680-7de5-7f4d-8323-6ea7a405184b",
+      "title": "MV DaveEast CruchCalhoun StephNKlay",
+      "duration": 191,
+      "artists": [
+        "DaveEast CruchCalhoun"
+      ]
+    },
+    {
+      "id": "019f2680-7dd8-7f8e-80d5-b7745e27c14c",
+      "title": "MV DaveEast ThiccerThanWater",
+      "duration": 263,
+      "artists": [
+        "DaveEast"
+      ]
+    },
+    {
+      "id": "019f2680-7dca-7df1-a9d7-c4f59ea5e403",
+      "title": "MV DaveEast StillHere",
+      "duration": 233,
+      "artists": [
+        "DaveEast"
+      ]
+    },
+    {
+      "id": "019f2680-7dbb-70e4-beb8-20ec0fefcdbc",
+      "title": "MV DaveEast SlipEASTMIX",
+      "duration": 118,
+      "artists": [
+        "DaveEast"
+      ]
+    },
+    {
+      "id": "019f2680-7dad-7225-9720-0caac94050b0",
+      "title": "MV DaveEast Rules",
+      "duration": 248,
+      "artists": [
+        "DaveEast"
+      ]
+    },
+    {
+      "id": "019f2680-7d9e-768c-9780-1fbe93aac39b",
+      "title": "MV DaveEast MillionOffRap",
+      "duration": 165,
+      "artists": [
+        "DaveEast"
+      ]
+    },
+    {
+      "id": "019f2680-7d91-7316-9f0c-4c18dfbfb2de",
+      "title": "MV Datin TopSpeedRunning Move",
+      "duration": 255,
+      "artists": [
+        "Datin TopSpeedRunning"
+      ]
+    },
+    {
+      "id": "019f2680-7d73-7a3c-a61c-7c5ebec2aec7",
+      "title": "MV Darlene WanderlustNDixieCups",
+      "duration": 200,
+      "artists": [
+        "Darlene"
+      ]
+    },
+    {
+      "id": "019f2680-7d65-7ac5-93cd-0029a3ba0bea",
+      "title": "MV DangerMouseXBlackThought Because",
+      "duration": 288,
+      "artists": [
+        "DangerMouse",
+        "BlackThought"
+      ]
+    },
+    {
+      "id": "019f2680-7d56-79e8-bb7d-ef07a4b7cf03",
+      "title": "MV DangerMouse Aquamarine",
+      "duration": 238,
+      "artists": [
+        "DangerMouse"
+      ]
+    },
+    {
+      "id": "019f2680-7d3c-7c4b-9c24-971392369fc0",
+      "title": "MV DabronKain WholeMood",
+      "duration": 243,
+      "artists": [
+        "DabronKain"
+      ]
+    },
+    {
+      "id": "019f2680-7d29-7752-847f-99fe2c893329",
+      "title": "MV DT ThankGodWatchingMe",
+      "duration": 212,
+      "artists": [
+        "DT"
+      ]
+    },
+    {
+      "id": "019f2680-7d17-7393-9e12-4a95021ffbb5",
+      "title": "MV DSmoke ElRey",
+      "duration": 194,
+      "artists": [
+        "DSmoke"
+      ]
+    },
+    {
+      "id": "019f2680-7d08-7554-b1ec-689305d4bfaa",
+      "title": "MV DSTRK MelaninDrip",
+      "duration": 175,
+      "artists": [
+        "DSTRK"
+      ]
+    },
+    {
+      "id": "019f2680-7cfa-7dd0-ae1a-66e554fb1485",
+      "title": "MV DJMuggs WeRidingWeAintHiding",
+      "duration": 191,
+      "artists": [
+        "DJMuggs"
+      ]
+    },
+    {
+      "id": "019f2680-7cec-7457-b82b-9fb924c8ffa4",
+      "title": "MV DJMuggs BigMoney",
+      "duration": 208,
+      "artists": [
+        "DJMuggs"
+      ]
+    },
+    {
+      "id": "019f2680-b601-76ba-b041-668202cde966",
+      "title": "MV ElmJosae SquidGames",
+      "duration": 159,
+      "artists": [
+        "ElmJosae"
+      ]
+    },
+    {
+      "id": "019f2680-a67d-70ab-b3dc-72c9cd9fd8c9",
+      "title": "MV ErickSermonFtSaltNPepa Back2TheParty",
+      "duration": 145,
+      "artists": [
+        "ErickSermon",
+        "SaltNPepa"
+      ]
+    },
+    {
+      "id": "019f2680-80c0-74fd-bea0-a02eb9c9fafe",
+      "title": "MV Eto Vintage",
+      "duration": 194,
+      "artists": [
+        "Eto"
+      ]
+    },
+    {
+      "id": "019f2680-80b5-7658-b629-edaf7764e34e",
+      "title": "MV Eto PoolHallScene",
+      "duration": 120,
+      "artists": [
+        "Eto"
+      ]
+    },
+    {
+      "id": "019f2680-80a5-7a58-9c9e-e6496fc888b4",
+      "title": "MV EshonBurgundy YahsPlan",
+      "duration": 177,
+      "artists": [
+        "EshonBurgundy"
+      ]
+    },
+    {
+      "id": "019f2680-809a-7492-a1b2-fba90829ebf2",
+      "title": "MV EshonBurgundy ThirtyThree",
+      "duration": 196,
+      "artists": [
+        "EshonBurgundy"
+      ]
+    },
+    {
+      "id": "019f2680-808b-7c5d-995d-8452a7d9f181",
+      "title": "MV EshonBurgundy TheMeek",
+      "duration": 205,
+      "artists": [
+        "EshonBurgundy"
+      ]
+    },
+    {
+      "id": "019f2680-807a-791c-bd9a-134b0519caf0",
+      "title": "MV EshonBurgundy HomeOfTheBrave",
+      "duration": 112,
+      "artists": [
+        "EshonBurgundy"
+      ]
+    },
+    {
+      "id": "019f2680-8070-7247-a317-0a12aa088c7d",
+      "title": "MV EshonBurgundy HolyLight",
+      "duration": 267,
+      "artists": [
+        "EshonBurgundy"
+      ]
+    },
+    {
+      "id": "019f2680-805e-70d8-aa8e-0054ef3c251b",
+      "title": "MV EriqTrilly PandaTalk2",
+      "duration": 141,
+      "artists": [
+        "EriqTrilly"
+      ]
+    },
+    {
+      "id": "019f2680-804c-74d4-aa78-9618e5475bad",
+      "title": "MV EriqTrilly Lock",
+      "duration": 208,
+      "artists": [
+        "EriqTrilly"
+      ]
+    },
+    {
+      "id": "019f2680-8032-7d99-bdc6-bab22f069b51",
+      "title": "MV ElleED TokyoDrift",
+      "duration": 233,
+      "artists": [
+        "ElleED"
+      ]
+    },
+    {
+      "id": "019f2680-801b-7b6c-b31c-2cd5ce1c7436",
+      "title": "MV ElleED MelaninDrip",
+      "duration": 175,
+      "artists": [
+        "ElleED"
+      ]
+    },
+    {
+      "id": "019f2680-7ff8-7c6f-9fe3-bc614c9af622",
+      "title": "MV ElleED BlackTies",
+      "duration": 193,
+      "artists": [
+        "ElleED"
+      ]
+    },
+    {
+      "id": "019f2680-7fe5-70a1-9239-4cc632014701",
+      "title": "MV ElleED Baddie",
+      "duration": 326,
+      "artists": [
+        "ElleED"
+      ]
+    },
+    {
+      "id": "019f2680-7fd5-7f5f-8a82-670041772483",
+      "title": "MV ElijahTheBoy OverYou",
+      "duration": 174,
+      "artists": [
+        "ElijahTheBoy"
+      ]
+    },
+    {
+      "id": "019f2680-7fc3-750d-9db3-1f2bac532066",
+      "title": "MV ElephantMan LookYah",
+      "duration": 167,
+      "artists": [
+        "ElephantMan"
+      ]
+    },
+    {
+      "id": "019f2680-7fb2-7412-96f5-825995d94a52",
+      "title": "MV EkohxKingIso 21",
+      "duration": 216,
+      "artists": [
+        "Ekoh",
+        "KingIso"
+      ]
+    },
+    {
+      "id": "019f2680-7fa2-7863-815e-1ef253023bf1",
+      "title": "MV EkohXNateVickers HurtMyself",
+      "duration": 178,
+      "artists": [
+        "Ekoh",
+        "NateVickers"
+      ]
+    },
+    {
+      "id": "019f2680-7f90-71d0-a7d6-4d5b9149a4b7",
+      "title": "MV Ekoh Wasted",
+      "duration": 159,
+      "artists": [
+        "Ekoh"
+      ]
+    },
+    {
+      "id": "019f2680-7f6f-7428-a682-64d6c83c63df",
+      "title": "MV Ekoh HoneyBoy",
+      "duration": 156,
+      "artists": [
+        "Ekoh"
+      ]
+    },
+    {
+      "id": "019f2680-7f5d-7a96-a2d3-d94122de4291",
+      "title": "MV Ekoh Freeverse6",
+      "duration": 233,
+      "artists": [
+        "Ekoh"
+      ]
+    },
+    {
+      "id": "019f2680-7f4c-73cc-8c6b-edde4e100478",
+      "title": "MV Ekoh BaneFreestyle",
+      "duration": 181,
+      "artists": [
+        "Ekoh"
+      ]
+    },
+    {
+      "id": "019f2680-7f34-7c1c-bd24-ade98cf4e5e0",
+      "title": "MV Eklectico UnDia",
+      "duration": 121,
+      "artists": [
+        "Eklectico"
+      ]
+    },
+    {
+      "id": "019f2680-7f1e-7a66-80fa-60809effaf18",
+      "title": "MV Eklectico RediPaTo",
+      "duration": 187,
+      "artists": [
+        "Eklectico"
+      ]
+    },
+    {
+      "id": "019f2680-7f0c-7078-a8fb-2a0ef6094106",
+      "title": "MV Eklectico HablanPila",
+      "duration": 116,
+      "artists": [
+        "Eklectico"
+      ]
+    },
+    {
+      "id": "019f2680-7efc-7c58-897f-416fcde5882e",
+      "title": "MV Ekelctico Malo",
+      "duration": 84,
+      "artists": [
+        "Ekelctico"
+      ]
+    },
+    {
+      "id": "019f2680-7eea-7bf0-8a98-24bb47b748fd",
+      "title": "MV EddieKaineXFinn LeaveItToMe",
+      "duration": 182,
+      "artists": [
+        "EddieKaine",
+        "Finn"
+      ]
+    },
+    {
+      "id": "019f2680-7eda-7772-9403-34659008939e",
+      "title": "MV EddieKaineXBPInfinite BackAgainstTheWall",
+      "duration": 234,
+      "artists": [
+        "EddieKaine",
+        "BPInfinite"
+      ]
+    },
+    {
+      "id": "019f2680-7ec8-7172-9028-fd1d21e6e812",
+      "title": "MV EddieKaineNFinn DoubleBack",
+      "duration": 205,
+      "artists": [
+        "EddieKaineNFinn"
+      ]
+    },
+    {
+      "id": "019f2680-c6fe-75b8-acd1-539f8c3f9e5a",
+      "title": "MV JessieReyezFTBigSean SHUTUP",
+      "duration": 153,
+      "artists": [
+        "JessieReyez",
+        "BigSean"
+      ]
+    },
+    {
+      "id": "019f2680-c6d2-7ca7-ac8c-9eb58ee73771",
+      "title": "MV JDymondsFTPsychoticVision ImmaPamperMyself",
+      "duration": 182,
+      "artists": [
+        "JDymonds",
+        "PsychoticVision"
+      ]
+    },
+    {
+      "id": "019f2680-b73c-7dad-8df6-8cdefcbb3f29",
+      "title": "MV JoeyBadass TheRulersBack",
+      "duration": 153,
+      "artists": [
+        "JoeyBadass"
+      ]
+    },
+    {
+      "id": "019f2680-b70d-7468-b2e5-43e4dcc23258",
+      "title": "MV JoeyBadass SorryNotSorry",
+      "duration": 225,
+      "artists": [
+        "JoeyBadass"
+      ]
+    },
+    {
+      "id": "019f2680-b6f8-73bd-a944-40133ed6f8a9",
+      "title": "MV JessieReyezFTAriLennox JustLikeThat",
+      "duration": 162,
+      "artists": [
+        "JessieReyez",
+        "AriLenno"
+      ]
+    },
+    {
+      "id": "019f2680-b6db-7ba8-aeda-4d0a0e20e3eb",
+      "title": "MV JIFTRoyWoods LoveMeLoveMeNot",
+      "duration": 284,
+      "artists": [
+        "RoyWoods"
+      ]
+    },
+    {
+      "id": "019f2680-b28f-7135-96c9-554a29ff41f1",
+      "title": "MV JoynerLucas FTJellyRoll BestForMe",
+      "duration": 282,
+      "artists": [
+        "JoynerLucas",
+        "JellyRoll"
+      ]
+    },
+    {
+      "id": "019f2680-b259-7d0b-a56d-6f4e3aa1b11f",
+      "title": "MV JaePierce PrayForMe",
+      "duration": 228,
+      "artists": [
+        "JaePierce"
+      ]
+    },
+    {
+      "id": "019f2680-acdf-7140-bff4-2e8c7bfd38f8",
+      "title": "MV JDymonds MostUnderestimated",
+      "duration": 181,
+      "artists": [
+        "JDymonds"
+      ]
+    },
+    {
+      "id": "019f2680-a79b-7e12-869a-3c24928ef932",
+      "title": "MV JohnnyCocoa GreenLight",
+      "duration": 154,
+      "artists": [
+        "JohnnyCocoa"
+      ]
+    },
+    {
+      "id": "019f2680-a775-7df1-9271-d96026740ce1",
+      "title": "MV JarredAllStarFTSelahTheCorner TheGreatBanquet",
+      "duration": 197,
+      "artists": [
+        "JarredAllStar",
+        "SelahTheCorner"
+      ]
+    },
+    {
+      "id": "019f2680-875a-7b51-8e70-ff6c5209c13c",
+      "title": "MV JoynerLucas Seventeen",
+      "duration": 241,
+      "artists": [
+        "JoynerLucas"
+      ]
+    },
+    {
+      "id": "019f2680-8746-74a5-a9ae-9533e947f1a2",
+      "title": "MV JoynerLucas RamenAndOJ",
+      "duration": 218,
+      "artists": [
+        "JoynerLucas"
+      ]
+    },
+    {
+      "id": "019f2680-8732-79a8-a04f-b1ebdf03301a",
+      "title": "MV JoynerLucas Broski",
+      "duration": 325,
+      "artists": [
+        "JoynerLucas"
+      ]
+    },
+    {
+      "id": "019f2680-871f-71fc-850c-de0070f468b5",
+      "title": "MV JoynerLucas Blackout",
+      "duration": 196,
+      "artists": [
+        "JoynerLucas"
+      ]
+    },
+    {
+      "id": "019f2680-870a-73ec-b2ee-d7bb396c4ddd",
+      "title": "MV Jovaan Embustera",
+      "duration": 198,
+      "artists": [
+        "Jovaan"
+      ]
+    },
+    {
+      "id": "019f2680-86f7-71c3-b480-a7371c9820d8",
+      "title": "MV Jovaan BapeRemix",
+      "duration": 363,
+      "artists": [
+        "Jovaan"
+      ]
+    },
+    {
+      "id": "019f2680-86e3-72ab-a51f-bdb43ea7be7b",
+      "title": "MV JourneyMontanaftFergieBaby UsedToIt",
+      "duration": 194,
+      "artists": [
+        "JourneyMontana",
+        "FergieBaby"
+      ]
+    },
+    {
+      "id": "019f2680-86cd-7fe5-aa15-2ecde4982329",
+      "title": "MV Joony DriftingInTokyo",
+      "duration": 109,
+      "artists": [
+        "Joony"
+      ]
+    },
+    {
+      "id": "019f2680-86b8-7126-a27f-3d17bf9d7cfb",
+      "title": "MV Jones ThisMyZone",
+      "duration": 276,
+      "artists": [
+        "Jones"
+      ]
+    },
+    {
+      "id": "019f2680-86a5-7a09-a845-c9f5dbb0dcad",
+      "title": "MV JohnJiggs Soil",
+      "duration": 161,
+      "artists": [
+        "JohnJiggs"
+      ]
+    },
+    {
+      "id": "019f2680-8690-74ea-885c-144454fd945d",
+      "title": "MV JoeyMajorsXEto TheWay",
+      "duration": 166,
+      "artists": [
+        "JoeyMajors",
+        "Eto"
+      ]
+    },
+    {
+      "id": "019f2680-867c-79e8-94a7-ff603839b053",
+      "title": "MV JoeyMajors NoLosses",
+      "duration": 281,
+      "artists": [
+        "JoeyMajors"
+      ]
+    },
+    {
+      "id": "019f2680-8667-7345-8d83-016b21671920",
+      "title": "MV JoeyMajors ImAllIn",
+      "duration": 220,
+      "artists": [
+        "JoeyMajors"
+      ]
+    },
+    {
+      "id": "019f2680-8654-756b-ab0e-53ca59a8f8ad",
+      "title": "MV JoeyMajors ForTheHood",
+      "duration": 181,
+      "artists": [
+        "JoeyMajors"
+      ]
+    },
+    {
+      "id": "019f2680-863f-7f4b-8a77-f5a880be4eff",
+      "title": "MV JoeyMajors BossMoves",
+      "duration": 241,
+      "artists": [
+        "JoeyMajors"
+      ]
+    },
+    {
+      "id": "019f2680-8625-76df-92c4-b87b01836e2a",
+      "title": "MV JoeyBadass ShowMe",
+      "duration": 292,
+      "artists": [
+        "JoeyBadass"
+      ]
+    },
+    {
+      "id": "019f2680-8609-7111-b92d-2fa11717fc86",
+      "title": "MV JoeyBadass Fallin",
+      "duration": 261,
+      "artists": [
+        "JoeyBadass"
+      ]
+    },
+    {
+      "id": "019f2680-85d4-7d56-b71c-e589e0a01664",
+      "title": "MV JoellOrtizXKxngCrooked TheTaleOf2Cities",
+      "duration": 262,
+      "artists": [
+        "JoellOrtiz",
+        "ngCrooked"
+      ]
+    },
+    {
+      "id": "019f2680-85bf-7861-927f-1072a710dbb9",
+      "title": "MV Jenevieve 2NLuv",
+      "duration": 185,
+      "artists": [
+        "Jenevieve"
+      ]
+    },
+    {
+      "id": "019f2680-85ab-798e-9273-33e3278f2b36",
+      "title": "MV JayRoyale TheWiseNLakid",
+      "duration": 145,
+      "artists": [
+        "JayRoyale"
+      ]
+    },
+    {
+      "id": "019f2680-8595-70e7-ab33-ed8a2b986807",
+      "title": "MV JarredAllstar NYCCyphaSeriesPt8",
+      "duration": 224,
+      "artists": [
+        "JarredAllstar"
+      ]
+    },
+    {
+      "id": "019f2680-8568-76eb-90dd-50a7d84bdf00",
+      "title": "MV JamalGasol VeniceScooters",
+      "duration": 75,
+      "artists": [
+        "JamalGasol"
+      ]
+    },
+    {
+      "id": "019f2680-8555-7aeb-a924-bafa4b484d72",
+      "title": "MV JaeSkeese AgainstTheGrain",
+      "duration": 274,
+      "artists": [
+        "JaeSkeese"
+      ]
+    },
+    {
+      "id": "019f2680-8541-710d-8c33-9c55fd638288",
+      "title": "MV JStoneftTraeTheTruthxGP45xLyrivelli SoulSearch",
+      "duration": 306,
+      "artists": [
+        "JStone",
+        "TraeTheTruth",
+        "GP45",
+        "Lyrivelli"
+      ]
+    },
+    {
+      "id": "019f2680-852d-791f-a0f3-124fca61848e",
+      "title": "MV JStoneXDaveEastFtSymphonyGreen RichRoll",
+      "duration": 158,
+      "artists": [
+        "JStone",
+        "DaveEast",
+        "SymphonyGreen"
+      ]
+    },
+    {
+      "id": "019f2680-8519-74af-8f00-116843c9f201",
+      "title": "MV JSaenz Zoomies",
+      "duration": 130,
+      "artists": [
+        "JSaenz"
+      ]
+    },
+    {
+      "id": "019f2680-8504-7dd8-bffd-15deebc66c4a",
+      "title": "MV JMonty RichFriends",
+      "duration": 146,
+      "artists": [
+        "JMonty"
+      ]
+    },
+    {
+      "id": "019f2680-84f1-741b-b42a-5ee12a741522",
+      "title": "MV JI ThangForYouRemix",
+      "duration": 168,
+      "artists": [
+        "JI"
+      ]
+    },
+    {
+      "id": "019f2680-84de-7c0e-b695-1985832af1d3",
+      "title": "MV JI TakenForGranted",
+      "duration": 167,
+      "artists": [
+        "JI"
+      ]
+    },
+    {
+      "id": "019f2680-84ca-757d-a368-56242ef757cb",
+      "title": "MV JI BrokenEnough",
+      "duration": 185,
+      "artists": [
+        "JI"
+      ]
+    },
+    {
+      "id": "019f2680-84b7-7398-ab85-cab716423c57",
+      "title": "MV JI BlackRoses",
+      "duration": 160,
+      "artists": [
+        "JI"
+      ]
+    },
+    {
+      "id": "019f2680-84a2-766b-bb33-5fc8f12d4e21",
+      "title": "MV JBeers BallantineX",
+      "duration": 134,
+      "artists": [
+        "JBeers"
+      ]
+    },
+    {
+      "id": "019f2680-c720-74cf-b322-d07a68aeee67",
+      "title": "MV Khantrast LandedInBrooklyn",
+      "duration": 121,
+      "artists": [
+        "Khantrast"
+      ]
+    },
+    {
+      "id": "019f2680-c2a7-7183-bd2f-1c031817f47e",
+      "title": "MV KieranTheLightXKiddLee IAmNotTheSame",
+      "duration": 211,
+      "artists": [
+        "KieranTheLight",
+        "KiddLee"
+      ]
+    },
+    {
+      "id": "019f2680-b795-7e35-8394-c1971890f1d2",
+      "title": "MV KnaladeusFTJavyXIxAciyaIona SufficientGrace",
+      "duration": 185,
+      "artists": [
+        "Knaladeus",
+        "Javy",
+        "AciyaIona"
+      ]
+    },
+    {
+      "id": "019f2680-b770-78c3-b926-42b398b89970",
+      "title": "MV Khantrast ManOfTheYear",
+      "duration": 197,
+      "artists": [
+        "Khantrast"
+      ]
+    },
+    {
+      "id": "019f2680-b2c7-7f9f-aca1-41840dd94668",
+      "title": "MV KembeX HippieSabotage PoleVaulting",
+      "duration": 217,
+      "artists": [
+        "Kembe",
+        "HippieSabotage"
+      ]
+    },
+    {
+      "id": "019f2680-ad65-7aab-b4c8-7f1af4bb9ab0",
+      "title": "MV KnoxHillFTMelvoG GimmeThat",
+      "duration": 196,
+      "artists": [
+        "Kno",
+        "Hill",
+        "MelvoG"
+      ]
+    },
+    {
+      "id": "019f2680-a7f4-7583-b401-17c089a1def0",
+      "title": "MV KtlynXConnorPrice NewPhone",
+      "duration": 128,
+      "artists": [
+        "Ktlyn",
+        "ConnorPrice"
+      ]
+    },
+    {
+      "id": "019f2680-a7d8-78ba-b887-72602861148c",
+      "title": "MV Ktlyn FreeGame",
+      "duration": 132,
+      "artists": [
+        "Ktlyn"
+      ]
+    },
+    {
+      "id": "019f2680-a7bc-75b1-8981-77c51b5fc06b",
+      "title": "MV KofiStoneFTBenjaminZephaniah MaySoundCrazy",
+      "duration": 221,
+      "artists": [
+        "KofiStone",
+        "BenjaminZephaniah"
+      ]
+    },
+    {
+      "id": "019f2680-8907-7622-ad3a-87b481178f8e",
+      "title": "MV KyahBaby Timing",
+      "duration": 165,
+      "artists": [
+        "KyahBaby"
+      ]
+    },
+    {
+      "id": "019f2680-88f0-7683-909c-01b131d86997",
+      "title": "MV Kwajo InsideOut",
+      "duration": 182,
+      "artists": [
+        "Kwajo"
+      ]
+    },
+    {
+      "id": "019f2680-88dc-787d-8811-876ac1fdd12d",
+      "title": "MV KvneSativaftUncleShemmy KarateChop",
+      "duration": 99,
+      "artists": [
+        "KvneSativa",
+        "UncleShemmy"
+      ]
+    },
+    {
+      "id": "019f2680-88c6-798e-a5b7-61d0a9c42b28",
+      "title": "MV Kumbaya TheWholeThing",
+      "duration": 168,
+      "artists": [
+        "Kumbaya"
+      ]
+    },
+    {
+      "id": "019f2680-88b2-77cd-b570-ebfc030652b4",
+      "title": "MV Kumbaya LeftToDeal",
+      "duration": 131,
+      "artists": [
+        "Kumbaya"
+      ]
+    },
+    {
+      "id": "019f2680-889d-7325-90bf-7fc23e80f2a1",
+      "title": "MV Kumbaya HoldOn",
+      "duration": 137,
+      "artists": [
+        "Kumbaya"
+      ]
+    },
+    {
+      "id": "019f2680-8888-7e23-bda3-31a9585242be",
+      "title": "MV Kir TheCode",
+      "duration": 128,
+      "artists": [
+        "Kir"
+      ]
+    },
+    {
+      "id": "019f2680-8872-7425-b69d-64fdfa592491",
+      "title": "MV KingIso ImOkay",
+      "duration": 297,
+      "artists": [
+        "KingIso"
+      ]
+    },
+    {
+      "id": "019f2680-885d-72c9-97d1-a620548e187b",
+      "title": "MV KingIso IMH",
+      "duration": 233,
+      "artists": [
+        "KingIso"
+      ]
+    },
+    {
+      "id": "019f2680-884a-7b5f-90e5-c99fc197d7da",
+      "title": "MV KingCooley GetDown",
+      "duration": 161,
+      "artists": [
+        "KingCooley"
+      ]
+    },
+    {
+      "id": "019f2680-8834-7f15-b58c-085acb53d433",
+      "title": "MV KieranTheLight TheFall",
+      "duration": 166,
+      "artists": [
+        "KieranTheLight"
+      ]
+    },
+    {
+      "id": "019f2680-881e-7b9e-9a1a-d8c1a583b517",
+      "title": "MV KennyMason Halos",
+      "duration": 137,
+      "artists": [
+        "KennyMason"
+      ]
+    },
+    {
+      "id": "019f2680-8807-7d13-b492-b0d998db86f6",
+      "title": "MV KendrickP GetWhatYouGive",
+      "duration": 182,
+      "artists": [
+        "KendrickP"
+      ]
+    },
+    {
+      "id": "019f2680-87f0-7d2b-a7f0-766e3b00ef63",
+      "title": "MV Kelela OnTheRun",
+      "duration": 295,
+      "artists": [
+        "Kelela"
+      ]
+    },
+    {
+      "id": "019f2680-87d9-7c2d-972e-84a34168c698",
+      "title": "MV KashSupreme Mama",
+      "duration": 228,
+      "artists": [
+        "KashSupreme"
+      ]
+    },
+    {
+      "id": "019f2680-87c6-7658-a021-5e338ebd7af1",
+      "title": "MV Kahlee PerfectIntentions",
+      "duration": 236,
+      "artists": [
+        "Kahlee"
+      ]
+    },
+    {
+      "id": "019f2680-87b2-7bd7-b21f-e0113cc5c280",
+      "title": "MV KOG DaysnTimes",
+      "duration": 156,
+      "artists": [
+        "KOG"
+      ]
+    },
+    {
+      "id": "019f2680-8795-7415-8be8-136a2b3d2277",
+      "title": "MV KMo Committed",
+      "duration": 149,
+      "artists": [
+        "KMo"
+      ]
+    },
+    {
+      "id": "019f2680-8774-7b92-baab-fbb4dad7eee8",
+      "title": "MV KCartel RockOut",
+      "duration": 196,
+      "artists": [
+        "KCartel"
+      ]
+    },
+    {
+      "id": "019f2680-bc90-79a4-b43e-78f0d73be50b",
+      "title": "MV RichBrian Serpents",
+      "duration": 68,
+      "artists": [
+        "RichBrian"
+      ]
+    },
+    {
+      "id": "019f2680-bc57-7e68-a487-fd84bc052c92",
+      "title": "MV RedmanFTMethodMan Lalala",
+      "duration": 200,
+      "artists": [
+        "Redman",
+        "MethodMan"
+      ]
+    },
+    {
+      "id": "019f2680-bc0b-73ee-b4b6-927821e09b28",
+      "title": "MV Redman DontWannaCMeRich",
+      "duration": 141,
+      "artists": [
+        "Redman"
+      ]
+    },
+    {
+      "id": "019f2680-bbc6-7f5d-8d69-31b583a78711",
+      "title": "MV RayVaughn CemeteryLanterns",
+      "duration": 242,
+      "artists": [
+        "RayVaughn"
+      ]
+    },
+    {
+      "id": "019f2680-b391-733f-a7f1-440ab499d754",
+      "title": "MV RikMontero LevelYou",
+      "duration": 292,
+      "artists": [
+        "RikMontero"
+      ]
+    },
+    {
+      "id": "019f2680-ae8a-7eb7-b89a-77185f5262bf",
+      "title": "MV Redimi2xNatanElProfeta Flipando",
+      "duration": 193,
+      "artists": [
+        "Redimi2",
+        "NatanElProfeta"
+      ]
+    },
+    {
+      "id": "019f2680-a882-7640-a548-d937db5f1243",
+      "title": "MV ReiBrown GetMeOut",
+      "duration": 394,
+      "artists": [
+        "ReiBrown"
+      ]
+    },
+    {
+      "id": "019f2680-96de-746c-90a6-df03aec3713c",
+      "title": "MV RoyalFlushxSeanPrice Cassidy BOB",
+      "duration": 160,
+      "artists": [
+        "RoyalFlush",
+        "SeanPrice Cassidy"
+      ]
+    },
+    {
+      "id": "019f2680-96c6-779b-96a3-70d66f50c93b",
+      "title": "MV RomeStreetzxJoeyBadass FireAtYaIdleMind",
+      "duration": 202,
+      "artists": [
+        "RomeStreetz",
+        "JoeyBadass"
+      ]
+    },
+    {
+      "id": "019f2680-96ab-7a19-8bb8-71312d762f7a",
+      "title": "MV RocknessMonstaxRonBrowz LettuceNCabbage",
+      "duration": 146,
+      "artists": [
+        "RocknessMonsta",
+        "RonBrowz"
+      ]
+    },
+    {
+      "id": "019f2680-968c-7e84-b2d5-8df895a75bba",
+      "title": "MV RikMonteroFtVariousArtists AintRunning",
+      "duration": 341,
+      "artists": [
+        "RikMontero",
+        "VariousArtists"
+      ]
+    },
+    {
+      "id": "019f2680-9669-70aa-ac45-bcd6f0cf7ca2",
+      "title": "MV RickHyde Poza",
+      "duration": 163,
+      "artists": [
+        "RickHyde"
+      ]
+    },
+    {
+      "id": "019f2680-964b-7073-be5d-27625d7f0c44",
+      "title": "MV RickHyde MsYoungs",
+      "duration": 157,
+      "artists": [
+        "RickHyde"
+      ]
+    },
+    {
+      "id": "019f2680-962a-73bd-9e01-6f2bef2ca4a2",
+      "title": "MV RevTheArtist FakeLove",
+      "duration": 173,
+      "artists": [
+        "RevTheArtist"
+      ]
+    },
+    {
+      "id": "019f2680-9610-75db-8e26-effbac0c7ab7",
+      "title": "MV Ren Murderer",
+      "duration": 205,
+      "artists": [
+        "Ren"
+      ]
+    },
+    {
+      "id": "019f2680-95e8-797b-94bc-a9ee82be9e88",
+      "title": "MV Redveil Shoulder",
+      "duration": 248,
+      "artists": [
+        "Redveil"
+      ]
+    },
+    {
+      "id": "019f2680-95a5-75af-b9a6-11930a22694b",
+      "title": "MV Redman SlapDaShitOutcha",
+      "duration": 223,
+      "artists": [
+        "Redman"
+      ]
+    },
+    {
+      "id": "019f2680-9579-78ff-af36-c88d2a0c207a",
+      "title": "MV RedRum DietSmoke",
+      "duration": 160,
+      "artists": [
+        "RedRum"
+      ]
+    },
+    {
+      "id": "019f2680-9532-7e4e-9d71-c6bcd51fae12",
+      "title": "MV RedINF TakeChances",
+      "duration": 243,
+      "artists": [
+        "RedINF"
+      ]
+    },
+    {
+      "id": "019f2680-9515-7980-af8a-05b8ade4822d",
+      "title": "MV RayRav FridayThe13th",
+      "duration": 100,
+      "artists": [
+        "RayRav"
+      ]
+    },
+    {
+      "id": "019f2680-94da-7573-abff-b642821d1efe",
+      "title": "MV RahimSamad 8thWonder",
+      "duration": 171,
+      "artists": [
+        "RahimSamad"
+      ]
+    },
+    {
+      "id": "019f2680-94af-7bd9-85d8-01b7ba0ecf67",
+      "title": "MV RJPayne ThePendulum",
+      "duration": 121,
+      "artists": [
+        "RJPayne"
+      ]
+    },
+    {
+      "id": "019f2680-bf1d-7816-b91e-26446b78baee",
+      "title": "MV Token Feral",
+      "duration": 211,
+      "artists": [
+        "Token"
+      ]
+    },
+    {
+      "id": "019f2680-bef3-7c52-bd9d-9ac373085784",
+      "title": "MV TaliGoyaFTLeta MajinBuu",
+      "duration": 169,
+      "artists": [
+        "TaliGoya",
+        "Leta"
+      ]
+    },
+    {
+      "id": "019f2680-becd-7583-b22a-3a7fc3fab59a",
+      "title": "MV TaPu LalaMancipe",
+      "duration": 186,
+      "artists": [
+        "TaPu"
+      ]
+    },
+    {
+      "id": "019f2680-b41c-796e-af39-e02636a2739b",
+      "title": "MV TierraWhack TwoNight",
+      "duration": 210,
+      "artists": [
+        "TierraWhack"
+      ]
+    },
+    {
+      "id": "019f2680-afb1-7af3-bab7-07d960b64a9b",
+      "title": "MV TrizzxMikeSummers Scrapin",
+      "duration": 134,
+      "artists": [
+        "Trizz",
+        "MikeSummers"
+      ]
+    },
+    {
+      "id": "019f2680-af7f-7a84-942c-08311e44d9ea",
+      "title": "MV TrizzxMikeSummers HellBent",
+      "duration": 128,
+      "artists": [
+        "Trizz",
+        "MikeSummers"
+      ]
+    },
+    {
+      "id": "019f2680-a953-7fd5-a92c-36d597c7d5ab",
+      "title": "MV TannerAdell BuckleBunnyBarnyardSession",
+      "duration": 197,
+      "artists": [
+        "TannerAdell"
+      ]
+    },
+    {
+      "id": "019f2680-a08a-7c5f-9001-b9f2b7ec509f",
+      "title": "MV TyDaDalexVDon UFOFev TheRaidPopcornCeilings",
+      "duration": 138,
+      "artists": [
+        "TyDaDale",
+        "VDon UFOFev"
+      ]
+    },
+    {
+      "id": "019f2680-a06e-75a5-b7a3-8378c6d9ee44",
+      "title": "MV Ty4Thought DaRealMe",
+      "duration": 154,
+      "artists": [
+        "Ty4Thought"
+      ]
+    },
+    {
+      "id": "019f2680-a054-780e-beb9-ece07d3251d8",
+      "title": "MV TwistedInsane RapGame",
+      "duration": 232,
+      "artists": [
+        "TwistedInsane"
+      ]
+    },
+    {
+      "id": "019f2680-a03e-78ed-87ee-125fafb773d3",
+      "title": "MV Trizz OnAndOn",
+      "duration": 214,
+      "artists": [
+        "Trizz"
+      ]
+    },
+    {
+      "id": "019f2680-a021-7f03-a8dc-b98fccb1324d",
+      "title": "MV TrendsettaShady FxckAllYall2",
+      "duration": 120,
+      "artists": [
+        "TrendsettaShady"
+      ]
+    },
+    {
+      "id": "019f2680-a005-75b5-855a-3cf06087134d",
+      "title": "MV TreButler SamePlace",
+      "duration": 207,
+      "artists": [
+        "TreButler"
+      ]
+    },
+    {
+      "id": "019f2680-9fdd-72fb-afb3-f44584c11c77",
+      "title": "MV Traylormade DoubleWideREMIX",
+      "duration": 286,
+      "artists": [
+        "Traylormade"
+      ]
+    },
+    {
+      "id": "019f2680-9fbb-7217-bd9c-0ac05943eb66",
+      "title": "MV TopRamiin TheLifeWeLive",
+      "duration": 190,
+      "artists": [
+        "TopRamiin"
+      ]
+    },
+    {
+      "id": "019f2680-9f8d-7b54-9f71-d3fbc0f7a11f",
+      "title": "MV Token OrangeLineFreestyle",
+      "duration": 158,
+      "artists": [
+        "Token"
+      ]
+    },
+    {
+      "id": "019f2680-9f6f-794b-80e0-0d9d2225d5ed",
+      "title": "MV ToBezel Pain",
+      "duration": 187,
+      "artists": [
+        "ToBezel"
+      ]
+    },
+    {
+      "id": "019f2680-9f41-7e00-b8c2-f86f251b2291",
+      "title": "MV Theolodge BoardingPlanes",
+      "duration": 186,
+      "artists": [
+        "Theolodge"
+      ]
+    },
+    {
+      "id": "019f2680-9f1e-7ff5-9373-5037853cd0a3",
+      "title": "MV TheStixxx CrazyTrain",
+      "duration": 251,
+      "artists": [
+        "TheSti"
+      ]
+    },
+    {
+      "id": "019f2680-9efa-7dae-bb3f-bda00c99d9e5",
+      "title": "MV TheREALDeeZftNoekReklaw 40Days",
+      "duration": 193,
+      "artists": [
+        "TheREALDeeZ",
+        "NoekReklaw"
+      ]
+    },
+    {
+      "id": "019f2680-9ed6-742f-83f4-32e107d84d2b",
+      "title": "MV TheMusalini Ashtray",
+      "duration": 78,
+      "artists": [
+        "TheMusalini"
+      ]
+    },
+    {
+      "id": "019f2680-9e7a-74ef-8bf9-55454370f385",
+      "title": "MV TheMusalini AnythingGoes",
+      "duration": 123,
+      "artists": [
+        "TheMusalini"
+      ]
+    },
+    {
+      "id": "019f2680-9e55-7195-9748-217f200d789c",
+      "title": "MV TheBadSeed ElephantInTheRoom",
+      "duration": 188,
+      "artists": [
+        "TheBadSeed"
+      ]
+    },
+    {
+      "id": "019f2680-9e2e-7a43-a15b-3cc34d40cec5",
+      "title": "MV TheAvalanches BecauseImMe",
+      "duration": 284,
+      "artists": [
+        "TheAvalanches"
+      ]
+    },
+    {
+      "id": "019f2680-9de3-7bf0-882e-ef5719340989",
+      "title": "MV TheAlchemistFtActionBronson Vertigo",
+      "duration": 177,
+      "artists": [
+        "TheAlchemist",
+        "ActionBronson"
+      ]
+    },
+    {
+      "id": "019f2680-9dba-704f-bce7-858f7e40f5c7",
+      "title": "MV Tamera Poison",
+      "duration": 174,
+      "artists": [
+        "Tamera"
+      ]
+    },
+    {
+      "id": "019f2680-9d91-76b6-bc3d-cf30e2dd96dc",
+      "title": "MV TTETruth Golden",
+      "duration": 177,
+      "artists": [
+        "TTETruth"
+      ]
+    },
+    {
+      "id": "019f2680-bf9b-7b4e-aba7-2856a72d856c",
+      "title": "MV VinniePaz HeadOfDavid",
+      "duration": 184,
+      "artists": [
+        "VinniePaz"
+      ]
+    },
+    {
+      "id": "019f2680-bf6a-7b4f-9c47-8fbf27748cb1",
+      "title": "MV VelNine WhereWillIGo",
+      "duration": 81,
+      "artists": [
+        "VelNine"
+      ]
+    },
+    {
+      "id": "019f2680-b436-7368-bb35-bac047ecb4e8",
+      "title": "MV VelNine GangstaBitch",
+      "duration": 177,
+      "artists": [
+        "VelNine"
+      ]
+    },
+    {
+      "id": "019f2680-a979-791d-8e0c-06469b82166d",
+      "title": "MV VinniePazFTTrxstworthy TheJungleIsAShapeshifter",
+      "duration": 193,
+      "artists": [
+        "VinniePaz",
+        "stworthy"
+      ]
+    },
+    {
+      "id": "019f2680-a303-7d6e-8316-1b148c6c850a",
+      "title": "MV Vybrid TheseTimes",
+      "duration": 199,
+      "artists": [
+        "Vybrid"
+      ]
+    },
+    {
+      "id": "019f2680-a2d3-72a6-8826-7c4e1d48eca6",
+      "title": "MV Vitorio TimesSquareFlows",
+      "duration": 142,
+      "artists": [
+        "Vitorio"
+      ]
+    },
+    {
+      "id": "019f2680-a2b6-739d-8809-6d72dde4a518",
+      "title": "MV VinniePaz SlightRebellionOffMadison",
+      "duration": 184,
+      "artists": [
+        "VinniePaz"
+      ]
+    },
+    {
+      "id": "019f2680-a298-766c-8dd4-7131d96e25a1",
+      "title": "MV VinniePaz KoreshBabylon",
+      "duration": 169,
+      "artists": [
+        "VinniePaz"
+      ]
+    },
+    {
+      "id": "019f2680-a26f-7370-83b2-8e5471b06030",
+      "title": "MV VinniePaz FaithHealer",
+      "duration": 186,
+      "artists": [
+        "VinniePaz"
+      ]
+    },
+    {
+      "id": "019f2680-a24b-775a-8e79-a03321e7ea1f",
+      "title": "MV VinceSerrano TheAnswer",
+      "duration": 170,
+      "artists": [
+        "VinceSerrano"
+      ]
+    },
+    {
+      "id": "019f2680-a224-781e-921d-91f4aefba9ac",
+      "title": "MV VicoCxAl2ElAldeano BlamBlam",
+      "duration": 399,
+      "artists": [
+        "VicoC",
+        "Al2ElAldeano"
+      ]
+    },
+    {
+      "id": "019f2680-a209-763b-98e9-de13583dc32c",
+      "title": "MV VicoC Sabado14Visualizer",
+      "duration": 272,
+      "artists": [
+        "VicoC"
+      ]
+    },
+    {
+      "id": "019f2680-a1ee-7323-a2e2-fa2946a190af",
+      "title": "MV VicoC PreguntaleATuPapaPorMi",
+      "duration": 325,
+      "artists": [
+        "VicoC"
+      ]
+    },
+    {
+      "id": "019f2680-a1cd-7a5d-8841-c31643fdf2b2",
+      "title": "MV VicLucas Who",
+      "duration": 220,
+      "artists": [
+        "VicLucas"
+      ]
+    },
+    {
+      "id": "019f2680-a1af-756f-92c2-048ae7e6f94a",
+      "title": "MV VibeChemistry Baddest",
+      "duration": 245,
+      "artists": [
+        "VibeChemistry"
+      ]
+    },
+    {
+      "id": "019f2680-a181-7c17-bfcd-6eeca83038ee",
+      "title": "MV VelTheWonder UmaSamurai",
+      "duration": 217,
+      "artists": [
+        "VelTheWonder"
+      ]
+    },
+    {
+      "id": "019f2680-a168-778b-8e71-cf4b2826daf9",
+      "title": "MV VelNine RudeBone",
+      "duration": 213,
+      "artists": [
+        "VelNine"
+      ]
+    },
+    {
+      "id": "019f2680-a128-7255-8928-014bcfecf256",
+      "title": "MV Various ThatPhillyJawnOfficialCypher",
+      "duration": 231,
+      "artists": [
+        "Various"
+      ]
+    },
+    {
+      "id": "019f2680-a102-7e11-b2b8-15ce318bf355",
+      "title": "MV VF7 UnaDoll",
+      "duration": 148,
+      "artists": [
+        "VF7"
+      ]
+    },
+    {
+      "id": "019f2680-a0e3-7146-951b-fec359ead176",
+      "title": "MV VF7 BadBichi",
+      "duration": 172,
+      "artists": [
+        "VF7"
+      ]
+    },
+    {
+      "id": "019f2680-a0c7-7b6e-b13c-acd986f6c5a4",
+      "title": "MV VF7 Aprovechame",
+      "duration": 193,
+      "artists": [
+        "VF7"
+      ]
+    },
+    {
+      "id": "019f2680-a0a6-78a1-b434-70bcc1559822",
+      "title": "MV VCiannii MakeYouBetter",
+      "duration": 223,
+      "artists": [
+        "VCiannii"
+      ]
+    }
+  ],
+  "promo_pool": [
+    {
+      "id": "019f2681-1148-71a7-a37e-dd8a867ec37b",
+      "title": "NBP PromoVideo FreestyleExplosion3",
+      "duration": 48
+    },
+    {
+      "id": "019f2681-1083-7c07-8b77-182c0ff81c79",
+      "title": "FrankieCutlassPromo OldKrateShow",
+      "duration": 36
+    },
+    {
+      "id": "019f2680-fb1e-792c-9444-cc859fbbab93",
+      "title": "TwinCalPromo",
+      "duration": 60
+    },
+    {
+      "id": "019f2680-7027-7e0c-8d28-25fbced824d5",
+      "title": "IA LosDiggityPromoAd 001",
+      "duration": 53
+    },
+    {
+      "id": "019f2680-6f9e-77da-b5d3-76b7505e5d31",
+      "title": "IA 2B1L Episode13 BMBTVPromoAd",
+      "duration": 29
+    },
+    {
+      "id": "019f2680-6d0f-7144-b450-54fae70c78ca",
+      "title": "IA 2B1L Episode13 BMBTVPromoAd 2",
+      "duration": 28
+    },
+    {
+      "id": "019f2680-705c-769d-99d1-b300fad1b0ca",
+      "title": "IA SolodropsGemsonLyrivelli",
+      "duration": 79
+    },
+    {
+      "id": "019f2680-703c-77f5-b9a0-a799af5309b3",
+      "title": "IA LyrivelliBridgeSituation",
+      "duration": 122
+    },
+    {
+      "id": "019f2680-6ff8-722b-af3e-39e55ebacb5e",
+      "title": "IA BMBLogoReveal",
+      "duration": 10
+    },
+    {
+      "id": "019f2680-6fe0-7b26-ae90-1672b52b4fab",
+      "title": "IA BMBIntro Record",
+      "duration": 29
+    },
+    {
+      "id": "019f2680-6fcd-765a-9d36-ecbdaaba8248",
+      "title": "IA 2B1L SeagullMadness",
+      "duration": 39
+    },
+    {
+      "id": "019f2680-6fbb-7d69-979b-17fe498d227f",
+      "title": "IA 2B1L NightAtTheRoxburyClip",
+      "duration": 36
+    },
+    {
+      "id": "019f2680-6f89-702b-94cc-11f4ca997ec6",
+      "title": "IA 2B1L 8bitIntro",
+      "duration": 43
+    },
+    {
+      "id": "019f2680-6ea2-75e1-8662-2f2823d894b6",
+      "title": "IA SkyzooShoutout",
+      "duration": 14
+    },
+    {
+      "id": "019f2680-6e97-7624-a630-8ab1be19453b",
+      "title": "IA KidCapriDrop",
+      "duration": 12
+    }
+  ],
+  "special_pool_note": "Drawn from 'Live Performances' (57) and 'Live Event Interviews' (61) categories on Black Marker TV; pick items not yet in special_ids_used_all.",
+  "special_ids_used_all": [
+    "019f2680-744c-77ba-b3a6-9e188ac841a9",
+    "019f2681-0e69-71c3-9523-45a91d27a0b8",
+    "019f2680-71b0-777f-b61c-08a8a1b95981",
+    "019f2680-71f4-77c7-be26-4309dadf962f",
+    "019f2681-0272-73b2-b2ab-6f08232b8579",
+    "019f2681-0395-7dea-95bb-3420dfeb9dbf",
+    "019f2680-7506-7c42-a7cf-d8c127c1bba1",
+    "019f2680-7303-77ab-803e-e7ee3adb1207",
+    "019f2680-7698-766c-ba6b-cf6f6c566794",
+    "019f2681-02a6-7a80-ad7c-e3db8b6d3d6b",
+    "019f2680-761d-7469-ade2-67edb1315c5a",
+    "019f2680-7789-7354-980d-0757e5b424cd",
+    "019f2680-7283-79c7-a693-e831ee202d6a",
+    "019f2680-75f0-7ce5-a54a-109758c51b21",
+    "019f2681-024a-7b43-a588-a95d1a704a2d",
+    "019f2680-ff33-7ed0-b952-49639cb5e1d6",
+    "019f2680-7543-7ece-bf2d-e49a15d74507",
+    "019f2681-0771-7455-ac1a-48741c6b1ef8",
+    "019f2681-0e52-744d-bf13-cc6e9aec29a1",
+    "019f2680-7675-7feb-b131-57a480ef6ffd",
+    "019f2680-724c-717b-a37f-db919996d890",
+    "019f2680-b4a3-7ec5-8b6e-a742874dadc9",
+    "019f2681-0214-7771-bb53-5251fd874d21",
+    "019f2680-7400-7423-b173-9f422e8f35b8"
+  ],
+  "playlists": {
+    "Monday Loop 1": {
+      "playlist_id": "019f26a1-4473-7013-b760-5be6fc985a49",
+      "total_seconds": 21604,
+      "mv_ids_used": [
+        "019f2680-c54e-76f2-a682-c263e54442bd",
+        "019f2680-7864-7405-9bac-c112a578ca29",
+        "019f2680-791c-7618-8b9d-d60145e3ef4a",
+        "019f2680-7bc4-7d81-b5bd-ca869cc2f2cc",
+        "019f2680-e5cf-7a03-90a1-3f98b0a9ab04",
+        "019f2680-becd-7583-b22a-3a7fc3fab59a",
+        "019f2680-a005-75b5-855a-3cf06087134d",
+        "019f2680-a775-7df1-9271-d96026740ce1",
+        "019f2680-807a-791c-bd9a-134b0519caf0",
+        "019f2680-801b-7b6c-b31c-2cd5ce1c7436",
+        "019f2680-95a5-75af-b9a6-11930a22694b",
+        "019f2680-ced5-774e-8db6-bbd6e1de760a",
+        "019f2680-d9d5-7319-b887-44616eac9852",
+        "019f2680-94da-7573-abff-b642821d1efe",
+        "019f2680-7a1c-765c-a213-1859750fc425",
+        "019f2680-aa5a-79a7-9fb8-4d307bd7b3cf",
+        "019f2680-7bdd-7853-afdb-f0e10d491388",
+        "019f2680-87b2-7bd7-b21f-e0113cc5c280",
+        "019f2680-9532-7e4e-9d71-c6bcd51fae12",
+        "019f2680-b770-78c3-b926-42b398b89970",
+        "019f2680-86f7-71c3-b480-a7371c9820d8",
+        "019f2680-7e96-7e2f-b9c1-34d45c5f4776",
+        "019f2680-8d60-7057-8a31-6e124c01aa6d",
+        "019f2680-79fc-7e63-b81d-e84dd56b3951",
+        "019f2680-7ec8-7172-9028-fd1d21e6e812",
+        "019f2680-d435-708d-9f5b-3472b0f6e939",
+        "019f2680-b436-7368-bb35-bac047ecb4e8",
+        "019f2680-7d08-7554-b1ec-689305d4bfaa",
+        "019f2680-7dfb-7137-ab6a-2bfbc64a4fb1",
+        "019f2680-a209-763b-98e9-de13583dc32c",
+        "019f2680-e3f6-79b1-9cee-3e68870691bb",
+        "019f2680-7fc3-750d-9db3-1f2bac532066",
+        "019f2680-88f0-7683-909c-01b131d86997",
+        "019f2680-9d91-76b6-bc3d-cf30e2dd96dc",
+        "019f2680-780a-7f92-8139-bd7f232867b9",
+        "019f2680-79ed-7f1d-a1a6-24dcd0679e40",
+        "019f2680-b1a4-75ec-8a5b-a156d3dc70cf",
+        "019f2680-cbb8-7384-9667-af69008a5282",
+        "019f2680-875a-7b51-8e70-ff6c5209c13c",
+        "019f2680-c945-7e6e-a831-b1b4f72313e1",
+        "019f2680-7b11-7f74-a3ea-2db6cdce1eac",
+        "019f2680-ac33-799f-8bb7-63d2dd42d6f1",
+        "019f2680-7eea-7bf0-8a98-24bb47b748fd",
+        "019f2680-b502-798f-be43-f375f97d83df",
+        "019f2680-809a-7492-a1b2-fba90829ebf2",
+        "019f2680-7fe5-70a1-9239-4cc632014701",
+        "019f2680-7854-77a7-b1e5-3fc2413a0183",
+        "019f2680-788c-79f8-af2e-ef0eb650cf9b",
+        "019f2680-a9e8-7f77-868c-f208ba3a1e4f",
+        "019f2680-d8fd-7a34-bd40-2285377b8119",
+        "019f2680-7bd2-7ef6-99a1-d1b82bc32c27",
+        "019f2680-a03e-78ed-87ee-125fafb773d3",
+        "019f2680-7c8b-7acb-a9d3-a19db4818132",
+        "019f2680-7834-7499-86de-1c46359bc4eb",
+        "019f2680-d83b-7bcd-b3c9-dea3de438f88",
+        "019f2680-ca26-7738-9c15-1f79fd8d4694",
+        "019f2680-9e7a-74ef-8bf9-55454370f385",
+        "019f2680-b2c7-7f9f-aca1-41840dd94668",
+        "019f2680-7c7b-7754-a5a0-0357ea829a36",
+        "019f2680-96ab-7a19-8bb8-71312d762f7a",
+        "019f2680-7bae-72b8-9d53-1741e448a603",
+        "019f2680-a26f-7370-83b2-8e5471b06030",
+        "019f2680-7fb2-7412-96f5-825995d94a52",
+        "019f2680-7e71-7c33-b2d0-83fe23cb71c5",
+        "019f2680-ab4d-7eaf-a831-09c2d562b67e",
+        "019f2680-d1f9-7f3d-868f-6e6b8d6f5c62",
+        "019f2680-7965-7731-8498-f80fdb402133",
+        "019f2680-ad65-7aab-b4c8-7f1af4bb9ab0",
+        "019f2680-7aec-7f44-9991-7a95ece65510",
+        "019f2680-7bea-7b8e-bcba-4bc4b4e3a77c",
+        "019f2680-dc0a-7a21-b486-ae06abe2c1e0",
+        "019f2680-7b05-750d-a134-827f5827769a",
+        "019f2680-b601-76ba-b041-668202cde966",
+        "019f2680-8541-710d-8c33-9c55fd638288",
+        "019f2680-7eda-7772-9403-34659008939e",
+        "019f2680-8070-7247-a317-0a12aa088c7d",
+        "019f2680-7ff8-7c6f-9fe3-bc614c9af622",
+        "019f2680-c1c2-7e9e-9d5f-8b5221c5f642",
+        "019f2680-d718-706e-8a8d-2948c6e5a063",
+        "019f2680-88c6-798e-a5b7-61d0a9c42b28",
+        "019f2680-7b66-7340-90c0-36ff86df4f3d",
+        "019f2680-cc02-7ada-8b7e-4e4a09d8844c",
+        "019f2680-cd23-7b21-9efb-985d42d19cb0",
+        "019f2680-863f-7f4b-8a77-f5a880be4eff",
+        "019f2680-aa8f-738f-a806-aff7c4f84ee6",
+        "019f2680-d2dc-7770-bdec-e6f4d7ebe791",
+        "019f2680-c534-7a4b-81d7-cab0d2721829",
+        "019f2680-bbc6-7f5d-8d69-31b583a78711",
+        "019f2680-d680-7303-be58-058697f74c0c",
+        "019f2680-7d91-7316-9f0c-4c18dfbfb2de",
+        "019f2680-ca9b-7e28-9327-f8c6c97dbc75",
+        "019f2680-d992-7ca5-8440-9445215350a7",
+        "019f2680-9f6f-794b-80e0-0d9d2225d5ed",
+        "019f2680-c03b-7fa0-a31b-c8e271db079f",
+        "019f2680-7817-744c-baf2-bdf5f14393de",
+        "019f2680-dd87-7517-a607-4891c1430966",
+        "019f2680-d024-79f2-b05b-fe4172731e94",
+        "019f2680-9f1e-7ff5-9373-5037853cd0a3",
+        "019f2680-ab12-7938-a590-8c14ec4535a5",
+        "019f2680-b5ba-7003-8618-5ea1301bf325",
+        "019f2680-cefe-7a05-ba03-acbd98bd2f4f"
+      ],
+      "promo_ids_used": [
+        "019f2681-1148-71a7-a37e-dd8a867ec37b",
+        "019f2681-1083-7c07-8b77-182c0ff81c79",
+        "019f2680-fb1e-792c-9444-cc859fbbab93",
+        "019f2680-7027-7e0c-8d28-25fbced824d5",
+        "019f2680-6f9e-77da-b5d3-76b7505e5d31",
+        "019f2680-6d0f-7144-b450-54fae70c78ca",
+        "019f2680-705c-769d-99d1-b300fad1b0ca",
+        "019f2680-703c-77f5-b9a0-a799af5309b3",
+        "019f2680-6ff8-722b-af3e-39e55ebacb5e",
+        "019f2680-6fe0-7b26-ae90-1672b52b4fab"
+      ],
+      "special_ids_used": [
+        "019f2681-0214-7771-bb53-5251fd874d21",
+        "019f2680-724c-717b-a37f-db919996d890",
+        "019f2680-761d-7469-ade2-67edb1315c5a"
+      ]
+    },
+    "Monday Loop 2": {
+      "playlist_id": "019f26a1-3364-79ac-bc64-3c54d695f477",
+      "total_seconds": 21610,
+      "mv_ids_used": [
+        "019f2680-d6d8-76e6-9221-473fc3affbde",
+        "019f2680-805e-70d8-aa8e-0054ef3c251b",
+        "019f2680-d88c-78bb-93cd-4f7f49591881",
+        "019f2680-d36c-7382-940a-93668fd478a6",
+        "019f2680-bc90-79a4-b43e-78f0d73be50b",
+        "019f2680-e58a-747c-87c9-df2f9bce9e2f",
+        "019f2680-b4c6-7f94-826f-790517ece642",
+        "019f2680-85ab-798e-9273-33e3278f2b36",
+        "019f2680-e601-7745-ab3b-971a59c152ca",
+        "019f2680-a640-779f-885c-3e484f533efb",
+        "019f2680-78e3-7853-a482-31a6040f490f",
+        "019f2680-a5f0-7535-89f9-4d67dc6ecce0",
+        "019f2680-b5dc-7abe-91c1-708984af49b7",
+        "019f2680-ae8a-7eb7-b89a-77185f5262bf",
+        "019f2680-a7f4-7583-b401-17c089a1def0",
+        "019f2680-889d-7325-90bf-7fc23e80f2a1",
+        "019f2680-84f1-741b-b42a-5ee12a741522",
+        "019f2680-d811-73d4-8628-81faeeaa3c28",
+        "019f2680-7cc6-7376-9594-2a773643f4e1",
+        "019f2680-7944-75af-b31c-7418075e9bc2",
+        "019f2680-d1b8-7d3a-b93e-c9f03f576d5f",
+        "019f2680-7a41-7ba7-a0ad-1dc4c89972ec",
+        "019f2680-d409-73db-b8e5-b138e32f3607",
+        "019f2680-7c50-72cc-8b9b-41a8bb1c56ab",
+        "019f2680-e6aa-7dda-b495-57c1b9a0d893",
+        "019f2680-8667-7345-8d83-016b21671920",
+        "019f2680-8774-7b92-baab-fbb4dad7eee8",
+        "019f2680-9f8d-7b54-9f71-d3fbc0f7a11f",
+        "019f2680-79cf-7981-86ff-2936a7d120ca",
+        "019f2680-cf54-735f-90fb-b7732ab0e528",
+        "019f2680-9669-70aa-ac45-bcd6f0cf7ca2",
+        "019f2680-c877-76c6-b699-ea31708bbd74",
+        "019f2680-c89f-71ef-9ad5-2605a5dd902d",
+        "019f2680-7bba-79fd-a1ff-3bd480ead821",
+        "019f2680-7873-7471-bad7-4ddf0d5514c8",
+        "019f2680-dd0e-7c0f-b205-7d4447abd530",
+        "019f2680-8807-7d13-b492-b0d998db86f6",
+        "019f2680-7dd8-7f8e-80d5-b7745e27c14c",
+        "019f2680-962a-73bd-9e01-6f2bef2ca4a2",
+        "019f2680-cd89-7a5d-b2e4-52120f41db42",
+        "019f2680-b56d-7d29-8faa-51fc5d3f4c48",
+        "019f2680-e636-7e30-af3d-1a9f654e81f4",
+        "019f2680-8795-7415-8be8-136a2b3d2277",
+        "019f2680-c720-74cf-b322-d07a68aeee67",
+        "019f2680-968c-7e84-b2d5-8df895a75bba",
+        "019f2680-c571-7328-acda-b955c9707912",
+        "019f2680-7c0a-713f-a2ed-46248efb310e",
+        "019f2680-b54a-7fa5-a1e8-3e4b31b6b580",
+        "019f2680-a06e-75a5-b7a3-8378c6d9ee44",
+        "019f2680-8555-7aeb-a924-bafa4b484d72",
+        "019f2680-e4d2-7087-a975-5ff9eca2c4a0",
+        "019f2680-8032-7d99-bdc6-bab22f069b51",
+        "019f2680-d0e3-7a4a-bb09-dc049eb69f3b",
+        "019f2680-7b28-72a6-936a-cb5def30d743",
+        "019f2680-7826-717d-ac3e-72a6be2d3251",
+        "019f2680-a7d8-78ba-b887-72602861148c",
+        "019f2680-86cd-7fe5-aa15-2ecde4982329",
+        "019f2680-9de3-7bf0-882e-ef5719340989",
+        "019f2680-7899-7fe4-a4cd-1516f383f62d",
+        "019f2680-c502-72d9-9a71-c8fbb0b6c643",
+        "019f2680-cf7b-72da-a6ec-8139d3dad50f",
+        "019f2680-a2b6-739d-8809-6d72dde4a518",
+        "019f2680-b28f-7135-96c9-554a29ff41f1",
+        "019f2680-7f6f-7428-a682-64d6c83c63df",
+        "019f2680-ab8b-7bdf-b911-b418f36660ca",
+        "019f2680-7b4e-7fa0-96ef-bb1b613488f5",
+        "019f2680-a5c9-77c6-b68c-daa20c6c1dd2",
+        "019f2680-7b1c-71c1-8c44-10ebf77bab14",
+        "019f2680-a67d-70ab-b3dc-72c9cd9fd8c9",
+        "019f2680-bf1d-7816-b91e-26446b78baee",
+        "019f2680-7af8-7f76-b6d0-cdb17aac35bf",
+        "019f2680-9dba-704f-bce7-858f7e40f5c7",
+        "019f2680-d32e-7483-9f2c-3615432a8bf8",
+        "019f2680-852d-791f-a0f3-124fca61848e",
+        "019f2680-a882-7640-a548-d937db5f1243",
+        "019f2680-a102-7e11-b2b8-15ce318bf355",
+        "019f2680-c0f7-7bd9-a8ef-6d0723fd71e7",
+        "019f2680-a9c1-7129-a0b2-53289fe7c93a",
+        "019f2680-808b-7c5d-995d-8452a7d9f181",
+        "019f2680-7b72-7e54-aba6-7997c2d4178d",
+        "019f2680-9515-7980-af8a-05b8ade4822d",
+        "019f2680-af7f-7a84-942c-08311e44d9ea",
+        "019f2680-aacf-73df-906e-e9bd5f6a59eb",
+        "019f2680-b259-7d0b-a56d-6f4e3aa1b11f",
+        "019f2680-acdf-7140-bff4-2e8c7bfd38f8",
+        "019f2680-7ca8-7364-834d-74350dbe01b8",
+        "019f2680-79c1-7534-893c-863dfe702b4c",
+        "019f2680-a24b-775a-8e79-a03321e7ea1f",
+        "019f2680-8609-7111-b92d-2fa11717fc86",
+        "019f2680-e50e-7c0f-9329-15af618cc2b1",
+        "019f2680-b4db-75d9-821e-b3aaf21e1156",
+        "019f2680-7b59-763b-a677-34d3763d2bea",
+        "019f2680-884a-7b5f-90e5-c99fc197d7da",
+        "019f2680-7e26-7f2f-a2f5-dc23e0de4821",
+        "019f2680-cad7-792e-93df-7389c109a9f0",
+        "019f2680-86e3-72ab-a51f-bdb43ea7be7b",
+        "019f2680-8504-7dd8-bffd-15deebc66c4a",
+        "019f2680-7b95-7c20-980e-3af408103010",
+        "019f2680-8732-79a8-a04f-b1ebdf03301a",
+        "019f2680-82e3-76ea-80eb-88138c8c6b73",
+        "019f2680-cd56-79f2-990b-d6e4a4ce3ff3"
+      ],
+      "promo_ids_used": [
+        "019f2681-1148-71a7-a37e-dd8a867ec37b",
+        "019f2681-1083-7c07-8b77-182c0ff81c79",
+        "019f2680-fb1e-792c-9444-cc859fbbab93",
+        "019f2680-7027-7e0c-8d28-25fbced824d5",
+        "019f2680-6f9e-77da-b5d3-76b7505e5d31",
+        "019f2680-6d0f-7144-b450-54fae70c78ca",
+        "019f2680-705c-769d-99d1-b300fad1b0ca",
+        "019f2680-703c-77f5-b9a0-a799af5309b3",
+        "019f2680-6ff8-722b-af3e-39e55ebacb5e",
+        "019f2680-6fe0-7b26-ae90-1672b52b4fab",
+        "019f2680-6fcd-765a-9d36-ecbdaaba8248"
+      ],
+      "special_ids_used": [
+        "019f2680-7789-7354-980d-0757e5b424cd",
+        "019f2680-71f4-77c7-be26-4309dadf962f",
+        "019f2680-ff33-7ed0-b952-49639cb5e1d6"
+      ]
+    },
+    "Monday Loop 3": {
+      "playlist_id": "019f26a1-20bc-7c84-8b70-c67647251e5c",
+      "total_seconds": 21615,
+      "mv_ids_used": [
+        "019f2680-cc8e-7a8c-ae56-122df5ea0d4c",
+        "019f2680-8595-70e7-ab33-ed8a2b986807",
+        "019f2680-b52c-79e6-8cf6-f451fc3d105c",
+        "019f2680-c6d2-7ca7-ac8c-9eb58ee73771",
+        "019f2680-bc0b-73ee-b4b6-927821e09b28",
+        "019f2680-7efc-7c58-897f-416fcde5882e",
+        "019f2680-9efa-7dae-bb3f-bda00c99d9e5",
+        "019f2680-c9d3-7718-a0b8-503b3f593d37",
+        "019f2680-ccdf-7564-baab-1e0066aab54e",
+        "019f2680-dfb1-7e22-a177-cb3c50bce269",
+        "019f2680-7cdf-77e7-b465-eb1517bd03d5",
+        "019f2680-870a-73ec-b2ee-d7bb396c4ddd",
+        "019f2680-79dd-7e67-8887-671e541ec52b",
+        "019f2680-7d65-7ac5-93cd-0029a3ba0bea",
+        "019f2680-7c61-79a1-af8e-d08f1999ecb0",
+        "019f2680-a224-781e-921d-91f4aefba9ac",
+        "019f2680-b6f8-73bd-a944-40133ed6f8a9",
+        "019f2680-7f0c-7078-a8fb-2a0ef6094106",
+        "019f2680-7ab0-72e0-8927-f1e2e3d1ec22",
+        "019f2680-8872-7425-b69d-64fdfa592491",
+        "019f2680-8888-7e23-bda3-31a9585242be",
+        "019f2680-84b7-7398-ab85-cab716423c57",
+        "019f2680-d657-76b0-bce3-5f984ed936ea",
+        "019f2680-96c6-779b-96a3-70d66f50c93b",
+        "019f2680-b4ee-7ae5-a52e-cae63ab3d269",
+        "019f2680-9e2e-7a43-a15b-3cc34d40cec5",
+        "019f2680-e00f-739b-81b8-566639e8463d",
+        "019f2680-ac00-7786-a056-83ca46b51478",
+        "019f2680-bef3-7c52-bd9d-9ac373085784",
+        "019f2680-80a5-7a58-9c9e-e6496fc888b4",
+        "019f2680-8746-74a5-a9ae-9533e947f1a2",
+        "019f2680-d308-7a53-9cde-338bae2d6688",
+        "019f2680-7998-7244-ab81-8d6eeb74384e",
+        "019f2680-a605-73de-a51a-f30408477015",
+        "019f2680-d7bd-7c40-b06d-9b8f16fddeee",
+        "019f2680-7d73-7a3c-a61c-7c5ebec2aec7",
+        "019f2680-a2d3-72a6-8826-7c4e1d48eca6",
+        "019f2680-cea1-77d5-ada2-128f66787621",
+        "019f2680-dcd0-7134-b418-117e277b8237",
+        "019f2680-7d17-7393-9e12-4a95021ffbb5",
+        "019f2680-d935-7043-ba14-9021a283127a",
+        "019f2680-ce2f-74e7-8131-988fcac16506",
+        "019f2680-7b89-7826-9355-9ffe2a4818be",
+        "019f2680-a5b8-749a-941f-d568c70e35f7",
+        "019f2680-b518-786b-8ed0-30b7bd0f7de1",
+        "019f2680-a1ee-7323-a2e2-fa2946a190af",
+        "019f2680-7d3c-7c4b-9c24-971392369fc0",
+        "019f2680-87c6-7658-a021-5e338ebd7af1",
+        "019f2680-a298-766c-8dd4-7131d96e25a1",
+        "019f2680-7ba3-7dd7-8197-99f5900deeec",
+        "019f2680-78cf-7b8d-b3bf-7319bae04c04",
+        "019f2680-7fa2-7863-815e-1ef253023bf1",
+        "019f2680-84a2-766b-bb33-5fc8f12d4e21",
+        "019f2680-7a94-7736-8861-7a3cf21c1507",
+        "019f2680-85bf-7861-927f-1072a710dbb9",
+        "019f2680-c901-72fb-8be3-fb388c2a599e",
+        "019f2680-a1cd-7a5d-8841-c31643fdf2b2",
+        "019f2680-b70d-7468-b2e5-43e4dcc23258",
+        "019f2680-79b2-75ba-a25d-d00cd88a460b",
+        "019f2680-d292-7c7b-b8cd-cd0cf104835c",
+        "019f2680-aa07-76e0-aa5d-7d48aa9cd3ed",
+        "019f2680-cf2d-7d23-bee1-c34fe2d45de0",
+        "019f2680-abcc-7df5-a4d0-f019140a4e7b",
+        "019f2680-def0-738f-a025-5c5d5caf8f71",
+        "019f2680-a953-7fd5-a92c-36d597c7d5ab",
+        "019f2680-87f0-7d2b-a7f0-766e3b00ef63",
+        "019f2680-7fd5-7f5f-8a82-670041772483",
+        "019f2680-c174-734a-805d-695924c02c83",
+        "019f2680-b0f4-7f46-8924-dec00e004160",
+        "019f2680-9e55-7195-9748-217f200d789c",
+        "019f2680-b57f-766f-a6d1-5e540e0ffb28",
+        "019f2680-964b-7073-be5d-27625d7f0c44",
+        "019f2680-7e86-7905-bc4c-2db735d8766e",
+        "019f2680-c2a7-7183-bd2f-1c031817f47e",
+        "019f2680-e67b-7dd7-8146-5eccbd653ef3",
+        "019f2680-e474-7e76-84b8-71cf5456f5de",
+        "019f2680-88dc-787d-8811-876ac1fdd12d",
+        "019f2680-d5b8-713d-adc5-85504faebf4a",
+        "019f2680-804c-74d4-aa78-9618e5475bad",
+        "019f2680-cdfc-77bd-b2e3-f45a3f5b2ec7",
+        "019f2680-7cfa-7dd0-ae1a-66e554fb1485",
+        "019f2680-7a0a-721b-95ea-53d576b479da",
+        "019f2680-8654-756b-ab0e-53ca59a8f8ad",
+        "019f2680-a054-780e-beb9-ece07d3251d8",
+        "019f2680-78a8-76dd-8247-e549c5b59953",
+        "019f2680-7cd3-7971-b1ba-5317643dc73a",
+        "019f2680-7a7e-7125-b7d5-2730be9ed833",
+        "019f2680-a303-7d6e-8316-1b148c6c850a",
+        "019f2680-a0a6-78a1-b434-70bcc1559822",
+        "019f2680-a7bc-75b1-8981-77c51b5fc06b",
+        "019f2680-b73c-7dad-8df6-8cdefcbb3f29",
+        "019f2680-8519-74af-8f00-116843c9f201",
+        "019f2680-a181-7c17-bfcd-6eeca83038ee",
+        "019f2680-8907-7622-ad3a-87b481178f8e",
+        "019f2680-c0cc-7f5c-90f6-d5b987e5f31d"
+      ],
+      "promo_ids_used": [
+        "019f2681-1148-71a7-a37e-dd8a867ec37b",
+        "019f2681-1083-7c07-8b77-182c0ff81c79",
+        "019f2680-fb1e-792c-9444-cc859fbbab93",
+        "019f2680-7027-7e0c-8d28-25fbced824d5",
+        "019f2680-6f9e-77da-b5d3-76b7505e5d31",
+        "019f2680-6d0f-7144-b450-54fae70c78ca",
+        "019f2680-705c-769d-99d1-b300fad1b0ca",
+        "019f2680-703c-77f5-b9a0-a799af5309b3",
+        "019f2680-6ff8-722b-af3e-39e55ebacb5e",
+        "019f2680-6fe0-7b26-ae90-1672b52b4fab",
+        "019f2680-6fcd-765a-9d36-ecbdaaba8248"
+      ],
+      "special_ids_used": [
+        "019f2680-7400-7423-b173-9f422e8f35b8",
+        "019f2680-7698-766c-ba6b-cf6f6c566794",
+        "019f2681-0272-73b2-b2ab-6f08232b8579"
+      ]
+    },
+    "Monday Loop 4": {
+      "playlist_id": "019f26a1-0e57-7a62-b086-e1371fc53a4b",
+      "total_seconds": 21572,
+      "mv_ids_used": [
+        "019f2680-cdb6-7c95-94c0-a4c9766bd3e7",
+        "019f2680-c227-7ac1-8823-6eb3131fdbbd",
+        "019f2680-b795-7e35-8394-c1971890f1d2",
+        "019f2680-871f-71fc-850c-de0070f468b5",
+        "019f2680-c984-7bc3-a981-004f2f1d2084",
+        "019f2680-7cec-7457-b82b-9fb924c8ffa4",
+        "019f2680-c1e9-7666-8ba0-6515a41992ff",
+        "019f2680-de2c-7039-ab18-a60525758412",
+        "019f2680-7c9a-7364-af28-0a19ae6b9a5e",
+        "019f2680-7e18-79d5-b73a-1c987d80971f",
+        "019f2680-da39-7f94-8270-04ab3a5ea1a0",
+        "019f2680-7ea7-7363-936a-31a7d82bb7b6",
+        "019f2680-e0bc-7109-af0e-82a8d405f8cc",
+        "019f2680-84de-7c0e-b695-1985832af1d3",
+        "019f2680-c63b-762a-9beb-fa200165dc14",
+        "019f2680-88b2-77cd-b570-ebfc030652b4",
+        "019f2680-afb1-7af3-bab7-07d960b64a9b",
+        "019f2680-86a5-7a09-a845-c9f5dbb0dcad",
+        "019f2680-e056-710b-b1e1-0186c5ed2229",
+        "019f2680-7a70-7109-91a2-b046a6c396a6",
+        "019f2680-7bf8-73b4-8360-a0c543cd0962",
+        "019f2680-9ed6-742f-83f4-32e107d84d2b",
+        "019f2680-7b43-7fdb-860d-0af642da51b0",
+        "019f2680-e419-71df-9fd2-bd5ff212ba3c",
+        "019f2680-7dbb-70e4-beb8-20ec0fefcdbc",
+        "019f2680-d6a6-7b06-93d5-e5cfd98b6230",
+        "019f2680-7d29-7752-847f-99fe2c893329",
+        "019f2680-8834-7f15-b58c-085acb53d433",
+        "019f2680-9610-75db-8e26-effbac0c7ab7",
+        "019f2680-a62b-7053-b432-53fc480221b5",
+        "019f2680-d78e-7d1d-bdbb-9da997dc4c4d",
+        "019f2680-a1af-756f-92c2-048ae7e6f94a",
+        "019f2680-95e8-797b-94bc-a9ee82be9e88",
+        "019f2680-7f90-71d0-a7d6-4d5b9149a4b7",
+        "019f2680-7984-7033-937e-6f4b256c82f5",
+        "019f2680-7c44-7056-b2b6-f65876f9f45d",
+        "019f2680-b391-733f-a7f1-440ab499d754",
+        "019f2680-85d4-7d56-b71c-e589e0a01664",
+        "019f2680-80c0-74fd-bea0-a02eb9c9fafe",
+        "019f2680-7aa2-7d2c-8da4-fe4700effb2c",
+        "019f2680-979f-7fb7-b937-360421def510",
+        "019f2680-87d9-7c2d-972e-84a34168c698",
+        "019f2680-a669-7246-8d92-e60ccc227ee0",
+        "019f2680-7de5-7f4d-8323-6ea7a405184b",
+        "019f2680-c09c-7366-8e01-b14a96cf0a9c",
+        "019f2680-bf6a-7b4f-9c47-8fbf27748cb1",
+        "019f2680-7e0b-78f2-aad6-4c9fccf24f0f",
+        "019f2680-78f6-7105-bcbc-fd108c817bf9",
+        "019f2680-c5a2-7415-935b-c8af178e59f6",
+        "019f2680-84ca-757d-a368-56242ef757cb",
+        "019f2680-b6db-7ba8-aeda-4d0a0e20e3eb",
+        "019f2680-de68-71cc-b342-9d10c3540231",
+        "019f2680-d7e9-7779-9688-33b83202b2ea",
+        "019f2680-7a88-7750-a4e5-ec4d64c7ead7",
+        "019f2680-96de-746c-90a6-df03aec3713c",
+        "019f2680-7c15-7365-b44c-258411ccb020",
+        "019f2680-7eb8-75a3-8437-1f00e0cf9423",
+        "019f2680-7abd-7a32-98bc-7dc7db956080",
+        "019f2680-7dad-7225-9720-0caac94050b0",
+        "019f2680-8568-76eb-90dd-50a7d84bdf00",
+        "019f2680-e4a3-756e-af5f-36a8ab892fb3",
+        "019f2680-7c23-7062-b7cd-6999394193f5",
+        "019f2680-bf9b-7b4e-aba7-2856a72d856c",
+        "019f2680-867c-79e8-94a7-ff603839b053",
+        "019f2680-d58d-74b8-bbbe-595eb288a081",
+        "019f2680-792f-7bc1-94e3-6aede36b1340",
+        "019f2680-a616-70f4-b2ce-4d86ea163558",
+        "019f2680-7f5d-7a96-a2d3-d94122de4291",
+        "019f2680-9f41-7e00-b8c2-f86f251b2291",
+        "019f2680-a08a-7c5f-9001-b9f2b7ec509f",
+        "019f2680-a5db-75c6-a4b2-17c42ba63696",
+        "019f2680-bc57-7e68-a487-fd84bc052c92",
+        "019f2680-80b5-7658-b629-edaf7764e34e",
+        "019f2680-885d-72c9-97d1-a620548e187b",
+        "019f2680-a0c7-7b6e-b13c-acd986f6c5a4",
+        "019f2680-790b-776f-8b94-f4779608ea31",
+        "019f2680-a021-7f03-a8dc-b98fccb1324d",
+        "019f2680-9fbb-7217-bd9c-0ac05943eb66",
+        "019f2680-9579-78ff-af36-c88d2a0c207a",
+        "019f2680-d866-7e8b-bede-4263d5253dc2",
+        "019f2680-a168-778b-8e71-cf4b2826daf9",
+        "019f2680-d5eb-75fd-af52-d2d0744b4ee9",
+        "019f2680-e45e-79b1-9133-fbe2695ca4ca",
+        "019f2680-94af-7bd9-85d8-01b7ba0ecf67",
+        "019f2680-a656-7883-93ab-b0ba01ce421d",
+        "019f2680-7e63-7ce6-a5b6-32ae12183deb",
+        "019f2680-7b7e-7c0a-954f-9f0ef6a730a3"
+      ],
+      "promo_ids_used": [
+        "019f2681-1148-71a7-a37e-dd8a867ec37b",
+        "019f2681-1083-7c07-8b77-182c0ff81c79",
+        "019f2680-fb1e-792c-9444-cc859fbbab93",
+        "019f2680-7027-7e0c-8d28-25fbced824d5",
+        "019f2680-6f9e-77da-b5d3-76b7505e5d31",
+        "019f2680-6d0f-7144-b450-54fae70c78ca",
+        "019f2680-705c-769d-99d1-b300fad1b0ca",
+        "019f2680-703c-77f5-b9a0-a799af5309b3",
+        "019f2680-6ff8-722b-af3e-39e55ebacb5e",
+        "019f2680-6fe0-7b26-ae90-1672b52b4fab"
+      ],
+      "special_ids_used": [
+        "019f2680-7303-77ab-803e-e7ee3adb1207",
+        "019f2680-b4a3-7ec5-8b6e-a742874dadc9",
+        "019f2681-024a-7b43-a588-a95d1a704a2d"
+      ],
+      "opener_ids_used": [
+        "019f2680-f229-755f-9a6b-edb24b95fce2"
+      ]
+    },
+    "Tuesday Loop 1": {
+      "playlist_id": "019f26a0-e30e-7ad1-a8b6-9bf4da9890dc",
+      "total_seconds": 21588,
+      "mv_ids_used": [
+        "019f2680-7ca8-7364-834d-74350dbe01b8",
+        "019f2680-9d91-76b6-bc3d-cf30e2dd96dc",
+        "019f2680-9669-70aa-ac45-bcd6f0cf7ca2",
+        "019f2680-7a0a-721b-95ea-53d576b479da",
+        "019f2680-80a5-7a58-9c9e-e6496fc888b4",
+        "019f2680-962a-73bd-9e01-6f2bef2ca4a2",
+        "019f2680-8690-74ea-885c-144454fd945d",
+        "019f2680-d83b-7bcd-b3c9-dea3de438f88",
+        "019f2680-c6d2-7ca7-ac8c-9eb58ee73771",
+        "019f2680-b5dc-7abe-91c1-708984af49b7",
+        "019f2680-bc90-79a4-b43e-78f0d73be50b",
+        "019f2680-9e7a-74ef-8bf9-55454370f385",
+        "019f2680-88dc-787d-8811-876ac1fdd12d",
+        "019f2680-da39-7f94-8270-04ab3a5ea1a0",
+        "019f2680-8519-74af-8f00-116843c9f201",
+        "019f2680-d718-706e-8a8d-2948c6e5a063",
+        "019f2680-86e3-72ab-a51f-bdb43ea7be7b",
+        "019f2680-a1af-756f-92c2-048ae7e6f94a",
+        "019f2680-e00f-739b-81b8-566639e8463d",
+        "019f2680-a08a-7c5f-9001-b9f2b7ec509f",
+        "019f2680-d680-7303-be58-058697f74c0c",
+        "019f2680-a656-7883-93ab-b0ba01ce421d",
+        "019f2680-86a5-7a09-a845-c9f5dbb0dcad",
+        "019f2680-7f5d-7a96-a2d3-d94122de4291",
+        "019f2680-c901-72fb-8be3-fb388c2a599e",
+        "019f2680-ce72-7cc3-b169-a088a8c15d55",
+        "019f2680-a979-791d-8e0c-06469b82166d",
+        "019f2680-8807-7d13-b492-b0d998db86f6",
+        "019f2680-9532-7e4e-9d71-c6bcd51fae12",
+        "019f2680-dd0e-7c0f-b205-7d4447abd530",
+        "019f2680-7ec8-7172-9028-fd1d21e6e812",
+        "019f2680-86b8-7126-a27f-3d17bf9d7cfb",
+        "019f2680-c227-7ac1-8823-6eb3131fdbbd",
+        "019f2680-84ca-757d-a368-56242ef757cb",
+        "019f2680-8834-7f15-b58c-085acb53d433",
+        "019f2680-b4ee-7ae5-a52e-cae63ab3d269",
+        "019f2680-d88c-78bb-93cd-4f7f49591881",
+        "019f2680-da9b-702f-aaf0-5bd779b48e37",
+        "019f2680-7b11-7f74-a3ea-2db6cdce1eac",
+        "019f2680-7864-7405-9bac-c112a578ca29",
+        "019f2680-bbc6-7f5d-8d69-31b583a78711",
+        "019f2680-807a-791c-bd9a-134b0519caf0",
+        "019f2680-abcc-7df5-a4d0-f019140a4e7b",
+        "019f2680-8667-7345-8d83-016b21671920",
+        "019f2680-7eda-7772-9403-34659008939e",
+        "019f2680-7bae-72b8-9d53-1741e448a603",
+        "019f2680-7c23-7062-b7cd-6999394193f5",
+        "019f2680-79a6-78df-b65a-610f0d6e43d5",
+        "019f2680-7dfb-7137-ab6a-2bfbc64a4fb1",
+        "019f2680-86f7-71c3-b480-a7371c9820d8",
+        "019f2680-bf6a-7b4f-9c47-8fbf27748cb1",
+        "019f2680-7c50-72cc-8b9b-41a8bb1c56ab",
+        "019f2680-ca26-7738-9c15-1f79fd8d4694",
+        "019f2680-e056-710b-b1e1-0186c5ed2229",
+        "019f2680-7dd8-7f8e-80d5-b7745e27c14c",
+        "019f2680-9579-78ff-af36-c88d2a0c207a",
+        "019f2680-7899-7fe4-a4cd-1516f383f62d",
+        "019f2680-b176-71d5-ae74-0c5862490b29",
+        "019f2680-87c6-7658-a021-5e338ebd7af1",
+        "019f2680-7fb2-7412-96f5-825995d94a52",
+        "019f2680-a882-7640-a548-d937db5f1243",
+        "019f2680-9de3-7bf0-882e-ef5719340989",
+        "019f2680-b52c-79e6-8cf6-f451fc3d105c",
+        "019f2680-d467-7b1d-817b-04607be4855b",
+        "019f2680-7eb8-75a3-8437-1f00e0cf9423",
+        "019f2680-85d4-7d56-b71c-e589e0a01664",
+        "019f2680-a5db-75c6-a4b2-17c42ba63696",
+        "019f2680-9515-7980-af8a-05b8ade4822d",
+        "019f2680-d78e-7d1d-bdbb-9da997dc4c4d",
+        "019f2680-88c6-798e-a5b7-61d0a9c42b28",
+        "019f2680-e636-7e30-af3d-1a9f654e81f4",
+        "019f2680-7b95-7c20-980e-3af408103010",
+        "019f2680-ab12-7938-a590-8c14ec4535a5",
+        "019f2680-a605-73de-a51a-f30408477015",
+        "019f2680-e6d4-7760-a9ae-1126079355a3",
+        "019f2680-c502-72d9-9a71-c8fbb0b6c643",
+        "019f2680-809a-7492-a1b2-fba90829ebf2",
+        "019f2680-e45e-79b1-9133-fbe2695ca4ca",
+        "019f2680-780a-7f92-8139-bd7f232867b9",
+        "019f2680-cd89-7a5d-b2e4-52120f41db42",
+        "019f2680-875a-7b51-8e70-ff6c5209c13c",
+        "019f2680-7cb7-7f4a-9c82-19e66b02baf2",
+        "019f2680-bef3-7c52-bd9d-9ac373085784",
+        "019f2680-85ab-798e-9273-33e3278f2b36",
+        "019f2680-c1e9-7666-8ba0-6515a41992ff",
+        "019f2680-a168-778b-8e71-cf4b2826daf9",
+        "019f2680-d6d8-76e6-9221-473fc3affbde",
+        "019f2680-790b-776f-8b94-f4779608ea31",
+        "019f2680-cb57-7eb8-97d4-b7fa06b10926",
+        "019f2680-852d-791f-a0f3-124fca61848e",
+        "019f2680-79dd-7e67-8887-671e541ec52b",
+        "019f2680-7a88-7750-a4e5-ec4d64c7ead7",
+        "019f2680-7f4c-73cc-8c6b-edde4e100478",
+        "019f2680-885d-72c9-97d1-a620548e187b",
+        "019f2680-8625-76df-92c4-b87b01836e2a",
+        "019f2680-884a-7b5f-90e5-c99fc197d7da",
+        "019f2680-aacf-73df-906e-e9bd5f6a59eb",
+        "019f2680-79b2-75ba-a25d-d00cd88a460b",
+        "019f2680-7b59-763b-a677-34d3763d2bea",
+        "019f2680-d8fd-7a34-bd40-2285377b8119",
+        "019f2680-7ab0-72e0-8927-f1e2e3d1ec22",
+        "019f2680-de2c-7039-ab18-a60525758412",
+        "019f2680-78cf-7b8d-b3bf-7319bae04c04",
+        "019f2680-a0e3-7146-951b-fec359ead176"
+      ],
+      "promo_ids_used": [
+        "019f2681-1148-71a7-a37e-dd8a867ec37b",
+        "019f2681-1083-7c07-8b77-182c0ff81c79",
+        "019f2680-fb1e-792c-9444-cc859fbbab93",
+        "019f2680-7027-7e0c-8d28-25fbced824d5",
+        "019f2680-6f9e-77da-b5d3-76b7505e5d31",
+        "019f2680-6d0f-7144-b450-54fae70c78ca",
+        "019f2680-705c-769d-99d1-b300fad1b0ca",
+        "019f2680-703c-77f5-b9a0-a799af5309b3",
+        "019f2680-6ff8-722b-af3e-39e55ebacb5e",
+        "019f2680-6fe0-7b26-ae90-1672b52b4fab",
+        "019f2680-6fcd-765a-9d36-ecbdaaba8248",
+        "019f2680-6fbb-7d69-979b-17fe498d227f"
+      ],
+      "special_ids_used": [
+        "019f2680-7675-7feb-b131-57a480ef6ffd",
+        "019f2680-744c-77ba-b3a6-9e188ac841a9",
+        "019f2681-0395-7dea-95bb-3420dfeb9dbf"
+      ],
+      "opener_ids_used": [],
+      "note": "Full MV deck reshuffle for Tuesday -- mv_ids_used here may overlap with Monday's, by design."
+    },
+    "Tuesday Loop 2": {
+      "playlist_id": "019f26a0-d07f-77d6-bff1-3559d23a7bd2",
+      "total_seconds": 21602,
+      "mv_ids_used": [
+        "019f2680-7e18-79d5-b73a-1c987d80971f",
+        "019f2680-b4c6-7f94-826f-790517ece642",
+        "019f2680-7817-744c-baf2-bdf5f14393de",
+        "019f2680-d6a6-7b06-93d5-e5cfd98b6230",
+        "019f2680-b4db-75d9-821e-b3aaf21e1156",
+        "019f2680-b518-786b-8ed0-30b7bd0f7de1",
+        "019f2680-e4a3-756e-af5f-36a8ab892fb3",
+        "019f2680-7955-7769-85a3-a8cb58a92af7",
+        "019f2680-7b66-7340-90c0-36ff86df4f3d",
+        "019f2680-9e2e-7a43-a15b-3cc34d40cec5",
+        "019f2680-b0ab-79db-98ce-cb7bc7bb36c5",
+        "019f2680-7dbb-70e4-beb8-20ec0fefcdbc",
+        "019f2680-c63b-762a-9beb-fa200165dc14",
+        "019f2680-a67d-70ab-b3dc-72c9cd9fd8c9",
+        "019f2680-cc8e-7a8c-ae56-122df5ea0d4c",
+        "019f2680-e601-7745-ab3b-971a59c152ca",
+        "019f2680-a7f4-7583-b401-17c089a1def0",
+        "019f2680-ae8a-7eb7-b89a-77185f5262bf",
+        "019f2680-c945-7e6e-a831-b1b4f72313e1",
+        "019f2680-7eea-7bf0-8a98-24bb47b748fd",
+        "019f2680-8568-76eb-90dd-50a7d84bdf00",
+        "019f2680-c2a7-7183-bd2f-1c031817f47e",
+        "019f2680-e536-7ba6-804e-92aed544c386",
+        "019f2680-7c9a-7364-af28-0a19ae6b9a5e",
+        "019f2680-ced5-774e-8db6-bbd6e1de760a",
+        "019f2680-c03b-7fa0-a31b-c8e271db079f",
+        "019f2680-cd23-7b21-9efb-985d42d19cb0",
+        "019f2680-d935-7043-ba14-9021a283127a",
+        "019f2680-b41c-796e-af39-e02636a2739b",
+        "019f2680-d7e9-7779-9688-33b83202b2ea",
+        "019f2680-ac33-799f-8bb7-63d2dd42d6f1",
+        "019f2680-7854-77a7-b1e5-3fc2413a0183",
+        "019f2680-7a41-7ba7-a0ad-1dc4c89972ec",
+        "019f2680-7bc4-7d81-b5bd-ca869cc2f2cc",
+        "019f2680-a06e-75a5-b7a3-8378c6d9ee44",
+        "019f2680-e50e-7c0f-9329-15af618cc2b1",
+        "019f2680-afb1-7af3-bab7-07d960b64a9b",
+        "019f2680-7e0b-78f2-aad6-4c9fccf24f0f",
+        "019f2680-cc02-7ada-8b7e-4e4a09d8844c",
+        "019f2680-c571-7328-acda-b955c9707912",
+        "019f2680-7abd-7a32-98bc-7dc7db956080",
+        "019f2680-ca9b-7e28-9327-f8c6c97dbc75",
+        "019f2680-78a8-76dd-8247-e549c5b59953",
+        "019f2680-cf2d-7d23-bee1-c34fe2d45de0",
+        "019f2680-d435-708d-9f5b-3472b0f6e939",
+        "019f2680-7aa2-7d2c-8da4-fe4700effb2c",
+        "019f2680-7965-7731-8498-f80fdb402133",
+        "019f2680-7873-7471-bad7-4ddf0d5514c8",
+        "019f2680-7e86-7905-bc4c-2db735d8766e",
+        "019f2680-b57f-766f-a6d1-5e540e0ffb28",
+        "019f2680-7ff8-7c6f-9fe3-bc614c9af622",
+        "019f2680-7bba-79fd-a1ff-3bd480ead821",
+        "019f2680-d3ad-7fe6-a6c0-f8ff89ff6688",
+        "019f2680-a1ee-7323-a2e2-fa2946a190af",
+        "019f2680-b54a-7fa5-a1e8-3e4b31b6b580",
+        "019f2680-a7d8-78ba-b887-72602861148c",
+        "019f2680-d024-79f2-b05b-fe4172731e94",
+        "019f2680-7b05-750d-a134-827f5827769a",
+        "019f2680-94af-7bd9-85d8-01b7ba0ecf67",
+        "019f2680-7d91-7316-9f0c-4c18dfbfb2de",
+        "019f2680-8504-7dd8-bffd-15deebc66c4a",
+        "019f2680-c534-7a4b-81d7-cab0d2721829",
+        "019f2680-7c8b-7acb-a9d3-a19db4818132",
+        "019f2680-7c44-7056-b2b6-f65876f9f45d",
+        "019f2680-84de-7c0e-b695-1985832af1d3",
+        "019f2680-88b2-77cd-b570-ebfc030652b4",
+        "019f2680-7fd5-7f5f-8a82-670041772483",
+        "019f2680-9f41-7e00-b8c2-f86f251b2291",
+        "019f2680-85bf-7861-927f-1072a710dbb9",
+        "019f2680-9f1e-7ff5-9373-5037853cd0a3",
+        "019f2680-b770-78c3-b926-42b398b89970",
+        "019f2680-d36c-7382-940a-93668fd478a6",
+        "019f2680-a669-7246-8d92-e60ccc227ee0",
+        "019f2680-d58d-74b8-bbbe-595eb288a081",
+        "019f2680-b436-7368-bb35-bac047ecb4e8",
+        "019f2680-9f8d-7b54-9f71-d3fbc0f7a11f",
+        "019f2680-cbb8-7384-9667-af69008a5282",
+        "019f2680-9ed6-742f-83f4-32e107d84d2b",
+        "019f2680-7e3f-756e-96b0-67233e42ac57",
+        "019f2680-c09c-7366-8e01-b14a96cf0a9c",
+        "019f2680-a5f0-7535-89f9-4d67dc6ecce0",
+        "019f2680-808b-7c5d-995d-8452a7d9f181",
+        "019f2680-7b89-7826-9355-9ffe2a4818be",
+        "019f2680-ccdf-7564-baab-1e0066aab54e",
+        "019f2680-95a5-75af-b9a6-11930a22694b",
+        "019f2680-cea1-77d5-ada2-128f66787621",
+        "019f2680-801b-7b6c-b31c-2cd5ce1c7436",
+        "019f2680-7bdd-7853-afdb-f0e10d491388",
+        "019f2680-7b4e-7fa0-96ef-bb1b613488f5",
+        "019f2680-7d29-7752-847f-99fe2c893329",
+        "019f2680-d292-7c7b-b8cd-cd0cf104835c",
+        "019f2680-a0a6-78a1-b434-70bcc1559822",
+        "019f2680-d0e3-7a4a-bb09-dc049eb69f3b",
+        "019f2680-ad65-7aab-b4c8-7f1af4bb9ab0",
+        "019f2680-e419-71df-9fd2-bd5ff212ba3c",
+        "019f2680-a209-763b-98e9-de13583dc32c",
+        "019f2680-79cf-7981-86ff-2936a7d120ca",
+        "019f2680-d7bd-7c40-b06d-9b8f16fddeee",
+        "019f2680-acdf-7140-bff4-2e8c7bfd38f8",
+        "019f2680-7f34-7c1c-bd24-ade98cf4e5e0",
+        "019f2680-a775-7df1-9271-d96026740ce1",
+        "019f2680-a5b8-749a-941f-d568c70e35f7",
+        "019f2680-8d60-7057-8a31-6e124c01aa6d",
+        "019f2680-7b1c-71c1-8c44-10ebf77bab14",
+        "019f2680-e43a-7a8d-800a-680494eb3c33",
+        "019f2680-7bea-7b8e-bcba-4bc4b4e3a77c"
+      ],
+      "promo_ids_used": [
+        "019f2681-1148-71a7-a37e-dd8a867ec37b",
+        "019f2681-1083-7c07-8b77-182c0ff81c79",
+        "019f2680-fb1e-792c-9444-cc859fbbab93",
+        "019f2680-7027-7e0c-8d28-25fbced824d5",
+        "019f2680-6f9e-77da-b5d3-76b7505e5d31",
+        "019f2680-6d0f-7144-b450-54fae70c78ca",
+        "019f2680-705c-769d-99d1-b300fad1b0ca",
+        "019f2680-703c-77f5-b9a0-a799af5309b3",
+        "019f2680-6ff8-722b-af3e-39e55ebacb5e",
+        "019f2680-6fe0-7b26-ae90-1672b52b4fab",
+        "019f2680-6fcd-765a-9d36-ecbdaaba8248",
+        "019f2680-6fbb-7d69-979b-17fe498d227f"
+      ],
+      "special_ids_used": [
+        "019f2680-7506-7c42-a7cf-d8c127c1bba1",
+        "019f2680-7283-79c7-a693-e831ee202d6a",
+        "019f2681-0e69-71c3-9523-45a91d27a0b8"
+      ],
+      "opener_ids_used": [],
+      "note": "Full MV deck reshuffle for Tuesday -- mv_ids_used here may overlap with Monday's, by design."
+    },
+    "Tuesday Loop 3": {
+      "playlist_id": "019f26a0-bf85-77c7-a1e3-1c008ce337a2",
+      "total_seconds": 21598,
+      "mv_ids_used": [
+        "019f2680-dfb1-7e22-a177-cb3c50bce269",
+        "019f2680-8032-7d99-bdc6-bab22f069b51",
+        "019f2680-ab8b-7bdf-b911-b418f36660ca",
+        "019f2680-79ed-7f1d-a1a6-24dcd0679e40",
+        "019f2680-7b43-7fdb-860d-0af642da51b0",
+        "019f2680-87f0-7d2b-a7f0-766e3b00ef63",
+        "019f2680-9fdd-72fb-afb3-f44584c11c77",
+        "019f2680-7d08-7554-b1ec-689305d4bfaa",
+        "019f2680-87d9-7c2d-972e-84a34168c698",
+        "019f2680-a5a4-7fb7-a9b4-12522224973f",
+        "019f2680-8872-7425-b69d-64fdfa592491",
+        "019f2680-7cec-7457-b82b-9fb924c8ffa4",
+        "019f2680-7984-7033-937e-6f4b256c82f5",
+        "019f2680-7826-717d-ac3e-72a6be2d3251",
+        "019f2680-82e3-76ea-80eb-88138c8c6b73",
+        "019f2680-a616-70f4-b2ce-4d86ea163558",
+        "019f2680-d9d5-7319-b887-44616eac9852",
+        "019f2680-84b7-7398-ab85-cab716423c57",
+        "019f2680-b795-7e35-8394-c1971890f1d2",
+        "019f2680-7a5a-720e-8bc7-bf50639637b5",
+        "019f2680-d3df-75d3-8de8-9e339228abb4",
+        "019f2680-a9e8-7f77-868c-f208ba3a1e4f",
+        "019f2680-96de-746c-90a6-df03aec3713c",
+        "019f2680-b0f4-7f46-8924-dec00e004160",
+        "019f2680-cad7-792e-93df-7389c109a9f0",
+        "019f2680-7cd3-7971-b1ba-5317643dc73a",
+        "019f2680-8070-7247-a317-0a12aa088c7d",
+        "019f2680-7e71-7c33-b2d0-83fe23cb71c5",
+        "019f2680-7af8-7f76-b6d0-cdb17aac35bf",
+        "019f2680-b5ba-7003-8618-5ea1301bf325",
+        "019f2680-b70d-7468-b2e5-43e4dcc23258",
+        "019f2680-9610-75db-8e26-effbac0c7ab7",
+        "019f2680-d657-76b0-bce3-5f984ed936ea",
+        "019f2680-c147-7f99-a5db-dd3964f25b3b",
+        "019f2680-7dad-7225-9720-0caac94050b0",
+        "019f2680-e58a-747c-87c9-df2f9bce9e2f",
+        "019f2680-c0f7-7bd9-a8ef-6d0723fd71e7",
+        "019f2680-d308-7a53-9cde-338bae2d6688",
+        "019f2680-cf54-735f-90fb-b7732ab0e528",
+        "019f2680-a005-75b5-855a-3cf06087134d",
+        "019f2680-9f6f-794b-80e0-0d9d2225d5ed",
+        "019f2680-7b7e-7c0a-954f-9f0ef6a730a3",
+        "019f2680-7f0c-7078-a8fb-2a0ef6094106",
+        "019f2680-b502-798f-be43-f375f97d83df",
+        "019f2680-804c-74d4-aa78-9618e5475bad",
+        "019f2680-7d65-7ac5-93cd-0029a3ba0bea",
+        "019f2680-a128-7255-8928-014bcfecf256",
+        "019f2680-7de5-7f4d-8323-6ea7a405184b",
+        "019f2680-7834-7499-86de-1c46359bc4eb",
+        "019f2680-7974-79e3-9c65-aebc0badfbc9",
+        "019f2680-8541-710d-8c33-9c55fd638288",
+        "019f2680-7845-72b6-811b-0ea03ba5fad8",
+        "019f2680-7a70-7109-91a2-b046a6c396a6",
+        "019f2680-cd56-79f2-990b-d6e4a4ce3ff3",
+        "019f2680-cdfc-77bd-b2e3-f45a3f5b2ec7",
+        "019f2680-a03e-78ed-87ee-125fafb773d3",
+        "019f2680-c720-74cf-b322-d07a68aeee67",
+        "019f2680-80b5-7658-b629-edaf7764e34e",
+        "019f2680-bf9b-7b4e-aba7-2856a72d856c",
+        "019f2680-867c-79e8-94a7-ff603839b053",
+        "019f2680-a7bc-75b1-8981-77c51b5fc06b",
+        "019f2680-9e55-7195-9748-217f200d789c",
+        "019f2680-7c15-7365-b44c-258411ccb020",
+        "019f2680-cefe-7a05-ba03-acbd98bd2f4f",
+        "019f2680-b73c-7dad-8df6-8cdefcbb3f29",
+        "019f2680-7ba3-7dd7-8197-99f5900deeec",
+        "019f2680-d8d5-7ea0-b62a-788469b577b2",
+        "019f2680-bf1d-7816-b91e-26446b78baee",
+        "019f2680-aa07-76e0-aa5d-7d48aa9cd3ed",
+        "019f2680-b391-733f-a7f1-440ab499d754",
+        "019f2680-7c0a-713f-a2ed-46248efb310e",
+        "019f2680-cdb6-7c95-94c0-a4c9766bd3e7",
+        "019f2680-c0cc-7f5c-90f6-d5b987e5f31d",
+        "019f2680-c877-76c6-b699-ea31708bbd74",
+        "019f2680-a224-781e-921d-91f4aefba9ac",
+        "019f2680-8888-7e23-bda3-31a9585242be",
+        "019f2680-8795-7415-8be8-136a2b3d2277",
+        "019f2680-78f6-7105-bcbc-fd108c817bf9",
+        "019f2680-7f1e-7a66-80fa-60809effaf18",
+        "019f2680-7d17-7393-9e12-4a95021ffbb5",
+        "019f2680-de68-71cc-b342-9d10c3540231",
+        "019f2680-8774-7b92-baab-fbb4dad7eee8",
+        "019f2680-7e26-7f2f-a2f5-dc23e0de4821",
+        "019f2680-7e56-7c11-bab6-d77106da3d8c",
+        "019f2680-a5c9-77c6-b68c-daa20c6c1dd2",
+        "019f2680-8732-79a8-a04f-b1ebdf03301a",
+        "019f2680-78e3-7853-a482-31a6040f490f",
+        "019f2680-7dca-7df1-a9d7-c4f59ea5e403",
+        "019f2680-b56d-7d29-8faa-51fc5d3f4c48",
+        "019f2680-805e-70d8-aa8e-0054ef3c251b",
+        "019f2680-7cdf-77e7-b465-eb1517bd03d5",
+        "019f2680-a102-7e11-b2b8-15ce318bf355",
+        "019f2680-870a-73ec-b2ee-d7bb396c4ddd",
+        "019f2680-e3f6-79b1-9cee-3e68870691bb",
+        "019f2680-94da-7573-abff-b642821d1efe",
+        "019f2680-7fa2-7863-815e-1ef253023bf1",
+        "019f2680-d1b8-7d3a-b93e-c9f03f576d5f",
+        "019f2680-7e96-7e2f-b9c1-34d45c5f4776",
+        "019f2680-e67b-7dd7-8146-5eccbd653ef3",
+        "019f2680-8595-70e7-ab33-ed8a2b986807",
+        "019f2680-d409-73db-b8e5-b138e32f3607"
+      ],
+      "promo_ids_used": [
+        "019f2681-1148-71a7-a37e-dd8a867ec37b",
+        "019f2681-1083-7c07-8b77-182c0ff81c79",
+        "019f2680-fb1e-792c-9444-cc859fbbab93",
+        "019f2680-7027-7e0c-8d28-25fbced824d5",
+        "019f2680-6f9e-77da-b5d3-76b7505e5d31",
+        "019f2680-6d0f-7144-b450-54fae70c78ca",
+        "019f2680-705c-769d-99d1-b300fad1b0ca",
+        "019f2680-703c-77f5-b9a0-a799af5309b3",
+        "019f2680-6ff8-722b-af3e-39e55ebacb5e",
+        "019f2680-6fe0-7b26-ae90-1672b52b4fab",
+        "019f2680-6fcd-765a-9d36-ecbdaaba8248"
+      ],
+      "special_ids_used": [
+        "019f2680-75f0-7ce5-a54a-109758c51b21",
+        "019f2680-71b0-777f-b61c-08a8a1b95981",
+        "019f2681-02a6-7a80-ad7c-e3db8b6d3d6b"
+      ],
+      "opener_ids_used": [],
+      "note": "Full MV deck reshuffle for Tuesday -- mv_ids_used here may overlap with Monday's, by design."
+    },
+    "Tuesday Loop 4": {
+      "playlist_id": "019f26a0-aa4e-7827-8247-9b6bddd97f22",
+      "total_seconds": 21607,
+      "mv_ids_used": [
+        "019f2680-7cfa-7dd0-ae1a-66e554fb1485",
+        "019f2680-8746-74a5-a9ae-9533e947f1a2",
+        "019f2680-a303-7d6e-8316-1b148c6c850a",
+        "019f2680-d866-7e8b-bede-4263d5253dc2",
+        "019f2680-a1cd-7a5d-8841-c31643fdf2b2",
+        "019f2680-88f0-7683-909c-01b131d86997",
+        "019f2680-ce2f-74e7-8131-988fcac16506",
+        "019f2680-bc0b-73ee-b4b6-927821e09b28",
+        "019f2680-79c1-7534-893c-863dfe702b4c",
+        "019f2680-979f-7fb7-b937-360421def510",
+        "019f2680-7f90-71d0-a7d6-4d5b9149a4b7",
+        "019f2680-dfd9-728f-b0a3-5d54f157252b",
+        "019f2680-7d73-7a3c-a61c-7c5ebec2aec7",
+        "019f2680-d134-7b72-b5ee-f3f0ea93ea32",
+        "019f2680-a0c7-7b6e-b13c-acd986f6c5a4",
+        "019f2680-7bd2-7ef6-99a1-d1b82bc32c27",
+        "019f2680-a054-780e-beb9-ece07d3251d8",
+        "019f2680-b2c7-7f9f-aca1-41840dd94668",
+        "019f2680-84a2-766b-bb33-5fc8f12d4e21",
+        "019f2680-86cd-7fe5-aa15-2ecde4982329",
+        "019f2680-e474-7e76-84b8-71cf5456f5de",
+        "019f2680-e0bc-7109-af0e-82a8d405f8cc",
+        "019f2680-968c-7e84-b2d5-8df895a75bba",
+        "019f2680-d965-7062-a692-cdec0f3e1e58",
+        "019f2680-7a7e-7125-b7d5-2730be9ed833",
+        "019f2680-dcd0-7134-b418-117e277b8237",
+        "019f2680-9dba-704f-bce7-858f7e40f5c7",
+        "019f2680-e5cf-7a03-90a1-3f98b0a9ab04",
+        "019f2680-7a1c-765c-a213-1859750fc425",
+        "019f2680-c89f-71ef-9ad5-2605a5dd902d",
+        "019f2680-7aec-7f44-9991-7a95ece65510",
+        "019f2680-af7f-7a84-942c-08311e44d9ea",
+        "019f2680-881e-7b9e-9a1a-d8c1a583b517",
+        "019f2680-c1c2-7e9e-9d5f-8b5221c5f642",
+        "019f2680-889d-7325-90bf-7fc23e80f2a1",
+        "019f2680-8654-756b-ab0e-53ca59a8f8ad",
+        "019f2680-7fe5-70a1-9239-4cc632014701",
+        "019f2680-b259-7d0b-a56d-6f4e3aa1b11f",
+        "019f2680-b28f-7135-96c9-554a29ff41f1",
+        "019f2680-78bd-7d78-b60d-88c42ac7ec51",
+        "019f2680-791c-7618-8b9d-d60145e3ef4a",
+        "019f2680-b601-76ba-b041-668202cde966",
+        "019f2680-aa8f-738f-a806-aff7c4f84ee6",
+        "019f2680-b6db-7ba8-aeda-4d0a0e20e3eb",
+        "019f2680-bc57-7e68-a487-fd84bc052c92",
+        "019f2680-a24b-775a-8e79-a03321e7ea1f",
+        "019f2680-87b2-7bd7-b21f-e0113cc5c280",
+        "019f2680-7ea7-7363-936a-31a7d82bb7b6",
+        "019f2680-8555-7aeb-a924-bafa4b484d72",
+        "019f2680-a2d3-72a6-8826-7c4e1d48eca6",
+        "019f2680-7b72-7e54-aba6-7997c2d4178d",
+        "019f2680-7e63-7ce6-a5b6-32ae12183deb",
+        "019f2680-becd-7583-b22a-3a7fc3fab59a",
+        "019f2680-a640-779f-885c-3e484f533efb",
+        "019f2680-7a2c-710d-8ac3-dc8f20ca1f7b",
+        "019f2680-7c7b-7754-a5a0-0357ea829a36",
+        "019f2680-7efc-7c58-897f-416fcde5882e",
+        "019f2680-e6aa-7dda-b495-57c1b9a0d893",
+        "019f2680-7998-7244-ab81-8d6eeb74384e",
+        "019f2680-8609-7111-b92d-2fa11717fc86",
+        "019f2680-e65a-7216-a588-ab694565f5d9",
+        "019f2680-dc0a-7a21-b486-ae06abe2c1e0",
+        "019f2680-ab4d-7eaf-a831-09c2d562b67e",
+        "019f2680-cf7b-72da-a6ec-8139d3dad50f",
+        "019f2680-96ab-7a19-8bb8-71312d762f7a",
+        "019f2680-7d9e-768c-9780-1fbe93aac39b",
+        "019f2680-a79b-7e12-869a-3c24928ef932",
+        "019f2680-95e8-797b-94bc-a9ee82be9e88",
+        "019f2680-964b-7073-be5d-27625d7f0c44",
+        "019f2680-aa5a-79a7-9fb8-4d307bd7b3cf",
+        "019f2680-c6fe-75b8-acd1-539f8c3f9e5a",
+        "019f2680-871f-71fc-850c-de0070f468b5",
+        "019f2680-9fbb-7217-bd9c-0ac05943eb66",
+        "019f2680-a021-7f03-a8dc-b98fccb1324d",
+        "019f2680-a298-766c-8dd4-7131d96e25a1",
+        "019f2680-e4d2-7087-a975-5ff9eca2c4a0",
+        "019f2680-7d56-79e8-bb7d-ef07a4b7cf03",
+        "019f2680-7c61-79a1-af8e-d08f1999ecb0",
+        "019f2680-79fc-7e63-b81d-e84dd56b3951",
+        "019f2680-a953-7fd5-a92c-36d597c7d5ab",
+        "019f2680-d5b8-713d-adc5-85504faebf4a",
+        "019f2680-8907-7622-ad3a-87b481178f8e",
+        "019f2680-7cc6-7376-9594-2a773643f4e1",
+        "019f2680-b1a4-75ec-8a5b-a156d3dc70cf"
+      ],
+      "promo_ids_used": [
+        "019f2681-1148-71a7-a37e-dd8a867ec37b",
+        "019f2681-1083-7c07-8b77-182c0ff81c79",
+        "019f2680-fb1e-792c-9444-cc859fbbab93",
+        "019f2680-7027-7e0c-8d28-25fbced824d5",
+        "019f2680-6f9e-77da-b5d3-76b7505e5d31",
+        "019f2680-6d0f-7144-b450-54fae70c78ca",
+        "019f2680-705c-769d-99d1-b300fad1b0ca",
+        "019f2680-703c-77f5-b9a0-a799af5309b3"
+      ],
+      "special_ids_used": [
+        "019f2680-7543-7ece-bf2d-e49a15d74507",
+        "019f2681-0771-7455-ac1a-48741c6b1ef8",
+        "019f2681-0e52-744d-bf13-cc6e9aec29a1"
+      ],
+      "opener_ids_used": [
+        "019f2680-f519-757f-b682-38c7d337c8a4"
+      ],
+      "note": "Full MV deck reshuffle for Tuesday -- mv_ids_used here may overlap with Monday's, by design."
+    }
+  },
+  "excluded_artists": [
+    "beselfliss",
+    "beselfless",
+    "aych"
+  ],
+  "opener_ids_used_all": [
+    "019f2680-f229-755f-9a6b-edb24b95fce2",
+    "019f2680-f519-757f-b682-38c7d337c8a4"
+  ],
+  "deck_reshuffles": [
+    {
+      "day": "Tuesday",
+      "loops": [
+        "Tuesday Loop 1",
+        "Tuesday Loop 2",
+        "Tuesday Loop 3",
+        "Tuesday Loop 4"
+      ],
+      "reason": "User requested full MV deck reshuffle so Tuesday plays differently from Monday"
+    }
+  ]
+}

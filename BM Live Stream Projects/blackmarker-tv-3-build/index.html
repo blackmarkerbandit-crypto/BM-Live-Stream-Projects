@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BlackMarker.TV — Only Dope Sh!t</title>
+  <link rel="icon" href="assets/logo-white.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<!-- ==== ASSEMBLED FOR QA (header + home + footer). {{tokens}} render literally until the CMS fills them. ==== -->
+<!-- =====================================================================
+     HEADER PARTIAL  —  partials/header.html
+     Top bar + logo/socials/subscribe + main menu. Include on EVERY page.
+     Depends on: css/styles.css, js/main.js, assets/logo-white.png, assets/header-bg.jpg
+     CMS notes:
+       - Set class="on" on the <a> for the CURRENT page (see Home below).
+       - The subscribe modal at the bottom is shared; any button with
+         class="open-sub" opens it (header + footer both use it).
+     ===================================================================== -->
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="msg">Artists — get <b>featured</b> on Black Marker TV</span>
+    <a class="topbar-btn" href="mailto:canyoudigit@blackmarker.tv?subject=Music%20Submission%20for%20Review">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 00-3 3v6a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M5 10v1a7 7 0 0014 0v-1M12 18v4M8 22h8"/></svg>
+      Submit Your Music
+    </a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="head-bg"></div>
+  <div class="head-in">
+    <div class="brand-col">
+      <a class="brand-logo" href="/"><img src="assets/logo-white.png" alt="Black Marker TV"></a>
+      <div class="brand-tag">Only <b>Dope Sh!t</b> — An Independent Broadcast Network</div>
+    </div>
+    <div class="head-actions">
+      <div class="socials">
+        <a class="s-yt" href="https://youtube.com/@blackmarkertv" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.5-.4-5.2a2.7 2.7 0 00-1.9-1.9C18.9 4.5 12 4.5 12 4.5s-6.9 0-8.7.4a2.7 2.7 0 00-1.9 1.9C1 8.5 1 12 1 12s0 3.5.4 5.2a2.7 2.7 0 001.9 1.9c1.8.4 8.7.4 8.7.4s6.9 0 8.7-.4a2.7 2.7 0 001.9-1.9C23 15.5 23 12 23 12zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
+        <a class="s-ig" href="https://instagram.com/blackmarkertv" aria-label="Instagram"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="s-fb" href="https://facebook.com/blackmarkertv" aria-label="Facebook"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+        <a class="s-tw" href="https://twitch.tv/" aria-label="Twitch"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg></a>
+      </div>
+      <button class="btn btn-red btn-subscribe open-sub"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>Subscribe</button>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN MENU  (page links — set class="on" on the current page) -->
+<nav>
+  <div class="nav-in">
+    <a href="/" class="on">Home</a>
+    <span class="has-sub">
+      <a href="/on-demand">On Demand</a>
+      <span class="submenu">
+        <a href="/on-demand?pcid=47">The Weekly Interrupt</a>
+        <a href="/on-demand?pcid=65">Can You Dig It!? Live Music Review</a>
+        <a href="/on-demand?pcid=69">Talking Tipsy</a>
+        <a href="/on-demand?pcid=88">The Alien Podcast</a>
+        <a href="/on-demand?pcid=92">For The Record</a>
+        <span class="sep"></span>
+        <a href="/battles">Performance Battles</a>
+      </span>
+    </span>
+    <a href="/event-streams">Event Streams</a>
+    <a href="/shop">"The Bodega" Shop</a>
+    <a href="/schedule">Schedule</a>
+    <a href="/contact">Contact</a>
+    <a href="/account" class="acct"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg>Account</a>
+  </div>
+</nav>
+
+<!-- SUBSCRIBE MODAL (shared — opened by any .open-sub button) -->
+<div class="modal-overlay" id="subModal">
+  <form class="modal" onsubmit="return false;">
+    <button type="button" class="modal-x" id="closeSub" aria-label="Close">✕</button>
+    <div class="su-title">Join the List</div>
+    <div class="su-sub">Latest news, drops &amp; events — straight to your inbox.</div>
+    <div class="su-grid">
+      <input type="text" name="first_name" placeholder="First Name *" aria-label="First name" required>
+      <input type="text" name="last_name" placeholder="Last Name" aria-label="Last name">
+      <input type="email" name="email" placeholder="Email Address *" aria-label="Email address" required>
+      <input type="tel" name="phone" placeholder="Phone" aria-label="Phone">
+    </div>
+    <div class="su-roles">
+      <span class="su-roles-lbl">I'm a</span>
+      <label><input type="radio" name="role" value="artist"> Artist</label>
+      <label><input type="radio" name="role" value="company"> Company</label>
+      <label><input type="radio" name="role" value="fan"> Fan of Dope Sh!t</label>
+    </div>
+    <button class="btn btn-red su-submit" type="submit">Sign Up</button>
+  </form>
+</div>
+
+
+<!-- =====================================================================
+     HOMEPAGE CONTENT  —  templates/home.html
+     The page body BETWEEN the header and footer partials.
+     Dynamic regions are marked with  {{ tokens }}  and  BEGIN/END LOOP
+     comments — swap these for your CMS macro syntax.
+     Data source for the dynamic regions: a public read-only JSON endpoint
+     that resolves the active ChannelCast schedule -> now/next + latest.
+     (See README.md -> "Dynamic data".)
+     ===================================================================== -->
+
+<!-- ============ LIVE PLAYER + CHAT ============ -->
+<section class="wrap live-wrap">
+  <div class="live-grid" id="liveGrid">
+
+    <!-- PLAYER -->
+    <div class="player">
+      <div class="player-stage">
+        <div class="live-tag" style="z-index:3;"><span class="d"></span>LIVE · THE FREE LOOP</div>
+        <!-- ChannelCast live player mounts into this div -->
+        <div id="cc-player-019eba4dbb24746eafa619f8fea1e9aa" style="width:100%;aspect-ratio:16/9;background:#000;"></div>
+      </div>
+      <div class="player-bar">
+        <div>
+          <div style="font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:4px;display:flex;align-items:center;gap:6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--red);display:inline-block;animation:blink 1.3s infinite;"></span>Now Playing</div>
+          <!-- {{ now_playing_title }} — current item from the ChannelCast schedule -->
+          <div class="pb-title" id="pbTitle">{{ now_playing_title }}</div>
+          <div class="pb-sub">Only <b style="color:var(--text);">Dope Sh!t</b> · 24/7 Music &amp; Shows · <a href="mailto:canyoudigit@blackmarker.tv" style="color:var(--red);font-weight:700;">Submit Your Music Today!</a></div>
+        </div>
+        <div class="pb-actions">
+          <div class="chip active" id="chatToggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span id="chatToggleLbl">Chat: On</span></div>
+          <div class="chip" id="shareBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span id="shareLbl">Share</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE CHAT  (placeholder shell — local echo only.
+         Replace with a realtime backend, planned: Supabase.) -->
+    <div class="chat" id="chatPanel">
+      <div class="chat-head">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <span class="t">Live Chat</span>
+        <span class="cnt" id="chatCount"><!-- {{ viewers }} --> viewers</span>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="sys-msg">Welcome to BlackMarker.TV — keep it respectful.</div>
+        <!-- BEGIN LOOP: chat_messages (rendered by the realtime backend) -->
+        <div class="msg"><span class="u mod">BMB_Mod</span><span class="txt">Drop your song requests 👇</span></div>
+        <!-- END LOOP -->
+      </div>
+      <div class="chat-foot">
+        <input id="chatInput" placeholder="Chat as guest…" aria-label="Chat message">
+        <button class="chat-send" id="chatSend">Send</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ UPCOMING VIDEOS (from the active ChannelCast loop) ============ -->
+<section class="section up-section">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:16px;">
+      <div>
+        <div class="eyebrow">Coming Up on the Loop</div>
+        <h2 class="sec-title">Upcoming Videos</h2>
+      </div>
+      <a class="sec-link" href="/schedule">See full schedule →</a>
+    </div>
+    <div class="up-list" id="upcomingList">
+      <!-- BEGIN LOOP: upcoming (first row = now playing, gets class "now").
+           Fields per item: {{ when }} {{ artist }} {{ song }} {{ duration }} -->
+      <div class="up-row now"><span class="up-when"><span class="d"></span>Now</span><span class="up-mid"><span class="up-artist">{{ artist }}</span> <span class="up-song">— {{ song }}</span></span><span class="up-dur">{{ duration }}</span></div>
+      <div class="up-row"><span class="up-when">{{ when }}</span><span class="up-mid"><span class="up-artist">{{ artist }}</span> <span class="up-song">— {{ song }}</span></span><span class="up-dur">{{ duration }}</span></div>
+      <!-- END LOOP -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ LATEST VIDEOS (newest per On Demand category) ============ -->
+<section class="section latest-section">
+  <!-- BACKGROUND HOLDER: set background-image on .latest-bg, or drop <img class="latest-bg-img" src="..."> inside it -->
+  <div class="latest-bg" id="latestBg"></div>
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:16px;">
+      <div>
+        <div class="eyebrow">Fresh On Demand</div>
+        <h2 class="sec-title">Latest Videos</h2>
+      </div>
+      <a class="sec-link" href="/on-demand">All On Demand →</a>
+    </div>
+    <div class="grid-cat" id="latestGrid">
+      <!-- BEGIN LOOP: latest (one card per On Demand show — its newest upload).
+           Fields: {{ category }} {{ title }} {{ meta }} {{ duration }} {{ poster_url }} {{ href }} -->
+      <a class="card full" href="{{ href }}">
+        <div class="thumb">
+          <!-- when a poster is available: <img class="thumb-img" src="{{ poster_url }}" alt=""> -->
+          <span class="cat-tag">{{ category }}</span>
+          <span class="ph-ico"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 9l5 3-5 3z"/></svg></span>
+          <span class="dur">{{ duration }}</span>
+        </div>
+        <div class="c-title">{{ title }}</div>
+        <div class="c-meta">{{ meta }}</div>
+      </a>
+      <!-- END LOOP -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRENDING IN MUSIC ============ -->
+<section class="section trend-section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">Hot in the Rotation</div>
+        <h2 class="sec-title">Trending in Music</h2>
+      </div>
+      <a class="sec-link" href="/on-demand?pcid=music">All music videos →</a>
+    </div>
+    <div class="rail" id="trendingRail">
+      <!-- BEGIN LOOP: trending. Fields: {{ title }} {{ meta }} {{ duration }} {{ poster_url }} {{ href }} -->
+      <a class="card" href="{{ href }}">
+        <div class="thumb">
+          <!-- when a poster is available: <img class="thumb-img" src="{{ poster_url }}" alt=""> -->
+          <span class="ph-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 9l5 3-5 3z"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span>
+          <span class="dur">{{ duration }}</span>
+        </div>
+        <div class="c-title">{{ title }}</div>
+        <div class="c-meta">{{ meta }}</div>
+      </a>
+      <!-- END LOOP -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ WANT YOUR NETWORK LIKE THIS (ChannelCast cross-sell) ============ -->
+<section class="section wrap">
+  <div class="cc">
+    <div class="cc-txt">
+      <div class="cc-eye">Powered by ChannelCast</div>
+      <h2 class="cc-h">Want your network<br>like this?</h2>
+      <p class="cc-p">BlackMarker.TV runs on ChannelCast — the same platform we build and manage for creators, venues, and businesses. Your own branded site, 24/7 loop, live channel, On Demand library, and chat. This whole page is the live demo.</p>
+      <div class="cc-actions">
+        <a class="btn btn-red" href="https://www.getchannelcast.com">Explore ChannelCast</a>
+        <a class="btn btn-ghost" href="/contact">Book a Demo</a>
+      </div>
+    </div>
+    <div style="flex:0 0 250px;min-width:220px;">
+      <div style="border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:20px;">
+        <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">What you get</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;">
+          <div>▮ Branded streaming site</div>
+          <div>▮ 24/7 loop + live channel</div>
+          <div>▮ On Demand library</div>
+          <div>▮ Live chat + PPV</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ChannelCast player embed (loads the live channel into #cc-player-... above).
+     Place these two <script> tags once per page that shows the player. -->
+<script src="https://channelcast.tv/embed/player.js"></script>
+<script>
+  ChannelCastPlayer.mount({
+    target: '#cc-player-019eba4dbb24746eafa619f8fea1e9aa',
+    channelId: '019eba4d-bb24-746e-afa6-19f8fea1e9aa',
+    apiBase: 'https://channelcast.tv'
+  });
+</script>
+
+
+<!-- =====================================================================
+     FOOTER PARTIAL  —  partials/footer.html
+     Include on EVERY page (after the page content).
+     Depends on: css/styles.css, js/main.js, assets/logo-white.png
+     Note: the Subscribe button uses class="open-sub" to open the shared
+           modal defined in the header partial.
+     ===================================================================== -->
+<footer>
+  <div class="foot-in">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="foot-logo" href="/"><img src="assets/logo-white.png" alt="Black Marker TV"></a>
+        <p>The Black Marker Bandit independent broadcast network — live music reviews, shows, battles, and events.</p>
+        <div class="foot-cc"><span class="ccmk">ChannelCast</span> · Platform &amp; hosting partner</div>
+      </div>
+      <div class="foot-col">
+        <h4>Work With Us</h4>
+        <a href="/partnerships">Partnership Opportunities</a>
+        <a href="/advertising">Advertising &amp; Promotions</a>
+        <a href="/production">Streaming Production Services</a>
+        <a href="mailto:canyoudigit@blackmarker.tv">Submit Your Music</a>
+      </div>
+      <div class="foot-col foot-signup">
+        <h4>Stay in the Loop</h4>
+        <div class="lbl">Sign up for the latest news, updates &amp; promotions sent directly to your email.</div>
+        <button class="btn btn-red btn-subscribe open-sub" style="margin-top:2px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>Subscribe</button>
+        <div class="socials socials-sm" style="margin-top:20px;">
+          <a class="s-yt" href="https://youtube.com/@blackmarkertv" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.5-.4-5.2a2.7 2.7 0 00-1.9-1.9C18.9 4.5 12 4.5 12 4.5s-6.9 0-8.7.4a2.7 2.7 0 00-1.9 1.9C1 8.5 1 12 1 12s0 3.5.4 5.2a2.7 2.7 0 001.9 1.9c1.8.4 8.7.4 8.7.4s6.9 0 8.7-.4a2.7 2.7 0 001.9-1.9C23 15.5 23 12 23 12zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
+          <a class="s-ig" href="https://instagram.com/blackmarkertv" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a class="s-fb" href="https://facebook.com/blackmarkertv" aria-label="Facebook"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+          <a class="s-tw" href="https://twitch.tv/" aria-label="Twitch"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2022–2026 Black Marker Media LLC · All Rights Reserved</span>
+      <span>BlackMarker.TV · Wesley Chapel, FL</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

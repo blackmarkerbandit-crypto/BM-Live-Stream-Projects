@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!-- =====================================================================
+     UNIVERSAL INTERIOR PAGE SHELL  —  templates/page.html
+     The layout every non-homepage page uses: head + header + EMPTY body
+     container + footer. Drop the page's content into <main class="page-body">.
+     Replace the include comments with your CMS's include syntax.
+     ===================================================================== -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title }} — BlackMarker.TV</title>
+  <link rel="icon" href="assets/logo-white.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- {% include "partials/header.html" %} -->
+
+  <!-- UNIVERSAL PAGE BODY — interior page content renders here (empty by design) -->
+  <main class="page-body">
+    {{ page_content }}
+  </main>
+
+  <!-- {% include "partials/footer.html" %} -->
+
+  <script src="js/main.js"></script>
+</body>
+</html>

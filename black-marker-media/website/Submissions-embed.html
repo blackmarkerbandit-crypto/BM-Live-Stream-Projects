@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Submit Your Music — BlackMarker.TV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E8181C;
+  --red-dark: #B01212;
+  --bg: #080808;
+  --surface: #111111;
+  --surface2: #181818;
+  --border: #222222;
+  --border2: #2a2a2a;
+  --text: #F0F0F0;
+  --muted: #777777;
+  --muted2: #555555;
+  --white: #FFFFFF;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.6; padding: 40px 20px; }
+
+/* LAYOUT */
+.page-wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: start; }
+
+/* LEFT COPY */
+.eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--red); margin-bottom: 14px; }
+.page-title { font-size: clamp(30px, 4vw, 52px); font-weight: 900; line-height: 1.06; letter-spacing: -1.5px; color: var(--white); margin-bottom: 16px; }
+.page-title span { color: var(--red); }
+.page-sub { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 32px; }
+
+.info-block { display: flex; flex-direction: column; }
+.info-item { display: flex; gap: 14px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid var(--border); }
+.info-item:last-child { border-bottom: none; }
+.info-icon { width: 34px; height: 34px; min-width: 34px; background: rgba(232,24,28,0.08); border: 1px solid rgba(232,24,28,0.18); border-radius: 5px; display: flex; align-items: center; justify-content: center; }
+.info-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 2px; }
+.info-value { font-size: 13px; color: var(--text); line-height: 1.55; }
+
+/* FORM CARD */
+.form-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.form-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--red), rgba(232,24,28,0.3), transparent);
+}
+
+.form-heading { font-size: 20px; font-weight: 800; color: var(--white); letter-spacing: -0.3px; margin-bottom: 4px; }
+.form-sub { font-size: 12px; color: var(--muted); margin-bottom: 28px; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-field { display: flex; flex-direction: column; gap: 6px; }
+.form-field.full { grid-column: 1 / -1; }
+
+label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+label .req { color: var(--red); margin-left: 2px; }
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+textarea,
+select {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 10px 14px;
+  transition: border-color 0.2s, background 0.2s;
+  width: 100%;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+input::placeholder, textarea::placeholder { color: var(--muted2); }
+input:focus, textarea:focus, select:focus {
+  border-color: rgba(232,24,28,0.5);
+  background: #1a1a1a;
+}
+textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+}
+
+/* SOCIAL HANDLES */
+.social-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--muted); margin-bottom: 10px;
+}
+.social-rows { display: flex; flex-direction: column; gap: 8px; }
+.social-row-wrap { display: grid; grid-template-columns: 130px 1fr 20px; gap: 8px; align-items: center; }
+.social-row-wrap.first { grid-template-columns: 130px 1fr; }
+.remove-social {
+  background: none; border: none; color: var(--muted2); cursor: pointer;
+  font-size: 18px; line-height: 1; padding: 0; transition: color 0.15s;
+}
+.remove-social:hover { color: var(--red); }
+.add-social-btn {
+  background: none; border: 1px dashed var(--border2); color: var(--muted);
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.5px; padding: 8px 14px; border-radius: 5px;
+  cursor: pointer; transition: border-color 0.2s, color 0.2s; margin-top: 6px;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.add-social-btn:hover { border-color: var(--muted); color: var(--text); }
+
+/* DIVIDER */
+.form-divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+/* CHECKBOX */
+.checkbox-row { display: flex; align-items: flex-start; gap: 10px; }
+.checkbox-row input[type="checkbox"] {
+  width: 16px; height: 16px; min-width: 16px; margin-top: 2px;
+  accent-color: var(--red); cursor: pointer; border: none; padding: 0; background: none;
+}
+.checkbox-label { font-size: 12px; color: var(--muted); line-height: 1.5; cursor: pointer; }
+.checkbox-label strong { color: var(--text); font-weight: 600; }
+
+/* SUBMIT */
+.submit-btn {
+  width: 100%; background: var(--red); color: #fff; border: none;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 800;
+  letter-spacing: 0.5px; text-transform: uppercase; padding: 14px 24px;
+  border-radius: 6px; cursor: pointer; transition: background 0.2s, transform 0.1s;
+  margin-top: 20px;
+}
+.submit-btn:hover { background: var(--red-dark); transform: translateY(-1px); }
+.form-note { font-size: 11px; color: var(--muted2); text-align: center; margin-top: 10px; line-height: 1.5; }
+
+@media (max-width: 860px) {
+  .page-wrap { grid-template-columns: 1fr; gap: 36px; }
+}
+@media (max-width: 520px) {
+  body { padding: 20px 12px; }
+  .form-card { padding: 24px 16px; }
+  .form-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+<!-- LEFT: COPY -->
+<div class="copy-col">
+  <div class="eyebrow">Open Submissions</div>
+  <h1 class="page-title">Get Your Music<br><span>Heard.</span></h1>
+  <p class="page-sub">BlackMarker.TV features a live end-of-month music review show where we listen, react, and break down your tracks on air — plus select cuts get added to regular rotation across the network. Submit below for a chance to be featured.</p>
+
+  <div class="info-block">
+    <div class="info-item">
+      <div class="info-icon">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div>
+        <div class="info-label">When</div>
+        <div class="info-value">End-of-month live review show — submissions close 1 week before airdate</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><path d="M9 19V6l12-3v13M9 19c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm12-3c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z"/></svg>
+      </div>
+      <div>
+        <div class="info-label">What We Review</div>
+        <div class="info-value">All genres welcome — rap, R&amp;B, gospel, reggaeton, afrobeats, and more</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <div>
+        <div class="info-label">Selected Tracks</div>
+        <div class="info-value">Featured artists get added to regular rotation on BlackMarker.TV</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="#E8181C" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <div>
+        <div class="info-label">Response</div>
+        <div class="info-value">We review every submission — selected artists will be notified before airdate</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT: FORM -->
+<div class="form-card">
+  <div class="form-heading">Music Submission</div>
+  <div class="form-sub">Fields marked <span style="color:var(--red);">*</span> are required</div>
+
+  <form id="submission-form">
+    <div class="form-grid">
+
+      <div class="form-field">
+        <label>Artist Name <span class="req">*</span></label>
+        <input type="text" name="artist_name" placeholder="Stage name or group" required>
+      </div>
+
+      <div class="form-field">
+        <label>Producer</label>
+        <input type="text" name="producer" placeholder="Who produced the track?">
+      </div>
+
+      <div class="form-field">
+        <label>City <span class="req">*</span></label>
+        <input type="text" name="city" placeholder="City, State" required>
+      </div>
+
+      <div class="form-field">
+        <label>Contact Name</label>
+        <input type="text" name="contact_name" placeholder="Your name (if different)">
+      </div>
+
+      <div class="form-field full">
+        <label>Email <span class="req">*</span></label>
+        <input type="email" name="email" placeholder="your@email.com" required>
+      </div>
+
+      <!-- SOCIAL HANDLES -->
+      <div class="form-field full">
+        <div class="social-label">Social Handles</div>
+        <div class="social-rows" id="social-rows">
+          <div class="social-row-wrap first">
+            <select name="social_platform_1">
+              <option value="">Platform</option>
+              <option>Instagram</option>
+              <option>TikTok</option>
+              <option>Twitter / X</option>
+              <option>YouTube</option>
+              <option>Facebook</option>
+              <option>SoundCloud</option>
+              <option>Spotify</option>
+              <option>Other</option>
+            </select>
+            <input type="text" name="social_handle_1" placeholder="@handle or URL">
+          </div>
+        </div>
+        <button type="button" class="add-social-btn" id="add-social">+ Add Another Handle</button>
+      </div>
+
+      <div class="form-field full">
+        <label>Link to Song or Video <span class="req">*</span></label>
+        <input type="url" name="song_link" placeholder="YouTube, SoundCloud, Spotify, Drive link..." required>
+      </div>
+
+      <div class="form-field full">
+        <label>Special Note or Message</label>
+        <textarea name="note" placeholder="Anything you want us to know about the track, the story behind it, or yourself..."></textarea>
+      </div>
+
+    </div>
+
+    <hr class="form-divider">
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="newsletter" name="newsletter" value="yes" checked>
+      <label class="checkbox-label" for="newsletter">
+        <strong>Sign me up for the latest news and updates</strong> from BlackMarker.TV — new shows, rotation announcements, and exclusive drops. No spam, ever.
+      </label>
+    </div>
+
+    <button type="submit" class="submit-btn">Submit for Review</button>
+    <p class="form-note">By submitting you confirm this is original work and you own or have rights to the content.</p>
+  </form>
+</div><!-- /.form-card -->
+</div><!-- /.page-wrap -->
+
+<script>
+var socialCount = 1;
+document.getElementById('add-social').addEventListener('click', function () {
+  socialCount++;
+  var row = document.createElement('div');
+  row.className = 'social-row-wrap';
+  row.innerHTML =
+    '<select name="social_platform_' + socialCount + '">' +
+      '<option value="">Platform</option>' +
+      '<option>Instagram</option>' +
+      '<option>TikTok</option>' +
+      '<option>Twitter / X</option>' +
+      '<option>YouTube</option>' +
+      '<option>Facebook</option>' +
+      '<option>SoundCloud</option>' +
+      '<option>Spotify</option>' +
+      '<option>Other</option>' +
+    '</select>' +
+    '<input type="text" name="social_handle_' + socialCount + '" placeholder="@handle or URL">' +
+    '<button type="button" class="remove-social" title="Remove">&times;</button>';
+  document.getElementById('social-rows').appendChild(row);
+  row.querySelector('.remove-social').addEventListener('click', function () {
+    row.remove();
+  });
+});
+</script>
+
+</body>
+</html>

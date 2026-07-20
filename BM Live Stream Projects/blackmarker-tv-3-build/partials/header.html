@@ -1,0 +1,86 @@
+<!-- =====================================================================
+     HEADER PARTIAL  —  partials/header.html
+     Top bar + logo/socials/subscribe + main menu. Include on EVERY page.
+     Depends on: css/styles.css, js/main.js, assets/logo-white.png, assets/header-bg.jpg
+     CMS notes:
+       - Set class="on" on the <a> for the CURRENT page (see Home below).
+       - The subscribe modal at the bottom is shared; any button with
+         class="open-sub" opens it (header + footer both use it).
+     ===================================================================== -->
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="msg">Artists — get <b>featured</b> on Black Marker TV</span>
+    <a class="topbar-btn" href="mailto:canyoudigit@blackmarker.tv?subject=Music%20Submission%20for%20Review">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 00-3 3v6a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M5 10v1a7 7 0 0014 0v-1M12 18v4M8 22h8"/></svg>
+      Submit Your Music
+    </a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="head-bg"></div>
+  <div class="head-in">
+    <div class="brand-col">
+      <a class="brand-logo" href="/"><img src="assets/logo-white.png" alt="Black Marker TV"></a>
+      <div class="brand-tag">Only <b>Dope Sh!t</b> — An Independent Broadcast Network</div>
+    </div>
+    <div class="head-actions">
+      <div class="socials">
+        <a class="s-yt" href="https://youtube.com/@blackmarkertv" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.5-.4-5.2a2.7 2.7 0 00-1.9-1.9C18.9 4.5 12 4.5 12 4.5s-6.9 0-8.7.4a2.7 2.7 0 00-1.9 1.9C1 8.5 1 12 1 12s0 3.5.4 5.2a2.7 2.7 0 001.9 1.9c1.8.4 8.7.4 8.7.4s6.9 0 8.7-.4a2.7 2.7 0 001.9-1.9C23 15.5 23 12 23 12zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
+        <a class="s-ig" href="https://instagram.com/blackmarkertv" aria-label="Instagram"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="s-fb" href="https://facebook.com/blackmarkertv" aria-label="Facebook"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+        <a class="s-tw" href="https://twitch.tv/" aria-label="Twitch"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg></a>
+      </div>
+      <button class="btn btn-red btn-subscribe open-sub"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>Subscribe</button>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN MENU  (page links — set class="on" on the current page) -->
+<nav>
+  <div class="nav-in">
+    <a href="/" class="on">Home</a>
+    <span class="has-sub">
+      <a href="/on-demand">On Demand</a>
+      <span class="submenu">
+        <a href="/on-demand?pcid=47">The Weekly Interrupt</a>
+        <a href="/on-demand?pcid=65">Can You Dig It!? Live Music Review</a>
+        <a href="/on-demand?pcid=69">Talking Tipsy</a>
+        <a href="/on-demand?pcid=88">The Alien Podcast</a>
+        <a href="/on-demand?pcid=92">For The Record</a>
+        <span class="sep"></span>
+        <a href="/battles">Performance Battles</a>
+      </span>
+    </span>
+    <a href="/event-streams">Event Streams</a>
+    <a href="/shop">"The Bodega" Shop</a>
+    <a href="/schedule">Schedule</a>
+    <a href="/contact">Contact</a>
+    <a href="/account" class="acct"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg>Account</a>
+  </div>
+</nav>
+
+<!-- SUBSCRIBE MODAL (shared — opened by any .open-sub button) -->
+<div class="modal-overlay" id="subModal">
+  <form class="modal" onsubmit="return false;">
+    <button type="button" class="modal-x" id="closeSub" aria-label="Close">✕</button>
+    <div class="su-title">Join the List</div>
+    <div class="su-sub">Latest news, drops &amp; events — straight to your inbox.</div>
+    <div class="su-grid">
+      <input type="text" name="first_name" placeholder="First Name *" aria-label="First name" required>
+      <input type="text" name="last_name" placeholder="Last Name" aria-label="Last name">
+      <input type="email" name="email" placeholder="Email Address *" aria-label="Email address" required>
+      <input type="tel" name="phone" placeholder="Phone" aria-label="Phone">
+    </div>
+    <div class="su-roles">
+      <span class="su-roles-lbl">I'm a</span>
+      <label><input type="radio" name="role" value="artist"> Artist</label>
+      <label><input type="radio" name="role" value="company"> Company</label>
+      <label><input type="radio" name="role" value="fan"> Fan of Dope Sh!t</label>
+    </div>
+    <button class="btn btn-red su-submit" type="submit">Sign Up</button>
+  </form>
+</div>

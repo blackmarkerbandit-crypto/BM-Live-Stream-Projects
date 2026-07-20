@@ -140,12 +140,6 @@ a{color:var(--red);text-decoration:none;}
 .cont-add-select:focus{outline:none;border-color:var(--red);}
 .cont-save-btn{background:var(--red);color:#fff;border:none;border-radius:5px;padding:6px 14px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;}
 .cont-save-btn:hover{background:#c91014;}
-.captain-counts{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;}
-.captain-counts-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
-.captain-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
-.captain-pill{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:12px;display:flex;gap:8px;align-items:center;}
-.captain-pill .cp-name{font-weight:600;}
-.captain-pill .cp-count{background:var(--red-dim);color:var(--red);border-radius:4px;padding:1px 8px;font-size:11px;font-weight:700;}
 .cont-full-notice{background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);color:var(--yellow);border-radius:6px;padding:10px 14px;font-size:13px;font-weight:600;margin-bottom:12px;display:none;}
 .cont-full-notice.show{display:block;}
 
@@ -394,7 +388,6 @@ a{color:var(--red);text-decoration:none;}
     <div id="capacity-block" class="capacity-block"></div>
     <div id="cont-full-notice" class="cont-full-notice">Contingent is full — 50 / 50 spots filled. Remove a member to add someone new.</div>
     <div id="crew-sections"></div>
-    <div id="captain-counts" class="captain-counts"></div>
   </div>
 </div>
 
@@ -473,7 +466,7 @@ const DESIGN_BRIEF = [
     tasks: [
       { id: 'db1a', text: 'QR code destination confirmed: www.blackmarker.tv ✓' },
       { id: 'db1b', text: 'Print quantity confirmed: 1,000 event cards ✓' },
-      { id: 'db1c', text: 'Submit to printer — must arrive before June 12' },
+      { id: 'db1c', text: 'Printed and in transit — arriving by Sunday June 8. ✓', preComplete: true },
     ]
   },
   {
@@ -483,7 +476,7 @@ const DESIGN_BRIEF = [
     back: ['Email: info@blackmarkermedia.com','Website: blackmarkermedia.com','Location: Wesley Chapel, FL — Serving clients nationwide','BAM™ formula callout: Build + Amplify + Monetize','Social handles'],
     tasks: [
       { id: 'db2a', text: 'Print quantity confirmed: 250 corporate cards ✓ — separate print run from event cards' },
-      { id: 'db2b', text: 'Submit to printer — must arrive before June 12' },
+      { id: 'db2b', text: 'Printed and in transit — arriving by Sunday June 8. ✓', preComplete: true },
     ]
   },
   {
@@ -492,7 +485,7 @@ const DESIGN_BRIEF = [
     front: ['Talent photos: DJ Charlie Chase + Joselito Da Puppet + Thirstin Howl the 3rd','"Celebrating Puerto Rican Pioneers"','National Puerto Rican Day Parade | June 14, 2026','BlackMarker.TV logo + "Watch Live" CTA'],
     note: 'High-contrast design only — must be readable at distance. No small text.',
     tasks: [
-      { id: 'db3a', text: 'Create Blip Billboards account — pull exact file specs before designing' },
+      { id: 'db3a', text: 'Blip Billboards account set up ✓ — finalize and upload 4 ad creatives (Jun 12, 13, 14) and set budgets before event week.', preComplete: false },
       { id: 'db3b', text: 'Design and upload creative to Blip — schedule for June 13–14 run' },
       { id: 'db3c', text: 'Set daily budget in Blip ($200–$400 total recommended for 2 days)' },
       { id: 'db3d', text: 'Send someone to Times Square to photograph ad running — social content' },
@@ -506,11 +499,11 @@ const DESIGN_BRIEF = [
       { label: 'Float Access Laminate', items: ['BlackMarker.TV logo','"FLOAT ACCESS" — visually distinct from Staff (different color or bold border)','National Puerto Rican Day Parade | June 14, 2026','Blank name line'] },
     ],
     tasks: [
-      { id: 'db4a', text: 'Design Staff laminate' },
-      { id: 'db4b', text: 'Design Float Access laminate — visually distinct from Staff' },
-      { id: 'db4c', text: 'Print on card stock and laminate (locally or via Avery/GotPrint)' },
-      { id: 'db4d', text: 'Order lanyards — one per laminate' },
-      { id: 'db4e', text: 'Confirm quantity of each type once crew/contingent list is finalized' },
+      { id: 'db4a', text: 'Staff laminate designed. ✓', preComplete: true },
+      { id: 'db4b', text: 'Float Access laminate designed. ✓', preComplete: true },
+      { id: 'db4c', text: 'Laminates submitted to Felix — completing by Monday June 9. ✓', preComplete: true },
+      { id: 'db4d', text: 'Lanyards — with Felix for completion by Monday June 9. ✓', preComplete: true },
+      { id: 'db4e', text: 'Quantity confirmed and submitted. ✓', preComplete: true },
     ]
   },
   {
@@ -520,12 +513,12 @@ const DESIGN_BRIEF = [
     back: ['"Celebrating Puerto Rican Pioneers" | NPRDP June 14, 2026'],
     note: 'Colors confirmed: Red #CF142B · Blue #0038A8 · White #FFFFFF · Black #000000 · Yellow #F5C800. Print material must be ordered by May 29 for Bibi to press in time before June 14.',
     tasks: [
-      { id: 'db5a', text: 'Shirt design timeline — First draft due Monday May 25 · Round 1 revisions due Wednesday May 27 · Round 2 revisions due Thursday May 28 · Final design delivery Thursday May 29.' },
+      { id: 'db5a', text: 'Shirt design complete ✓ — prints ordered via Bibi in-house.', preComplete: true },
       { id: 'db5b', text: 'Print method confirmed: Bibi in-house ✓' },
       { id: 'db5c', text: 'Collect size breakdown from contingent list' },
-      { id: 'db5d', text: 'Order print material for Bibi by Thursday May 29 — hard deadline for on-time pressing before June 14.' },
+      { id: 'db5d', text: 'Print material ordered for Bibi ✓ — in production.', preComplete: true },
       { id: 'db5e', text: 'Order 5–10 extra shirts above confirmed count' },
-      { id: 'db5f', text: 'Order stickers by Thursday May 29 — design already complete, just needs to go to print.' },
+      { id: 'db5f', text: 'Stickers ordered ✓ — in production.', preComplete: true },
     ]
   },
   {
@@ -580,18 +573,18 @@ const DESIGN_BRIEF = [
       },
     ],
     tasks: [
-      { id: 'db6a', text: 'Design brief handed off to designer ✓ (May 22). Designer working from DESIGN-FILE.ai at 1/4 scale. Path: Bond Floats Option 1 FLOAT TEMPLATE/DESIGN-FILE.ai — do not rename files.' },
-      { id: 'db6b', text: 'BMM/BlackMarker.TV logo authorization confirmed by NPRDP rep ✓ — community/cultural branding is OK. Not classified as a major brand sponsor.' },
-      { id: 'db6c', text: 'Color palette confirmed ✓ — Red #CF142B (PR flag) · Blue #0038A8 (PR flag) · White #FFFFFF · Black #000000 · Yellow/Gold #F5C800. Apply consistently across all float surfaces, shirts, postcards, and stream graphics.' },
-      { id: 'db6d', text: 'Design back panel (8\' × 11\'10") — BlackMarker.TV logo + "Celebrating Puerto Rican Pioneers" + talent names + parade theme tie-in. High-contrast, broadcast-readable.' },
-      { id: 'db6e', text: 'Design side panels and skirt (21.5" tall) — brand/campaign wrap for street-level visibility' },
-      { id: 'db6f', text: 'Design upper deck rail/barrier front face — BlackMarker.TV branding' },
-      { id: 'db6g', text: 'Generate 3D preview using PREVIEW-FILE.ai and send to team for Review #1' },
-      { id: 'db6j', text: 'Team Review #1 — collect feedback, incorporate revisions. FLOAT DESIGN DUE.' },
-      { id: 'db6k', text: 'Apply Review #1 revisions and send updated design to team for Review #2' },
-      { id: 'db6l', text: 'Team Review #2 — final internal approval, lock all changes' },
-      { id: 'db6h', text: 'Final packaging day — assemble DESIGN-FILE.ai + PREVIEW-FILE.ai + PRINT-FILE.ai, confirm all files are correct and linked' },
-      { id: 'db6m', text: 'Submit packaged files to Bond Floats — starts 2-day approval window. NPRDP final approval due June 5.' },
+      { id: 'db6a', text: 'Design brief handed off to designer ✓', preComplete: true },
+      { id: 'db6b', text: 'BMM/BlackMarker.TV logo authorization confirmed by NPRDP rep ✓', preComplete: true },
+      { id: 'db6c', text: 'Color palette confirmed ✓ — Red #CF142B · Blue #0038A8 · White #FFFFFF · Black #000000 · Yellow/Gold #F5C800.', preComplete: true },
+      { id: 'db6d', text: 'Back panel designed. ✓', preComplete: true },
+      { id: 'db6e', text: 'Side panels and skirt designed. ✓', preComplete: true },
+      { id: 'db6f', text: 'Upper deck rail/barrier designed. ✓', preComplete: true },
+      { id: 'db6g', text: '3D preview generated and sent to team. ✓', preComplete: true },
+      { id: 'db6j', text: 'Team Review #1 complete. ✓', preComplete: true },
+      { id: 'db6k', text: 'Review #1 revisions applied. ✓', preComplete: true },
+      { id: 'db6l', text: 'Team Review #2 complete — final design locked. ✓', preComplete: true },
+      { id: 'db6h', text: 'Final package assembled and files confirmed. ✓', preComplete: true },
+      { id: 'db6m', text: 'Final design submitted to Bond Floats for printing. ✓', preComplete: true },
       { id: 'db6i', text: 'Confirm audio plan — max 85dB, volume lowered at 51st St, no sound effects near viewing stand/broadcast area' },
     ]
   }
@@ -608,68 +601,68 @@ const TASKS = {
         { id: 'oa1', text: 'Float application submitted to NPRDP', preComplete: true },
         { id: 'oa2', text: 'Registered for first orientation with NPRDP', preComplete: true },
         { id: 'oa3', text: 'Custom Float package selected and paid — $6,500 (8\' × 28\' × 13\', custom signage/graphics, driver insurance included)', preComplete: true },
-        { id: 'oa4', text: 'Attend NPRDP orientation — document all requirements, deadlines, float specs, and wristband process' },
+        { id: 'oa4', text: 'NPRDP orientation attended. ✓', preComplete: true },
         { id: 'oa5', text: 'Insurance confirmed NOT required by NPRDP — confirmed directly with parade rep. Float package + contingent registration covers this. No action needed. ✓' },
         { id: 'oa6', text: '116th St vendor registration complete ✓ — application submitted, fee paid (Wil Sweets, May 21), vendor spot numbers confirmed, side-by-side placement confirmed.' },
-        { id: 'oa7', text: 'Confirm Joselito DaPuppet contract for both events (June 13 + June 14)' },
-        { id: 'oa8', text: 'Confirm DJ Charlie Chase contract for parade float (June 14) — confirm travel/accommodation covered by BMB or self?' },
-        { id: 'oa9', text: 'Receive wristbands and permits for 50-person walking contingent from NPRDP (issued after application completion)' },
-        { id: 'oa10', text: 'Confirm float participant number and staging assignment from NPRDP' },
+        { id: 'oa7', text: 'Joselito DaPuppet contract confirmed for both events (June 13 + June 14). ✓', preComplete: true },
+        { id: 'oa8', text: 'DJ Charlie Chase contract confirmed for parade float (June 14). ✓', preComplete: true },
+        { id: 'oa9', text: 'Wristbands & permits picked up. ✓', preComplete: true },
+        { id: 'oa10', text: 'Float participant number and staging assignment received from NPRDP. ✓', preComplete: true },
       ]
     },
     {
       id: 'grp-ob', label: 'Billboard & Marketing',
       tasks: [
-        { id: 'ob1', text: 'Set up Blip Billboards account and book Times Square digital billboard — blipbillboards.com/times-square. Pay-per-blip model: $20/blip minimum (15-sec display), only pay when ad plays. Set daily budget for June 13–14 ($200–$400 total recommended). Self-serve, no contract.', briefLink: 'grp-db3' },
-        { id: 'ob2', text: 'Design billboard creative — 15-second spot. Pull exact file specs from Blip uploader before designing. Content: DJ Charlie Chase + Joselito Da Puppet + Thirstin Howl the 3rd photos, "Celebrating Puerto Rican Pioneers", parade date, BlackMarker.TV logo + "Watch Live" CTA. High-contrast only — no small text.', briefLink: 'grp-db3' },
-        { id: 'ob3', text: 'Announce float participation on all BMB/BlackMarker.TV channels — creative slides ready, rolling out Sunday May 24. NPRDP parade started their campaign this week; riding the momentum.' },
-        { id: 'ob4', text: 'Announce DJ Charlie Chase booking — creative slides done, first posts Sunday May 24, full rollout Monday May 25. Pitch to Puerto Rican media outlets.' },
-        { id: 'ob5', text: 'Coordinate Joselito DaPuppet cross-promotion — meeting Friday May 22 to align. 500K+ followers / 2M+ weekly reach. Sync his post timing with BMB rollout starting Monday May 25.' },
-        { id: 'ob6', text: 'Launch paid digital ad campaigns — Meta Ads Manager + Google Ads. Target: Puerto Rican community, NYC metro + FL + diaspora markets.' },
-        { id: 'ob7', text: 'Schedule countdown social posts for both events leading up to parade weekend' },
-        { id: 'ob8', text: 'Send team member to photograph Times Square billboard while it\'s running — pure social media gold' },
-        { id: 'ob9', text: 'Create GMAN community partnership proposal (shirts deal) — 3 tiers: (A) Basic: brand mentions in exchange for shirt discount, (B) Moderate: logo on live streams + shirts + promos for free shirts, (C) Full Partner: all of B + $500–$1K cash contribution. Present at Saturday May 23 morning meeting.', briefLink: 'grp-db5' },
+        { id: 'ob1', text: 'Blip (Jun 12) + Caasie (Jun 13 · Jun 14) — accounts live, ad plan locked. Creative upload + campaign setup in progress — completing June 5–6.', preComplete: false, briefLink: 'grp-db3' },
+        { id: 'ob2', text: 'Billboard creative — finalizing and uploading to Blip + Caasie. Completing June 5–6.', briefLink: 'grp-db3' },
+        { id: 'ob3', text: 'Float participation announced on all BMB/BlackMarker.TV channels. ✓', preComplete: true },
+        { id: 'ob4', text: 'DJ Charlie Chase + all main personalities announced. ✓', preComplete: true },
+        { id: 'ob5', text: 'Joselito cross-promotion active — accepting collabs and cross-promoting. ✓', preComplete: true },
+        { id: 'ob6', text: 'Paid digital ads — not needed. N/A ✓', preComplete: true },
+        { id: 'ob7', text: 'Countdown social posts running on schedule — started June 4, continuing through parade day. ✓', preComplete: true },
+        { id: 'ob8', text: 'Assign someone to photograph billboard while running — social content.' },
+        { id: 'ob9', text: 'GMAN community partnership — N/A', preComplete: true },
       ]
     },
     {
       id: 'grp-oc', label: 'Equipment',
       tasks: [
-        { id: 'oc1', text: 'Equipment inventory — Eric Gomez responsible, due Monday May 25. Cameras, audio kit, laptop, encoders, cables, adapters.' },
-        { id: 'oc2', text: 'Equipment gap list — Eric Gomez responsible, due Monday May 25. Only rental needed: generator. All other gear (cameras, audio, bonding devices, encoders) already in-house.' },
+        { id: 'oc1', text: 'Equipment inventory complete ✓ — cameras, audio kit, laptop, encoders, cables, adapters all accounted for.', preComplete: true },
+        { id: 'oc2', text: 'Equipment gap list complete ✓ — only generator needed as rental; all other gear in-house.', preComplete: true },
         { id: 'oc3', text: 'Cellular bonding — 2 devices already in-house ✓. No rental needed. One unit for 116th St Festival, one for parade float.' },
-        { id: 'oc4', text: 'Source generator for Event 1 (Festival Tent) — Honda EU3000iS or equiv. 3,000–5,000W inverter generator. Quiet enough for tent environment.' },
-        { id: 'oc5', text: 'Source generator for Event 2 (Parade Float) — Honda EU7000iS or equiv. 5,000–8,000W. Must be secured to float with steel straps.' },
-        { id: 'oc6', text: 'Order walking contingent branded shirts × 55 (50 + 5 spares) — 3 weeks minimum lead time before June 14. Black shirt, BlackMarker.TV logo front, "Celebrating Puerto Rican Pioneers" back.', briefLink: 'grp-db5' },
-        { id: 'oc7', text: 'Order branded tablecloth + vertical banners × 2 for festival tent (Event 1)' },
-        { id: 'oc8', text: 'Order float banners — BlackMarker.TV main banner + "Celebrating Puerto Rican Pioneers" theme banner + PR flag. Weatherproof vinyl. ORDER AFTER NPRDP design approval (June 6+).' },
-        { id: 'oc9', text: 'Build team equipment bring-list — catalog all items that need to come from individual team members (chairs, tarps, personal gear, etc.). Assign each item to a person. Complete before June 10 load-in.' },
+        { id: 'oc4', text: 'Generator + sound for Event 1 (Festival Tent) — confirmed and covered. ✓', preComplete: true },
+        { id: 'oc5', text: 'Generator + sound for Event 2 (Parade Float) — confirmed and covered. ✓', preComplete: true },
+        { id: 'oc6', text: 'Walking contingent shirts × 55 — design done, prints ordered via Bibi in-house. ✓', preComplete: true, briefLink: 'grp-db5' },
+        { id: 'oc7', text: 'Festival tent items complete ✓ — branded tablecloth + vertical banners done.', preComplete: true },
+        { id: 'oc8', text: 'Float banners designed and submitted with main float design. ✓', preComplete: true },
+        { id: 'oc9', text: 'Equipment bring-list — pending: finalize what Charlie Chase needs to bring for his DJ setup.' },
       ]
     },
     {
       id: 'grp-od', label: 'Production Pre-Production',
       tasks: [
-        { id: 'od1', text: 'Design branded graphics package: intro bumper (10–15 sec animation), lower thirds ("LIVE FROM 116TH ST FESTIVAL" / "LIVE — PUERTO RICAN DAY PARADE"), talent name cards (Joselito, Charlie Chase, host names), intermission card. Color palette and visual language must match float design — do not start until float palette is locked (see Design Brief §6).', briefLink: 'grp-db6' },
+        { id: 'od1', text: 'Stream graphics package — in progress, completing by Sunday June 8.', briefLink: 'grp-db6' },
         { id: 'od2', text: 'Stream keys set on BlackMarker.TV RTMP for both events ✓ — confirmed. Only destination is BlackMarker.TV.' },
         { id: 'od3', text: 'YouTube Live — NOT streaming. BlackMarker.TV only. N/A ✓' },
         { id: 'od4', text: 'Facebook Live — NOT streaming. BlackMarker.TV only. N/A ✓' },
-        { id: 'od5', text: 'Full stream rig test before travel — run 1-hour test stream from studio to verify all systems' },
-        { id: 'od6', text: 'Create show rundown for Event 1 (116th St Festival) — segment list, timing, transitions, host cues' },
-        { id: 'od7', text: 'Create show rundown for Event 2 (Parade Float) — segment list, timing, Charlie Chase interview block, contingent walk segment' },
-        { id: 'od8', text: 'Brief both hosts on format and show rundown for each event' },
-        { id: 'od9', text: 'Create DJ Charlie Chase host talking point card — born 1/16/1959 Manhattan (PR parents), Cold Crush Brothers (1975), first hip-hop group signed by CBS, DMC Hall of Fame 2003, NPRDP historical honoree' },
-        { id: 'od10', text: 'Create Joselito DaPuppet host talking point card' },
+        { id: 'od5', text: 'Remote stream rack and unit tested and confirmed. ✓', preComplete: true },
+        { id: 'od6', text: 'Show rundown — Event 1 (116th St Festival) — in progress, completing by Sunday June 8.' },
+        { id: 'od7', text: 'Show rundown — Event 2 (Parade Float) — in progress, completing by Sunday June 8.' },
+        { id: 'od8', text: 'Brief both hosts on format and show rundowns — completing by Sunday June 8.' },
+        { id: 'od9', text: 'Charlie Chase host talking point card — completing by Sunday June 8.' },
+        { id: 'od10', text: 'Joselito DaPuppet host talking point card — completing by Sunday June 8.' },
       ]
     },
     {
       id: 'grp-oe', label: 'Travel & Logistics',
       tasks: [
-        { id: 'oe1', text: 'Book flights for all traveling crew — round trip, arriving June 12. June = peak travel season, book early.' },
-        { id: 'oe2', text: 'Book hotel — June 12–15, near Midtown Manhattan. Budget ~$300–$600/night.' },
-        { id: 'oe3', text: 'Vehicle confirmed: Tahoe secured ✓ — pickup June 10, dropoff TBD. Verify cargo capacity fits generators, canopy, cases, and float materials.' },
-        { id: 'oe4', text: 'Plan equipment transport logistics from hotel to Event 1 (116th St) on June 13, then to parade staging on June 14' },
-        { id: 'oe5', text: 'Plan crew meals and per diem for each day (June 12–14 minimum)' },
-        { id: 'oe6', text: 'Build emergency contacts list: NPRDP organizer, 116th St Festival organizer, Bond Floats contact, float driver, Joselito, Charlie Chase contacts' },
-        { id: 'oe7', text: 'Confirm rain contingency plan — who makes the call, what changes for each event if weather is bad' },
+        { id: 'oe1', text: 'Flights booked for all traveling crew. ✓', preComplete: true },
+        { id: 'oe2', text: 'Hotel confirmed — June 12–15. ✓', preComplete: true },
+        { id: 'oe3', text: 'Vehicle confirmed: Tahoe secured ✓', preComplete: true },
+        { id: 'oe4', text: 'Equipment transport plan confirmed. ✓', preComplete: true },
+        { id: 'oe5', text: 'Crew meals/per diem — N/A ✓', preComplete: true },
+        { id: 'oe6', text: 'Emergency contacts list — N/A ✓', preComplete: true },
+        { id: 'oe7', text: 'Rain contingency plan — N/A ✓', preComplete: true },
       ]
     },
     {
@@ -691,31 +684,31 @@ const TASKS = {
     {
       id: 'grp-e1a', label: 'Permitting & Applications',
       tasks: [
-        { id: 'e1a1', text: 'Vendor application submitted to 116th Street Festival organizers ✓ — Wil Sweets completed May 21.' },
-        { id: 'e1a2', text: 'Registration fee paid ✓ — Wil Sweets paid May 21.' },
-        { id: 'e1a3', text: 'Vendor space fully confirmed ✓ — 10×10 per spot, spot numbers confirmed, side-by-side placement confirmed (May 22).' },
-        { id: 'e1a4', text: 'Generator confirmed permitted ✓ — fire extinguisher in-hand ✓. Good to go.' },
-        { id: 'e1a5', text: 'No electrical hookup available ✓ — running fully off generator. Generator is the sole power source for the tent.' },
-        { id: 'e1a6', text: 'Confirm load-in time and Tahoe parking/vehicle access for the day' },
+        { id: 'e1a1', text: 'Vendor application submitted to 116th Street Festival organizers ✓ — Wil Sweets completed May 21.', preComplete: true },
+        { id: 'e1a2', text: 'Registration fee paid ✓ — Wil Sweets paid May 21.', preComplete: true },
+        { id: 'e1a3', text: 'Vendor space fully confirmed ✓ — 10×10 per spot, spot numbers confirmed, side-by-side placement confirmed (May 22).', preComplete: true },
+        { id: 'e1a4', text: 'Generator confirmed permitted ✓ — fire extinguisher in-hand ✓. Good to go.', preComplete: true },
+        { id: 'e1a5', text: 'No electrical hookup available ✓ — running fully off generator.', preComplete: true },
+        { id: 'e1a6', text: 'Load-in time and Tahoe parking/vehicle access confirmed. ✓', preComplete: true },
       ]
     },
     {
       id: 'grp-e1b', label: 'Tent & Physical Setup',
       tasks: [
-        { id: 'e1b1', text: 'Source 10×20 pop-up canopy — must be fire-retardant certified (NYC requirement for commercial events)' },
-        { id: 'e1b2', text: 'Canopy sidewalls × 2 (back + one side for wind/tech station privacy)' },
-        { id: 'e1b3', text: 'Sandbag leg weights × 4 — 40–50 lbs each (NYC requires this; no staking in asphalt)' },
-        { id: 'e1b4', text: '6ft folding table for commentary table' },
-        { id: 'e1b5', text: 'Chairs × 3 (Host 1, Joselito, Host 2 / extra seat)' },
-        { id: 'e1b6', text: 'Branded tablecloth + vertical banners × 2 at tent opening' },
-        { id: 'e1b7', text: 'Finalize tent layout — commentary table faces crowd/street; cameras frame hosts with street visible behind; DJ booth to the side; tech station at rear' },
-        { id: 'e1b8', text: 'Optional: monitor/display at front of tent showing stream playback to attract passersby' },
+        { id: 'e1b1', text: '10×20 pop-up canopy sourced and confirmed. ✓', preComplete: true },
+        { id: 'e1b2', text: 'Canopy sidewalls × 2 confirmed. ✓', preComplete: true },
+        { id: 'e1b3', text: 'Sandbag leg weights × 4 confirmed. ✓', preComplete: true },
+        { id: 'e1b4', text: '6ft folding table confirmed. ✓', preComplete: true },
+        { id: 'e1b5', text: 'Chairs × 3 confirmed. ✓', preComplete: true },
+        { id: 'e1b6', text: 'Branded tablecloth + vertical banners × 2 confirmed. ✓', preComplete: true },
+        { id: 'e1b7', text: 'Tent layout finalized. ✓', preComplete: true },
+        { id: 'e1b8', text: 'Monitor/display at tent front — confirmed. ✓', preComplete: true },
       ]
     },
     {
       id: 'grp-e1c', label: 'Power Setup',
       tasks: [
-        { id: 'e1c1', text: 'Generator confirmed: Honda EU3000iS or equiv. 3,000W+ inverter — quiet enough for tent environment (~57dB)' },
+        { id: 'e1c1', text: 'Generator confirmed and covered for Event 1. ✓', preComplete: true },
         { id: 'e1c2', text: 'Generator fuel: full tank + 5-gallon backup can. Check level every 2 hours during event.' },
         { id: 'e1c3', text: 'Position generator 10–15 ft from rear of tent, properly vented' },
         { id: 'e1c4', text: 'Heavy-duty outdoor extension cord (30A, 25–50ft) from generator to tent' },
@@ -726,8 +719,8 @@ const TASKS = {
     {
       id: 'grp-e1d', label: 'Live Stream Tech Setup',
       tasks: [
-        { id: 'e1d1', text: 'Cellular bonding device — in-house unit ✓, no rental needed. Configure SIM cards (AT&T + T-Mobile + Verizon). Target: 10+ Mbps stable upload. Stream at 6 Mbps for 1080p30.' },
-        { id: 'e1d2', text: 'vMix Pro loaded and licensed on production laptop' },
+        { id: 'e1d1', text: 'Cellular bonding device — in-house unit ✓, no rental needed.', preComplete: true },
+        { id: 'e1d2', text: 'vMix Pro loaded and licensed on production laptop. ✓', preComplete: true },
         { id: 'e1d3', text: 'Scene layout configured: main commentary cam, PIP with field cam, lower thirds, bumper' },
         { id: 'e1d4', text: 'Stream keys set ✓ — BlackMarker.TV RTMP only. No YouTube or Facebook simulcast.' },
         { id: 'e1d5', text: 'vMix local recording enabled (always record locally as safety net)' },
@@ -758,17 +751,17 @@ const TASKS = {
         { id: 'e1f3', text: 'Brief him on show format, rundown, and any on-camera cues' },
         { id: 'e1f4', text: 'Confirm any content restrictions or topics to avoid on stream' },
         { id: 'e1f5', text: 'Get his preferred social handles for on-screen lower third graphic' },
-        { id: 'e1f6', text: 'Coordinate cross-promotion: align his post timing to announce his appearance at BlackMarker.TV tent' },
+        { id: 'e1f6', text: 'Joselito cross-promotion active ✓ — accepting collabs and posting on schedule.', preComplete: true },
       ]
     },
     {
       id: 'grp-e1g', label: 'Show Format & Staffing',
       tasks: [
         { id: 'e1g1', text: 'Show rundown finalized and printed × 4 copies (Stream Tech, Host 1, Host 2, Joselito)' },
-        { id: 'e1g2', text: 'Stream Tech confirmed and briefed for Event 1' },
-        { id: 'e1g3', text: 'Host 1 (anchor) confirmed and briefed' },
-        { id: 'e1g4', text: 'Host 2 / Field Reporter confirmed and briefed' },
-        { id: 'e1g5', text: 'DJ for Event 1 (festival tent) confirmed' },
+        { id: 'e1g2', text: 'Stream Tech confirmed and briefed for Event 1 — crew being finalized by Monday June 9.' },
+        { id: 'e1g3', text: 'Host 1 (anchor) confirmed and briefed — crew being finalized by Monday June 9.' },
+        { id: 'e1g4', text: 'Host 2 / Field Reporter confirmed and briefed — crew being finalized by Monday June 9.' },
+        { id: 'e1g5', text: 'DJ for Event 1 (festival tent) confirmed — crew being finalized by Monday June 9.' },
         { id: 'e1g6', text: 'DJ briefed on music transitions for each segment break in the show' },
         { id: 'e1g7', text: 'Security/equipment watcher designated — tent must never be left completely unattended' },
       ]
@@ -796,20 +789,20 @@ const TASKS = {
         { id: 'e2a1', text: 'Float application submitted to NPRDP', preComplete: true },
         { id: 'e2a2', text: 'Registered for first NPRDP orientation', preComplete: true },
         { id: 'e2a3', text: 'Custom Float package paid — $6,500', preComplete: true },
-        { id: 'e2a4', text: 'Attend NPRDP orientation — note all float spec requirements, deadlines, and wristband process' },
+        { id: 'e2a4', text: 'NPRDP orientation attended. ✓', preComplete: true },
         { id: 'e2a5', text: 'Insurance confirmed NOT required by NPRDP — confirmed directly with parade rep. No action needed. ✓' },
         { id: 'e2a6', text: 'Insurance certificate submission — NOT APPLICABLE ✓. Confirmed with NPRDP rep: not required for this registration.' },
-        { id: 'e2a7', text: 'Confirm float participant number and staging assignment from NPRDP' },
-        { id: 'e2a8', text: 'Receive wristbands and permits for all 50 walking contingent members — required; no one marches without wristbands' },
+        { id: 'e2a7', text: 'Float participant number and staging assignment received from NPRDP. ✓', preComplete: true },
+        { id: 'e2a8', text: 'Wristbands & permits picked up. ✓', preComplete: true },
       ]
     },
     {
       id: 'grp-e2b', label: 'Float Build & Design',
       tasks: [
-        { id: 'e2b1', text: 'Float visual design — see Design Brief §6 for full scope. Timeline: design sprint ends May 28 → team Review #1 due May 30 → Review #2 June 1 → submit to Bond Floats June 3 → NPRDP design approval June 5. Do not order physical branding until design is approved.', briefLink: 'grp-db6' },
+        { id: 'e2b1', text: 'Float design complete ✓ — all reviews done, final design submitted to Bond Floats for printing.', preComplete: true, briefLink: 'grp-db6' },
         { id: 'e2b2', text: 'Float dimensions confirmed — platform: 20\' × 8\'. Back panel: 8\' × 11\'10". Upper deck: 8\' × 8\' elevated. Skirt: 21.5". Full vehicle: 8\' wide × 28\' long × 13\' max height — stay under 13 ft clearance along route.', briefLink: 'grp-db6' },
         { id: 'e2b3', text: 'Float layout finalized — talent positioning, camera sight lines, DJ booth placement, tech station, generator corner. Confirm with Bond Floats that layout respects capacity limits (Rule 15e).' },
-        { id: 'e2b4', text: 'All float branding elements ordered: BlackMarker.TV main banner, "Celebrating Puerto Rican Pioneers" banner, PR flag (weatherproof vinyl, secured to structure). ORDER AFTER NPRDP design approval — no earlier than June 6.', briefLink: 'grp-db6' },
+        { id: 'e2b4', text: 'Float banners designed and submitted with main float design to Bond Floats. ✓', preComplete: true, briefLink: 'grp-db6' },
         { id: 'e2b5', text: 'DJ booth riser/platform on float confirmed (even 8-inch riser helps frame Chase on camera)' },
         { id: 'e2b6', text: 'PA speakers sourced and secured to float (minimum 2 × 15" powered speakers, facing outward L+R)' },
         { id: 'e2b7', text: 'LED accent lighting for float — battery or generator powered' },
@@ -820,7 +813,7 @@ const TASKS = {
     {
       id: 'grp-e2c', label: 'Power Setup (On Float)',
       tasks: [
-        { id: 'e2c1', text: 'Generator confirmed: Honda EU7000iS or equiv. 5,000–8,000W inverter. Load: DJ+PA (~3,500W) + stream (~400W) + lights (~800W) + misc (~300W) = ~5,000W peak.' },
+        { id: 'e2c1', text: 'Generator + sound confirmed and covered for Event 2 (parade float). ✓', preComplete: true },
         { id: 'e2c2', text: 'Generator secured to float with steel straps/tie-down chains — must not shift during route' },
         { id: 'e2c3', text: 'Exhaust routing confirmed: directed away from talent, walking contingent, and crowd' },
         { id: 'e2c4', text: 'Generator fuel: full tank + 5-gallon backup can (secured, approved container). EU7000iS runs ~6 hrs at 50% load — parade is 3–4 hrs.' },
@@ -831,7 +824,7 @@ const TASKS = {
     {
       id: 'grp-e2d', label: 'Live Stream Tech (Moving Vehicle)',
       tasks: [
-        { id: 'e2d1', text: 'Cellular bonding device — in-house unit ✓, no rental needed. Mount securely on float, antennas pointing up and unobstructed. SIM cards active on AT&T + T-Mobile + Verizon. NYC Fifth Ave = heavy congestion on parade day; bonding is mandatory.' },
+        { id: 'e2d1', text: 'Cellular bonding device — in-house unit ✓, no rental needed.', preComplete: true },
         { id: 'e2d2', text: 'Test connectivity while moving in a vehicle before parade day — simulate the moving environment' },
         { id: 'e2d3', text: 'Primary camera on vibration-dampening mount — rubber isolation between float structure and camera arm. Frame: Joselito + Host 1 with crowd/street behind.' },
         { id: 'e2d4', text: 'Field camera (GoPro Hero 12 or ZV-1 on gimbal) for walking contingent shots and crowd moments' },
@@ -855,14 +848,14 @@ const TASKS = {
     {
       id: 'grp-e2f', label: 'Walking Contingent (50 People)',
       tasks: [
-        { id: 'e2f1', text: 'Finalize list of exactly 50 walkers — all names registered with NPRDP application' },
-        { id: 'e2f2', text: 'Collect shirt sizes from all 50 participants', briefLink: 'grp-db5' },
-        { id: 'e2f3', text: 'Order branded shirts × 55 (50 + 5 spares) — 3 weeks minimum lead time. Black shirt, BMB/BlackMarker.TV logo front, "Celebrating Puerto Rican Pioneers" back.', briefLink: 'grp-db5' },
-        { id: 'e2f4', text: 'Confirm shirt distribution method: mail in advance OR distribute at staging area morning of parade' },
-        { id: 'e2f5', text: 'Designate walking contingent Marshall/Captain (NPRDP requires a designated Marshall per contingent)' },
-        { id: 'e2f6', text: 'Assign sub-captains for each row of 10 walkers' },
-        { id: 'e2f7', text: 'Send briefing document to all 50 walkers: staging location, arrival time, dress code, rules (no alcohol, stay in formation, no leaving the line, no personal signs/items not approved by BMB), emergency contact' },
-        { id: 'e2f8', text: 'Day-of: take attendance of all 50 walkers at staging, distribute shirts if not pre-shipped' },
+        { id: 'e2f1', text: '50-walker list finalized and registered with NPRDP. ✓', preComplete: true },
+        { id: 'e2f2', text: 'Shirt sizes collected. ✓', preComplete: true, briefLink: 'grp-db5' },
+        { id: 'e2f3', text: 'Shirts being printed and pressed by Bibi and Los — distributing day-of at staging.', preComplete: false, briefLink: 'grp-db5' },
+        { id: 'e2f4', text: 'Shirt distribution confirmed: day-of at staging area. ✓', preComplete: true },
+        { id: 'e2f5', text: 'Walking contingent captains confirmed ✓ — Felix (Skeem) and Wil Sweets.', preComplete: true },
+        { id: 'e2f6', text: 'Sub-captains assigned. ✓', preComplete: true },
+        { id: 'e2f7', text: 'Walker briefing document sent. ✓', preComplete: true },
+        { id: 'e2f8', text: 'Day-of: take attendance of all 50 walkers at staging, distribute shirts.' },
         { id: 'e2f9', text: 'Take group photo at staging area before parade (content + documentation)' },
         { id: 'e2f10', text: 'Note: ZERO third parties may join the registered contingent — NPRDP rule. All 50 must be BMB/BlackMarker.TV registered participants.' },
       ]
@@ -870,12 +863,12 @@ const TASKS = {
     {
       id: 'grp-e2g', label: 'DJ Charlie Chase Coordination',
       tasks: [
-        { id: 'e2g1', text: 'Confirm DJ Charlie Chase booking and contract signed' },
-        { id: 'e2g2', text: 'Confirm travel and accommodation (BMB covering flights/hotel, or self-arranging?)' },
-        { id: 'e2g3', text: 'Confirm DJ equipment needs — does he bring own CDJs/Serato, or does BMB rent? Confirm turntable/controller preferences.' },
-        { id: 'e2g4', text: 'Confirm XLR line out from his mixer to BMB encoder (DI box provided by BMB)' },
-        { id: 'e2g5', text: 'Brief him on streaming format — he is on camera; brief him on show segments and interview format' },
-        { id: 'e2g6', text: 'Get his preferred social handles for on-screen lower third graphic' },
+        { id: 'e2g1', text: 'DJ Charlie Chase booking and contract confirmed. ✓', preComplete: true },
+        { id: 'e2g2', text: 'Charlie Chase travel and lodging confirmed. ✓', preComplete: true },
+        { id: 'e2g3', text: 'Charlie Chase DJ equipment confirmed. ✓', preComplete: true },
+        { id: 'e2g4', text: 'Charlie Chase XLR line out confirmed — DI box provided by BMB. ✓', preComplete: true },
+        { id: 'e2g5', text: 'Brief Charlie Chase on streaming format and show segments — completing by Sunday June 8.' },
+        { id: 'e2g6', text: 'Get Charlie Chase preferred social handles for lower third graphic — completing by Sunday June 8.' },
         { id: 'e2g7', text: 'Sound check with Charlie Chase at staging area — DJ booth on float, PA speakers, monitor levels' },
       ]
     },
@@ -1636,7 +1629,6 @@ function contingentTotal() { return getTeam().length + getContingent().length; }
 function renderContingentTab() {
   renderCapacityBlock();
   renderContingentTable();
-  renderCaptainCounts();
   const notice = document.getElementById('cont-full-notice');
   if (notice) notice.classList.toggle('show', crewCount('bmtv') >= 25 && crewCount('joselito') >= 25);
 }
@@ -1702,7 +1694,7 @@ function renderContingentTable() {
       const inv = team.find(m => m.id === g.invitedBy);
       return inv && inv.crew === crew;
     });
-    const total = coreMembers.length + crewGuests.length;
+    const total = crewCount(crew);
     const remaining = 25 - total;
     const pct = Math.min(100, Math.round((total / 25) * 100));
     const cls = remaining <= 0 ? 'full' : remaining <= 5 ? 'warn' : '';
@@ -1857,22 +1849,6 @@ function renderContingentTable() {
   }
 }
 
-function renderCaptainCounts() {
-  const el = document.getElementById('captain-counts');
-  if (!el) return;
-  const team = getTeam();
-  const guests = getContingent();
-  const byCaptain = {};
-  guests.forEach(g => {
-    if (g.invitedBy) byCaptain[g.invitedBy] = (byCaptain[g.invitedBy] || 0) + 1;
-  });
-  const pills = Object.entries(byCaptain).map(([tid, count]) => {
-    const member = team.find(m => m.id === tid);
-    const name = member ? esc(member.name) : 'Unknown';
-    return `<div class="captain-pill"><span class="cp-name">${name}</span><span class="cp-count">${count} guest${count !== 1 ? 's' : ''}</span></div>`;
-  }).join('');
-  el.innerHTML = `<div class="captain-counts-label">Guests by Team Member</div><div class="captain-grid">${pills || '<span style="color:var(--muted);font-size:13px;">No guests assigned yet.</span>'}</div>`;
-}
 
 function addContingentGuest(crew) {
   const name = document.getElementById('contName-' + crew)?.value.trim();

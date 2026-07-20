@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ChannelCast Loop Builder</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:14px/1.4 -apple-system,Segoe UI,Roboto,sans-serif;
+         background:#0f1115; color:#e6e8ec; }
+  header { padding:14px 20px; background:#161a21; border-bottom:1px solid #262c36;
+           display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  header h1 { font-size:16px; margin:0; font-weight:600; }
+  .tabs { display:flex; gap:4px; }
+  .tab { padding:6px 14px; border-radius:6px 6px 0 0; cursor:pointer; color:#9aa4b2; }
+  .tab.active { background:#0f1115; color:#e6e8ec; border:1px solid #262c36; border-bottom:none; }
+  main { padding:20px; }
+  .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:14px; }
+  select,input,button { font:inherit; color:#e6e8ec; background:#1b2029;
+    border:1px solid #2c333e; border-radius:6px; padding:7px 10px; }
+  button { cursor:pointer; background:#2563eb; border-color:#2563eb; }
+  button.ghost { background:#1b2029; border-color:#2c333e; }
+  button.danger { background:#3a1620; border-color:#5b2233; color:#ffb4c0; }
+  button:hover { filter:brightness(1.1); }
+  table { border-collapse:collapse; width:100%; font-size:13px; }
+  th,td { text-align:left; padding:6px 8px; border-bottom:1px solid #1e242d; }
+  th { color:#8b95a3; font-weight:600; position:sticky; top:0; background:#0f1115; }
+  tr.mv td.kind { color:#7fd1ae; }
+  tr.special td.kind { color:#ffcf72; }
+  tr.promo td.kind, tr.intro td.kind { color:#8ea2ff; }
+  tr.opener td.kind, tr.show td.kind { color:#ff9d7a; }
+  td.time { font-variant-numeric:tabular-nums; color:#9aa4b2; white-space:nowrap; }
+  td.dur { font-variant-numeric:tabular-nums; color:#9aa4b2; }
+  .muted { color:#8b95a3; }
+  .pill { display:inline-block; padding:2px 8px; border-radius:999px; background:#1b2029; margin-right:6px; }
+  .ok { color:#7fd1ae; } .bad { color:#ff8a9c; }
+  .card { background:#141821; border:1px solid #222834; border-radius:10px; padding:16px; margin-bottom:16px; }
+  .grid2 { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; }
+  .grid2 input, .grid2 select { width:100%; }
+  label { display:block; font-size:12px; color:#8b95a3; margin-bottom:4px; }
+  .card, main { max-width:100%; }
+  .row { max-width:100%; }
+  input, select { max-width:100%; }
+  .openerRow { display:flex; gap:8px; align-items:center; margin-bottom:6px; max-width:100%; }
+  .openerRow .opVid { flex:1 1 auto; min-width:0; }
+  .openerRow .opHour { width:84px; flex:0 0 84px; }
+  .openerRow .athr { color:#8b95a3; white-space:nowrap; font-size:12px; }
+  #toast { position:fixed; right:16px; bottom:16px; background:#1b2029; border:1px solid #2c333e;
+    padding:10px 14px; border-radius:8px; opacity:0; transition:opacity .2s; max-width:360px; }
+  #toast.show { opacity:1; }
+  .tblwrap { max-height:70vh; overflow:auto; border:1px solid #1e242d; border-radius:8px; }
+  .iconbtn { padding:3px 8px; }
+  progress { -webkit-appearance:none; appearance:none; border:1px solid #2c333e; border-radius:8px;
+    background:#1b2029; overflow:hidden; }
+  progress::-webkit-progress-bar { background:#1b2029; }
+  progress::-webkit-progress-value { background:#2563eb; }
+  progress::-moz-progress-bar { background:#2563eb; }
+  details.sec { border:1px solid #222834; border-radius:8px; margin-bottom:8px; background:#141821; }
+  details.sec > summary { cursor:pointer; padding:10px 12px; font-weight:600; list-style:none; }
+  details.sec > summary::-webkit-details-marker { display:none; }
+  details.sec > summary::before { content:'▸'; margin-right:8px; color:#8b95a3; }
+  details.sec[open] > summary::before { content:'▾'; }
+  .libtbl { width:100%; border-collapse:collapse; font-size:13px; }
+  .libtbl td { padding:5px 10px; border-top:1px solid #1e242d; vertical-align:top; }
+  .usg { color:#7fd1ae; } .unused { color:#ff8a9c; }
+  .tsel { font-size:12px; padding:3px 6px; }
+  #activity { position:fixed; top:0; left:0; right:0; height:3px; background:transparent;
+    overflow:hidden; display:none; z-index:100; }
+  #activity::before { content:''; position:absolute; height:100%; width:35%;
+    background:#3b82f6; border-radius:3px; animation:slide 1.1s infinite ease-in-out; }
+  @keyframes slide { 0%{left:-35%} 100%{left:100%} }
+</style>
+</head>
+<body>
+<div id="activity"></div>
+<header>
+  <h1>ChannelCast Loop Builder</h1>
+  <div class="tabs">
+    <div class="tab active" data-tab="loops">Loops</div>
+    <div class="tab" data-tab="generate">Generate</div>
+    <div class="tab" data-tab="library">Library</div>
+    <div class="tab" data-tab="import">Import</div>
+    <div class="tab" data-tab="showupdate">Show Update</div>
+    <div class="tab" data-tab="musicdrop">Music Drop</div>
+  </div>
+  <span id="chan" class="muted"></span>
+</header>
+<main>
+
+<!-- LOOPS -->
+<section id="tab-loops">
+  <div class="row">
+    <select id="playlistSel"></select>
+    <button class="ghost" onclick="loadItems()">Refresh</button>
+    <button class="ghost" onclick="saveOrder()">Save order</button>
+    <button onclick="syncAllLoops()">Sync all loops</button>
+    <span id="loopStats" class="muted"></span>
+  </div>
+  <div class="row" id="loopSyncRow" style="display:none">
+    <progress id="loopSyncBar" value="0" max="100" style="flex:1; height:16px"></progress>
+    <span id="loopSyncPct" class="muted" style="min-width:220px; text-align:right"></span>
+  </div>
+  <div class="tblwrap">
+    <table id="itemsTbl"><thead><tr>
+      <th>#</th><th>Plays at</th><th>Title</th><th>Type</th><th>Len</th><th></th><th></th>
+    </tr></thead><tbody></tbody></table>
+  </div>
+</section>
+
+<!-- GENERATE -->
+<section id="tab-generate" style="display:none">
+  <div class="card">
+    <div class="grid2">
+      <div><label>Target length (hours)</label><input id="genHours" type="number" step="0.1" value="6"></div>
+      <div><label>Same-artist gap (hours)</label><input id="genGap" type="number" step="0.5" value="2"></div>
+      <div><label># Specials (perf/interview)</label><input id="genSpecials" type="number" value="3"></div>
+      <div><label>Promo every N videos</label><input id="genPromo" type="number" value="8"></div>
+      <div><label>Seed (blank = random)</label><input id="genSeed" type="number" placeholder="random"></div>
+      <div><label>Reshuffle whole deck?</label>
+        <select id="genReshuffle"><option value="true">Yes - fresh order</option>
+        <option value="false">No - avoid chosen loops' songs</option></select></div>
+    </div>
+    <datalist id="showlist"></datalist>
+    <div style="margin-top:14px">
+      <label>Openers — optional full shows dropped in at set times</label>
+      <div id="openerList"></div>
+      <button class="ghost" type="button" onclick="addOpenerRow()" style="margin-top:2px">+ Add opener</button>
+    </div>
+    <div class="row">
+      <label style="margin:0 8px 0 0">Avoid songs from these loops (when not reshuffling):</label>
+      <select id="genAvoid" multiple size="4" style="min-width:240px"></select>
+    </div>
+    <div class="row">
+      <button onclick="doGenerate()">Generate preview</button>
+      <span id="genReport" class="muted"></span>
+    </div>
+  </div>
+
+  <div class="card" id="previewCard" style="display:none">
+    <div class="row">
+      <strong>Preview</strong><span id="previewStats" class="muted"></span>
+      <span style="flex:1"></span>
+      <select id="pushTarget"></select>
+      <button id="pushBtn" onclick="pushPreview()">Push to this loop</button>
+    </div>
+    <div class="row" id="pushProgressRow" style="display:none">
+      <progress id="pushBar" value="0" max="100" style="flex:1; height:16px"></progress>
+      <span id="pushPct" class="muted" style="min-width:120px; text-align:right"></span>
+    </div>
+    <div class="tblwrap">
+      <table id="previewTbl"><thead><tr>
+        <th>#</th><th>Plays at</th><th>Title</th><th>Type</th><th>Len</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- LIBRARY -->
+<section id="tab-library" style="display:none">
+  <div class="card">
+    <div class="row">
+      <button id="syncBtn" onclick="syncLibrary()">Sync library from ChannelCast</button>
+      <span id="libStats" class="muted"></span>
+    </div>
+    <div class="row" id="syncProgressRow" style="display:none">
+      <progress id="syncBar" value="0" max="100" style="flex:1; height:16px"></progress>
+      <span id="syncPct" class="muted" style="min-width:200px; text-align:right"></span>
+    </div>
+    <p class="muted">Pulls the full media library so generation and the opener picker stay current. Run this after uploading new videos.</p>
+  </div>
+  <div class="card">
+    <strong>Load a new video into ChannelCast</strong>
+    <div class="grid2" style="margin-top:10px">
+      <div><label>Title</label><input id="nvTitle" placeholder="MV ArtistName SongName" style="width:100%"></div>
+      <div><label>Source URL (.mp4 or .m3u8)</label><input id="nvUrl" placeholder="https://…" style="width:100%"></div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button onclick="addVideo()">Add to library</button>
+      <span class="muted">After adding, click “Sync library” to pick it up for generation.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <strong>Media by type</strong>
+      <span style="flex:1"></span>
+      <label style="display:inline; margin:0 6px 0 0; color:#8b95a3">filter</label>
+      <input id="libFilter" placeholder="search title…" oninput="renderLibrarySections()" style="width:220px">
+      <button class="ghost" onclick="refreshBrowser()">Refresh</button>
+    </div>
+    <p class="muted" id="usageNote">Usage (which loops each file is in) needs an all-loops sync — click “Sync all loops” on the Loops tab.</p>
+    <div id="libSections"></div>
+  </div>
+</section>
+
+<!-- IMPORT (S3) -->
+<section id="tab-import" style="display:none">
+  <div class="card">
+    <div class="row">
+      <button onclick="checkS3()">Check S3 for new uploads</button>
+      <span id="s3Stats" class="muted"></span>
+      <span style="flex:1"></span>
+      <button class="ghost" onclick="s3SelectNew()">Select new</button>
+      <button class="ghost" onclick="s3SelectNone()">Clear</button>
+      <button onclick="importSelected()">Import Media</button>
+    </div>
+    <div class="row" id="s3ProgressRow" style="display:none">
+      <progress id="s3Bar" value="0" max="100" style="flex:1; height:16px"></progress>
+      <span id="s3Pct" class="muted" style="min-width:220px; text-align:right"></span>
+    </div>
+    <p class="muted">New uploads to your S3 bucket show here. Tick the ones to bring in (new files are pre-checked), tweak titles if needed, then <b>Import Media</b> — each is added to your ChannelCast library via API.</p>
+    <div class="tblwrap">
+      <table id="s3Tbl"><thead><tr>
+        <th></th><th>File</th><th>Import as (title)</th><th>Size</th><th>Uploaded</th><th>Status</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- SHOW UPDATE -->
+<section id="tab-showupdate" style="display:none">
+  <div class="card">
+    <div class="row">
+      <label style="display:inline;margin:0 6px 0 0;color:#8b95a3">Show</label>
+      <select id="suShow"><option value="TWI">The Weekly Interrupt (TWI)</option></select>
+      <button onclick="previewShowUpdate()">Preview update</button>
+      <span id="suMsg" class="muted"></span>
+    </div>
+    <p class="muted">A new episode goes to Hour 0 of the two lead loops; each older episode cascades down a day. Affected loops are regenerated fresh (all rules + ≥6h enforced), with pinned shows kept at their hour. Review below, then commit.</p>
+    <div id="suReview"></div>
+    <div class="row" id="suProgressRow" style="display:none">
+      <progress id="suBar" value="0" max="100" style="flex:1; height:16px"></progress>
+      <span id="suPct" class="muted" style="min-width:240px; text-align:right"></span>
+    </div>
+    <div class="row" id="suExecRow" style="display:none">
+      <button id="suExecBtn" onclick="executeShowUpdate()">ADD SHOW &amp; UPDATE LOOPS</button>
+      <span class="muted">This rebuilds the affected Loop 4s. Takes a few minutes.</span>
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC DROP -->
+<section id="tab-musicdrop" style="display:none">
+  <div class="card">
+    <div class="row">
+      <button onclick="loadDropCandidates()">Find new music</button>
+      <button onclick="dropSelectAll(true)">Select all</button>
+      <button onclick="dropSelectAll(false)">Clear</button>
+      <span id="mdMsg" class="muted"></span>
+    </div>
+    <p class="muted">Music videos in the library that aren’t on a single loop yet. Each one you pick plays
+      <b>once a day, every day</b> — rotating loop slots as the week goes on, so it never lands at the
+      same point of the schedule twice. Every loop it touches is regenerated with a fresh music shuffle
+      around its existing shows and performances; only the music changes.</p>
+    <div class="tblwrap" style="max-height:340px">
+      <table id="mdTbl"><thead><tr>
+        <th style="width:28px"></th><th>Title</th><th style="width:80px">Length</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button onclick="previewDrop()">Preview drop</button>
+      <span id="mdCount" class="muted"></span>
+    </div>
+    <div id="mdReview"></div>
+    <div class="row" id="mdProgressRow" style="display:none">
+      <progress id="mdBar" value="0" max="100" style="flex:1; height:16px"></progress>
+      <span id="mdPct" class="muted" style="min-width:260px; text-align:right"></span>
+    </div>
+    <div class="row" id="mdExecRow" style="display:none">
+      <button id="mdExecBtn" onclick="executeDrop()">ADD MUSIC &amp; UPDATE LOOPS</button>
+      <span class="muted">Rebuilds every affected loop. Expect 20–30 minutes for a full week.</span>
+    </div>
+  </div>
+</section>
+
+</main>
+<div id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+let LIB = [], PLAYLISTS = [], CURRENT_ITEMS = [], PREVIEW = null, CFG = {};
+let PLCACHE = {usage:{}, playlists:[], synced_at:null};
+
+function fmt(s){s=Math.round(s);const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;
+  return `${h}:${String(m).padStart(2,'0')}:${String(x).padStart(2,'0')}`;}
+function toast(msg,bad){const t=$('#toast');t.textContent=msg;t.style.borderColor=bad?'#5b2233':'#2c333e';
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+let _busy=0;
+function setBusy(d){_busy=Math.max(0,_busy+d);$('#activity').style.display=_busy>0?'block':'none';}
+async function api(path,opts){setBusy(1);try{const r=await fetch(path,opts);if(!r.ok){const e=await r.text();throw new Error(e);}return r.json();}finally{setBusy(-1);}}
+
+// tabs
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  ['loops','generate','library','import','showupdate','musicdrop'].forEach(n=>$('#tab-'+n).style.display=n===t.dataset.tab?'':'none');
+  if(t.dataset.tab==='musicdrop' && !MDCAND.length) loadDropCandidates();
+});
+
+async function init(){
+  CFG = await api('/api/config');
+  $('#chan').textContent = CFG.channel_name + '  ·  excluding: ' + (CFG.excluded_artists.join(', ')||'none');
+  $('#genHours').value = (CFG.target_seconds/3600);
+  $('#genGap').value = (CFG.gap_seconds/3600);
+  await loadPlaylists();
+  await refreshLibraryView();
+  await loadPlaylistsCache();
+  renderLibrarySections();
+  await loadShowList();
+}
+
+async function loadPlaylists(){
+  const data = await api('/api/playlists?channelId='+CFG.channel_id);
+  PLAYLISTS = data.playlists || data;
+  const opts = PLAYLISTS.map(p=>`<option value="${p.id}">${p.name} (${p.items})</option>`).join('');
+  $('#playlistSel').innerHTML = opts;
+  $('#pushTarget').innerHTML = opts;
+  $('#genAvoid').innerHTML = opts;
+  if(PLAYLISTS.length) loadItems();
+}
+
+async function loadItems(){
+  const pid = $('#playlistSel').value;
+  const data = await api(`/api/playlist/${pid}/items`);
+  CURRENT_ITEMS = data.items;
+  const tb = $('#itemsTbl tbody'); tb.innerHTML='';
+  data.items.forEach((it,i)=>{
+    const kind = classify(it.title);
+    const tr=document.createElement('tr'); tr.className=kind;
+    tr.innerHTML = `<td>${i+1}</td><td class="time">${fmt(it.playsAtSeconds)}</td>
+      <td>${it.title}</td><td class="kind">${kind}</td><td class="dur">${fmt(it.durationSeconds)}</td>
+      <td><button class="ghost iconbtn" onclick="move(${i},-1)">↑</button>
+          <button class="ghost iconbtn" onclick="move(${i},1)">↓</button></td>
+      <td><button class="danger iconbtn" onclick="removeItem('${it.playlistItemId}')">✕</button></td>`;
+    tb.appendChild(tr);
+  });
+  $('#loopStats').textContent = `${data.count} items · ${fmt(data.total_seconds)} total`;
+}
+
+function classify(t){
+  if(t.startsWith('MV ')) return 'mv';
+  if(t.startsWith('LP ')||t.startsWith('LI ')||t.startsWith('Performance ')||
+     (t.includes('Showcase')&&(t.includes('Performance')||t.includes('Interview')))||
+     t.includes('CloseOutParty Interview')||t.includes('RoundsOn7th Interview')) return 'special';
+  if(t.startsWith('IA ')||t.includes('Promo')||t.includes('LoopVideo')) return 'promo';
+  if(t.startsWith('TWI ')||t.startsWith('BMTV ')) return 'show';
+  return 'other';
+}
+
+function move(i,d){const j=i+d;if(j<0||j>=CURRENT_ITEMS.length)return;
+  const a=CURRENT_ITEMS;[a[i],a[j]]=[a[j],a[i]];
+  // recompute timestamps locally for display
+  let ts=0;a.forEach(x=>{x.playsAtSeconds=ts;ts+=x.durationSeconds;});
+  const tb=$('#itemsTbl tbody');tb.innerHTML='';
+  a.forEach((it,k)=>{const kind=classify(it.title);const tr=document.createElement('tr');tr.className=kind;
+    tr.innerHTML=`<td>${k+1}</td><td class="time">${fmt(it.playsAtSeconds)}</td><td>${it.title}</td>
+      <td class="kind">${kind}</td><td class="dur">${fmt(it.durationSeconds)}</td>
+      <td><button class="ghost iconbtn" onclick="move(${k},-1)">↑</button>
+          <button class="ghost iconbtn" onclick="move(${k},1)">↓</button></td>
+      <td><button class="danger iconbtn" onclick="removeItem('${it.playlistItemId}')">✕</button></td>`;
+    tb.appendChild(tr);});
+}
+
+async function saveOrder(){
+  const pid=$('#playlistSel').value;
+  const ids=CURRENT_ITEMS.map(i=>i.mediaId);
+  if(!ids.length){ toast('Load a loop first',true); return; }
+  const secs=Math.ceil(ids.length*2*0.25);
+  if(!confirm(`Save this order? It rebuilds the loop (${ids.length} items, ~${secs}s). Safe to run — nothing is lost if interrupted.`)) return;
+  const row=$('#loopSyncRow'), bar=$('#loopSyncBar'), pct=$('#loopSyncPct');
+  row.style.display=''; bar.value=0; bar.max=100; pct.textContent='saving order…'; setBusy(1);
+  try{
+    const r=await fetch('/api/reorder-rebuild',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({playlistId:pid,orderedMediaIds:ids})});
+    if(!r.ok) throw new Error(await r.text());
+    const reader=r.body.getReader(), dec=new TextDecoder(); let buf='';
+    while(true){
+      const {value,done}=await reader.read(); if(done) break;
+      buf+=dec.decode(value,{stream:true}); let idx;
+      while((idx=buf.indexOf('\n'))>=0){
+        const line=buf.slice(0,idx).trim(); buf=buf.slice(idx+1); if(!line) continue;
+        const m=JSON.parse(line);
+        if(!m.done){ bar.max=m.total; bar.value=m.done;
+          pct.textContent=`${m.phase==='add'?'writing new order':'clearing old'} ${m.done}/${m.total}`; }
+      }
+    }
+    pct.textContent='order saved ✓'; toast('Order saved'); loadItems();
+  }catch(e){ pct.textContent='failed'; toast('Save failed: '+e.message,true); }
+  finally{ setBusy(-1); setTimeout(()=>row.style.display='none',3000); }
+}
+async function removeItem(id){
+  try{await api('/api/remove',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({playlistItemId:id})});toast('Removed');loadItems();loadPlaylists();}
+  catch(e){toast('Remove failed: '+e.message,true);}
+}
+
+async function syncAllLoops(){
+  const row=$('#loopSyncRow'), bar=$('#loopSyncBar'), pct=$('#loopSyncPct');
+  row.style.display=''; bar.value=0; bar.max=100; pct.textContent='starting…'; setBusy(1);
+  try{
+    const r=await fetch('/api/sync-playlists-stream',{method:'POST'});
+    if(!r.ok) throw new Error(await r.text());
+    const reader=r.body.getReader(), dec=new TextDecoder(); let buf='', sum=null;
+    while(true){
+      const {value,done}=await reader.read(); if(done) break;
+      buf+=dec.decode(value,{stream:true}); let idx;
+      while((idx=buf.indexOf('\n'))>=0){
+        const line=buf.slice(0,idx).trim(); buf=buf.slice(idx+1); if(!line) continue;
+        const m=JSON.parse(line);
+        if(m.done){ sum=m; } else { bar.max=m.n; bar.value=m.i; pct.textContent=`loop ${m.i}/${m.n}: ${m.name} · ${m.count} items`; }
+      }
+    }
+    pct.textContent=`done — ${sum?sum.playlists:''} loops synced ✓`;
+    await loadPlaylists(); await loadPlaylistsCache(); renderLibrarySections();
+    toast('All loops synced');
+  }catch(e){ pct.textContent='failed'; toast('Loop sync failed: '+e.message,true); }
+  finally{ setBusy(-1); setTimeout(()=>row.style.display='none',3000); }
+}
+
+async function loadPlaylistsCache(){
+  PLCACHE=await api('/api/playlists-cache');
+  if(PLCACHE.synced_at) $('#usageNote').textContent=
+    `Usage from all-loops sync at ${new Date(PLCACHE.synced_at*1000).toLocaleString()}. "✕ all" removes a file from every loop (stays in your library).`;
+}
+
+async function refreshBrowser(){ await refreshLibraryView(); await loadPlaylistsCache(); renderLibrarySections(); }
+
+const TYPE_OPTS=[['mv','Music Video'],['special','Perf / Interview'],['promo','Promo / Bumper'],
+  ['show','Full Show'],['other','Other / Ad'],['archive','Archive (out of rotation)']];
+
+function typeSelect(m){
+  const opts=TYPE_OPTS.map(([v,l])=>`<option value="${v}"${m.kind===v?' selected':''}>${l}</option>`).join('');
+  return `<select class="tsel" onchange='setType(${JSON.stringify(m.id)},this.value,${JSON.stringify(m.title)})'>${opts}</select>`
+    +(m.overridden?' <span class="usg" title="manually set">•</span>':'');
+}
+
+function renderLibrarySections(){
+  const filter=($('#libFilter').value||'').toLowerCase();
+  const introId=CFG.intro_media_id, usage=PLCACHE.usage||{};
+  const groups={};
+  LIB.forEach(m=>{ let g=(m.id===introId&&m.kind!=='archive')?'intro':m.kind; (groups[g]=groups[g]||[]).push(m); });
+  const order=[['special','Performances & Interviews'],['show','Full Shows (openers)'],
+    ['promo','Promos & Bumpers'],['intro','Intro Plug'],['mv','Music Videos'],['other','Other / Ads'],
+    ['archive','Archived — remove from loops & delete in dashboard']];
+  let html='';
+  for(const [key,label] of order){
+    let items=(groups[key]||[]);
+    if(filter) items=items.filter(m=>m.title.toLowerCase().includes(filter));
+    if(!items.length) continue;
+    items.sort((a,b)=>a.title.localeCompare(b.title));
+    // Closed by default -- expanded sections made this a very long scroll. A
+    // search still opens them, otherwise you'd have to click into each one.
+    const openAttr=filter?'open':'';
+    let rows='';
+    items.forEach(m=>{
+      const u=usage[m.id]||[];
+      const names=[...new Set(u.map(x=>x.playlistName))];
+      const cell=u.length
+        ? `<span class="${key==='archive'?'unused':'usg'}">in ${names.length} loop(s)${u.length>names.length?` · ${u.length} spots`:''}:</span> ${names.join(', ')} `
+          +`<button class="danger iconbtn" title="remove from all loops" onclick='removeFromAll(${JSON.stringify(m.id)})'>✕ all</button>`
+        : `<span class="${key==='archive'?'usg':'unused'}">${key==='archive'?'not in any loop':'unused'}</span>`;
+      rows+=`<tr><td style="min-width:200px">${m.title}</td><td class="dur">${fmt(m.duration)}</td>`
+        +`<td style="white-space:nowrap">${typeSelect(m)}</td><td>${cell}</td></tr>`;
+    });
+    const note=key==='archive'
+      ? `<div class="muted" style="padding:4px 10px">Excluded from all future loops. Use “✕ all” to pull from current loops, then delete them in the ChannelCast dashboard (the API can’t delete media).</div>` : '';
+    html+=`<details class="sec" ${openAttr}><summary>${label} — ${items.length}</summary>${note}`
+      +`<div style="overflow:auto"><table class="libtbl">${rows}</table></div></details>`;
+  }
+  $('#libSections').innerHTML = html || '<p class="muted">No media. Sync the library first.</p>';
+}
+
+async function setType(mediaId,newType,title){
+  if(newType==='archive'){
+    if(!confirm(`Archive "${title}"?\n\nIt’ll be excluded from all future loops. You can then pull it from current loops (✕ all) and delete it in the ChannelCast dashboard.`)){
+      renderLibrarySections(); return;   // revert the dropdown
+    }
+  }
+  try{
+    await api('/api/override',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({mediaId,type:newType})});
+    await refreshLibraryView();
+    renderLibrarySections();
+    toast(newType==='archive'?'Archived — now excluded from loops':'Type updated');
+  }catch(e){ toast('Update failed: '+e.message,true); }
+}
+
+async function removeFromAll(mediaId){
+  const u=(PLCACHE.usage||{})[mediaId]||[];
+  if(!u.length) return;
+  if(!confirm(`Remove this file from all ${u.length} loop(s)? It stays in your library.`)) return;
+  try{
+    for(const e of u){
+      await api('/api/remove',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({playlistItemId:e.playlistItemId})});
+    }
+    toast('Removed from '+u.length+' loop(s); re-syncing…');
+    await syncAllLoops();
+  }catch(err){ toast('Remove failed: '+err.message,true); }
+}
+
+async function refreshLibraryView(){
+  const data=await api('/api/library');LIB=data.items||[];
+  const by=data.by_kind||{};
+  $('#libStats').textContent = data.total
+    ? `${data.total} items — `+Object.entries(by).map(([k,v])=>`${k}:${v}`).join('  ')+
+      (data.synced_at?`  · synced ${new Date(data.synced_at*1000).toLocaleString()}`:'')
+    : 'Library not synced yet.';
+  // opener datalist = shows
+  $('#showlist').innerHTML = LIB.filter(m=>m.kind==='show')
+    .map(m=>`<option data-id="${m.id}" value="${m.title}">`).join('');
+}
+async function syncLibrary(){
+  const row=$('#syncProgressRow'), bar=$('#syncBar'), pct=$('#syncPct'), btn=$('#syncBtn');
+  row.style.display=''; bar.value=0; bar.max=100; pct.textContent='starting…'; btn.disabled=true;
+  setBusy(1);
+  try{
+    const r=await fetch('/api/sync-library-stream',{method:'POST'});
+    if(!r.ok) throw new Error(await r.text());
+    const reader=r.body.getReader(), dec=new TextDecoder(); let buf='', summary=null;
+    while(true){
+      const {value,done}=await reader.read();
+      if(done) break;
+      buf+=dec.decode(value,{stream:true});
+      let idx;
+      while((idx=buf.indexOf('\n'))>=0){
+        const line=buf.slice(0,idx).trim(); buf=buf.slice(idx+1);
+        if(!line) continue;
+        const m=JSON.parse(line);
+        if(m.done){ summary=m; }
+        else { bar.max=m.n; bar.value=m.i; pct.textContent=`searching ${m.i}/${m.n} · ${m.items} items found`; }
+      }
+    }
+    pct.textContent=`done — ${summary?summary.total:''} items ✓`;
+    await refreshLibraryView();
+    toast('Library synced');
+  }catch(e){ pct.textContent='failed'; toast('Sync failed: '+e.message,true); }
+  finally{ btn.disabled=false; setBusy(-1); setTimeout(()=>row.style.display='none',3000); }
+}
+// ---- show update ----
+let SUPLAN=null;
+async function loadShowList(){
+  try{
+    const shows=await api('/api/show-update/shows');
+    $('#suShow').innerHTML=shows.map(s=>`<option value="${s.key}">${s.label} (${s.key})</option>`).join('');
+  }catch(e){}
+}
+async function previewShowUpdate(newMediaId){
+  const show=$('#suShow').value;
+  $('#suMsg').textContent='loading…'; $('#suReview').innerHTML=''; $('#suExecRow').style.display='none';
+  try{
+    let url='/api/show-update/preview?show='+encodeURIComponent(show);
+    if(newMediaId) url+='&newMediaId='+encodeURIComponent(newMediaId);
+    SUPLAN=await api(url);
+    $('#suMsg').textContent='';
+    const epOpts=SUPLAN.newShowOptions.map(o=>`<option value="${o.id}"${o.id===SUPLAN.newShow.id?' selected':''}>${o.title}</option>`).join('');
+    let rows=SUPLAN.plan.map(e=>{
+      const keeps=e.preserved.map(k=>`${k.title} @ ${k.hour}h`).join(', ');
+      const isNew=(e.incoming===SUPLAN.newShow.title);
+      return `<tr><td>${e.loop}</td><td class="muted">hr ${e.hour}</td>
+        <td class="muted">${e.replaced||'(none — added)'}</td><td>→</td>
+        <td>${e.incoming}${isNew?' <span class="pill">new</span>':''}</td>
+        <td class="usg">${keeps||''}</td></tr>`;
+    }).join('');
+    $('#suReview').innerHTML=
+      `<div class="card" style="background:#12161d">
+        <div class="row"><b>New episode:</b>
+          <select id="suEpisode" onchange="previewShowUpdate(this.value)" style="min-width:320px">${epOpts}</select>
+          <span class="muted">(${fmt(SUPLAN.newShow.duration)})</span></div>
+        <div style="margin:6px 0"><b>Removed from rotation:</b> <span class="unused">${SUPLAN.removed.join(', ')||'—'}</span></div>
+        <div class="tblwrap" style="margin-top:8px"><table class="libtbl"><thead><tr>
+          <th>Loop</th><th>Hour</th><th>Replaces</th><th></th><th>New show</th><th>Also keeps</th></tr></thead>
+          <tbody>${rows}</tbody></table></div>
+      </div>`;
+    $('#suExecRow').style.display='';
+  }catch(e){ $('#suMsg').textContent=''; toast('Preview failed: '+e.message,true); }
+}
+async function executeShowUpdate(){
+  if(!SUPLAN){ toast('Preview first',true); return; }
+  const n=SUPLAN.plan.length;
+  if(!confirm(`Update ${n} loop(s) now?\n\nNew episode: ${SUPLAN.newShow.title}\n\nEach affected loop is rebuilt fresh with its shows pinned. Takes a few minutes.`)) return;
+  const row=$('#suProgressRow'),bar=$('#suBar'),pct=$('#suPct'),btn=$('#suExecBtn');
+  row.style.display=''; btn.disabled=true; bar.value=0; bar.max=100; pct.textContent='starting…'; setBusy(1);
+  try{
+    const r=await fetch('/api/show-update/execute',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({show:$('#suShow').value, newMediaId:SUPLAN.newShow.id})});
+    if(!r.ok) throw new Error(await r.text());
+    const reader=r.body.getReader(),dec=new TextDecoder(); let buf='',doneLoops=0;
+    while(true){
+      const {value,done}=await reader.read(); if(done) break;
+      buf+=dec.decode(value,{stream:true}); let idx;
+      while((idx=buf.indexOf('\n'))>=0){
+        const line=buf.slice(0,idx).trim(); buf=buf.slice(idx+1); if(!line) continue;
+        const m=JSON.parse(line);
+        if(m.done){ pct.textContent=`done — ${m.loops} loops updated ✓`; }
+        else if(m.phase==='generate'){ pct.textContent=`${m.loop}: generating…`; bar.value=0; }
+        else if(m.phase==='write'||m.phase==='clear'){ bar.max=m.total; bar.value=m.done;
+          pct.textContent=`${m.loop}: ${m.phase==='write'?'writing':'clearing'} ${m.done}/${m.total}`; }
+        else if(m.phase==='loopdone'){ doneLoops++; }
+      }
+    }
+    toast('Loops updated ✓'); loadPlaylists();
+  }catch(e){ pct.textContent='failed'; toast('Update failed: '+e.message,true); }
+  finally{ btn.disabled=false; setBusy(-1); }
+}
+
+// ---- music drop ----
+const DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+let MDCAND=[], MDSEL=new Set(), MDPLAN=null;
+
+async function loadDropCandidates(){
+  $('#mdMsg').textContent='looking…';
+  try{
+    const d=await api('/api/music-drop/candidates');
+    MDCAND=d.candidates||[];
+    MDSEL=new Set(MDCAND.map(c=>c.id));           // everything new, checked by default
+    $('#mdMsg').textContent = d.synced_at
+      ? `${MDCAND.length} music video(s) not in any loop yet`
+      : `${MDCAND.length} found — but loops have never been synced, so this may be wrong. Run “Sync all loops” first.`;
+    renderDropCandidates();
+  }catch(e){ $('#mdMsg').textContent=''; toast('Lookup failed: '+e.message,true); }
+}
+function renderDropCandidates(){
+  $('#mdTbl').querySelector('tbody').innerHTML = MDCAND.map(c=>
+    `<tr><td><input type="checkbox" data-id="${c.id}" ${MDSEL.has(c.id)?'checked':''}
+        onchange="dropToggle('${c.id}',this.checked)"></td>
+      <td>${c.title}</td><td class="dur">${fmt(c.duration)}</td></tr>`).join('')
+    || `<tr><td colspan="3" class="muted">Nothing new — every music video in the library is already in rotation.</td></tr>`;
+  updateDropCount();
+}
+function dropToggle(id,on){ on?MDSEL.add(id):MDSEL.delete(id); updateDropCount(); }
+function dropSelectAll(on){
+  MDSEL = on ? new Set(MDCAND.map(c=>c.id)) : new Set();
+  $('#mdTbl').querySelectorAll('input[type=checkbox]').forEach(cb=>cb.checked=on);
+  updateDropCount();
+}
+function updateDropCount(){
+  const n=MDSEL.size;
+  $('#mdCount').textContent = n ? `${n} selected → ${n*7} plays across the week` : 'none selected';
+  $('#mdExecRow').style.display='none'; $('#mdReview').innerHTML=''; MDPLAN=null;
+}
+
+async function previewDrop(){
+  if(!MDSEL.size){ toast('Pick at least one music video',true); return; }
+  $('#mdMsg').textContent='planning…';
+  try{
+    MDPLAN=await api('/api/music-drop/preview?mediaIds='+[...MDSEL].join(','));
+    $('#mdMsg').textContent='';
+    const byLoop={}; MDPLAN.plan.forEach(e=>byLoop[e.loop]=e);
+    const grid=DAYS.map(d=>{
+      const cells=[1,2,3,4].map(n=>{
+        const e=byLoop[`${d} Loop ${n}`];
+        return `<td>${e?`<b>${e.adds.length}</b>`:'<span class="muted">—</span>'}</td>`;
+      }).join('');
+      return `<tr><td>${d}</td>${cells}</tr>`;
+    }).join('');
+    const detail=MDPLAN.plan.map(e=>
+      `<details><summary>${e.loop} <span class="muted">— ${e.adds.length} new song(s)</span></summary>
+        <div class="muted" style="padding:4px 0 8px 14px">${e.adds.map(a=>a.title).join('<br>')}</div></details>`).join('');
+    $('#mdReview').innerHTML=
+      `<div class="card" style="background:#12161d">
+        <div style="margin-bottom:8px"><b>${MDPLAN.newCount}</b> new music video(s)
+          → <b>${MDPLAN.plays}</b> plays across <b>${MDPLAN.loops}</b> loops
+          <span class="muted">(each song once a day, rotating loop slots)</span></div>
+        <table class="libtbl" style="max-width:420px"><thead><tr>
+          <th>Day</th><th>Loop 1</th><th>Loop 2</th><th>Loop 3</th><th>Loop 4</th></tr></thead>
+          <tbody>${grid}</tbody></table>
+        <div style="margin-top:10px">${detail}</div>
+      </div>`;
+    $('#mdExecRow').style.display='';
+  }catch(e){ $('#mdMsg').textContent=''; toast('Preview failed: '+e.message,true); }
+}
+
+async function executeDrop(){
+  if(!MDPLAN){ toast('Preview first',true); return; }
+  if(!confirm(`Add ${MDPLAN.newCount} new music video(s) across ${MDPLAN.loops} loops?\n\n`
+    +`Each loop is rebuilt with a fresh music shuffle — its shows and performances stay put.\n`
+    +`This takes 20–30 minutes. Leave this tab open.`)) return;
+  const row=$('#mdProgressRow'),bar=$('#mdBar'),pct=$('#mdPct'),btn=$('#mdExecBtn');
+  row.style.display=''; btn.disabled=true; bar.value=0; bar.max=100; pct.textContent='starting…'; setBusy(1);
+  let at='', n=MDPLAN.loops;
+  try{
+    const r=await fetch('/api/music-drop/execute',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({mediaIds:[...MDSEL]})});
+    if(!r.ok) throw new Error(await r.text());
+    const reader=r.body.getReader(),dec=new TextDecoder(); let buf='';
+    while(true){
+      const {value,done}=await reader.read(); if(done) break;
+      buf+=dec.decode(value,{stream:true}); let idx;
+      while((idx=buf.indexOf('\n'))>=0){
+        const line=buf.slice(0,idx).trim(); buf=buf.slice(idx+1); if(!line) continue;
+        const m=JSON.parse(line);
+        if(m.done){
+          bar.value=bar.max;
+          pct.textContent=`done — ${m.loops} loops updated ✓`;
+          if(m.unplaced&&m.unplaced.length)
+            toast(`${m.unplaced.length} song(s) couldn’t fit — see console`,true), console.warn('unplaced:',m.unplaced);
+        }
+        else if(m.phase==='generate'){ at=`loop ${m.i}/${m.n}`; pct.textContent=`${at} · ${m.loop}: generating…`; bar.value=0; }
+        else if(m.phase==='write'||m.phase==='clear'){ bar.max=m.total; bar.value=m.done;
+          pct.textContent=`${at} · ${m.loop}: ${m.phase==='write'?'writing':'clearing'} ${m.done}/${m.total}`; }
+      }
+    }
+    toast('Music dropped ✓'); loadPlaylists(); loadDropCandidates();
+  }catch(e){ pct.textContent='failed'; toast('Drop failed: '+e.message,true); }
+  finally{ btn.disabled=false; setBusy(-1); }
+}
+
+// ---- S3 import ----
+let S3OBJS=[];
+function fmtSize(b){ return b>=1e9?(b/1e9).toFixed(1)+' GB':b>=1e6?(b/1e6).toFixed(0)+' MB':(b/1e3).toFixed(0)+' KB'; }
+async function checkS3(){
+  try{
+    const d=await api('/api/s3/list');
+    S3OBJS=d.objects||[];
+    const nnew=S3OBJS.filter(o=>!o.alreadyImported).length;
+    $('#s3Stats').textContent=`${d.count} file(s) in ${d.bucket}${d.prefix?'/'+d.prefix:''} · ${nnew} new`;
+    renderS3();
+  }catch(e){ toast('S3 check failed: '+e.message,true); $('#s3Stats').textContent='error — check s3_bucket in config.json'; }
+}
+function renderS3(){
+  const tb=$('#s3Tbl tbody'); tb.innerHTML='';
+  S3OBJS.forEach((o,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><input type="checkbox" class="s3chk" data-i="${i}" ${o.alreadyImported?'':'checked'}></td>
+      <td style="min-width:200px">${o.key}</td>
+      <td><input class="s3title" data-i="${i}" value="${(o.title||'').replace(/"/g,'&quot;')}" style="width:100%"></td>
+      <td class="dur">${fmtSize(o.size)}</td>
+      <td class="muted" style="white-space:nowrap">${o.lastModified?new Date(o.lastModified).toLocaleString():''}</td>
+      <td>${o.alreadyImported?'<span class="usg">imported</span>':'<span class="unused">new</span>'}</td>`;
+    tb.appendChild(tr);
+  });
+}
+function s3SelectNew(){ document.querySelectorAll('.s3chk').forEach(c=>{ c.checked=!S3OBJS[c.dataset.i].alreadyImported; }); }
+function s3SelectNone(){ document.querySelectorAll('.s3chk').forEach(c=>c.checked=false); }
+async function importSelected(){
+  const items=[];
+  document.querySelectorAll('.s3chk').forEach(c=>{
+    if(c.checked){ const i=c.dataset.i, o=S3OBJS[i];
+      const title=(document.querySelector(`.s3title[data-i="${i}"]`).value||'').trim()||o.title;
+      items.push({key:o.key,title,url:o.url}); }
+  });
+  if(!items.length){ toast('Nothing selected',true); return; }
+  if(!confirm(`Import ${items.length} file(s) into your ChannelCast library?`)) return;
+  const row=$('#s3ProgressRow'),bar=$('#s3Bar'),pct=$('#s3Pct'); row.style.display='';
+  bar.value=0; bar.max=items.length; pct.textContent='0 / '+items.length; setBusy(1);
+  try{
+    const r=await fetch('/api/s3/import',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items})});
+    if(!r.ok) throw new Error(await r.text());
+    const reader=r.body.getReader(),dec=new TextDecoder(); let buf='',errs=0,sum=null;
+    while(true){ const {value,done}=await reader.read(); if(done) break;
+      buf+=dec.decode(value,{stream:true}); let idx;
+      while((idx=buf.indexOf('\n'))>=0){ const line=buf.slice(0,idx).trim(); buf=buf.slice(idx+1); if(!line) continue;
+        const m=JSON.parse(line);
+        if(m.done){ sum=m; } else { bar.value=m.i; if(m.error) errs++; pct.textContent=`${m.i} / ${m.n}${errs?` · ${errs} err`:''}`; }
+      } }
+    pct.textContent=`done — imported ${sum?sum.imported:''}/${items.length}${errs?`, ${errs} failed`:''} ✓`;
+    toast(`Imported ${sum?sum.imported:0} file(s); re-syncing library…`);
+    await checkS3(); await syncLibrary();
+  }catch(e){ pct.textContent='failed'; toast('Import failed: '+e.message,true); }
+  finally{ setBusy(-1); }
+}
+
+async function addVideo(){
+  const title=$('#nvTitle').value.trim(),url=$('#nvUrl').value.trim();
+  if(!title||!url){toast('Title and URL required',true);return;}
+  try{const r=await api('/api/add-media',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({title,url})});toast('Added: '+(r.mediaId||'ok'));$('#nvTitle').value='';$('#nvUrl').value='';}
+  catch(e){toast('Add failed: '+e.message,true);}
+}
+
+function addOpenerRow(){
+  const div=document.createElement('div');
+  div.className='openerRow';
+  div.innerHTML=`<input class="opVid" list="showlist" placeholder="type to search a show…">
+    <span class="athr">@ hour</span>
+    <input class="opHour" type="number" step="0.5" min="0" value="0" title="0 = top of loop · 2 = top of 2nd hour · 2.5 = 2h30m">
+    <button class="ghost iconbtn" type="button" onclick="this.closest('.openerRow').remove()">✕</button>`;
+  $('#openerList').appendChild(div);
+}
+
+function collectOpeners(){
+  const out=[];
+  document.querySelectorAll('#openerList .openerRow').forEach(row=>{
+    const title=row.querySelector('.opVid').value.trim();
+    if(!title) return;
+    const m=LIB.find(x=>x.title===title);
+    if(!m){ toast('Opener not found: '+title,true); return; }
+    out.push({mediaId:m.id, hour:parseFloat(row.querySelector('.opHour').value)||0});
+  });
+  return out;
+}
+
+async function doGenerate(){
+  const openers=collectOpeners();
+  const avoid=[...$('#genAvoid').selectedOptions].map(o=>o.value);
+  const body={channelId:CFG.channel_id,
+    targetHours:parseFloat($('#genHours').value),gapHours:parseFloat($('#genGap').value),
+    numSpecials:parseInt($('#genSpecials').value),promoEvery:parseInt($('#genPromo').value),
+    reshuffle:$('#genReshuffle').value==='true',avoidPlaylistIds:avoid,openers,
+    seed:$('#genSeed').value?parseInt($('#genSeed').value):null};
+  try{
+    toast('Generating…');
+    PREVIEW=await api('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(body)});
+    const rep=PREVIEW.report;
+    $('#genReport').innerHTML = rep.ok
+      ? `<span class="ok">✓ no violations</span> · ${rep.item_count} items · ${rep.mv_count} MVs`
+        +(rep.opener_placements&&rep.opener_placements.length
+            ? ' · openers @ '+rep.opener_placements.map(o=>fmt(o.placed_at)).join(', ')
+            : '')
+        +(PREVIEW.specials_depleted_reset?' · <span class="pill">specials pool reset</span>':'')
+      : `<span class="bad">${rep.violations.length} violation(s)</span>`;
+    renderPreview();
+  }catch(e){toast('Generate failed: '+e.message,true);}
+}
+function renderPreview(){
+  $('#previewCard').style.display='';
+  const seq=PREVIEW.sequence;const tb=$('#previewTbl tbody');tb.innerHTML='';
+  let total=0;
+  seq.forEach((it,i)=>{total=it.playsAtSeconds+it.duration;const kind=it.kind;
+    const tr=document.createElement('tr');tr.className=kind;
+    tr.innerHTML=`<td>${i+1}</td><td class="time">${fmt(it.playsAtSeconds)}</td><td>${it.title}</td>
+      <td class="kind">${kind}</td><td class="dur">${fmt(it.duration)}</td>`;tb.appendChild(tr);});
+  $('#previewStats').textContent=` · ${seq.length} items · ${fmt(total)} total`;
+}
+async function pushPreview(){
+  if(!PREVIEW){toast('Generate first',true);return;}
+  const pid=$('#pushTarget').value;
+  const tgt=PLAYLISTS.find(p=>p.id===pid);
+  if(tgt&&tgt.items>0&&!confirm(`"${tgt.name}" already has ${tgt.items} items. Push will APPEND. Continue?`))return;
+  const ids=PREVIEW.media_ids, total=ids.length;
+  const btn=$('#pushBtn'), bar=$('#pushBar');
+  btn.disabled=true; $('#pushProgressRow').style.display='';
+  bar.max=total; bar.value=0; $('#pushPct').textContent='0 / '+total;
+  let i=0;
+  try{
+    for(i=0;i<total;i++){
+      await api('/api/push-one',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({playlistId:pid,mediaId:ids[i]})});
+      bar.value=i+1;
+      $('#pushPct').textContent=`${i+1} / ${total}  (${Math.round((i+1)/total*100)}%)`;
+    }
+    await api('/api/record-specials',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({specialIds:PREVIEW.chosen_special_ids})});
+    $('#pushPct').textContent=`done — ${total} items ✓`;
+    toast('Pushed '+total+' items');
+    loadPlaylists();
+  }catch(e){
+    $('#pushPct').textContent=`stopped at ${i+1} / ${total}`;
+    toast('Push failed at item '+(i+1)+': '+e.message,true);
+  }finally{
+    btn.disabled=false;
+    setTimeout(()=>{$('#pushProgressRow').style.display='none';},2500);
+  }
+}
+
+init();
+</script>
+</body>
+</html>

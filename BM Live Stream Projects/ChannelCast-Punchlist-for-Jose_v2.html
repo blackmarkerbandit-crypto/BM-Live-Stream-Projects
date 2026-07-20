@@ -1,0 +1,609 @@
+<!doctype html>
+<html><head><title>ChannelCast.TV Launch Punchlist</title>
+<style>
+  :root{
+    --bg:#f5f7fa; --surface:#ffffff; --surface-2:#eef1f5; --border:#e0e4ea;
+    --ink:#1a2230; --ink-soft:#586173; --ink-faint:#8a93a3;
+    --accent:#2f6fed; --accent-soft:#e7eefc;
+    --p1:#d63c42; --p1-bg:#fbe9ea; --p1-line:#e5484d;
+    --p2:#a8730a; --p2-bg:#f8f0dd; --p2-line:#d9971a;
+    --p3:#556484; --p3-bg:#eceff5; --p3-line:#7385a6;
+    --good:#218a5e;
+    --shadow:0 1px 2px rgba(20,30,50,.05), 0 4px 16px rgba(20,30,50,.06);
+    --mono:ui-monospace,"SF Mono","Cascadia Code","JetBrains Mono",Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0d1116; --surface:#161b22; --surface-2:#1c2230; --border:#262d3a;
+      --ink:#e7eaf0; --ink-soft:#9aa4b3; --ink-faint:#6a7382;
+      --accent:#5b93f7; --accent-soft:#182338;
+      --p1:#ff7278; --p1-bg:#331a1d; --p1-line:#e5484d;
+      --p2:#f0b24a; --p2-bg:#2f2716; --p2-line:#d9971a;
+      --p3:#93a1bb; --p3-bg:#1e2431; --p3-line:#5f6f8f;
+      --good:#4fd1a0;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f5f7fa; --surface:#ffffff; --surface-2:#eef1f5; --border:#e0e4ea;
+    --ink:#1a2230; --ink-soft:#586173; --ink-faint:#8a93a3;
+    --accent:#2f6fed; --accent-soft:#e7eefc;
+    --p1:#d63c42; --p1-bg:#fbe9ea; --p1-line:#e5484d;
+    --p2:#a8730a; --p2-bg:#f8f0dd; --p2-line:#d9971a;
+    --p3:#556484; --p3-bg:#eceff5; --p3-line:#7385a6;
+    --good:#218a5e;
+    --shadow:0 1px 2px rgba(20,30,50,.05), 0 4px 16px rgba(20,30,50,.06);
+  }
+  :root[data-theme="dark"]{
+    --bg:#0d1116; --surface:#161b22; --surface-2:#1c2230; --border:#262d3a;
+    --ink:#e7eaf0; --ink-soft:#9aa4b3; --ink-faint:#6a7382;
+    --accent:#5b93f7; --accent-soft:#182338;
+    --p1:#ff7278; --p1-bg:#331a1d; --p1-line:#e5484d;
+    --p2:#f0b24a; --p2-bg:#2f2716; --p2-line:#d9971a;
+    --p3:#93a1bb; --p3-bg:#1e2431; --p3-line:#5f6f8f;
+    --good:#4fd1a0;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px;}
+
+  /* header */
+  header{padding:34px 0 20px;}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;display:flex;align-items:center;gap:8px;}
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);
+    box-shadow:0 0 0 4px var(--accent-soft);}
+  h1{font-size:clamp(26px,4vw,38px);line-height:1.1;margin:.35em 0 .15em;letter-spacing:-.02em;
+    text-wrap:balance;font-weight:750;}
+  .lede{color:var(--ink-soft);max-width:60ch;font-size:15.5px;margin:0;}
+  .lede b{color:var(--ink);font-weight:600;}
+
+  /* summary bar */
+  .board{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:12px;margin:24px 0 6px;}
+  @media (max-width:680px){.board{grid-template-columns:1fr 1fr;}}
+  .stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+    padding:14px 16px;box-shadow:var(--shadow);}
+  .stat .k{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-faint);display:flex;align-items:center;gap:7px;}
+  .stat .v{font-size:26px;font-weight:700;margin-top:4px;font-variant-numeric:tabular-nums;letter-spacing:-.01em;}
+  .stat .v small{font-size:15px;color:var(--ink-faint);font-weight:500;}
+  .bar{height:6px;border-radius:99px;background:var(--surface-2);overflow:hidden;margin-top:10px;}
+  .bar > i{display:block;height:100%;border-radius:99px;background:var(--good);transition:width .35s ease;}
+  .swatch{width:9px;height:9px;border-radius:3px;display:inline-block;}
+  .s1{background:var(--p1-line)} .s2{background:var(--p2-line)} .s3{background:var(--p3-line)}
+
+  /* controls */
+  .controls{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);
+    backdrop-filter:blur(8px);margin:18px -20px 0;padding:12px 20px;border-bottom:1px solid var(--border);
+    display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;}
+  .chip{font:inherit;font-size:13px;cursor:pointer;border:1px solid var(--border);background:var(--surface);
+    color:var(--ink-soft);border-radius:99px;padding:6px 13px;display:inline-flex;align-items:center;gap:7px;
+    transition:.15s;}
+  .chip:hover{border-color:var(--accent);color:var(--ink);}
+  .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink);}
+  .chip .n{font-family:var(--mono);font-size:11px;opacity:.8;}
+  .spacer{flex:1}
+  .btn{font:inherit;font-size:13px;cursor:pointer;border:1px solid var(--border);background:var(--surface);
+    color:var(--ink);border-radius:8px;padding:7px 12px;display:inline-flex;align-items:center;gap:7px;transition:.15s;}
+  .btn:hover{border-color:var(--accent);}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .btn.primary:hover{filter:brightness(1.06);}
+  .btn.primary .n{background:rgba(255,255,255,.22);border-radius:99px;padding:1px 6px;}
+  .btn.ghost{background:transparent;color:var(--ink-soft);}
+  .btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink);}
+  .btn .n{font-family:var(--mono);font-size:11px;}
+
+  /* baked-snapshot banner (only appears in an exported copy) */
+  .snapshot{margin:14px 0 0;padding:12px 15px;border-radius:10px;font-size:13.5px;line-height:1.5;
+    background:var(--accent-soft);color:var(--ink);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);}
+
+  /* "these are one bug" callout */
+  .cluster{margin:18px 0 0;padding:16px 18px;border-radius:12px;background:var(--surface);
+    border:1px solid color-mix(in srgb,var(--p1-line) 40%,var(--border));
+    border-left:4px solid var(--p1-line);box-shadow:var(--shadow);}
+  .cluster-h{font-weight:750;font-size:15px;letter-spacing:-.01em;margin-bottom:8px;color:var(--ink);}
+  .cluster p{margin:0 0 8px;color:var(--ink-soft);font-size:14px;}
+  .cluster p:last-child{margin-bottom:0;}
+  .cluster ul{margin:0 0 10px;padding-left:18px;display:flex;flex-direction:column;gap:6px;}
+  .cluster li{color:var(--ink-soft);font-size:14px;line-height:1.45;}
+  .cluster b{color:var(--ink);}
+  .p1tag{font-family:var(--mono);font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:5px;
+    color:var(--p1);background:var(--p1-bg);white-space:nowrap;}
+
+  /* sections + items */
+  section.grp{margin-top:30px;}
+  .grp-h{display:flex;align-items:baseline;gap:10px;margin:0 0 12px;}
+  .grp-h h2{font-size:14px;font-weight:700;letter-spacing:.02em;margin:0;text-transform:uppercase;
+    font-family:var(--mono);color:var(--ink-soft);}
+  .grp-h .rule{flex:1;height:1px;background:var(--border);}
+  .grp-h .gc{font-family:var(--mono);font-size:12px;color:var(--ink-faint);}
+
+  .item{position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:14px;
+    background:var(--surface);border:1px solid var(--border);border-radius:12px;
+    padding:15px 16px 15px 18px;margin-bottom:10px;box-shadow:var(--shadow);overflow:hidden;}
+  .item::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--p3-line);}
+  .item.p1::before{background:var(--p1-line)} .item.p2::before{background:var(--p2-line)} .item.p3::before{background:var(--p3-line)}
+  .item.done{opacity:.55;}
+  .item.done .title{text-decoration:line-through;text-decoration-color:var(--ink-faint);}
+
+  .cb{appearance:none;-webkit-appearance:none;width:22px;height:22px;border:2px solid var(--border);
+    border-radius:7px;cursor:pointer;margin-top:1px;background:var(--surface-2);transition:.15s;position:relative;flex:none;}
+  .cb:hover{border-color:var(--accent);}
+  .cb:checked{background:var(--good);border-color:var(--good);}
+  .cb:checked::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;
+    border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(43deg);}
+  .cb:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+  .body{min-width:0;}
+  .meta{display:flex;align-items:center;gap:9px;margin-bottom:5px;flex-wrap:wrap;}
+  .pill{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.03em;padding:2px 8px;border-radius:6px;}
+  .pill.p1{color:var(--p1);background:var(--p1-bg);} .pill.p2{color:var(--p2);background:var(--p2-bg);} .pill.p3{color:var(--p3);background:var(--p3-bg);}
+  .id{font-family:var(--mono);font-size:12px;color:var(--ink-faint);}
+
+  /* status: verified by API check / needs Eric's eyes / partly landed */
+  .st{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.03em;padding:2px 8px;
+    border-radius:6px;border:1px solid transparent;}
+  .st.done{color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent);border-color:color-mix(in srgb,var(--good) 30%,transparent);}
+  .st.partial{color:var(--p2);background:var(--p2-bg);border-color:color-mix(in srgb,var(--p2-line) 35%,transparent);}
+  .st.test{color:var(--accent);background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 30%,transparent);}
+  .item.verified{border-color:color-mix(in srgb,var(--good) 35%,var(--border));}
+  .item.verified::before{background:var(--good)!important;}
+  .notes li.ok{background:color-mix(in srgb,var(--good) 10%,transparent);color:var(--ink);border-radius:8px;padding:8px 10px 8px 26px;}
+  .notes li.ok::before{content:"\2713";background:none;left:9px;top:6px;width:auto;height:auto;
+    font-size:12px;font-weight:700;color:var(--good);}
+  .notes li.todo{background:var(--surface-2);color:var(--ink);border-radius:8px;padding:8px 10px 8px 26px;}
+  .notes li.todo::before{content:"\1F441";background:none;left:8px;top:8px;width:auto;height:auto;font-size:11px;}
+  .title{font-weight:650;font-size:15.5px;letter-spacing:-.01em;}
+  .desc{color:var(--ink-soft);font-size:14px;margin:6px 0 0;}
+  .notes{margin:9px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;}
+  .notes li{font-size:13px;color:var(--ink-soft);padding-left:14px;position:relative;line-height:1.45;}
+  .notes li::before{content:"";position:absolute;left:2px;top:8px;width:5px;height:5px;border-radius:50%;background:var(--ink-faint);}
+  .notes li.hint{background:var(--accent-soft);color:var(--ink);border-radius:8px;padding:8px 10px 8px 26px;}
+  .notes li.hint::before{content:"\1F50E";background:none;left:9px;top:8px;width:auto;height:auto;font-size:11px;}
+  .notes li code, .desc code, .title code{font-family:var(--mono);font-size:.86em;background:var(--surface-2);
+    padding:1px 5px;border-radius:5px;color:var(--ink);}
+
+  .actions{display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
+  .copy{font:inherit;font-family:var(--mono);font-size:12px;cursor:pointer;border:1px solid var(--border);
+    background:var(--surface-2);color:var(--ink-soft);border-radius:8px;padding:6px 10px;white-space:nowrap;transition:.15s;}
+  .copy:hover{border-color:var(--accent);color:var(--accent);}
+  .copy.ok{border-color:var(--good);color:var(--good);background:transparent;}
+
+  footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--border);color:var(--ink-faint);
+    font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .hidden{display:none!important;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+  @media (max-width:560px){
+    .item{grid-template-columns:auto 1fr;} .actions{grid-column:1/-1;flex-direction:row;justify-content:flex-start;padding-left:36px;}
+  }
+</style>
+
+<script id="baked">window.__BAKED={"CC-03":true,"CC-04":true,"CC-05":true,"CC-06":true,"CC-08":true,"CC-09":true,"CC-10":true,"CC-13":true,"CC-14":true,"CC-01":true,"CC-15":true,"CC-16":true,"CC-17":true,"CC-12":true};window.__BAKED_AT="7/14/2026, 1:50:41 AM";</script></head><body><div class="wrap">
+  <header>
+    <div class="eyebrow"><span class="dot"></span> ChannelCast.TV · Launch Prep</div>
+    <h1>Launch Punchout List</h1>
+    <p class="lede">Everything to fix on ChannelCast.TV before we go live to clients. <b>Jose has shipped a first pass</b> — anything confirmed against the live API is marked <b>✓ Verified</b> and <b>starts pre-checked</b>. Everything else is front-end and <b>needs your eyes</b>: hit <b>“Needs my test.”</b> As you test, check things off — then <b>↕ Unchecked first</b> floats what’s left to the top, and <b>⧉ Copy unchecked → Jose</b> puts exactly that on your clipboard. <b>Progress saves in your browser.</b></p>
+  </header>
+
+  <div class="board">
+    <div class="stat">
+      <div class="k">Checked off</div>
+      <div class="v"><span id="doneN">14</span><small>/<span id="totN">20</span></small></div>
+      <div class="bar"><i id="barAll" style="width: 70%;"></i></div>
+    </div>
+    <div class="stat">
+      <div class="k"><span class="swatch" style="background:var(--good)"></span> Verified via API</div>
+      <div class="v" id="vDone">5</div>
+      <div class="bar"><i id="barV" style="width: 25%; background: var(--good);"></i></div>
+    </div>
+    <div class="stat">
+      <div class="k"><span class="swatch" style="background:var(--p2-line)"></span> Partly landed</div>
+      <div class="v" id="vPart">1</div>
+      <div class="bar"><i id="barP" style="width: 5%; background: var(--p2-line);"></i></div>
+    </div>
+    <div class="stat">
+      <div class="k"><span class="swatch" style="background:var(--accent)"></span> Needs your test</div>
+      <div class="v" id="vTest">14</div>
+      <div class="bar"><i id="barT" style="width: 70%; background: var(--accent);"></i></div>
+    </div>
+  </div>
+
+  <div class="cluster">
+    <div class="cluster-h">⚑ Start here, Jose — CC-09 + CC-19 + CC-20 are probably one bug</div>
+    <p>The on-demand page runs <b>two player instances that aren’t aware of each other</b>: the inline
+    <b>feature block</b>, and the <b>overlay/modal</b> that opens when you click a video. Nearly everything
+    wrong with VOD traces back to that split:</p>
+    <ul>
+      <li><b>CC-09</b> — both players run at once, so you get two videos and two audio tracks.</li>
+      <li><b>CC-19</b> <span class="p1tag">P1 · blocker</span> — <b>VOD plays are never recorded.</b> The tracking hook
+        is almost certainly on the feature-block player and never made it onto the overlay — which is the one
+        people actually watch in. One player plays but isn’t counted; the other is counted but shouldn’t be playing.</li>
+      <li><b>CC-20</b> — plays double-logged, sometimes half a second apart. Two players, two event bindings,
+        one video. Likely the flip side of the same wiring.</li>
+    </ul>
+    <p><b>Fix how those two players are wired and you may close all three.</b> Worth doing before picking
+    off anything else on the VOD side.</p>
+  </div>
+
+  <div class="controls">
+    <div class="chips" id="filters">
+      <button class="chip" data-f="all" aria-pressed="true">All <span class="n" id="cAll">20</span></button>
+      <button class="chip" data-f="test" aria-pressed="false">🔍 Needs my test <span class="n" id="cTest">15</span></button>
+      <button class="chip" data-f="P1" aria-pressed="false"><span class="swatch s1"></span> P1 <span class="n" id="cP1">7</span></button>
+      <button class="chip" data-f="P2" aria-pressed="false"><span class="swatch s2"></span> P2 <span class="n" id="cP2">8</span></button>
+      <button class="chip" data-f="P3" aria-pressed="false"><span class="swatch s3"></span> P3 <span class="n" id="cP3">5</span></button>
+      <button class="chip" data-f="open" aria-pressed="false">Open only</button>
+    </div>
+    <div class="spacer"></div>
+    <button class="btn" id="sortBtn" aria-pressed="false" title="Float everything still open to the top">↕ Unchecked first</button>
+    <button class="btn primary" id="copyOpen">⧉ Copy unchecked → Jose <span class="n" id="cOpen">6</span></button>
+    <button class="btn" id="copyTest">⧉ Copy my test list</button>
+    <button class="btn" id="exportBtn" title="Download a copy of this page with your check-offs baked in">⬇ Export for Jose</button>
+    <button class="btn ghost" id="reset">Reset checks</button>
+  </div>
+
+  <main id="list"></main>
+
+  <footer>
+    <span>ChannelCast.TV launch punchout · built for Jose's handoff</span>
+    <span id="ts">Updated Jul 14, 2026</span>
+  </footer>
+</div>
+
+<script>
+// st: "done"    = I confirmed it against the live API
+//     "partial" = part of it landed, part is still missing
+//     "test"    = front-end / visual — Eric has to look at it
+const ITEMS = [
+  {id:"CC-01",sec:"Media Library",pri:"P1",st:"done",
+   title:"Add a separate <b>“filename”</b> field, distinct from the display <b>“title.”</b>",
+   desc:"Today there’s only one “title” field, which serves double duty: the naming-convention identifier (e.g. <code>MV ArtistName SongName</code>, <code>TWI …-MMDDYYYY</code> — how content gets categorized) <i>and</i> the viewer-facing name. Split into (1) a <b>filename</b> that follows our naming conventions (for categorization/classification/automation) and (2) a <b>friendly display title</b> that can be anything for viewers, independent of the file naming.",
+   notes:[{ok:true,t:"<b>Verified.</b> <code>list_media</code> now returns <code>filename</code> and <code>title</code> as separate fields, and <code>update_media</code> sets each independently. Existing items are backfilled with filename mirroring title, which is correct."},
+          {todo:true,t:"Worth a glance: confirm the <b>dashboard UI</b> also exposes both fields for editing, not just the API."}]},
+
+  {id:"CC-02",sec:"Video Player",pri:"P1",st:"test",
+   title:"Add a <b>“logo bug”</b> option to the video player.",
+   desc:"There’s currently no option in the system to place a logo bug (a persistent channel logo/watermark overlaid on the video, like a TV network corner logo). Add the ability to enable and configure a logo bug on the player.",
+   notes:[
+     {hint:true,t:"<b>Nothing in the API suggests this exists yet.</b> The channel object returns only <code>id</code>, <code>name</code>, <code>slug</code>, <code>live</code>, <code>isPublic</code> — no logo/watermark/overlay field. Assume this one is still untouched."},
+     {t:"<b>Spec — where it lives:</b> a <b>per-channel setting</b>, in <b>Channel Settings</b>, alongside the channel hero and other branding. It applies to everything the channel plays, so it does <i>not</i> belong on individual playlists or media items."},
+     {t:"<b>Spec — how to build it: a player-side overlay</b>, not a burned-in watermark. Draw the logo as a DOM/CSS layer on top of the video. It’s cheap, instantly toggleable, and needs no re-encoding. (Burning it into the video via Mux would survive someone pulling the raw HLS stream, but costs encoding and can’t be changed without re-processing every asset — not worth it for launch. If we ever need that, it’s a separate job.)"},
+     {t:"<b>Spec — controls:</b> on/off toggle · upload a <b>transparent PNG</b> (SVG welcome) · <b>corner</b> (top-left / top-right / bottom-left / bottom-right) · <b>size</b> · <b>opacity</b>."},
+     {t:"<b>Spec — behaviour:</b> size should be a <b>% of player width</b>, not fixed pixels, so it scales with the player. It must stay <b>above the video but below the player controls</b>, persist through <b>fullscreen</b>, and appear on <b>all three players</b> — the live/broadcast player, the VOD player, and the embeddable players clients drop on their own sites."},
+     {todo:true,t:"<b>Your test (once built):</b> upload a transparent PNG, set it bottom-right, and confirm it shows on the live stream, on a VOD, and inside an embed — and that it survives going fullscreen."}]},
+
+  {id:"CC-03",sec:"Playlists / Scheduling",pri:"P1",st:"test",
+   title:"Recurring playlist schedules aren’t actually recurring to the following week.",
+   desc:"When a playlist is scheduled with recurrence, it doesn’t re-schedule/repeat for the next week. Verify that (a) recurring schedules actually fire each week, and (b) upcoming/recurring scheduled playlists are visible on the playlist screen.",
+   notes:[{ok:true,t:"<b>Looks like it fired.</b> All 28 schedules read back as <code>Weekly</code>, starting the week of Jul 6–12. There are plays on Mon Jul 13 — including <code>TWI PRParadeWeekendCountdown</code> at 23:09 UTC, which is exactly the Monday Loop 4 opener, and Monday Loop 4 is scheduled for 22:00 UTC. That’s the weekly recurrence rolling over."},
+          {todo:true,t:"<b>Your test — but confirm it on screen.</b> Every play is tagged <code>source: \"channel\"</code>, never <code>\"schedule\"</code>, so I can’t tell from the API whether the schedule fired or the channel is just grinding its default loop. Check the schedule screen shows next week’s occurrences."}]},
+
+  {id:"CC-04",sec:"Playlists / Scheduling",pri:"P1",st:"test",
+   title:"<b>“Gap between videos”</b> won’t actually go to 0 (always defaults to 1 second).",
+   desc:"In the playlist screen, setting the inter-video gap to 0 doesn’t stick — it reverts to 1s. Need a true 0-gap option so videos cut straight through. Confirmed on our end: every playlist currently plays with a forced ~1s gap per item, so a 6-hour content loop actually runs ~2 min long (e.g. 121 items = 121s of gaps).",
+   notes:[{todo:true,t:"<b>Your test.</b> Set a playlist’s gap to <b>0</b> and save. Does it stick, or snap back to 1s? If it sticks, a 6h loop should now run 6:00:00, not ~6:02."},
+          {hint:true,t:"The API has always accepted <code>gapSeconds</code> on <code>update_playlist</code>, and it still does — so I can’t verify this one from my side. The bug was the UI clamping to a 1-second minimum."}]},
+
+  {id:"CC-05",sec:"Playlists / Scheduling",pri:"P1",st:"test",
+   title:"Schedule screen should show the <b>next recurring date</b> for each scheduled playlist.",
+   desc:"The upcoming recurring date isn’t displayed on the schedule.",
+   notes:[{todo:true,t:"<b>Your test.</b> Does each scheduled playlist now show its next run date?"},
+          {hint:true,t:"<code>list_schedules</code> still returns only id / start / recurrence / playlist — <b>no next-occurrence field</b>. That’s not proof it’s missing (the UI may compute it), but there’s no API surface for it."}]},
+
+  {id:"CC-06",sec:"Playlists / Scheduling",pri:"P3",st:"test",
+   title:"Make each day <b>collapsible</b> on the schedule screen.",
+   desc:"All days show their playlists expanded, so you scroll a long way. Let each day collapse/expand so the schedule is easier to scan.",
+   notes:[{todo:true,t:"<b>Your test.</b> Can each day collapse and expand?"}]},
+
+  {id:"CC-07",sec:"VOD / Embeds",pri:"P2",st:"test",
+   title:"Image upload on <b>VOD detail pages</b> doesn’t actually work.",
+   desc:"The VOD detail page shows drag-and-drop blocks for uploading a thumbnail and additional images, and it looks like it should function — but it doesn’t actually upload/save them. Fix the thumbnail + additional-image upload so the images actually attach to the VOD item.",
+   notes:[{todo:true,t:"<b>Your test.</b> Drag a thumbnail onto a VOD item, save, reload the page. Did it stick?"}]},
+
+  {id:"CC-08",sec:"VOD / Embeds",pri:"P2",st:"test",
+   title:"Allow embedding a <b>single VOD category</b> on its own (not just the full catalog).",
+   desc:"Today you can embed/install the whole VOD catalog into a page. Add the ability to embed one specific VOD category by itself.",
+   notes:[{todo:true,t:"<b>Your test.</b> Is there an option to grab embed code for one category (e.g. just <i>Can You Dig It!?</i>) rather than the whole catalog?"}]},
+
+  {id:"CC-09",sec:"Front-End — On-Demand (VOD) Page",pri:"P2",st:"test",
+   title:"Clicking a VOD item plays <b>two videos at once</b> (overlay + feature block).",
+   desc:"On the on-demand page, clicking a video opens it in an overlay/modal player (good), but the featured “feature block” keeps playing in the background at the same time — so two videos (and two audio tracks) play simultaneously. It should be either/or: when the overlay opens, pause the background feature-block playback (resume or leave it paused when the overlay closes). Only one plays at a time.",
+   notes:[
+     {hint:true,t:"<b>Jose — do this one together with CC-19 (and check CC-20 while you’re in there). They look like the same root cause.</b> This page runs two player instances that clearly aren’t aware of each other: the inline feature block and the click-through overlay. That same split explains why <b>VOD plays never get recorded</b> (CC-19) — the tracking hook almost certainly lives on the feature-block player and never made it onto the overlay, which is the one people actually watch in. One player is playing but not counted; the other is counted but shouldn’t be playing. Fix how these two are wired and you likely close both tickets — and the <b>double-logging in CC-20</b> may be the flip side of it (two players, two event bindings, one video)."},
+     {todo:true,t:"<b>Your test.</b> Click a video on the on-demand page. Does the background feature block pause, or do you still hear two audio tracks?"}]},
+
+  {id:"CC-10",sec:"Front-End — On-Demand (VOD) Page",pri:"P2",st:"test",
+   title:"Add <b>theming / customization</b> options for the VOD embed (colors).",
+   desc:"Give clients general options to match the embed to their brand: the main background color of the VOD embed, the color of the content boxes/tiles in the sliding rails, and the font colors. (White-label branding for client sites.)",
+   notes:[{todo:true,t:"<b>Your test.</b> Can you set background, tile and font colors on the embed?"}]},
+
+  {id:"CC-11",sec:"Live Monitor",pri:"P2",st:"test",
+   title:"Expand the live monitor page with <b>viewer / traffic analytics</b>.",
+   desc:"Make sure we’re pulling in all data Mux actually exposes, and add monitoring of who’s tuned into the live stream — IP addresses, city/state/location, concurrent viewers, etc.",
+   notes:[{todo:true,t:"<b>Your test.</b> What does the live monitor show now — concurrent viewers? locations?"},
+          {hint:true,t:"<code>play_report</code> still returns <b>no viewer geo</b>, so the geo half of this hasn’t landed on the API side yet. See CC-18."}]},
+
+  {id:"CC-12",sec:"Analytics",pri:"P2",st:"done",
+   title:"Include <b>live-broadcast / playlist plays</b> in analytics, separate from VOD.",
+   desc:"Analytics appear to count only VOD (on-demand) plays. Also count plays that happened via the live broadcast / playlist — ideally shown as its own section, distinct from the VOD plays.",
+   notes:[{ok:true,t:"<b>Verified, both sides.</b> <code>play_report</code> returns a <code>sourceSplit</code> and every play carries a <code>source</code> — and Eric confirmed the playlist plays now show on the analytics page."},
+          {hint:true,t:"Note the irony: it’s now inverted from the original complaint. Broadcast plays count; <b>VOD plays are the ones reading zero</b> — that’s <b>CC-19</b>, and it’s a real bug, not an empty dataset."}]},
+
+  {id:"CC-13",sec:"Analytics",pri:"P3",st:"test",
+   title:"Show a <b>full list of all episodes</b> on the analytics page (not just the top 20).",
+   desc:"Currently only the top ~20 episodes are shown. Add a way to open it up to all episodes with their full traffic — plays and shares — for every episode.",
+   notes:[{ok:true,t:"<b>The data is live.</b> <code>play_report</code> with <code>perEpisode=true</code> returned all <b>160 episodes</b>, not a top-20 slice."},
+          {todo:true,t:"<b>Your test.</b> Does the analytics page let you open up the full list? (Note: <b>share counts are still missing</b> from the API — see CC-18.)"}]},
+
+  {id:"CC-14",sec:"Websites",pri:"P1",st:"test",
+   title:"<b>Domain verification</b> on the Websites tab isn’t working.",
+   desc:"You currently can’t verify a domain on the Websites tab. Fix whatever’s needed so you can add a website and successfully verify it (get it through to a verified status).",
+   notes:[{todo:true,t:"<b>Your test.</b> Add a domain on the Websites tab and take it all the way through to <b>verified</b>."}]},
+
+  {id:"CC-19",sec:"Analytics",pri:"P1",st:"test",
+   title:"<b>VOD play tracking is dead — on-demand plays are never recorded.</b>",
+   desc:"On-demand plays return a permanent, exact <b>zero</b> while broadcast plays record fine. Analytics is something we’re <b>selling to clients</b>, and “on-demand plays” is the first number a client will ask for — shipping with it silently reading 0 is worse than shipping without the feature. <b>Launch blocker.</b>",
+   notes:[
+     {ok:true,t:"<b>Confirmed by direct test (Jul 14).</b> Eric played a VOD for a full minute. The play report for the last 24h then returned <b>49 plays, every one <code>source: \"channel\"</code>, and <code>vod: 0</code></b>. The log is near-real-time — the newest broadcast play landed ~2 min before the query — so there’s no ingestion lag hiding it. Nothing was recorded."},
+     {hint:true,t:"<b>Lead for Jose — start here.</b> Per <b>CC-09</b>, the on-demand page runs <b>two player instances</b>: the inline feature block, and the overlay/modal that opens when you click a video. Best guess: the play-tracking hook is wired into the feature-block player and <b>the overlay player never got it</b> — which is exactly the player people actually watch in. That would produce a permanent exact zero rather than flaky undercounting. Diff the two components first; likely a one-line fix."}]},
+
+  {id:"CC-20",sec:"Analytics",pri:"P2",st:"test",
+   title:"Plays are <b>double-logged</b> — one video counted 4–6 times in seconds.",
+   desc:"The raw play log shows repeated rows for a single video in tight clusters. This <b>inflates every play count we show a client</b> — including the broadcast numbers that <i>are</i> working.",
+   notes:[
+     {ok:true,t:"<b>Still happening as of Jul 14.</b> <code>MV DVAliasKhryst NewJackCity</code> logged <b>six times</b> between 05:22:45 and 05:25:57 — two of them <b>half a second apart</b> (05:23:06.79 and 05:23:07.30). Earlier: <code>MV Locksmith Haters</code> ×5 on Jul 13; <code>MV CoastContra Contradictions</code> ×4 inside six seconds on Jul 12."},
+     {todo:true,t:"For Jose: dedupe play events (same media + same session inside a short window), and find out why the player is re-firing — sub-second duplicates smell like a double event binding, not a genuine restart."}]},
+
+  {id:"CC-15",sec:"API / MCP gaps",pri:"P2",st:"done",
+   title:"Add <code>update_schedule</code> and <code>delete_schedule</code> to the API.",
+   desc:"Right now you can only <code>create_schedule</code> and <code>list_schedules</code> — there’s no way to edit or remove a schedule programmatically. A wrong/duplicate schedule can’t be fixed via API.",
+   notes:[{ok:true,t:"<b>Verified.</b> Both tools now exist. <code>update_schedule</code> takes recurrence, <code>byWeekDay</code>, <code>interval</code>, <code>monthlyWeekOfMonth</code> and <code>untilUtc</code>."}]},
+
+  {id:"CC-16",sec:"API / MCP gaps",pri:"P3",st:"done",
+   title:"Add media-management endpoints: <code>delete_media</code> and <code>rename/update_media</code>.",
+   desc:"No way to delete or rename a library item via API (we currently work around this locally in the loop-builder tool). Deleting still has to be done manually in the dashboard.",
+   notes:[{ok:true,t:"<b>Verified.</b> Both exist. <code>delete_media</code> also pulls the item from any playlists and VOD categories that referenced it — so the loop-builder’s “archive” workaround can eventually go away."}]},
+
+  {id:"CC-17",sec:"API / MCP gaps",pri:"P3",st:"done",
+   title:"Add category-management endpoints.",
+   desc:"Add <code>remove_media_from_category</code>, <code>delete_category</code>, <code>reorder_category_items</code>, and <code>list_category_items</code>. Categories can only be created and added to — not trimmed, reordered, or emptied via API.",
+   notes:[{ok:true,t:"<b>Verified.</b> All four exist."}]},
+
+  {id:"CC-18",sec:"API / MCP gaps",pri:"P3",st:"partial",
+   title:"Broaden <code>play_report</code>.",
+   desc:"Currently last 7 days / ≤200 rows. Add full history, per-episode totals, share counts, and (if possible) VOD-vs-broadcast breakdown + viewer geo — ties into CC-11 and CC-12.",
+   notes:[{ok:true,t:"<b>Landed:</b> history went from 7 days to <b>366</b>; new <code>perEpisode=true</code> mode returns per-episode totals; every play carries a <code>source</code> and the response includes a <b>VOD-vs-broadcast split</b>."},
+          {todo:true,t:"<b>Still missing:</b> <b>share counts</b> and <b>viewer geo</b>. The raw play log is also still capped at 200 rows (per-episode mode is the way around that). Geo blocks the back half of CC-11."}]},
+];
+
+const KEY="ccpunch_v1", SEED="ccpunch_seed_v2";
+
+// Check-offs normally live in localStorage, which never leaves this browser. So
+// "Export for Jose" bakes them into a copy of this file as window.__BAKED. On a
+// machine that has never opened this page (i.e. his), that snapshot IS the state
+// -- which is what makes the exported file actually tell the truth. Once he
+// starts ticking boxes, his own localStorage takes over.
+const state=JSON.parse(localStorage.getItem(KEY)||"null")
+         || Object.assign({}, window.__BAKED || {});
+const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
+const strip=h=>h.replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&nbsp;/g," ");
+const $=s=>document.querySelector(s);
+
+// Anything already verified against the live API starts checked, so "unchecked"
+// genuinely means "still to do" -- that's what gets copied over to Jose.
+// Runs once; any boxes already ticked by hand are left alone.
+function seedVerified(){
+  ITEMS.forEach(it=>{ if(it.st==="done" && state[it.id]===undefined) state[it.id]=true; });
+  save();
+}
+if(!localStorage.getItem(SEED)){ seedVerified(); localStorage.setItem(SEED,"1"); }
+
+// group by section preserving order
+const order=[]; const groups={};
+ITEMS.forEach(it=>{ if(!groups[it.sec]){groups[it.sec]=[];order.push(it.sec);} groups[it.sec].push(it); });
+const ORD={}; ITEMS.forEach((it,i)=>ORD[it.id]=i);   // original order, to restore
+
+const list=$("#list");
+order.forEach(sec=>{
+  const g=document.createElement("section"); g.className="grp"; g.dataset.sec=sec;
+  const items=groups[sec];
+  g.innerHTML=`<div class="grp-h"><h2>${sec}</h2><span class="rule"></span><span class="gc">${items.length}</span></div>`;
+  const STL={done:"✓ Verified",partial:"◐ Partly landed",test:"🔍 Needs your test"};
+  items.forEach(it=>{
+    const el=document.createElement("div");
+    el.className="item "+it.pri.toLowerCase()+(it.st==="done"?" verified":"");
+    el.dataset.id=it.id; el.dataset.pri=it.pri; el.dataset.st=it.st;
+    const cls=n=>n.ok?"ok":n.todo?"todo":n.hint?"hint":"";
+    const notes=it.notes.map(n=>`<li class="${cls(n)}">${n.t}</li>`).join("");
+    el.innerHTML=`
+      <input type="checkbox" class="cb" ${state[it.id]?"checked":""} aria-label="Mark ${it.id} done">
+      <div class="body">
+        <div class="meta"><span class="pill ${it.pri.toLowerCase()}">${it.pri}</span>
+          <span class="st ${it.st}">${STL[it.st]}</span><span class="id">${it.id}</span></div>
+        <div class="title">${it.title}</div>
+        <p class="desc">${it.desc}</p>
+        ${notes?`<ul class="notes">${notes}</ul>`:""}
+      </div>
+      <div class="actions"><button class="copy" title="Copy a ready-to-paste task">⧉ Copy</button></div>`;
+    if(state[it.id]) el.classList.add("done");
+    // checkbox
+    const cb=el.querySelector(".cb");
+    cb.addEventListener("change",()=>{ state[it.id]=cb.checked; save();
+      el.classList.toggle("done",cb.checked); refresh(); applySort(); applyFilter(); });
+    // copy one
+    el.querySelector(".copy").addEventListener("click",e=>copyItems([it],e.target));
+    g.appendChild(el);
+  });
+  list.appendChild(g);
+});
+
+const STTXT={done:"VERIFIED DONE (confirmed against the live API)",
+             partial:"PARTLY LANDED",test:"NEEDS MANUAL TEST"};
+function taskText(it){
+  const notes=it.notes.map(n=>"- "+strip(n.t)).join("\n");
+  return `ChannelCast.TV — ${it.id} [${it.pri}] — ${STTXT[it.st]}\nSection: ${it.sec}\n\nTask: ${strip(it.title)}\n\nDetails: ${strip(it.desc)}`+(notes?`\n\nNotes:\n${notes}`:"");
+}
+function copyItems(arr,btn,preamble){
+  const txt=(preamble?preamble+"\n\n———\n\n":"")+arr.map(taskText).join("\n\n———\n\n");
+  navigator.clipboard.writeText(txt).then(()=>{
+    if(btn && btn.classList.contains("copy")){ const o=btn.textContent; btn.textContent="✓ Copied"; btn.classList.add("ok");
+      setTimeout(()=>{btn.textContent=o;btn.classList.remove("ok");},1400); }
+    else if(btn){ const o=btn.textContent; btn.textContent="✓ Copied "+arr.length; setTimeout(()=>btn.textContent=o,1400); }
+  });
+}
+
+// filters
+let filter="all";
+document.querySelectorAll("#filters .chip").forEach(c=>{
+  c.addEventListener("click",()=>{
+    filter=c.dataset.f;
+    document.querySelectorAll("#filters .chip").forEach(x=>x.setAttribute("aria-pressed",x===c));
+    applyFilter();
+  });
+});
+function applyFilter(){
+  document.querySelectorAll(".item").forEach(el=>{
+    const done=el.classList.contains("done");
+    let show=true;
+    if(filter==="P1"||filter==="P2"||filter==="P3") show=el.dataset.pri===filter;
+    else if(filter==="open") show=!done;
+    else if(filter==="test") show=el.dataset.st!=="done" && !done;
+    el.classList.toggle("hidden",!show);
+  });
+  document.querySelectorAll(".grp").forEach(g=>{
+    const any=[...g.querySelectorAll(".item")].some(el=>!el.classList.contains("hidden"));
+    g.classList.toggle("hidden",!any);
+  });
+}
+
+// sort: float everything still open to the top (items within a section, and
+// sections that still have open work above the ones that are fully done)
+let sortUnchecked=false;
+const isDone=el=>el.classList.contains("done");
+function applySort(){
+  document.querySelectorAll(".grp").forEach(g=>{
+    const items=[...g.querySelectorAll(".item")];
+    items.sort(sortUnchecked
+      ? (a,b)=>(isDone(a)-isDone(b)) || (ORD[a.dataset.id]-ORD[b.dataset.id])
+      : (a,b)=>ORD[a.dataset.id]-ORD[b.dataset.id]);
+    items.forEach(el=>g.appendChild(el));   // header stays put; items re-append below it
+  });
+  const grps=[...list.querySelectorAll(".grp")];
+  const anyOpen=g=>[...g.querySelectorAll(".item")].some(el=>!isDone(el))?0:1;
+  grps.sort(sortUnchecked
+    ? (a,b)=>anyOpen(a)-anyOpen(b) || order.indexOf(a.dataset.sec)-order.indexOf(b.dataset.sec)
+    : (a,b)=>order.indexOf(a.dataset.sec)-order.indexOf(b.dataset.sec));
+  grps.forEach(g=>list.appendChild(g));
+}
+$("#sortBtn").addEventListener("click",e=>{
+  sortUnchecked=!sortUnchecked;
+  e.currentTarget.setAttribute("aria-pressed",sortUnchecked);
+  e.currentTarget.textContent=sortUnchecked?"↕ Original order":"↕ Unchecked first";
+  applySort();
+});
+
+// summary
+const byStatus=s=>ITEMS.filter(it=>it.st===s);
+const testList=()=>ITEMS.filter(it=>it.st!=="done");
+const uncheckedList=()=>ITEMS.filter(it=>!state[it.id]);
+function refresh(){
+  const tot=ITEMS.length, done=ITEMS.filter(it=>state[it.id]).length;
+  const by=p=>ITEMS.filter(it=>it.pri===p);
+  $("#doneN").textContent=done; $("#totN").textContent=tot;
+  $("#barAll").style.width=(tot?done/tot*100:0)+"%";
+  const v=byStatus("done").length, p=byStatus("partial").length, t=byStatus("test").length;
+  $("#vDone").textContent=v; $("#vPart").textContent=p; $("#vTest").textContent=t;
+  $("#barV").style.width=(v/tot*100)+"%";
+  $("#barP").style.width=(p/tot*100)+"%";
+  $("#barT").style.width=(t/tot*100)+"%";
+  $("#cAll").textContent=tot; $("#cTest").textContent=testList().length;
+  $("#cP1").textContent=by("P1").length;
+  $("#cP2").textContent=by("P2").length; $("#cP3").textContent=by("P3").length;
+  $("#cOpen").textContent=uncheckedList().length;
+}
+
+// unchecked = what's still left = what Jose gets
+$("#copyOpen").addEventListener("click",e=>{
+  const open=uncheckedList();
+  if(!open.length){ alert("Nothing unchecked — it's all done. 🎉"); return; }
+  const p1=open.filter(it=>it.pri==="P1").length;
+  const pre=`ChannelCast.TV — LAUNCH PUNCHLIST: WHAT'S STILL OPEN
+${open.length} item(s) remaining${p1?` · ${p1} are P1 launch blockers`:""} · as of ${new Date().toLocaleDateString()}
+
+START HERE: CC-09 + CC-19 + CC-20 are probably ONE bug.
+The on-demand page runs two player instances that aren't aware of each other: the inline
+feature block, and the overlay/modal that opens when you click a video.
+  - CC-09: both play at once (two videos, two audio tracks).
+  - CC-19 [P1 BLOCKER]: VOD plays are NEVER recorded. The tracking hook is almost certainly
+    on the feature-block player and never made it onto the overlay -- which is the one people
+    actually watch in. One player plays but isn't counted; the other is counted but shouldn't
+    be playing. Confirmed by direct test: a full minute of VOD playback recorded nothing,
+    while 49 broadcast plays landed in the same window.
+  - CC-20: plays double-logged, sometimes half a second apart. Two players, two event
+    bindings, one video.
+Fix how those two players are wired and you may close all three. Do it before anything
+else on the VOD side.`;
+  copyItems(open,e.currentTarget,pre);
+});
+$("#copyTest").addEventListener("click",e=>copyItems(testList(),e.currentTarget));
+
+// Download a self-contained copy with the current check-offs baked in, so the
+// file Jose opens shows exactly what Eric sees. Without this the checkboxes are
+// browser-local and the file would arrive looking untouched.
+$("#exportBtn").addEventListener("click",e=>{
+  const doc=document.documentElement.cloneNode(true);
+  doc.querySelector("#list").innerHTML="";                    // items re-render from JS
+  const prev=doc.querySelector("#baked"); if(prev) prev.remove();
+  // reset transient UI so the copy opens in its default view
+  doc.querySelectorAll("#filters .chip").forEach(c=>c.setAttribute("aria-pressed",c.dataset.f==="all"));
+  const sb=doc.querySelector("#sortBtn");
+  if(sb){ sb.setAttribute("aria-pressed","false"); sb.textContent="↕ Unchecked first"; }
+
+  const baked=doc.ownerDocument.createElement("script");
+  baked.id="baked";
+  baked.textContent=`window.__BAKED=${JSON.stringify(state)};`
+    +`window.__BAKED_AT=${JSON.stringify(new Date().toLocaleString())};`;
+  doc.querySelector("head").appendChild(baked);
+
+  const blob=new Blob(["<!doctype html>\n"+doc.outerHTML],{type:"text/html"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="ChannelCast-Punchlist-for-Jose.html";
+  a.click();
+  URL.revokeObjectURL(a.href);
+  const o=e.currentTarget.textContent;
+  e.currentTarget.textContent="✓ Downloaded";
+  setTimeout(()=>e.currentTarget.textContent=o,1800);
+});
+$("#reset").addEventListener("click",()=>{
+  if(!confirm("Clear your check-offs?\n\nThe items already verified against the API stay checked."))return;
+  Object.keys(state).forEach(k=>delete state[k]);
+  seedVerified();                                  // verified items are done -- keep them checked
+  document.querySelectorAll(".item").forEach(el=>{
+    const on=!!state[el.dataset.id];
+    el.querySelector(".cb").checked=on;
+    el.classList.toggle("done",on);
+  });
+  refresh(); applySort(); applyFilter();
+});
+
+// If this copy was exported with check-offs baked in, say so up front -- otherwise
+// a reader can't tell whose checkmarks these are or how stale they might be.
+if(window.__BAKED_AT){
+  const b=document.createElement("div");
+  b.className="snapshot";
+  b.innerHTML=`📌 <b>Snapshot from Eric — ${window.__BAKED_AT}.</b> `
+    +`<b>Checked</b> = done (either verified against the live API, or tested by Eric and confirmed working). `
+    +`<b>Unchecked</b> = still open, and it's yours. Anything you tick from here saves in <i>your</i> browser only — `
+    +`when you want to send status back, hit <b>⬇ Export for Jose</b> and mail the file back.`;
+  $("header").after(b);
+}
+
+$("#ts").textContent="Updated "+new Date().toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});
+refresh();
+</script>
+</body></html>

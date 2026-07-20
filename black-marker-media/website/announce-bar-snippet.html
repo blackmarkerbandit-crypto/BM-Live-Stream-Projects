@@ -1,0 +1,96 @@
+<!--
+  ╔══════════════════════════════════════════════════════════╗
+  ║  BLACKMARKER.TV  —  MUSIC SUBMISSION ANNOUNCEMENT BAR  ║
+  ║  Drop the <style> block into your existing <style> tag  ║
+  ║  Drop the <div class="announce-bar"> right before <nav> ║
+  ║  Also update:  nav { top: 36px; }  (was top: 0)         ║
+  ╚══════════════════════════════════════════════════════════╝
+-->
+
+<!-- ── CSS: add into your existing <style> block ─────────── -->
+<style>
+/* ANNOUNCE BAR */
+.announce-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 101;
+  height: 36px;
+  background: #0d0d0d;
+  border-bottom: 1px solid #1e1e1e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 24px;
+}
+
+.announce-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232,24,28,0.6), transparent);
+}
+
+.announce-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: #888888;
+  white-space: nowrap;
+}
+
+.announce-text strong {
+  color: #f0f0f0;
+  font-weight: 700;
+}
+
+.announce-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #E8181C;
+  color: #fff;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 3px;
+  transition: background 0.2s, transform 0.1s;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.announce-btn:hover {
+  background: #B01212;
+  transform: translateY(-1px);
+}
+
+.announce-btn::after {
+  content: '→';
+  font-size: 11px;
+  font-weight: 400;
+}
+
+/* Shift nav down to sit below the bar */
+/* UPDATE THIS in your existing nav rule: */
+/* nav { top: 36px; }  ← change from top: 0 */
+</style>
+
+
+<!-- ── HTML: place this directly before your <nav> tag ───── -->
+<div class="announce-bar">
+  <span class="announce-text">
+    <strong>Submit Your Music</strong> for Reviews &amp; Features
+  </span>
+  <a href="/Submissions" class="announce-btn">Submit Now</a>
+</div>

@@ -1,0 +1,170 @@
+<!-- =====================================================================
+     HOMEPAGE CONTENT  —  templates/home.html
+     The page body BETWEEN the header and footer partials.
+     Dynamic regions are marked with  {{ tokens }}  and  BEGIN/END LOOP
+     comments — swap these for your CMS macro syntax.
+     Data source for the dynamic regions: a public read-only JSON endpoint
+     that resolves the active ChannelCast schedule -> now/next + latest.
+     (See README.md -> "Dynamic data".)
+     ===================================================================== -->
+
+<!-- ============ LIVE PLAYER + CHAT ============ -->
+<section class="wrap live-wrap">
+  <div class="live-grid" id="liveGrid">
+
+    <!-- PLAYER -->
+    <div class="player">
+      <div class="player-stage">
+        <div class="live-tag" style="z-index:3;"><span class="d"></span>LIVE · THE FREE LOOP</div>
+        <!-- ChannelCast live player mounts into this div -->
+        <div id="cc-player-019eba4dbb24746eafa619f8fea1e9aa" style="width:100%;aspect-ratio:16/9;background:#000;"></div>
+      </div>
+      <div class="player-bar">
+        <div>
+          <div style="font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:4px;display:flex;align-items:center;gap:6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--red);display:inline-block;animation:blink 1.3s infinite;"></span>Now Playing</div>
+          <!-- {{ now_playing_title }} — current item from the ChannelCast schedule -->
+          <div class="pb-title" id="pbTitle">{{ now_playing_title }}</div>
+          <div class="pb-sub">Only <b style="color:var(--text);">Dope Sh!t</b> · 24/7 Music &amp; Shows · <a href="mailto:canyoudigit@blackmarker.tv" style="color:var(--red);font-weight:700;">Submit Your Music Today!</a></div>
+        </div>
+        <div class="pb-actions">
+          <div class="chip active" id="chatToggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span id="chatToggleLbl">Chat: On</span></div>
+          <div class="chip" id="shareBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span id="shareLbl">Share</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE CHAT  (placeholder shell — local echo only.
+         Replace with a realtime backend, planned: Supabase.) -->
+    <div class="chat" id="chatPanel">
+      <div class="chat-head">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <span class="t">Live Chat</span>
+        <span class="cnt" id="chatCount"><!-- {{ viewers }} --> viewers</span>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="sys-msg">Welcome to BlackMarker.TV — keep it respectful.</div>
+        <!-- BEGIN LOOP: chat_messages (rendered by the realtime backend) -->
+        <div class="msg"><span class="u mod">BMB_Mod</span><span class="txt">Drop your song requests 👇</span></div>
+        <!-- END LOOP -->
+      </div>
+      <div class="chat-foot">
+        <input id="chatInput" placeholder="Chat as guest…" aria-label="Chat message">
+        <button class="chat-send" id="chatSend">Send</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ UPCOMING VIDEOS (from the active ChannelCast loop) ============ -->
+<section class="section up-section">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:16px;">
+      <div>
+        <div class="eyebrow">Coming Up on the Loop</div>
+        <h2 class="sec-title">Upcoming Videos</h2>
+      </div>
+      <a class="sec-link" href="/schedule">See full schedule →</a>
+    </div>
+    <div class="up-list" id="upcomingList">
+      <!-- BEGIN LOOP: upcoming (first row = now playing, gets class "now").
+           Fields per item: {{ when }} {{ artist }} {{ song }} {{ duration }} -->
+      <div class="up-row now"><span class="up-when"><span class="d"></span>Now</span><span class="up-mid"><span class="up-artist">{{ artist }}</span> <span class="up-song">— {{ song }}</span></span><span class="up-dur">{{ duration }}</span></div>
+      <div class="up-row"><span class="up-when">{{ when }}</span><span class="up-mid"><span class="up-artist">{{ artist }}</span> <span class="up-song">— {{ song }}</span></span><span class="up-dur">{{ duration }}</span></div>
+      <!-- END LOOP -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ LATEST VIDEOS (newest per On Demand category) ============ -->
+<section class="section latest-section">
+  <!-- BACKGROUND HOLDER: set background-image on .latest-bg, or drop <img class="latest-bg-img" src="..."> inside it -->
+  <div class="latest-bg" id="latestBg"></div>
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:16px;">
+      <div>
+        <div class="eyebrow">Fresh On Demand</div>
+        <h2 class="sec-title">Latest Videos</h2>
+      </div>
+      <a class="sec-link" href="/on-demand">All On Demand →</a>
+    </div>
+    <div class="grid-cat" id="latestGrid">
+      <!-- BEGIN LOOP: latest (one card per On Demand show — its newest upload).
+           Fields: {{ category }} {{ title }} {{ meta }} {{ duration }} {{ poster_url }} {{ href }} -->
+      <a class="card full" href="{{ href }}">
+        <div class="thumb">
+          <!-- when a poster is available: <img class="thumb-img" src="{{ poster_url }}" alt=""> -->
+          <span class="cat-tag">{{ category }}</span>
+          <span class="ph-ico"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 9l5 3-5 3z"/></svg></span>
+          <span class="dur">{{ duration }}</span>
+        </div>
+        <div class="c-title">{{ title }}</div>
+        <div class="c-meta">{{ meta }}</div>
+      </a>
+      <!-- END LOOP -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRENDING IN MUSIC ============ -->
+<section class="section trend-section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">Hot in the Rotation</div>
+        <h2 class="sec-title">Trending in Music</h2>
+      </div>
+      <a class="sec-link" href="/on-demand?pcid=music">All music videos →</a>
+    </div>
+    <div class="rail" id="trendingRail">
+      <!-- BEGIN LOOP: trending. Fields: {{ title }} {{ meta }} {{ duration }} {{ poster_url }} {{ href }} -->
+      <a class="card" href="{{ href }}">
+        <div class="thumb">
+          <!-- when a poster is available: <img class="thumb-img" src="{{ poster_url }}" alt=""> -->
+          <span class="ph-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 9l5 3-5 3z"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span>
+          <span class="dur">{{ duration }}</span>
+        </div>
+        <div class="c-title">{{ title }}</div>
+        <div class="c-meta">{{ meta }}</div>
+      </a>
+      <!-- END LOOP -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ WANT YOUR NETWORK LIKE THIS (ChannelCast cross-sell) ============ -->
+<section class="section wrap">
+  <div class="cc">
+    <div class="cc-txt">
+      <div class="cc-eye">Powered by ChannelCast</div>
+      <h2 class="cc-h">Want your network<br>like this?</h2>
+      <p class="cc-p">BlackMarker.TV runs on ChannelCast — the same platform we build and manage for creators, venues, and businesses. Your own branded site, 24/7 loop, live channel, On Demand library, and chat. This whole page is the live demo.</p>
+      <div class="cc-actions">
+        <a class="btn btn-red" href="https://www.getchannelcast.com">Explore ChannelCast</a>
+        <a class="btn btn-ghost" href="/contact">Book a Demo</a>
+      </div>
+    </div>
+    <div style="flex:0 0 250px;min-width:220px;">
+      <div style="border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:20px;">
+        <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">What you get</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;">
+          <div>▮ Branded streaming site</div>
+          <div>▮ 24/7 loop + live channel</div>
+          <div>▮ On Demand library</div>
+          <div>▮ Live chat + PPV</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ChannelCast player embed (loads the live channel into #cc-player-... above).
+     Place these two <script> tags once per page that shows the player. -->
+<script src="https://channelcast.tv/embed/player.js"></script>
+<script>
+  ChannelCastPlayer.mount({
+    target: '#cc-player-019eba4dbb24746eafa619f8fea1e9aa',
+    channelId: '019eba4d-bb24-746e-afa6-19f8fea1e9aa',
+    apiBase: 'https://channelcast.tv'
+  });
+</script>

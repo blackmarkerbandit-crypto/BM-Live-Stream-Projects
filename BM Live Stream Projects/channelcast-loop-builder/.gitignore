@@ -1,0 +1,5 @@
+config.json
+library.json
+usage.json
+__pycache__/
+*.pyc
