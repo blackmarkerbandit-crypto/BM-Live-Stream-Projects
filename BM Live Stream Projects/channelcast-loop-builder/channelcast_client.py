@@ -62,16 +62,25 @@ class ChannelcastClient:
     # -- tools ---------------------------------------------------------------
     def call_tool(self, name: str, arguments: dict = None):
         """Call an MCP tool and return its parsed JSON payload (tools return
-        their data as a JSON string inside content[0].text)."""
+        their data as a JSON string inside content[0].text).
+
+        A failing tool does NOT come back as a JSON-RPC error: the server returns
+        a perfectly normal result carrying isError=true, with the message as
+        plain text. Without this check a failure looks like an empty success --
+        which is exactly how a broken S3 import reported "0 imported" and showed
+        no error whatsoever.
+        """
         result = self._rpc("tools/call", {"name": name, "arguments": arguments or {}})
-        content = result.get("content", [])
-        for c in content:
-            if c.get("type") == "text":
-                txt = c.get("text", "")
-                try:
-                    return json.loads(txt)
-                except json.JSONDecodeError:
-                    return {"text": txt}
+        texts = [c.get("text", "") for c in result.get("content", [])
+                 if c.get("type") == "text"]
+        if result.get("isError"):
+            msg = " ".join(t for t in texts if t) or "unknown tool error"
+            raise ChannelcastError(f"{name}: {msg}")
+        for txt in texts:
+            try:
+                return json.loads(txt)
+            except json.JSONDecodeError:
+                return {"text": txt}
         return result
 
     # -- convenience wrappers -----------------------------------------------
@@ -90,10 +99,14 @@ class ChannelcastClient:
     def list_categories(self, channel_id):
         return self.call_tool("list_categories", {"channelId": channel_id})
 
-    def add_media(self, title, provider_url, description=None):
+    def add_media(self, title, provider_url, description=None, filename=None):
+        # filename is the naming-convention key ChannelCast classifies on and is
+        # a REQUIRED argument (it may be null, but it has to be sent). Defaults
+        # to the title, which is what our S3 import wants anyway.
         return self.call_tool("add_media", {
             "title": title, "providerUrl": provider_url,
             "description": description,
+            "filename": filename if filename is not None else title,
         })
 
     def add_media_to_playlist(self, playlist_id, media_id):

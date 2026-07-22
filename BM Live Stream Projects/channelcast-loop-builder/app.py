@@ -32,6 +32,7 @@ USAGE_PATH = os.path.join(HERE, "usage.json")
 PLAYLISTS_PATH = os.path.join(HERE, "playlists_cache.json")
 OVERRIDES_PATH = os.path.join(HERE, "overrides.json")  # mediaId -> type (manual reclassify / archive)
 IMPORTED_S3_PATH = os.path.join(HERE, "imported_s3.json")  # list of S3 keys already imported
+JOB_PATH = os.path.join(HERE, "job_state.json")  # in-flight loop rebuild, for resume-after-crash
 
 client = ChannelcastClient(CONFIG["base_url"], CONFIG["token"])
 app = FastAPI(title="ChannelCast Loop Builder")
@@ -162,12 +163,18 @@ def _sync_collect(seen, term):
         mid = m["id"]
         if mid in seen:
             continue
-        title = m["title"]
-        kind = classify(title)
-        entry = {"id": mid, "title": title,
+        # ChannelCast now keeps the naming-convention `filename` separate from the
+        # viewer-facing `title`. Everything here -- classification, artist spacing,
+        # show prefixes, exclusions -- keys off the convention, so `title` in our
+        # library IS the filename; the display name rides along separately.
+        # Without this, a friendly title like "Tito Puente, Jr | Can You Dig It??"
+        # classifies as "other" and silently drops out of the show/opener logic.
+        name = m.get("filename") or m["title"]
+        kind = classify(name)
+        entry = {"id": mid, "title": name, "displayTitle": m["title"],
                  "duration": m.get("durationSeconds", 0), "kind": kind}
         if kind == "mv":
-            entry["artists"] = scheduler.artist_tokens(title)
+            entry["artists"] = scheduler.artist_tokens(name)
         seen[mid] = entry
 
 
@@ -440,11 +447,12 @@ class AddMediaReq(BaseModel):
     title: str
     url: str
     description: Optional[str] = None
+    filename: Optional[str] = None      # naming-convention key; defaults to title
 
 
 @app.post("/api/add-media")
 def add_media(req: AddMediaReq):
-    res = client.add_media(req.title, req.url, req.description)
+    res = client.add_media(req.title, req.url, req.description, req.filename)
     return res
 
 
@@ -523,22 +531,196 @@ async def s3_import(req: S3ImportReq):
         imported = set(load_json(IMPORTED_S3_PATH, []))
         n = len(req.items)
         ok = 0
+        errors = []
         for i, it in enumerate(req.items):
             title = it.get("title") or clean_title(it["key"])
             url = it.get("url")
             err = None
             try:
-                res = await run_in_threadpool(client.add_media, title, url, None)
+                # title and filename both start as the naming-convention name;
+                # a friendlier display title can be set later in ChannelCast.
+                res = await run_in_threadpool(client.add_media, title, url, None, title)
                 mid = res.get("mediaId") or res.get("id")
                 if mid:
                     ok += 1
                     imported.add(it["key"])
+                else:
+                    err = f"no media id in response: {res}"
             except Exception as e:
                 err = str(e)
+            if err:
+                errors.append({"title": title, "error": err})
             yield json.dumps({"i": i + 1, "n": n, "title": title, "error": err}) + "\n"
         save_json(IMPORTED_S3_PATH, list(imported))
-        yield json.dumps({"done": True, "imported": ok, "total": n}) + "\n"
+        yield json.dumps({"done": True, "imported": ok, "total": n,
+                          "failed": len(errors), "errors": errors[:10]}) + "\n"
     return StreamingResponse(gen(), media_type="application/x-ndjson", headers=NDJSON_HEADERS)
+
+
+# ---- resumable rebuild jobs -----------------------------------------------
+# Rebuilding a loop means "append the whole new order, then delete the old
+# items" -- 200+ API calls that used to stream straight through the browser. If
+# that stream died halfway (tab closed, network blip, server restart) the loop
+# was left holding old AND new content, and nothing remembered where it stopped.
+#
+# So every rebuild is now a job checkpointed to disk after each individual API
+# call. A job records, per loop: the exact generated order, how many of those
+# items are already added, the exact old playlist-item ids captured before we
+# started, and how many are already removed. Resuming replays only what's left,
+# which makes an interrupted run recoverable instead of destructive.
+
+def load_job():
+    return load_json(JOB_PATH, None)
+
+
+def save_job(job):
+    job["updated"] = time.time()
+    save_json(JOB_PATH, job)
+
+
+def clear_job():
+    try:
+        os.remove(JOB_PATH)
+    except OSError:
+        pass
+
+
+def job_done(job):
+    return bool(job) and all(l["status"] == "done" for l in job["loops"])
+
+
+def job_progress(job):
+    loops = job["loops"]
+    calls_total = sum(len(l.get("mediaIds") or []) + len(l.get("oldItemIds") or [])
+                      for l in loops)
+    calls_done = sum(l.get("added", 0) + l.get("removed", 0) for l in loops)
+    return {
+        "id": job["id"], "kind": job["kind"], "label": job.get("label", ""),
+        "loopsDone": sum(1 for l in loops if l["status"] == "done"),
+        "loopsTotal": len(loops),
+        "callsDone": calls_done, "callsTotal": calls_total,
+        "remaining": [l["loop"] for l in loops if l["status"] != "done"],
+        "updated": job.get("updated"),
+        "complete": job_done(job),
+    }
+
+
+def new_job(kind, label, loops):
+    """loops: [{loop, playlistId, gen:{openers,numSpecials,mustIds,keepFromLive}}]"""
+    for l in loops:
+        l.setdefault("status", "pending")
+        l.setdefault("added", 0)
+        l.setdefault("removed", 0)
+    job = {"id": "%d" % int(time.time()), "kind": kind, "label": label,
+           "created": time.time(), "loops": loops}
+    save_job(job)
+    return job
+
+
+async def run_job_stream(job):
+    """Drive a rebuild job to completion, yielding NDJSON progress lines.
+
+    Safe to call on a partially-finished job: finished loops are skipped and a
+    half-done loop picks up at the exact item it stopped on.
+    """
+    n = len(job["loops"])
+    for li, L in enumerate(job["loops"]):
+        name, pid = L["loop"], L["playlistId"]
+        if L["status"] == "done":
+            continue
+
+        # ---- plan this loop (only once; a resume reuses the frozen order) ----
+        if L["status"] == "pending":
+            yield json.dumps({"phase": "generate", "loop": name,
+                              "i": li + 1, "n": n}) + "\n"
+            g = L.get("gen", {})
+            keep = g.get("keepSpecialIds")
+            cur = await run_in_threadpool(client.list_playlist_items, pid)
+            items = cur.get("items", [])
+            if g.get("keepFromLive"):
+                keep = await run_in_threadpool(_specials_in, items)
+            openers = g.get("openers") or []
+            if g.get("openersFromLive"):     # keep whatever shows the loop already pins
+                openers = [{"mediaId": s["mediaId"], "hour": s["hour"]}
+                           for s in await run_in_threadpool(_shows_in, items)]
+            res = await run_in_threadpool(
+                generate_sequence, openers,
+                num_specials=g.get("numSpecials", 3), reshuffle=True,
+                must_ids=g.get("mustIds"), keep_special_ids=keep)
+            L["mediaIds"] = res["media_ids"]
+            L["oldItemIds"] = [it["playlistItemId"] for it in items]
+            L["added"] = L["removed"] = 0
+            L["totalSeconds"] = res["report"]["total_seconds"]
+            L["violations"] = len(res["report"].get("violations", []))
+            L["specialIds"] = res["chosen_special_ids"]
+            L["unplaced"] = res["report"].get("must_unplaced", [])
+            L["status"] = "writing"
+            await run_in_threadpool(save_job, job)
+
+        total = len(L["mediaIds"]) + len(L["oldItemIds"])
+
+        # ---- write the new order --------------------------------------------
+        if L["status"] == "writing":
+            ids = L["mediaIds"]
+            while L["added"] < len(ids):
+                await run_in_threadpool(client.add_media_to_playlist, pid, ids[L["added"]])
+                L["added"] += 1
+                await run_in_threadpool(save_job, job)
+                yield json.dumps({"phase": "write", "loop": name, "i": li + 1, "n": n,
+                                  "done": L["added"] + L["removed"], "total": total}) + "\n"
+            L["status"] = "clearing"
+            await run_in_threadpool(save_job, job)
+
+        # ---- drop the old items ---------------------------------------------
+        if L["status"] == "clearing":
+            olds = L["oldItemIds"]
+            while L["removed"] < len(olds):
+                try:
+                    await run_in_threadpool(client.remove_playlist_item, olds[L["removed"]])
+                except ChannelcastError:
+                    pass          # already gone (e.g. removed before a crash) -- fine
+                L["removed"] += 1
+                await run_in_threadpool(save_job, job)
+                yield json.dumps({"phase": "clear", "loop": name, "i": li + 1, "n": n,
+                                  "done": L["added"] + L["removed"], "total": total}) + "\n"
+            usage = load_json(USAGE_PATH, {"specials": []})
+            used = set(usage.get("specials", []))
+            used.update(L.get("specialIds") or [])
+            save_json(USAGE_PATH, {"specials": list(used)})
+            L["status"] = "done"
+            await run_in_threadpool(save_job, job)
+            yield json.dumps({"phase": "loopdone", "loop": name,
+                              "total_seconds": L.get("totalSeconds"),
+                              "violations": L.get("violations", 0)}) + "\n"
+
+    unplaced = [{"loop": l["loop"], "title": u["title"]}
+                for l in job["loops"] for u in (l.get("unplaced") or [])]
+    await run_in_threadpool(clear_job)
+    yield json.dumps({"done": True, "loops": n, "unplaced": unplaced}) + "\n"
+
+
+@app.get("/api/job")
+def get_job():
+    """Any unfinished rebuild, so the UI can offer to resume it."""
+    job = load_job()
+    if not job or job_done(job):
+        return {"job": None}
+    return {"job": job_progress(job)}
+
+
+@app.post("/api/job/clear")
+def post_job_clear():
+    clear_job()
+    return {"ok": True}
+
+
+@app.post("/api/job/resume")
+async def post_job_resume():
+    job = load_job()
+    if not job or job_done(job):
+        raise HTTPException(400, "No unfinished job to resume.")
+    return StreamingResponse(run_job_stream(job), media_type="application/x-ndjson",
+                             headers=NDJSON_HEADERS)
 
 
 # ---- show-update workflows ------------------------------------------------
@@ -577,11 +759,19 @@ def _loop_map():
 
 
 def _shows_in(items):
-    """All full-show opener items in a loop, with their inferred hour mark."""
+    """All full-show opener items in a loop, with their inferred hour mark.
+
+    Matches on the library's naming-convention name rather than the playlist
+    item's title -- playlist items carry the viewer-facing title, which may no
+    longer start with "TWI "/"CUDI " at all.
+    """
+    lib = load_json(LIBRARY_PATH, {"items": []}).get("items", [])
+    names = {m["id"]: m["title"] for m in lib}
     out = []
     for it in items:
-        if it["title"].startswith(_show_prefixes()):
-            out.append({"mediaId": it["mediaId"], "title": it["title"],
+        name = names.get(it["mediaId"], it["title"])
+        if name.startswith(_show_prefixes()):
+            out.append({"mediaId": it["mediaId"], "title": name,
                         "hour": round(it.get("playsAtSeconds", 0) / 3600)})
     return out
 
@@ -634,10 +824,19 @@ def build_show_plan(show_key, new_media_id=None):
         replaced = _match(shows_by[name], prefix, inc["hour"])
         if replaced and (name, inc["hour"]) not in from_loops:
             removed.append(replaced["title"])
+        # Never keep a second copy of the show being placed. A rebuild that dies
+        # partway leaves the new episode already on the loop; without this guard a
+        # re-run "preserves" that copy AND adds the incoming one, scheduling the
+        # same show twice. This is what makes re-running after a failure safe.
         preserved = [s for s in shows_by[name]
-                     if not (replaced and s["mediaId"] == replaced["mediaId"] and s["hour"] == replaced["hour"])]
+                     if s["mediaId"] != inc["mediaId"]
+                     and not (replaced and s["mediaId"] == replaced["mediaId"]
+                              and s["hour"] == replaced["hour"])]
         openers = [{"mediaId": s["mediaId"], "hour": s["hour"]} for s in preserved]
         openers.append({"mediaId": inc["mediaId"], "hour": inc["hour"]})
+        seen_op = set()                      # belt-and-braces: unique media per loop
+        openers = [o for o in openers
+                   if not (o["mediaId"] in seen_op or seen_op.add(o["mediaId"]))]
         plan.append({
             "loop": name,
             "hour": inc["hour"],
@@ -672,34 +871,13 @@ class ShowUpdateReq(BaseModel):
 async def show_update_execute(req: ShowUpdateReq):
     plan = await run_in_threadpool(build_show_plan, req.show, req.newMediaId)  # snapshot up front
     loops = await run_in_threadpool(_loop_map)
-
-    async def gen():
-        for entry in plan["plan"]:
-            name = entry["loop"]
-            pid = loops[name]["id"]
-            yield json.dumps({"phase": "generate", "loop": name}) + "\n"
-            res = await run_in_threadpool(generate_sequence, entry["openers"], 3, True)
-            media_ids = res["media_ids"]
-            cur = await run_in_threadpool(client.list_playlist_items, pid)
-            old = [it["playlistItemId"] for it in cur.get("items", [])]
-            total = len(media_ids) + len(old)
-            done = 0
-            for mid in media_ids:
-                await run_in_threadpool(client.add_media_to_playlist, pid, mid)
-                done += 1
-                yield json.dumps({"phase": "write", "loop": name, "done": done, "total": total}) + "\n"
-            for iid in old:
-                await run_in_threadpool(client.remove_playlist_item, iid)
-                done += 1
-                yield json.dumps({"phase": "clear", "loop": name, "done": done, "total": total}) + "\n"
-            usage = load_json(USAGE_PATH, {"specials": []})
-            used = set(usage.get("specials", []))
-            used.update(res["chosen_special_ids"])
-            save_json(USAGE_PATH, {"specials": list(used)})
-            yield json.dumps({"phase": "loopdone", "loop": name,
-                              "total_seconds": res["report"]["total_seconds"]}) + "\n"
-        yield json.dumps({"done": True, "loops": len(plan["plan"])}) + "\n"
-    return StreamingResponse(gen(), media_type="application/x-ndjson", headers=NDJSON_HEADERS)
+    job = new_job("show-update",
+                  "%s -> %s" % (plan["label"], plan["newShow"]["title"]),
+                  [{"loop": e["loop"], "playlistId": loops[e["loop"]]["id"],
+                    "gen": {"openers": e["openers"], "numSpecials": 3}}
+                   for e in plan["plan"]])
+    return StreamingResponse(run_job_stream(job), media_type="application/x-ndjson",
+                             headers=NDJSON_HEADERS)
 
 
 # --- Music drop -------------------------------------------------------------
@@ -816,55 +994,18 @@ def _specials_in(items):
 @app.post("/api/music-drop/execute")
 async def music_drop_execute(req: MusicDropReq):
     plan = await run_in_threadpool(build_music_plan, req.mediaIds)
-    entries = plan["plan"]
-
-    async def gen():
-        unplaced = []
-        for idx, entry in enumerate(entries):
-            name, pid = entry["loop"], entry["id"]
-            yield json.dumps({"phase": "generate", "loop": name,
-                              "i": idx + 1, "n": len(entries)}) + "\n"
-            cur = await run_in_threadpool(client.list_playlist_items, pid)
-            items = cur.get("items", [])
-            openers = [{"mediaId": s["mediaId"], "hour": s["hour"]}
-                       for s in _shows_in(items)]
-            keep = await run_in_threadpool(_specials_in, items)
-            res = await run_in_threadpool(
-                generate_sequence, openers,
-                num_specials=3, reshuffle=True,
-                must_ids=[a["id"] for a in entry["adds"]],
-                keep_special_ids=keep)
-
-            media_ids = res["media_ids"]
-            old = [it["playlistItemId"] for it in items]
-            total = len(media_ids) + len(old)
-            done = 0
-            for mid in media_ids:                      # rebuild: write new order...
-                await run_in_threadpool(client.add_media_to_playlist, pid, mid)
-                done += 1
-                yield json.dumps({"phase": "write", "loop": name,
-                                  "done": done, "total": total}) + "\n"
-            for iid in old:                            # ...then drop the old items
-                await run_in_threadpool(client.remove_playlist_item, iid)
-                done += 1
-                yield json.dumps({"phase": "clear", "loop": name,
-                                  "done": done, "total": total}) + "\n"
-
-            usage = load_json(USAGE_PATH, {"specials": []})
-            used = set(usage.get("specials", []))
-            used.update(res["chosen_special_ids"])
-            save_json(USAGE_PATH, {"specials": list(used)})
-
-            rep = res["report"]
-            for u in rep.get("must_unplaced", []):
-                unplaced.append({"loop": name, "title": u["title"]})
-            yield json.dumps({"phase": "loopdone", "loop": name,
-                              "total_seconds": rep["total_seconds"],
-                              "added": rep.get("must_placed", 0),
-                              "violations": len(rep.get("violations", []))}) + "\n"
-        yield json.dumps({"done": True, "loops": len(entries),
-                          "unplaced": unplaced}) + "\n"
-    return StreamingResponse(gen(), media_type="application/x-ndjson", headers=NDJSON_HEADERS)
+    # Openers and existing performances are read live per loop as it starts, so a
+    # 28-loop drop doesn't act on a snapshot that's an hour stale by the end.
+    job = new_job("music-drop",
+                  "%d new music video(s) across %d loops"
+                  % (plan["newCount"], plan["loops"]),
+                  [{"loop": e["loop"], "playlistId": e["id"],
+                    "gen": {"numSpecials": 3, "keepFromLive": True,
+                            "mustIds": [a["id"] for a in e["adds"]],
+                            "openersFromLive": True}}
+                   for e in plan["plan"]])
+    return StreamingResponse(run_job_stream(job), media_type="application/x-ndjson",
+                             headers=NDJSON_HEADERS)
 
 
 if __name__ == "__main__":

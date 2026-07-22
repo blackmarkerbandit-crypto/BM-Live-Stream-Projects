@@ -88,6 +88,22 @@
 </header>
 <main>
 
+<!-- unfinished rebuild: shown only when a job was interrupted -->
+<div id="resumeCard" class="card" style="display:none; border-color:#7a5b12; background:#1d1a11">
+  <div class="row" style="align-items:flex-start">
+    <div style="flex:1; min-width:0">
+      <b>⚠ Unfinished loop rebuild</b>
+      <div class="muted" id="resumeInfo" style="margin-top:4px"></div>
+    </div>
+    <button id="resumeBtn" onclick="resumeJob()">Resume</button>
+    <button class="ghost" onclick="discardJob()">Discard</button>
+  </div>
+  <div class="row" id="resumeProgressRow" style="display:none">
+    <progress id="resumeBar" value="0" max="100" style="flex:1; height:16px"></progress>
+    <span id="resumePct" class="muted" style="min-width:260px; text-align:right"></span>
+  </div>
+</div>
+
 <!-- LOOPS -->
 <section id="tab-loops">
   <div class="row">
@@ -308,6 +324,7 @@ async function init(){
   await loadPlaylistsCache();
   renderLibrarySections();
   await loadShowList();
+  await checkJob();          // surface any rebuild left half-finished by a crash
 }
 
 async function loadPlaylists(){
@@ -585,24 +602,68 @@ async function executeShowUpdate(){
   try{
     const r=await fetch('/api/show-update/execute',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({show:$('#suShow').value, newMediaId:SUPLAN.newShow.id})});
-    if(!r.ok) throw new Error(await r.text());
-    const reader=r.body.getReader(),dec=new TextDecoder(); let buf='',doneLoops=0;
-    while(true){
-      const {value,done}=await reader.read(); if(done) break;
-      buf+=dec.decode(value,{stream:true}); let idx;
-      while((idx=buf.indexOf('\n'))>=0){
-        const line=buf.slice(0,idx).trim(); buf=buf.slice(idx+1); if(!line) continue;
-        const m=JSON.parse(line);
-        if(m.done){ pct.textContent=`done — ${m.loops} loops updated ✓`; }
-        else if(m.phase==='generate'){ pct.textContent=`${m.loop}: generating…`; bar.value=0; }
-        else if(m.phase==='write'||m.phase==='clear'){ bar.max=m.total; bar.value=m.done;
-          pct.textContent=`${m.loop}: ${m.phase==='write'?'writing':'clearing'} ${m.done}/${m.total}`; }
-        else if(m.phase==='loopdone'){ doneLoops++; }
-      }
-    }
-    toast('Loops updated ✓'); loadPlaylists();
-  }catch(e){ pct.textContent='failed'; toast('Update failed: '+e.message,true); }
+    await consumeJobStream(r,bar,pct);
+    toast('Loops updated ✓'); loadPlaylists(); checkJob();
+  }catch(e){ pct.textContent='interrupted';
+    toast('Update stopped: '+e.message+' — reload to resume',true); checkJob(); }
   finally{ btn.disabled=false; setBusy(-1); }
+}
+
+// ---- resumable rebuild jobs ----
+// Every loop rebuild streams the same NDJSON, so one consumer drives the
+// progress bar for Show Update, Music Drop and Resume alike.
+async function consumeJobStream(resp, bar, pct){
+  if(!resp.ok) throw new Error(await resp.text());
+  const reader=resp.body.getReader(), dec=new TextDecoder();
+  let buf='', at='', result=null;
+  while(true){
+    const {value,done}=await reader.read(); if(done) break;
+    buf+=dec.decode(value,{stream:true}); let idx;
+    while((idx=buf.indexOf('\n'))>=0){
+      const line=buf.slice(0,idx).trim(); buf=buf.slice(idx+1); if(!line) continue;
+      const m=JSON.parse(line);
+      if(m.done){ result=m; bar.value=bar.max; pct.textContent=`done — ${m.loops} loop(s) updated ✓`; }
+      else if(m.phase==='generate'){ at=`loop ${m.i}/${m.n}`; bar.value=0;
+        pct.textContent=`${at} · ${m.loop}: generating…`; }
+      else if(m.phase==='write'||m.phase==='clear'){ bar.max=m.total; bar.value=m.done;
+        pct.textContent=`${at} · ${m.loop}: ${m.phase==='write'?'writing':'clearing'} ${m.done}/${m.total}`; }
+    }
+  }
+  return result;
+}
+
+async function checkJob(){
+  try{
+    const d=await api('/api/job');
+    const j=d.job;
+    if(!j){ $('#resumeCard').style.display='none'; return; }
+    $('#resumeCard').style.display='';
+    const pctDone=j.callsTotal?Math.round(j.callsDone/j.callsTotal*100):0;
+    $('#resumeInfo').innerHTML=
+      `<b>${j.label}</b><br>Stopped at ${j.loopsDone}/${j.loopsTotal} loops (${pctDone}% of writes). `
+      +`Still to do: ${j.remaining.join(', ')}.<br>`
+      +`<span class="unused">These loops may be over-length until this finishes.</span> `
+      +`Resuming picks up exactly where it stopped.`;
+  }catch(e){}
+}
+
+async function resumeJob(){
+  const bar=$('#resumeBar'), pct=$('#resumePct'), btn=$('#resumeBtn');
+  $('#resumeProgressRow').style.display=''; btn.disabled=true;
+  bar.value=0; bar.max=100; pct.textContent='resuming…'; setBusy(1);
+  try{
+    const r=await fetch('/api/job/resume',{method:'POST'});
+    await consumeJobStream(r,bar,pct);
+    toast('Rebuild finished ✓'); $('#resumeCard').style.display='none';
+    loadPlaylists(); checkJob();
+  }catch(e){ pct.textContent='failed'; toast('Resume failed: '+e.message,true); }
+  finally{ btn.disabled=false; setBusy(-1); }
+}
+
+async function discardJob(){
+  if(!confirm('Discard the unfinished rebuild?\n\nThe affected loops are left as-is — some may still be over-length until you rebuild them.')) return;
+  await api('/api/job/clear',{method:'POST'});
+  $('#resumeCard').style.display='none'; toast('Discarded');
 }
 
 // ---- music drop ----
@@ -683,27 +744,14 @@ async function executeDrop(){
   try{
     const r=await fetch('/api/music-drop/execute',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({mediaIds:[...MDSEL]})});
-    if(!r.ok) throw new Error(await r.text());
-    const reader=r.body.getReader(),dec=new TextDecoder(); let buf='';
-    while(true){
-      const {value,done}=await reader.read(); if(done) break;
-      buf+=dec.decode(value,{stream:true}); let idx;
-      while((idx=buf.indexOf('\n'))>=0){
-        const line=buf.slice(0,idx).trim(); buf=buf.slice(idx+1); if(!line) continue;
-        const m=JSON.parse(line);
-        if(m.done){
-          bar.value=bar.max;
-          pct.textContent=`done — ${m.loops} loops updated ✓`;
-          if(m.unplaced&&m.unplaced.length)
-            toast(`${m.unplaced.length} song(s) couldn’t fit — see console`,true), console.warn('unplaced:',m.unplaced);
-        }
-        else if(m.phase==='generate'){ at=`loop ${m.i}/${m.n}`; pct.textContent=`${at} · ${m.loop}: generating…`; bar.value=0; }
-        else if(m.phase==='write'||m.phase==='clear'){ bar.max=m.total; bar.value=m.done;
-          pct.textContent=`${at} · ${m.loop}: ${m.phase==='write'?'writing':'clearing'} ${m.done}/${m.total}`; }
-      }
+    const res=await consumeJobStream(r,bar,pct);
+    if(res&&res.unplaced&&res.unplaced.length){
+      console.warn('unplaced:',res.unplaced);
+      toast(`${res.unplaced.length} song(s) couldn’t fit — see console`,true);
     }
-    toast('Music dropped ✓'); loadPlaylists(); loadDropCandidates();
-  }catch(e){ pct.textContent='failed'; toast('Drop failed: '+e.message,true); }
+    toast('Music dropped ✓'); loadPlaylists(); loadDropCandidates(); checkJob();
+  }catch(e){ pct.textContent='interrupted';
+    toast('Drop stopped: '+e.message+' — reload to resume',true); checkJob(); }
   finally{ btn.disabled=false; setBusy(-1); }
 }
 
