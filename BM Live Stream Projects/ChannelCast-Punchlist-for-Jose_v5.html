@@ -185,33 +185,33 @@
   }
 </style>
 
-<script id="baked">window.__BAKED={"CC-03":true,"CC-04":true,"CC-05":true,"CC-06":true,"CC-08":true,"CC-09":true,"CC-10":true,"CC-13":true,"CC-14":true,"CC-01":true,"CC-15":true,"CC-16":true,"CC-17":true,"CC-12":true,"CC-11":true,"CC-19":true,"CC-20":true};window.__BAKED_AT="7/16/2026, 12:35:50 AM";</script></head><body><div class="wrap">
+<script id="baked">window.__BAKED={"CC-03":true,"CC-04":true,"CC-05":true,"CC-06":true,"CC-08":true,"CC-09":true,"CC-10":true,"CC-13":true,"CC-14":true,"CC-01":true,"CC-15":true,"CC-16":true,"CC-17":true,"CC-12":true,"CC-11":true,"CC-19":true,"CC-20":true,"CC-07":true,"CC-02":true,"CC-21":true,"CC-26":true};window.__BAKED_AT="7/22/2026, 12:28:45 AM";</script></head><body><div class="wrap">
   <header>
     <div class="eyebrow"><span class="dot"></span> ChannelCast.TV · Launch Prep</div>
     <h1>Launch Punchout List</h1>
     <p class="lede">Everything to fix on ChannelCast.TV before we go live to clients. <b>Jose has shipped a first pass</b> — anything confirmed against the live API is marked <b>✓ Verified</b> and <b>starts pre-checked</b>. Everything else is front-end and <b>needs your eyes</b>: hit <b>“Needs my test.”</b> As you test, check things off — then <b>↕ Unchecked first</b> floats what’s left to the top, and <b>⧉ Copy unchecked → Jose</b> puts exactly that on your clipboard. <b>Progress saves in your browser.</b></p>
-  </header>
+  </header><div class="snapshot">📌 <b>Snapshot from Eric — 7/16/2026, 12:35:50 AM.</b> <b>Checked</b> = done (either verified against the live API, or tested by Eric and confirmed working). <b>Unchecked</b> = still open, and it's yours. Anything you tick from here saves in <i>your</i> browser only — when you want to send status back, hit <b>⬇ Export for Jose</b> and mail the file back.</div>
 
   <div class="board">
     <div class="stat">
       <div class="k">Checked off</div>
-      <div class="v"><span id="doneN">17</span><small>/<span id="totN">21</span></small></div>
-      <div class="bar"><i id="barAll" style="width: 80.9524%;"></i></div>
+      <div class="v"><span id="doneN">21</span><small>/<span id="totN">26</span></small></div>
+      <div class="bar"><i id="barAll" style="width: 80.7692%;"></i></div>
     </div>
     <div class="stat">
       <div class="k"><span class="swatch" style="background:var(--good)"></span> Verified via API</div>
       <div class="v" id="vDone">6</div>
-      <div class="bar"><i id="barV" style="width: 28.5714%; background: var(--good);"></i></div>
+      <div class="bar"><i id="barV" style="width: 23.0769%; background: var(--good);"></i></div>
     </div>
     <div class="stat">
       <div class="k"><span class="swatch" style="background:var(--p2-line)"></span> Partly landed</div>
       <div class="v" id="vPart">1</div>
-      <div class="bar"><i id="barP" style="width: 4.7619%; background: var(--p2-line);"></i></div>
+      <div class="bar"><i id="barP" style="width: 3.84615%; background: var(--p2-line);"></i></div>
     </div>
     <div class="stat">
       <div class="k"><span class="swatch" style="background:var(--accent)"></span> Needs your test</div>
       <div class="v" id="vTest">14</div>
-      <div class="bar"><i id="barT" style="width: 66.6667%; background: var(--accent);"></i></div>
+      <div class="bar"><i id="barT" style="width: 53.8462%; background: var(--accent);"></i></div>
     </div>
   </div>
 
@@ -235,18 +235,18 @@
 
   <div class="controls">
     <div class="chips" id="filters">
-      <button class="chip" data-f="all" aria-pressed="true">All <span class="n" id="cAll">21</span></button>
-      <button class="chip" data-f="test" aria-pressed="false">🔍 Needs my test <span class="n" id="cTest">15</span></button>
-      <button class="chip" data-f="P1" aria-pressed="false"><span class="swatch s1"></span> P1 <span class="n" id="cP1">8</span></button>
-      <button class="chip" data-f="P2" aria-pressed="false"><span class="swatch s2"></span> P2 <span class="n" id="cP2">8</span></button>
-      <button class="chip" data-f="P3" aria-pressed="false"><span class="swatch s3"></span> P3 <span class="n" id="cP3">5</span></button>
+      <button class="chip" data-f="all" aria-pressed="true">All <span class="n" id="cAll">26</span></button>
+      <button class="chip" data-f="test" aria-pressed="false">🔍 Needs my test <span class="n" id="cTest">20</span></button>
+      <button class="chip" data-f="P1" aria-pressed="false"><span class="swatch s1"></span> P1 <span class="n" id="cP1">9</span></button>
+      <button class="chip" data-f="P2" aria-pressed="false"><span class="swatch s2"></span> P2 <span class="n" id="cP2">11</span></button>
+      <button class="chip" data-f="P3" aria-pressed="false"><span class="swatch s3"></span> P3 <span class="n" id="cP3">6</span></button>
       <button class="chip" data-f="open" aria-pressed="false">Open only</button>
     </div>
     <div class="spacer"></div>
     <button class="btn" id="sortBtn" aria-pressed="false" title="Float everything still open to the top">↕ Unchecked first</button>
-    <button class="btn primary" id="copyOpen">⧉ Copy unchecked → Jose <span class="n" id="cOpen">4</span></button>
+    <button class="btn primary" id="copyOpen">⧉ Copy unchecked → Jose 5</button>
     <button class="btn" id="copyTest">⧉ Copy my test list</button>
-    <button class="btn" id="exportBtn" title="Download a copy of this page with your check-offs baked in">⬇ Export for Jose</button>
+    <button class="btn" id="exportBtn" title="Download a copy of this page with your check-offs baked in">✓ Downloaded</button>
     <button class="btn ghost" id="reset">Reset checks</button>
   </div>
 
@@ -254,7 +254,7 @@
 
   <footer>
     <span>ChannelCast.TV launch punchout · built for Jose's handoff</span>
-    <span id="ts">Updated Jul 16, 2026</span>
+    <span id="ts">Updated Jul 22, 2026</span>
   </footer>
 </div>
 
@@ -309,15 +309,12 @@ const ITEMS = [
    notes:[
      {hint:true,t:"<b>Treat this as ONE bug, fixed once at the shared upload component.</b> Same dead behaviour on both screens (VOD detail + Channel Settings logo) strongly implies a single broken uploader — a mis-wired input handler, a failing pre-signed-URL / upload endpoint, or a JS error killing the drop zone. Check the browser console + network tab on a drop: is any request even firing? Fixing the component clears both CC-07 and CC-02."},
      {t:"<b>Was P2 — bumped to P1 (Jul 16).</b> A P2 can’t gate a P1: this blocks the logo bug (CC-02) and client VOD thumbnails."},
-     {ok:true,t:"<b>Strong evidence this is FIXED (Jul 22).</b> The library is now full of <b>uploaded</b> thumbnails served from <code>channelcast.tv/uploads/&lt;tenant&gt;/media-thumb/*.jpg</code> — hundreds of them, across CUDI / TWI / MV / LO7 items. Those are uploaded files, not Mux auto-frames, so the upload pipeline is demonstrably working. This should also unblock <b>CC-02 (logo bug)</b>."},
-     {todo:true,t:"<b>Retest the one spot we can't see from the API: Channel Settings → logo watermark.</b> Upload a transparent PNG and confirm it lands and renders on the player. VOD thumbnails are already proven by the uploaded files above."}]},
+     {todo:true,t:"<b>Retest after the fix, both spots.</b> VOD: drag a thumbnail on, save, reload — did it stick? Channel Settings: upload a logo PNG and confirm it lands. Both must work."}]},
 
   {id:"CC-08",sec:"VOD / Embeds",pri:"P2",st:"test",
    title:"Allow embedding a <b>single VOD category</b> on its own (not just the full catalog).",
    desc:"Today you can embed/install the whole VOD catalog into a page. Add the ability to embed one specific VOD category by itself.",
    notes:[{ok:true,t:"<b>Confirmed built (3.0 work).</b> The OTT renderer does exactly this — <code>OTTRenderer.mount({ target, feedUrl, category, theme })</code> renders just one category's episodes, with playback. We used it on the new show pages, so this looks done."},
-          {ok:true,t:"<b>Grid layout: it already works — but not the way you'd expect (Jul 22).</b> Eric flipped <i>The Weekly Interrupt</i> to <code>type: \"grid\"</code> in the dashboard to test grid embeds. Reading the renderer: it <b>does</b> have a vertical grid mode — <code>.ott-track-vertical</code> = <code>grid-template-columns: repeat(auto-fill, minmax(220px,1fr))</code> — and it switches to it whenever a category is active: <code>verticalBrowseMode = Boolean(state.activeCategory)</code>. Since our embed passes <code>category:</code> on mount, <b>a single-category embed already renders as a multi-row grid</b>, not a scrolling rail. Eric: open the Weekly Interrupt preview page — that grid is the mount-<code>category</code> behaviour."},
-          {todo:true,t:"<b>Jose — the dashboard's <code>type: row / grid</code> flag appears to do nothing for the embed.</b> The renderer never reads a layout/type field off the feed; layout is decided purely by whether a category is active. So flipping a category to <code>grid</code> in the dashboard has no effect on an embedded rail. Either (a) wire the feed's category <code>type</code> into the renderer, or (b) expose an explicit <code>layout: 'row' | 'grid'</code> option on <code>mount()</code> — and tell us which, so we stop chasing the dashboard toggle."},
           {todo:true,t:"<b>Your test.</b> Is there a copy-paste option in the dashboard to grab that single-category embed (e.g. just <i>Can You Dig It!?</i>), rather than only the whole catalog?"}]},
 
   {id:"CC-09",sec:"Front-End — On-Demand (VOD) Page",pri:"P2",st:"test",
@@ -371,19 +368,15 @@ const ITEMS = [
      {ok:true,t:"<b>Still happening as of Jul 16.</b> <code>MV MichaelaPaladio RunThisTownPart2</code> logged 3× in 55s (03:52:54 · 03:53:05 · 03:53:49); <code>Theolodge BoardingPlanes</code>, <code>AnaTijoux EnLaMia</code> and <code>SnowThaProduct ClaseDeIngles</code> each doubled in the same hour. The smoking gun is Jul 14: <code>DVAliasKhryst NewJackCity</code> fired <b>twice 0.51s apart</b> (05:23:06.79 → 05:23:07.30). No human restarts a video in half a second."},
      {hint:true,t:"<b>Clues for Jose — the diagnosis.</b> Sub-second duplicates = a <b>double event binding</b>, not a real replay. Most likely, in order: (1) the tracking call is bound to <b>more than one media event</b> — e.g. both <code>play</code> and <code>playing</code>, or <code>play</code> + <code>loadeddata</code>/<code>seeked</code> — so one real start fires it 2–3×; (2) the listener is <b>re-attached on every render</b> (React re-render / StrictMode double-invoke) so handlers stack up; (3) both players from CC-09 are mounted and each fires. It hits <b>both broadcast and VOD</b>, so the bug is in the <b>shared tracking call / its event binding</b>, not one specific player."},
      {hint:true,t:"<b>Fast way to confirm:</b> open DevTools → Network, filter to the play-tracking request, and start one video. If <b>2–3 identical requests fire in &lt;1s</b>, it’s the event binding. Then check how many listeners are attached to the <code>&lt;video&gt;</code> element (<code>getEventListeners($0)</code> in the console on the selected element)."},
-     {todo:true,t:"<b>Two-part fix.</b> (a) <b>Client (root cause):</b> bind tracking to a single event (<code>play</code>), once per real start, and debounce — ignore repeats of the same mediaId in the same session within ~2s; audit for duplicate / re-registered listeners. (b) <b>Server (safety net):</b> dedupe on ingest — collapse identical <code>(mediaId + session/IP)</code> events inside a short window — so stray duplicates never reach a client’s numbers. Leave wider-spaced repeats (30–60s) alone; those may be genuine re-plays. <b>Ties into CC-19</b> — the newly-tracking overlay player may be adding to this."},
-     {t:"<b>Jul 22 check — clean data, but do NOT read it as fixed.</b> No sub-second duplicates in the last 24h; every tight repeat traced to a <i>different viewer</i> (<code>EriqTrilly Lock</code> Omaha vs Denver; <code>KingCooley GetDown</code> US vs China; <code>Doechii Wait</code> ×4 from four countries). <b>Eric's read: that's lighter traffic, not a fix.</b> The VOD / on-demand areas <b>aren't public yet</b> — only the playlists and the main live embed are on the live site — so the overlay player that causes this barely runs right now."},
-     {todo:true,t:"<b>Still open.</b> Do the two-part fix above regardless, then <b>retest once the on-demand pages go public</b> and real traffic hits the overlay player. Clean numbers today prove nothing while the guilty player is effectively offline."}]},
+     {todo:true,t:"<b>Two-part fix.</b> (a) <b>Client (root cause):</b> bind tracking to a single event (<code>play</code>), once per real start, and debounce — ignore repeats of the same mediaId in the same session within ~2s; audit for duplicate / re-registered listeners. (b) <b>Server (safety net):</b> dedupe on ingest — collapse identical <code>(mediaId + session/IP)</code> events inside a short window — so stray duplicates never reach a client’s numbers. Leave wider-spaced repeats (30–60s) alone; those may be genuine re-plays. <b>Ties into CC-19</b> — the newly-tracking overlay player may be adding to this."}]},
 
-  {id:"CC-21",sec:"Analytics",pri:"P2",st:"done",
-   title:"Exclude <b>internal / test IPs</b> from analytics — with a toggle to see them. <b>✅ Shipped.</b>",
+  {id:"CC-21",sec:"Analytics",pri:"P2",st:"test",
+   title:"Exclude <b>internal / test IPs</b> from analytics — with a toggle to see them.",
    desc:"Our own testing, editing and QA plays are counted as real plays, so every client-facing number is inflated by us. Exclude a known set of internal IPs from reporting <b>by default</b> — but keep the ability to <b>see that traffic on demand</b>, because we need it for testing (e.g. we just used Eric’s own play to confirm the VOD fix in CC-19).",
    notes:[
      {ok:true,t:"<b>The data already exists — this is a filter, not new instrumentation.</b> As of Jul 16 every play carries <code>ip</code> + <code>geo</code>. All of Eric’s test plays read <code>47.197.18.138 · Wesley Chapel, FL</code>, so they’re trivially identifiable."},
      {t:"<b>Spec.</b> A tenant-level <b>excluded-IP list</b> in settings (add / label / remove — e.g. “Eric home”, “office WiFi”). Analytics <b>exclude those IPs by default</b>, with a clear <b>toggle “Include internal/test traffic”</b> to bring them back for QA. Prefer <b>labelling</b> excluded rows as ‘internal’ over hard-hiding, so it’s always obvious what’s being filtered and nothing looks silently missing."},
-     {t:"<b>Why it matters for launch:</b> pairs with CC-20 — dedup fixes double-<i>fires</i>, this removes <i>our own</i> plays. Together they’re what make the numbers we show a client actually trustworthy. Also lets us keep testing (CC-19, CC-02, etc.) without polluting stats."},
-     {ok:true,t:"<b>Verified shipped — built exactly to spec.</b> Internal IPs are now <b>excluded by default</b> (a 30-day report shows 279 public plays and reports <code>excludedInternalCount</code> for the rest), there's an <b><code>includeInternal=true</code> toggle</b> to bring them back for QA, and raw rows are <b>flagged <code>isInternal</code></b> rather than silently vanishing — the labelling approach we asked for. This is the item that makes client-facing numbers trustworthy."},
-     {hint:true,t:"<b>⚠️ Know this side effect (it will scare you):</b> because Eric's own test plays are internal, the <b>default</b> report now shows <code>vod: 0</code>. That is <b>not</b> a CC-19 regression — with <code>includeInternal=true</code> the same window shows <b>vod: 4</b> (Tito Puente ×2, TWI RandyOjeda, Nando). <b>Rule of thumb: to verify VOD tracking, always pass <code>includeInternal=true</code>,</b> or the only VOD plays we have (ours) are filtered out."}]},
+     {t:"<b>Why it matters for launch:</b> pairs with CC-20 — dedup fixes double-<i>fires</i>, this removes <i>our own</i> plays. Together they’re what make the numbers we show a client actually trustworthy. Also lets us keep testing (CC-19, CC-02, etc.) without polluting stats."}]},
 
   {id:"CC-15",sec:"API / MCP gaps",pri:"P2",st:"done",
    title:"Add <code>update_schedule</code> and <code>delete_schedule</code> to the API.",
@@ -400,20 +393,18 @@ const ITEMS = [
    desc:"Add <code>remove_media_from_category</code>, <code>delete_category</code>, <code>reorder_category_items</code>, and <code>list_category_items</code>. Categories can only be created and added to — not trimmed, reordered, or emptied via API.",
    notes:[{ok:true,t:"<b>Verified.</b> All four exist."}]},
 
-  {id:"CC-18",sec:"API / MCP gaps",pri:"P3",st:"done",
+  {id:"CC-18",sec:"API / MCP gaps",pri:"P3",st:"partial",
    title:"Broaden <code>play_report</code>.",
    desc:"Currently last 7 days / ≤200 rows. Add full history, per-episode totals, share counts, and (if possible) VOD-vs-broadcast breakdown + viewer geo — ties into CC-11 and CC-12.",
    notes:[{ok:true,t:"<b>Landed:</b> history 7 days → <b>366</b>; <code>perEpisode=true</code> per-episode totals; every play carries a <code>source</code> with a <b>VOD-vs-broadcast split</b>; and as of <b>Jul 16 viewer geo is in</b> — each play now has <code>ip</code> + <code>geo</code> {city, region, country}. That clears the geo half of CC-11 and enables CC-21."},
-          {ok:true,t:"<b>Share counts landed (verified Jul 22).</b> <code>play_report</code> now returns <b><code>totalShares</code></b> overall and a per-episode <b><code>shares</code></b> field in <code>perEpisode</code> mode. That was the last missing piece — CC-18 is complete."},
-          {todo:true,t:"<b>Worth one sanity test:</b> every <code>shares</code> value currently reads <b>0</b>, so the field exists but has never incremented. Share a video from the site and confirm the counter actually moves — otherwise the field is there but nothing is writing to it."}]},
+          {todo:true,t:"<b>Only one thing still missing: share counts.</b> No <code>shares</code> field in the raw log or the per-episode view. (The raw log is also still capped at 200 rows — <code>perEpisode</code> mode is the way around that.)"}]},
 
-  {id:"CC-22",sec:"BlackMarker.TV 3.0 — Site Data & Embeds",pri:"P1",st:"done",
-   title:"Expose a public <b>thumbnail / poster image URL</b> for every media item. <b>✅ Shipped Jul 22.</b>",
-   desc:"Building the BlackMarker.TV 3.0 site, we hit a wall: there was <b>no public way to get a video's thumbnail</b>. The player streams via Mux, but the public API only exposed the <i>live channel's</i> playbackId (Mux won't serve a static thumb for that → 400); there was no per-media thumbnail endpoint (404); and <code>list_media</code> returned no image field. So client sites — and our own Latest Videos / Trending / episode grids — couldn't show real thumbnails.",
+  {id:"CC-22",sec:"BlackMarker.TV 3.0 — Site Data & Embeds",pri:"P1",st:"build",
+   title:"Expose a public <b>thumbnail / poster image URL</b> for every media item.",
+   desc:"Building the BlackMarker.TV 3.0 site, we hit a wall: there's <b>no public way to get a video's thumbnail</b>. The player streams via Mux, but the public API only exposes the <i>live channel's</i> playbackId (Mux won't serve a static thumb for that → 400); there's no per-media thumbnail endpoint (404); and <code>list_media</code> returns no image field. So client sites — and our own Latest Videos / Trending / episode grids — can't show real thumbnails. Add a public per-media <code>posterUrl</code>.",
    notes:[
-     {ok:true,t:"<b>Verified Jul 22 — shipped exactly as specced.</b> <code>list_media</code> now returns <code>posterUrl</code> on every item, in <b>both</b> flavours we asked for: an <b>uploaded thumbnail</b> (<code>channelcast.tv/uploads/.../media-thumb/xxx.jpg</code>) where one exists, and a <b>Mux auto-frame fallback</b> (<code>image.mux.com/PLAYBACKID/thumbnail.jpg?width=1280&time=5</code>) where it doesn't. Fetched one directly: <b>HTTP 200, image/jpeg, 152 KB</b> — loads publicly, no auth."},
-     {t:"<b>Bonus:</b> the Mux fallback means per-asset playbackIds are now effectively public (embedded in the URL), which is what we needed for any custom thumbnail sizing."},
-     {todo:true,t:"<b>Only gap left:</b> <code>list_category_items</code> still returns just mediaId/title/sort/featured — <b>no posterUrl</b>. Add it there too so category rows can render art without a second lookup per item. (Small; folded into CC-24.)"}]},
+     {hint:true,t:"Ties into CC-07 (uploads): an uploaded VOD thumbnail should be the poster; otherwise fall back to a Mux frame from that asset's <i>own</i> playbackId (<code>image.mux.com/PLAYBACKID/thumbnail.jpg</code>) — but that per-asset playbackId needs to be exposed publicly for it to work."},
+     {todo:true,t:"Confirm the public feed returns a working image URL per item that loads cross-origin from a client's site."}]},
 
   {id:"CC-23",sec:"BlackMarker.TV 3.0 — Site Data & Embeds",pri:"P2",st:"build",
    title:"Public <b>“Now Playing / Up Next”</b> feed for the 24/7 loop (no auth).",
@@ -433,13 +424,6 @@ const ITEMS = [
    desc:"Each show page (e.g. The Weekly Interrupt) uses the show's <b>landscape category art</b> in the hero, plus its description and episode count. We're currently hardcoding the art from a local folder. Expose, per category: the <b>landscape art image URL</b>, description, episode count, and the OTT feed/category key — so show pages pull their own art and data instead of us baking it in per page.",
    notes:[
      {hint:true,t:"We already render the episode grid with the OTT renderer (<code>OTTRenderer.mount({ category, theme })</code>). This is about the surrounding hero <b>art + copy</b> coming from ChannelCast too."}]},
-
-  {id:"CC-27",sec:"BlackMarker.TV 3.0 — Site Data & Embeds",pri:"P2",st:"build",
-   title:"Add a <b>public / hidden flag per VOD category</b> (so auto-created recording folders stay internal).",
-   desc:"Going live auto-creates a <b>“Live Stream Recordings”</b> category as Mux saves the file — that's working as intended, and it's useful in the backend. But it is a <b>staging/internal folder</b>: it should never surface on the public site or in a public feed. Right now every category comes back from <code>list_categories</code> with no visibility flag, so anything consuming the feed can't tell an internal folder from a real show. Add a per-category <b>public/hidden</b> (or <code>isPublic</code>) flag, and honour it in the OTT feed and any public category endpoint.",
-   notes:[
-     {hint:true,t:"Workflow Eric described: recordings land in that folder automatically; if one is worth publishing, they <b>manually</b> move it into a real show category and set its status. So the folder is permanently internal by design — not a one-off to hide."},
-     {t:"Until this exists, the 3.0 site has to <b>hard-code a skip list</b> of category names, which breaks the moment a folder is renamed. Ties directly into <b>CC-24</b> (latest-per-category) and <b>CC-25</b> (category art) — both would otherwise happily surface “Live Stream Recordings” as if it were a show."}]},
 
   {id:"CC-26",sec:"BlackMarker.TV 3.0 — Site Data & Embeds",pri:"P3",st:"build",
    title:"Is there a <b>native live-chat embed</b> for the player?",
