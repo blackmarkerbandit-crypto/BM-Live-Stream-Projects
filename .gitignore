@@ -12,3 +12,7 @@ Thumbs.db
 # Python cache
 **/__pycache__/
 *.pyc
+
+# BlackMarker.TV 3.0 preview - rolling build backups
+blackmarker-tv-3-preview/_backup-*/
+**/_backup-*/

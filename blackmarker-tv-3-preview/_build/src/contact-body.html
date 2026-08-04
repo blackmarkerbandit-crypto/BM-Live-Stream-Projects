@@ -1,0 +1,339 @@
+<!-- CONTACT HERO -->
+<section class="ct-hero">
+  <div class="wrap">
+    <div class="ct-crumb"><a href="BlackMarkerTV-3-LIVE-PREVIEW.html">Home</a> <span class="sep">/</span> <span>Contact</span></div>
+    <div class="ct-hero-in">
+      <div>
+        <div class="ct-kicker">Contact &middot; Submissions &middot; Partnerships</div>
+        <h1 class="ct-title">Get At Us</h1>
+        <p class="ct-desc">Whether you&rsquo;re an artist trying to get your record reviewed on air, a brand looking to advertise, or an organizer who wants us covering your event &mdash; this is the door. Pick what you&rsquo;re here for and we&rsquo;ll route it to the right person.</p>
+      </div>
+      <div class="ct-hero-side">
+        <div class="ct-hero-stat"><span class="n">Video</span><span class="l">Preferred for submissions</span></div>
+        <div class="ct-hero-stat"><span class="n">YouTube</span><span class="l">Links are perfectly fine</span></div>
+      </div>
+    </div>
+
+    <!-- topic quick-picks: set the dropdown + jump to the form -->
+    <div class="ct-chips" id="ctChips">
+      <button type="button" class="ct-chip is-on" data-topic="submission">&#9835; Music / Video Submission</button>
+      <button type="button" class="ct-chip" data-topic="review">&#9654; Live Music Review</button>
+      <button type="button" class="ct-chip" data-topic="advertising">Advertising</button>
+      <button type="button" class="ct-chip" data-topic="partnership">Partnership</button>
+      <button type="button" class="ct-chip" data-topic="pitch">Show Pitch</button>
+      <button type="button" class="ct-chip" data-topic="event">Event Invite / Coverage</button>
+      <button type="button" class="ct-chip" data-topic="speaking">Speaking / Conference Stream</button>
+      <button type="button" class="ct-chip" data-topic="press">Press / Media</button>
+      <button type="button" class="ct-chip" data-topic="general">General Inquiry</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT BODY -->
+<section class="section wrap" id="contact-form">
+  <div class="ct-grid">
+
+    <!-- ---------- LEFT: the form ---------- -->
+    <div>
+      <div class="ann" data-ann="CMS FORM — replace with form-tool markup">
+        <!-- ================= BEGIN CMS FORM =================
+             IMPLEMENTATION NOTE
+             This whole block gets replaced by the CMS form tool's own markup.
+             Keep the field NAMES below identical so routing/notifications and
+             any downstream automation keep working:
+
+               topic        select    required   routes the submission
+               name         text      required
+               email        email     required
+               phone        tel
+               entity       text                 artist / company / org name
+               location     text
+               message      textarea  required
+               video_url    url                  REQUIRED when topic = submission|review
+               audio_url    url
+               work_title   text
+               genre        text
+               socials      text
+               explicit     select
+               rights_ok    checkbox  required when topic = submission|review
+               how_heard    select
+               consent      checkbox
+
+             Conditional rule to reproduce in the CMS:
+               show the "Your Material" fieldset only when
+               topic is "submission" or "review", and make
+               video_url + rights_ok required in that state.
+             ================================================== -->
+        <form class="ct-form" id="ctForm" novalidate>
+
+          <div class="ct-form-head">
+            <h2 class="sec-title">Send it over</h2>
+            <p class="ct-form-sub">Fields marked <span class="req">*</span> are required.</p>
+          </div>
+
+          <div class="ct-field">
+            <label for="f-topic">What&rsquo;s this about? <span class="req">*</span></label>
+            <select id="f-topic" name="topic" required>
+              <option value="submission">Music / Video Submission &mdash; feature on the channel</option>
+              <option value="review">Live Music Review &mdash; Can You Dig It!?</option>
+              <option value="advertising">Advertising &amp; Sponsorship</option>
+              <option value="partnership">Partnership / Collaboration</option>
+              <option value="pitch">Show Pitch &mdash; I have a show idea</option>
+              <option value="event">Event Invite &amp; Coverage</option>
+              <option value="speaking">Speaking / Streaming a Conference</option>
+              <option value="press">Press &amp; Media Request</option>
+              <option value="booking">Booking the Studio / Crew</option>
+              <option value="general">General Inquiry</option>
+            </select>
+          </div>
+
+          <div class="ct-row">
+            <div class="ct-field">
+              <label for="f-name">Name <span class="req">*</span></label>
+              <input type="text" id="f-name" name="name" placeholder="First and last" required>
+            </div>
+            <div class="ct-field">
+              <label for="f-email">Email <span class="req">*</span></label>
+              <input type="email" id="f-email" name="email" placeholder="you@domain.com" required>
+            </div>
+          </div>
+
+          <div class="ct-row">
+            <div class="ct-field">
+              <label for="f-entity">Artist / Company / Organization</label>
+              <input type="text" id="f-entity" name="entity" placeholder="How you want to be credited">
+            </div>
+            <div class="ct-field">
+              <label for="f-phone">Phone</label>
+              <input type="tel" id="f-phone" name="phone" placeholder="Optional">
+            </div>
+          </div>
+
+          <div class="ct-field">
+            <label for="f-location">Where are you based?</label>
+            <input type="text" id="f-location" name="location" placeholder="City, State / Country">
+          </div>
+
+          <!-- ---- conditional: submissions only ---- -->
+          <fieldset class="ct-media" id="ctMedia">
+            <legend class="ct-media-lg">Your Material</legend>
+            <p class="ct-media-note">
+              <b>Video is what we push hardest</b> &mdash; a performance, a music video, a live set, a visualizer.
+              A plain <b>YouTube link is perfectly fine</b>. Audio-only is welcome too, but video gets more
+              airtime and travels further on the network.
+            </p>
+
+            <div class="ct-field">
+              <label for="f-video">Video Link <span class="req" id="ctVideoReq">*</span></label>
+              <input type="url" id="f-video" name="video_url" placeholder="https://youtube.com/watch?v=...">
+              <div class="ct-help">YouTube, Vimeo, or any public link that plays without a login or download.</div>
+            </div>
+
+            <div class="ct-field">
+              <label for="f-audio">Audio / Streaming Link</label>
+              <input type="url" id="f-audio" name="audio_url" placeholder="Spotify, Apple Music, SoundCloud, Bandcamp&hellip;">
+              <div class="ct-help">Optional if you already gave us video &mdash; but helpful for the review.</div>
+            </div>
+
+            <div class="ct-row">
+              <div class="ct-field">
+                <label for="f-work">Track / Project Title</label>
+                <input type="text" id="f-work" name="work_title" placeholder="What are we listening to?">
+              </div>
+              <div class="ct-field">
+                <label for="f-genre">Genre / Lane</label>
+                <input type="text" id="f-genre" name="genre" placeholder="Hip-hop, R&amp;B, Latin, rock&hellip;">
+              </div>
+            </div>
+
+            <div class="ct-row">
+              <div class="ct-field">
+                <label for="f-socials">Social Handles</label>
+                <input type="text" id="f-socials" name="socials" placeholder="@yourhandle (IG, X, TikTok)">
+              </div>
+              <div class="ct-field">
+                <label for="f-explicit">Contains explicit content?</label>
+                <select id="f-explicit" name="explicit">
+                  <option value="">Select&hellip;</option>
+                  <option value="no">No &mdash; clean</option>
+                  <option value="yes">Yes &mdash; explicit</option>
+                  <option value="both">Both versions available</option>
+                </select>
+              </div>
+            </div>
+
+            <label class="ct-check" for="f-rights">
+              <input type="checkbox" id="f-rights" name="rights_ok">
+              <span>I own or control the rights to this material and give Black Marker TV permission to play,
+              review and broadcast it on air and across its channels. <span class="req" id="ctRightsReq">*</span></span>
+            </label>
+          </fieldset>
+
+          <div class="ct-field">
+            <label for="f-message">Message <span class="req">*</span></label>
+            <textarea id="f-message" name="message" rows="6" placeholder="Tell us what you&rsquo;re working with. For events, include dates and location." required></textarea>
+          </div>
+
+          <div class="ct-field">
+            <label for="f-heard">How&rsquo;d you find us?</label>
+            <select id="f-heard" name="how_heard">
+              <option value="">Select&hellip;</option>
+              <option>Watching the stream</option>
+              <option>YouTube</option>
+              <option>Instagram</option>
+              <option>Facebook</option>
+              <option>Twitch</option>
+              <option>An artist / friend referred me</option>
+              <option>Met the crew at an event</option>
+              <option>Search</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <label class="ct-check" for="f-consent">
+            <input type="checkbox" id="f-consent" name="consent">
+            <span>Keep me posted on show drops, events and network news.</span>
+          </label>
+
+          <div class="ct-submit-row">
+            <button type="submit" class="btn btn-red ct-submit">Send It</button>
+            <span class="ct-submit-note" id="ctStatus">We read everything that comes through.</span>
+          </div>
+        </form>
+        <!-- ================== END CMS FORM ================== -->
+        <span class="ann-note">The CMS form tool replaces the markup above. Field names, the conditional
+        &ldquo;Your Material&rdquo; rule, and the rights checkbox all need to carry over &mdash; the rights grant is what
+        lets the material be aired.</span>
+      </div>
+    </div>
+
+    <!-- ---------- RIGHT: sidebar ---------- -->
+    <aside class="ct-side">
+
+      <div class="ct-card">
+        <h3 class="ct-card-h">What makes a good submission</h3>
+        <ul class="ct-list">
+          <li><b>Send video first.</b> Performance, music video, live set, or visualizer.</li>
+          <li><b>One link, publicly playable.</b> No logins, no downloads, no expiring file transfers.</li>
+          <li><b>Unlisted YouTube is fine</b> if it isn&rsquo;t out yet &mdash; just make sure the link plays.</li>
+          <li><b>Say what you want.</b> A review, a feature, an interview, rotation &mdash; tell us.</li>
+          <li><b>Clear the rights first.</b> Uncleared samples or beats you don&rsquo;t control can&rsquo;t be aired.</li>
+        </ul>
+      </div>
+
+      <div class="ct-card">
+        <h3 class="ct-card-h">What happens next</h3>
+        <ol class="ct-steps">
+          <li><span class="n">1</span><div><b>It gets routed.</b> Your topic sends it to whoever handles that lane.</div></li>
+          <li><span class="n">2</span><div><b>We actually watch it.</b> Submissions go into the review queue for the next taping.</div></li>
+          <li><span class="n">3</span><div><b>You hear back.</b> If it&rsquo;s a fit we&rsquo;ll reach out about when it airs.</div></li>
+        </ol>
+        <div class="ann ct-ann-inline" data-ann="Set real response time">
+          <span class="ann-note">Add the real turnaround commitment here once decided (e.g. &ldquo;most inquiries
+          answered within X business days&rdquo;) &mdash; leaving it vague invites follow-up emails.</span>
+        </div>
+      </div>
+
+      <div class="ct-card">
+        <h3 class="ct-card-h">Rather just email?</h3>
+        <div class="ct-mail">
+          <div class="ct-mail-lbl">Music &amp; video submissions</div>
+          <a href="mailto:canyoudigit@blackmarker.tv?subject=Music%20Submission%20for%20Review">canyoudigit@blackmarker.tv</a>
+        </div>
+        <div class="ct-mail">
+          <div class="ct-mail-lbl">Everything else</div>
+          <a href="mailto:{{ general_inquiry_email }}" class="ct-token">{{ general_inquiry_email }}</a>
+        </div>
+        <div class="ann ct-ann-inline" data-ann="Needs real addresses">
+          <span class="ann-note">Only <b>canyoudigit@blackmarker.tv</b> is confirmed. Add the real general /
+          advertising / partnerships addresses (or a single catch-all) before this page ships.</span>
+        </div>
+      </div>
+
+      <div class="ct-card ct-card-social">
+        <h3 class="ct-card-h">Or slide through the socials</h3>
+        <div class="ct-socials">
+          <a href="#" class="ct-soc yt" aria-label="YouTube"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.9-.5-5.8c-.3-1-1.1-1.8-2.1-2.1C18.5 3.5 12 3.5 12 3.5s-6.5 0-8.4.6c-1 .3-1.8 1.1-2.1 2.1C1 8.1 1 12 1 12s0 3.9.5 5.8c.3 1 1.1 1.8 2.1 2.1 1.9.6 8.4.6 8.4.6s6.5 0 8.4-.6c1-.3 1.8-1.1 2.1-2.1.5-1.9.5-5.8.5-5.8zM9.8 15.5v-7l6.3 3.5-6.3 3.5z"/></svg></a>
+          <a href="#" class="ct-soc ig" aria-label="Instagram"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.8" cy="6.2" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" class="ct-soc fb" aria-label="Facebook"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V5.5h-3c-2.2 0-4 1.8-4 4V12H7.5v3.5H10V22h3.5v-6.5H16L16.5 12H13.5V9.5c0-.3.2-.5.5-.5z"/></svg></a>
+          <a href="#" class="ct-soc tw" aria-label="Twitch"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M4 3h16v11l-4.5 4.5H12L9 21H7v-2.5H4V3zm2 2v11h3v2.2l2.2-2.2h3.5L18 12.6V5H6zm7 2.5h1.8v5H13v-5zm-4 0h1.8v5H9v-5z"/></svg></a>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section wrap">
+  <div class="cc">
+    <div class="cc-txt">
+      <div class="cc-eye">Artists &mdash; Get Reviewed</div>
+      <h2 class="cc-h">Think your record<br>can hang?</h2>
+      <p class="cc-p">Drop a video link and we&rsquo;ll put it in front of the panel on <b>Can You Dig It!?</b> &mdash; the
+      live music review show. Honest feedback, on air, in front of the network.</p>
+      <div class="cc-actions">
+        <a class="btn btn-red" href="#contact-form">Submit Your Music</a>
+        <a class="btn btn-ghost" href="BlackMarkerTV-3-CAN-YOU-DIG-IT.html">Watch the Show</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var form = document.getElementById('ctForm');
+    if (!form) return;
+    var topic   = document.getElementById('f-topic');
+    var media   = document.getElementById('ctMedia');
+    var video   = document.getElementById('f-video');
+    var rights  = document.getElementById('f-rights');
+    var status  = document.getElementById('ctStatus');
+    var chipBox = document.getElementById('ctChips');
+
+    // topics that require material + a rights grant
+    function needsMedia(v) { return v === 'submission' || v === 'review'; }
+
+    function sync() {
+      var on = needsMedia(topic.value);
+      media.style.display = on ? '' : 'none';
+      video.required = on;
+      rights.required = on;
+      document.getElementById('ctVideoReq').style.display  = on ? '' : 'none';
+      document.getElementById('ctRightsReq').style.display = on ? '' : 'none';
+
+      if (chipBox) {
+        chipBox.querySelectorAll('.ct-chip').forEach(function (c) {
+          c.classList.toggle('is-on', c.dataset.topic === topic.value);
+        });
+      }
+    }
+
+    topic.addEventListener('change', sync);
+
+    if (chipBox) {
+      chipBox.addEventListener('click', function (e) {
+        var chip = e.target.closest('.ct-chip');
+        if (!chip) return;
+        topic.value = chip.dataset.topic;
+        sync();
+        document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+
+    // wireframe only -- the CMS form tool handles real submission
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        status.textContent = 'Fill in the required fields and try again.';
+        status.className = 'ct-submit-note is-warn';
+        form.reportValidity();
+        return;
+      }
+      status.textContent = 'Wireframe only — the CMS form tool handles real delivery.';
+      status.className = 'ct-submit-note is-ok';
+    });
+
+    sync();
+  })();
+</script>

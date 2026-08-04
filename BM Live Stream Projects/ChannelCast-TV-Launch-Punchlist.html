@@ -373,6 +373,13 @@ const ITEMS = [
      {t:"<b>Spec.</b> A tenant-level <b>excluded-IP list</b> in settings (add / label / remove — e.g. “Eric home”, “office WiFi”). Analytics <b>exclude those IPs by default</b>, with a clear <b>toggle “Include internal/test traffic”</b> to bring them back for QA. Prefer <b>labelling</b> excluded rows as ‘internal’ over hard-hiding, so it’s always obvious what’s being filtered and nothing looks silently missing."},
      {t:"<b>Why it matters for launch:</b> pairs with CC-20 — dedup fixes double-<i>fires</i>, this removes <i>our own</i> plays. Together they’re what make the numbers we show a client actually trustworthy. Also lets us keep testing (CC-19, CC-02, etc.) without polluting stats."}]},
 
+  {id:"CC-22",sec:"VOD / Embeds",pri:"P2",st:"test",
+   title:"Inside a VOD category, clicking a video should open its settings — and return you to <b>that same category</b> when done.",
+   desc:"Managing VOD content should be a clean round-trip: open a category → click a video → adjust its settings → land back on the <b>same category you came from</b>, where you left off. Today the return path is the gap — after editing a video you don’t come back to the originating category, so managing a category’s videos one after another means constantly re-navigating to find your place.",
+   notes:[
+     {hint:true,t:"<b>Implementation note for Jose:</b> a video can live in <i>multiple</i> categories, so “back to category” must remember the category you <b>clicked in from</b> — don’t derive it from the video (that’s ambiguous). Pass the originating category id/context into the settings view and use it for the back action. Ideally restore <b>scroll position</b> in the category too, so editing item #40 doesn’t dump you back at the top."},
+     {todo:true,t:"<b>Your test (once built):</b> open a category, scroll down, click a video, change a setting, save/close — do you land back in that same category at roughly where you were?"}]},
+
   {id:"CC-15",sec:"API / MCP gaps",pri:"P2",st:"done",
    title:"Add <code>update_schedule</code> and <code>delete_schedule</code> to the API.",
    desc:"Right now you can only <code>create_schedule</code> and <code>list_schedules</code> — there’s no way to edit or remove a schedule programmatically. A wrong/duplicate schedule can’t be fixed via API.",

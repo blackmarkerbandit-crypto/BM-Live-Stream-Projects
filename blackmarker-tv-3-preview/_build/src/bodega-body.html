@@ -1,0 +1,137 @@
+<!-- BODEGA HERO -->
+<section class="bd-hero">
+  <div class="wrap">
+    <div class="bd-crumb"><a href="BlackMarkerTV-3-LIVE-PREVIEW.html">Home</a> <span class="sep">/</span> <span>The Bodega</span></div>
+    <div class="bd-hero-in">
+      <div>
+        <div class="bd-kicker">Shop &middot; Merch &middot; Services</div>
+        <h1 class="bd-title">The Bodega</h1>
+        <p class="bd-desc">Gear, drops and services straight from the network. Everything Black Marker
+        puts its name on lives here.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROTATING AD BANNER -->
+<section class="wrap bd-banner-wrap">
+  <div class="ann" data-ann="Rotating ad banner &mdash; slides managed in the CMS">
+    <div class="bd-banner" id="bdBanner" aria-roledescription="carousel" aria-label="Featured promotions">
+
+      <div class="bd-slides" id="bdSlides">
+        <!-- ===== BANNER SLOT 1 ===== -->
+        <article class="bd-slide s1 is-on" data-slide="0" role="group" aria-label="Slide 1 of 3">
+          <div class="bd-slide-in">
+            <span class="bd-tag">Banner Slot 1</span>
+            <h2 class="bd-slide-h">New Clothing Drops</h2>
+            <p class="bd-slide-p">Rotate seasonal apparel launches through here &mdash; tees, hoodies, hats.</p>
+            <span class="btn btn-red bd-slide-btn">Shop the Drop</span>
+          </div>
+        </article>
+        <!-- ===== BANNER SLOT 2 ===== -->
+        <article class="bd-slide s2" data-slide="1" role="group" aria-label="Slide 2 of 3" hidden>
+          <div class="bd-slide-in">
+            <span class="bd-tag">Banner Slot 2</span>
+            <h2 class="bd-slide-h">Limited Items</h2>
+            <p class="bd-slide-p">One-off runs, event exclusives and collabs worth putting front and centre.</p>
+            <span class="btn btn-red bd-slide-btn">See What&rsquo;s Left</span>
+          </div>
+        </article>
+        <!-- ===== BANNER SLOT 3 ===== -->
+        <article class="bd-slide s3" data-slide="2" role="group" aria-label="Slide 3 of 3" hidden>
+          <div class="bd-slide-in">
+            <span class="bd-tag">Banner Slot 3</span>
+            <h2 class="bd-slide-h">Services &amp; Bookings</h2>
+            <p class="bd-slide-p">Studio time, streaming production, event coverage &mdash; sell the services too.</p>
+            <span class="btn btn-red bd-slide-btn">Book the Crew</span>
+          </div>
+        </article>
+      </div>
+
+      <button class="bd-nav prev" id="bdPrev" type="button" aria-label="Previous slide">&#8249;</button>
+      <button class="bd-nav next" id="bdNext" type="button" aria-label="Next slide">&#8250;</button>
+
+      <div class="bd-dots" id="bdDots" role="tablist" aria-label="Choose slide">
+        <button class="bd-dot is-on" type="button" data-go="0" role="tab" aria-label="Slide 1" aria-selected="true"></button>
+        <button class="bd-dot" type="button" data-go="1" role="tab" aria-label="Slide 2" aria-selected="false"></button>
+        <button class="bd-dot" type="button" data-go="2" role="tab" aria-label="Slide 3" aria-selected="false"></button>
+      </div>
+    </div>
+
+    <span class="ann-note">Auto-rotates every 6s, pauses on hover/focus, and honours
+    <code>prefers-reduced-motion</code>. Each slide is an <b>ad slot</b> &mdash; image, headline, copy and
+    link should all come from the CMS so the team can swap campaigns without a code change. Add or remove
+    slides freely; the dots and controls build off whatever slides exist.</span>
+  </div>
+</section>
+
+<!-- STORE PLACEHOLDER -->
+<section class="section wrap">
+  <div class="sec-head">
+    <div>
+      <div class="eyebrow">Shop</div>
+      <h2 class="sec-title">The Store</h2>
+    </div>
+  </div>
+
+  <div class="ann" data-ann="Store integration goes here">
+    <div class="bd-store">
+      <div class="bd-store-mark">[STORE]</div>
+      <p class="bd-store-p">Product grid, cart and checkout mount in this block.</p>
+    </div>
+    <span class="ann-note">Placeholder for the storefront. Whatever we land on &mdash; a hosted cart embed,
+    a CMS commerce module, or a Shopify/Square buy-button grid &mdash; it drops into this container. The
+    banner above and the page shell around it stay as they are.</span>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('bdBanner');
+    if (!root) return;
+    var slides = Array.prototype.slice.call(root.querySelectorAll('.bd-slide'));
+    var dots   = Array.prototype.slice.call(root.querySelectorAll('.bd-dot'));
+    if (slides.length < 2) return;
+
+    var i = 0, timer = null;
+    var DELAY = 6000;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function show(n) {
+      i = (n + slides.length) % slides.length;
+      slides.forEach(function (s, k) {
+        var on = k === i;
+        s.classList.toggle('is-on', on);
+        s.hidden = !on;
+      });
+      dots.forEach(function (d, k) {
+        d.classList.toggle('is-on', k === i);
+        d.setAttribute('aria-selected', k === i ? 'true' : 'false');
+      });
+    }
+    function next() { show(i + 1); }
+    function prev() { show(i - 1); }
+
+    function start() { if (!reduce && !timer) timer = setInterval(next, DELAY); }
+    function stop()  { if (timer) { clearInterval(timer); timer = null; } }
+    function bump()  { stop(); start(); }
+
+    document.getElementById('bdNext').addEventListener('click', function () { next(); bump(); });
+    document.getElementById('bdPrev').addEventListener('click', function () { prev(); bump(); });
+    dots.forEach(function (d) {
+      d.addEventListener('click', function () { show(parseInt(d.dataset.go, 10)); bump(); });
+    });
+
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+    // don't burn cycles rotating a banner nobody is looking at
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { stop(); } else { start(); }
+    });
+
+    show(0);
+    start();
+  })();
+</script>

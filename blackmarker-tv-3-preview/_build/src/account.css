@@ -1,0 +1,16 @@
+/* ============ ACCOUNT ============ */
+.ac-hero{background:radial-gradient(120% 100% at 20% 0%,rgba(232,24,28,.14),transparent 55%),#15110d;
+  border-bottom:1px solid #3a332b;padding:26px 0 30px;}
+.ac-crumb{font-size:12.5px;color:var(--muted);margin-bottom:16px;}
+.ac-crumb a{color:var(--muted);transition:.15s;}
+.ac-crumb a:hover{color:var(--red);}
+.ac-crumb .sep{margin:0 7px;color:var(--muted2);}
+.ac-kicker{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:11px;}
+.ac-title{font-size:clamp(30px,4.4vw,50px);font-weight:900;letter-spacing:var(--disp);line-height:1.02;margin-bottom:14px;}
+.ac-desc{color:var(--muted);font-size:15.5px;max-width:620px;line-height:1.6;}
+.ac-slot{border:2px dashed var(--border2);border-radius:16px;background:var(--surface);
+  padding:82px 28px;text-align:center;}
+.ac-slot-mark{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:clamp(26px,4.4vw,46px);font-weight:700;letter-spacing:.05em;color:var(--muted2);margin-bottom:12px;}
+.ac-slot-p{font-size:14px;color:var(--muted);}
+@media (max-width:760px){ .ac-slot{padding:56px 20px;} }

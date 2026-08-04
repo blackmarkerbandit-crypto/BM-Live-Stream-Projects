@@ -17,7 +17,7 @@
 - **◐ Partly landed** — some of it shipped, some is still missing.
 - **🔍 Needs test** — front-end/visual. Eric has to look at it; can't be checked via API.
 
-**Scorecard:** 7 verified · 1 partly landed · 13 need testing (21 items)
+**Scorecard:** 7 verified · 1 partly landed · 14 need testing (22 items)
 **No confirmed blockers left.** Remaining P1s are all untested front-end (CC-02 logo *display*, CC-03/04/05 scheduling, CC-14 domain verify).
 **✅ Cleared Jul 16:** CC-19 (VOD play tracking now records) · CC-07 (image upload fixed platform-wide) — both confirmed by direct test.
 
@@ -85,6 +85,10 @@ The on-demand page runs **two player instances that aren't aware of each other**
 
 ### VOD / Embeds
 - [ ] **CC-08 · P2 — Embed a single VOD category** (e.g. just *Can You Dig It!?*) rather than the whole catalog.
+- [ ] **CC-22 · P2 — In a VOD category, clicking a video should open its settings and return you to *that same category* when done.**
+  Managing VOD content should be a clean round-trip: open a category → click a video → adjust settings → land back on the **same category you came from**, where you left off. Today the return path is the gap — after editing a video you don't come back to the originating category, so working through a category's videos one by one means constantly re-navigating to find your place.
+  🔎 *For Jose:* a video can live in **multiple** categories, so "back to category" must remember the category you **clicked in from** — don't derive it from the video (ambiguous). Pass the originating category context into the settings view. Ideally restore **scroll position** too, so editing item #40 doesn't dump you at the top.
+  👁 *Test once built:* open a category, scroll down, click a video, change a setting, save/close — do you land back in the same category near where you were?
 - [ ] **CC-09 · P2 — Clicking a VOD item plays two videos at once.** Does the background feature block pause now?
   🔎 *Jose — do this one together with CC-19 (and check CC-20 while you're in there). See the "Start here" callout at the top: they look like the same root cause.*
 - [ ] **CC-10 · P2 — VOD embed theming** (background, tile, font colors).
