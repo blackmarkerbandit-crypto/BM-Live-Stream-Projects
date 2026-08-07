@@ -83,6 +83,7 @@
     <div class="tab" data-tab="import">Import</div>
     <div class="tab" data-tab="showupdate">Show Update</div>
     <div class="tab" data-tab="musicdrop">Music Drop</div>
+    <div class="tab" data-tab="archive">Archive Cleanup</div>
   </div>
   <span id="chan" class="muted"></span>
 </header>
@@ -206,6 +207,15 @@
       <button class="ghost" onclick="refreshBrowser()">Refresh</button>
     </div>
     <p class="muted" id="usageNote">Usage (which loops each file is in) needs an all-loops sync — click “Sync all loops” on the Loops tab.</p>
+    <div class="row" id="libBulkBar" style="display:none; position:sticky; top:0; z-index:5;
+         background:#161a21; border:1px solid #2c333e; border-radius:8px; padding:8px 10px">
+      <b id="libSelCount"></b>
+      <span class="muted">set all to</span>
+      <select id="libBulkType" class="tsel"></select>
+      <button onclick="applyBulkType()">Apply</button>
+      <button class="ghost" onclick="libSelectShown()">Select all shown</button>
+      <button class="ghost" onclick="libClearSel()">Clear</button>
+    </div>
     <div id="libSections"></div>
   </div>
 </section>
@@ -290,6 +300,87 @@
   </div>
 </section>
 
+<!-- ARCHIVE CLEANUP -->
+<section id="tab-archive" style="display:none">
+
+  <!-- step 1 -->
+  <div class="card">
+    <div class="row">
+      <b style="flex:0 0 auto">1 · Find archived media</b>
+      <button onclick="archiveScan()" id="arScanBtn">Scan ChannelCast</button>
+      <span id="arScanMsg" class="muted"></span>
+    </div>
+    <p class="muted">Reads the real <b>Active / Archived</b> status of every file in your ChannelCast
+      library — the status you set in the dashboard, which this app couldn’t see before.
+      Takes about two minutes.</p>
+    <div class="row" id="arScanRow" style="display:none">
+      <progress id="arScanBar" value="0" max="100" style="flex:1; height:16px"></progress>
+      <span id="arScanPct" class="muted" style="min-width:280px; text-align:right"></span>
+    </div>
+    <div id="arSummary"></div>
+  </div>
+
+  <!-- step 2 -->
+  <div class="card">
+    <div class="row">
+      <b style="flex:0 0 auto">2 · Purge from loops</b>
+      <button class="ghost" onclick="archivePurgePlan()" id="arPlanBtn">Check loops</button>
+      <button class="ghost" onclick="arSetMode('surgical')">All surgical</button>
+      <button class="ghost" onclick="arSetMode('rebuild')">All full rebuild</button>
+      <span id="arPlanMsg" class="muted"></span>
+    </div>
+    <p class="muted">Re-reads all 28 loops live, audits each against every rule, then plans the fix.
+      Two ways to fix a loop — pick per loop, the recommended one is preselected:</p>
+    <ul class="muted" style="margin-top:0">
+      <li><b>Surgical</b> — cut out just the archived items and top the loop back up to 6h.
+        A few calls per loop instead of a few hundred. Everything else stays exactly as it is.
+        The one cost is <b>drift</b>: pulling a 30-second promo out of the middle shifts everything
+        after it 30 seconds earlier, so an artist pair sitting right on the 2h line can land a few
+        seconds under it. The exact worst case is shown per loop.</li>
+      <li><b>Full rebuild</b> — regenerate the whole loop from scratch. Exact on every rule, but it
+        reshuffles all the music and takes ~60× longer.</li>
+    </ul>
+    <div class="row" id="arPlanRow" style="display:none">
+      <progress id="arPlanBar" value="0" max="100" style="flex:1; height:16px"></progress>
+      <span id="arPlanPct" class="muted" style="min-width:280px; text-align:right"></span>
+    </div>
+    <div id="arPlanReview"></div>
+    <div class="row" id="arPurgeRow" style="display:none">
+      <button id="arPurgeBtn" onclick="archiveRepair()">RUN REPAIR</button>
+      <span id="arRepairNote" class="muted"></span>
+    </div>
+  </div>
+
+  <!-- step 3 -->
+  <div class="card">
+    <div class="row">
+      <b style="flex:0 0 auto">3 · Delete archived files</b>
+      <button class="ghost" onclick="arSelect('clean')">Select not-in-loops</button>
+      <button class="ghost" onclick="arSelect('all')">Select all</button>
+      <button class="ghost" onclick="arSelect('none')">Clear</button>
+      <button class="ghost" onclick="archiveExport()">Export CSV</button>
+      <span id="arDelMsg" class="muted"></span>
+    </div>
+    <div class="tblwrap" style="max-height:420px">
+      <table id="arTbl"><thead><tr>
+        <th style="width:28px"></th><th>File</th><th style="width:90px">Type</th>
+        <th style="width:80px">Length</th><th>Still in loops</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+    <div class="row" id="arDelProgressRow" style="display:none; margin-top:10px">
+      <progress id="arDelBar" value="0" max="100" style="flex:1; height:16px"></progress>
+      <span id="arDelPct" class="muted" style="min-width:280px; text-align:right"></span>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="danger" id="arDelBtn" onclick="archiveDelete()">DELETE SELECTED</button>
+      <span id="arDelCount" class="muted"></span>
+    </div>
+    <p class="muted">Deletion is permanent and can’t be undone. Files still sitting in a loop are
+      skipped — run step 2 first, or use Export CSV and remove them by hand in the dashboard.</p>
+  </div>
+
+</section>
+
 </main>
 <div id="toast"></div>
 
@@ -310,8 +401,9 @@ async function api(path,opts){setBusy(1);try{const r=await fetch(path,opts);if(!
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
   t.classList.add('active');
-  ['loops','generate','library','import','showupdate','musicdrop'].forEach(n=>$('#tab-'+n).style.display=n===t.dataset.tab?'':'none');
+  ['loops','generate','library','import','showupdate','musicdrop','archive'].forEach(n=>$('#tab-'+n).style.display=n===t.dataset.tab?'':'none');
   if(t.dataset.tab==='musicdrop' && !MDCAND.length) loadDropCandidates();
+  if(t.dataset.tab==='archive' && !ARDATA) loadArchive();
 });
 
 async function init(){
@@ -398,7 +490,7 @@ async function saveOrder(){
       while((idx=buf.indexOf('\n'))>=0){
         const line=buf.slice(0,idx).trim(); buf=buf.slice(idx+1); if(!line) continue;
         const m=JSON.parse(line);
-        if(!m.done){ bar.max=m.total; bar.value=m.done;
+        if(m.done!==true){ bar.max=m.total; bar.value=m.done;
           pct.textContent=`${m.phase==='add'?'writing new order':'clearing old'} ${m.done}/${m.total}`; }
       }
     }
@@ -425,7 +517,7 @@ async function syncAllLoops(){
       while((idx=buf.indexOf('\n'))>=0){
         const line=buf.slice(0,idx).trim(); buf=buf.slice(idx+1); if(!line) continue;
         const m=JSON.parse(line);
-        if(m.done){ sum=m; } else { bar.max=m.n; bar.value=m.i; pct.textContent=`loop ${m.i}/${m.n}: ${m.name} · ${m.count} items`; }
+        if(m.done===true){ sum=m; } else { bar.max=m.n; bar.value=m.i; pct.textContent=`loop ${m.i}/${m.n}: ${m.name} · ${m.count} items`; }
       }
     }
     pct.textContent=`done — ${sum?sum.playlists:''} loops synced ✓`;
@@ -452,23 +544,43 @@ function typeSelect(m){
     +(m.overridden?' <span class="usg" title="manually set">•</span>':'');
 }
 
+// Which sections are expanded, and which files are ticked. Both survive a
+// re-render: retyping a file rebuilds this whole list, and without these you'd
+// lose your place (and your selection) after every single change.
+let LIBOPEN=new Set(), LIBSEL=new Set(), LIBFILTER=null, LIBSHOWN=[];
+
+function captureLibOpen(){
+  const secs=document.querySelectorAll('#libSections details.sec');
+  if(!secs.length) return;          // nothing rendered yet -- keep what we have
+  LIBOPEN=new Set([...secs].filter(s=>s.open).map(s=>s.dataset.key));
+}
+
 function renderLibrarySections(){
   const filter=($('#libFilter').value||'').toLowerCase();
+  captureLibOpen();
+  // A new search term opens every matching section; any other re-render (a type
+  // change, a refresh) leaves the sections exactly as the user had them.
+  const filterChanged = filter!==LIBFILTER;
+  LIBFILTER=filter;
+  const scroll=window.scrollY;
+
   const introId=CFG.intro_media_id, usage=PLCACHE.usage||{};
   const groups={};
   LIB.forEach(m=>{ let g=(m.id===introId&&m.kind!=='archive')?'intro':m.kind; (groups[g]=groups[g]||[]).push(m); });
   const order=[['special','Performances & Interviews'],['show','Full Shows (openers)'],
     ['promo','Promos & Bumpers'],['intro','Intro Plug'],['mv','Music Videos'],['other','Other / Ads'],
     ['archive','Archived — remove from loops & delete in dashboard']];
-  let html='';
+  let html=''; LIBSHOWN=[];
   for(const [key,label] of order){
     let items=(groups[key]||[]);
     if(filter) items=items.filter(m=>m.title.toLowerCase().includes(filter));
     if(!items.length) continue;
     items.sort((a,b)=>a.title.localeCompare(b.title));
+    LIBSHOWN.push(...items.map(m=>m.id));
     // Closed by default -- expanded sections made this a very long scroll. A
     // search still opens them, otherwise you'd have to click into each one.
-    const openAttr=filter?'open':'';
+    const openAttr=(filterChanged ? !!filter : LIBOPEN.has(key)) ? 'open' : '';
+    const nSel=items.filter(m=>LIBSEL.has(m.id)).length;
     let rows='';
     items.forEach(m=>{
       const u=usage[m.id]||[];
@@ -477,20 +589,67 @@ function renderLibrarySections(){
         ? `<span class="${key==='archive'?'unused':'usg'}">in ${names.length} loop(s)${u.length>names.length?` · ${u.length} spots`:''}:</span> ${names.join(', ')} `
           +`<button class="danger iconbtn" title="remove from all loops" onclick='removeFromAll(${JSON.stringify(m.id)})'>✕ all</button>`
         : `<span class="${key==='archive'?'usg':'unused'}">${key==='archive'?'not in any loop':'unused'}</span>`;
-      rows+=`<tr><td style="min-width:200px">${m.title}</td><td class="dur">${fmt(m.duration)}</td>`
+      rows+=`<tr><td style="width:26px"><input type="checkbox" class="libchk" data-id="${m.id}"${LIBSEL.has(m.id)?' checked':''}></td>`
+        +`<td style="min-width:200px">${m.title}</td><td class="dur">${fmt(m.duration)}</td>`
         +`<td style="white-space:nowrap">${typeSelect(m)}</td><td>${cell}</td></tr>`;
     });
     const note=key==='archive'
-      ? `<div class="muted" style="padding:4px 10px">Excluded from all future loops. Use “✕ all” to pull from current loops, then delete them in the ChannelCast dashboard (the API can’t delete media).</div>` : '';
-    html+=`<details class="sec" ${openAttr}><summary>${label} — ${items.length}</summary>${note}`
+      ? `<div class="muted" style="padding:4px 10px">Excluded from all future loops. To pull them out of the loops they’re still in and delete them for good, use the <b>Archive Cleanup</b> tab — it also picks up anything you archived in the ChannelCast dashboard.</div>` : '';
+    html+=`<details class="sec" data-key="${key}" ${openAttr}><summary>${label} — ${items.length}`
+      +`<span class="usg selcount">${nSel?` · ${nSel} selected`:''}</span></summary>${note}`
+      +`<div class="row" style="padding:2px 10px 6px"><button class="ghost iconbtn" onclick="libSelectSection('${key}',true)">select all ${items.length}</button>`
+      +`<button class="ghost iconbtn" onclick="libSelectSection('${key}',false)">none</button></div>`
       +`<div style="overflow:auto"><table class="libtbl">${rows}</table></div></details>`;
   }
   $('#libSections').innerHTML = html || '<p class="muted">No media. Sync the library first.</p>';
+  // Ticking a box only updates the box, its section's count and the bulk bar --
+  // re-rendering a thousand rows per click made ticking a batch crawl.
+  document.querySelectorAll('.libchk').forEach(c=>c.onchange=()=>{
+    c.checked?LIBSEL.add(c.dataset.id):LIBSEL.delete(c.dataset.id);
+    updateSectionCount(c.closest('details.sec'));
+    renderLibBulkBar();
+  });
+  // keep sections open/closed as the user left them, and don't jump the page
+  document.querySelectorAll('#libSections details.sec').forEach(s=>
+    s.addEventListener('toggle',captureLibOpen));
+  renderLibBulkBar();
+  window.scrollTo(0,scroll);
+}
+
+function updateSectionCount(det){
+  if(!det) return;
+  const n=det.querySelectorAll('.libchk:checked').length;
+  const el=det.querySelector('.selcount');
+  if(el) el.textContent = n ? ` · ${n} selected` : '';
+}
+
+function renderLibBulkBar(){
+  const bar=$('#libBulkBar');
+  if(!LIBSEL.size){ bar.style.display='none'; return; }
+  bar.style.display='';
+  $('#libSelCount').textContent=`${LIBSEL.size} file(s) selected —`;
+  const sel=$('#libBulkType');
+  if(!sel.options.length)
+    sel.innerHTML=TYPE_OPTS.map(([v,l])=>`<option value="${v}">${l}</option>`).join('');
+}
+
+function libSelectShown(){ LIBSHOWN.forEach(id=>LIBSEL.add(id)); renderLibrarySections(); }
+function libClearSel(){ LIBSEL.clear(); renderLibrarySections(); }
+function libSelectSection(key,on){
+  const introId=CFG.intro_media_id;
+  const filter=($('#libFilter').value||'').toLowerCase();
+  LIB.forEach(m=>{
+    const g=(m.id===introId&&m.kind!=='archive')?'intro':m.kind;
+    if(g!==key) return;
+    if(filter && !m.title.toLowerCase().includes(filter)) return;
+    on?LIBSEL.add(m.id):LIBSEL.delete(m.id);
+  });
+  renderLibrarySections();
 }
 
 async function setType(mediaId,newType,title){
   if(newType==='archive'){
-    if(!confirm(`Archive "${title}"?\n\nIt’ll be excluded from all future loops. You can then pull it from current loops (✕ all) and delete it in the ChannelCast dashboard.`)){
+    if(!confirm(`Archive "${title}"?\n\nIt’ll be excluded from all future loops. You can then pull it from current loops and delete it — see the Archive Cleanup tab.`)){
       renderLibrarySections(); return;   // revert the dropdown
     }
   }
@@ -501,6 +660,22 @@ async function setType(mediaId,newType,title){
     renderLibrarySections();
     toast(newType==='archive'?'Archived — now excluded from loops':'Type updated');
   }catch(e){ toast('Update failed: '+e.message,true); }
+}
+
+async function applyBulkType(){
+  const ids=[...LIBSEL], type=$('#libBulkType').value;
+  if(!ids.length) return;
+  const label=(TYPE_OPTS.find(t=>t[0]===type)||['',type])[1];
+  if(!confirm(`Set ${ids.length} file(s) to “${label}”?`
+    +(type==='archive'?'\n\nThey’ll be excluded from all future loops.':''))) return;
+  try{
+    await api('/api/override-bulk',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({mediaIds:ids,type})});
+    LIBSEL.clear();
+    await refreshLibraryView();
+    renderLibrarySections();
+    toast(`${ids.length} file(s) set to ${label}`);
+  }catch(e){ toast('Bulk update failed: '+e.message,true); }
 }
 
 async function removeFromAll(mediaId){
@@ -545,7 +720,7 @@ async function syncLibrary(){
         const line=buf.slice(0,idx).trim(); buf=buf.slice(idx+1);
         if(!line) continue;
         const m=JSON.parse(line);
-        if(m.done){ summary=m; }
+        if(m.done===true){ summary=m; }
         else { bar.max=m.n; bar.value=m.i; pct.textContent=`searching ${m.i}/${m.n} · ${m.items} items found`; }
       }
     }
@@ -622,7 +797,7 @@ async function consumeJobStream(resp, bar, pct){
     while((idx=buf.indexOf('\n'))>=0){
       const line=buf.slice(0,idx).trim(); buf=buf.slice(idx+1); if(!line) continue;
       const m=JSON.parse(line);
-      if(m.done){ result=m; bar.value=bar.max; pct.textContent=`done — ${m.loops} loop(s) updated ✓`; }
+      if(m.done===true){ result=m; bar.value=bar.max; pct.textContent=`done — ${m.loops} loop(s) updated ✓`; }
       else if(m.phase==='generate'){ at=`loop ${m.i}/${m.n}`; bar.value=0;
         pct.textContent=`${at} · ${m.loop}: generating…`; }
       else if(m.phase==='write'||m.phase==='clear'){ bar.max=m.total; bar.value=m.done;
@@ -755,6 +930,256 @@ async function executeDrop(){
   finally{ btn.disabled=false; setBusy(-1); }
 }
 
+// ---- archive cleanup ----
+// Three steps, in order: read every file's real ChannelCast status, rebuild the
+// loops that still hold an archived one, then delete (or export) what's left.
+let ARDATA=null, ARSEL=new Set(), ARPLAN=null;
+
+// One NDJSON reader for all three streams; cb(msg) handles each line.
+async function readStream(resp, cb){
+  if(!resp.ok) throw new Error(await resp.text());
+  const reader=resp.body.getReader(), dec=new TextDecoder();
+  let buf='', last=null;
+  while(true){
+    const {value,done}=await reader.read(); if(done) break;
+    buf+=dec.decode(value,{stream:true}); let idx;
+    while((idx=buf.indexOf('\n'))>=0){
+      const line=buf.slice(0,idx).trim(); buf=buf.slice(idx+1); if(!line) continue;
+      const m=JSON.parse(line);
+      if(m.error && !m.i) throw new Error(m.error);
+      if(m.done===true) last=m;
+      cb(m);
+    }
+  }
+  return last;
+}
+
+function arAgo(ts){ return ts ? new Date(ts*1000).toLocaleString() : 'never'; }
+
+async function loadArchive(){
+  try{ ARDATA=await api('/api/archive/list'); renderArchive(); }
+  catch(e){ toast('Archive load failed: '+e.message,true); }
+}
+
+function renderArchive(){
+  const d=ARDATA; if(!d) return;
+  if(!d.scanned_at){
+    $('#arSummary').innerHTML='<p class="muted">Not scanned yet — run the scan above.</p>';
+    $('#arTbl tbody').innerHTML=''; arUpdateCount(); return;
+  }
+  $('#arSummary').innerHTML=
+    `<div class="row" style="margin:4px 0 0">
+       <span class="pill"><b>${d.archived.length}</b> archived</span>
+       <span class="pill">${d.active} active</span>
+       <span class="pill">${d.total} total</span>
+       <span class="pill ${d.inLoops?'bad':'ok'}">${d.inLoops} still in loops${d.spots?` · ${d.spots} spots`:''}</span>
+       <span class="muted">scanned ${arAgo(d.scanned_at)}${d.complete?'':' · INCOMPLETE'}</span>
+     </div>`
+    +(d.usage_synced_at?`<p class="muted">Loop membership shown below is from the loop sync at
+        ${arAgo(d.usage_synced_at)}. Step 2 re-reads it live.</p>`
+      :`<p class="muted">Loops haven’t been synced yet — click “Check loops” in step 2.</p>`);
+  const tb=$('#arTbl tbody'); tb.innerHTML='';
+  d.archived.forEach(m=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><input type="checkbox" class="archk" data-id="${m.id}" ${ARSEL.has(m.id)?'checked':''}></td>
+      <td style="min-width:220px">${m.filename}${m.title&&m.title!==m.filename?`<br><span class="muted">${m.title}</span>`:''}</td>
+      <td class="muted">${m.kind}</td>
+      <td class="dur">${fmt(m.duration)}</td>
+      <td>${m.spots?`<span class="unused">in ${m.loops.length} loop(s) · ${m.spots} spots</span>
+             <span class="muted"><br>${m.loops.join(', ')}</span>`
+            :'<span class="usg">not in any loop</span>'}</td>`;
+    tb.appendChild(tr);
+  });
+  tb.querySelectorAll('.archk').forEach(c=>c.onchange=()=>{
+    c.checked?ARSEL.add(c.dataset.id):ARSEL.delete(c.dataset.id); arUpdateCount(); });
+  arUpdateCount();
+}
+
+function arUpdateCount(){
+  const d=ARDATA;
+  const stuck=d?d.archived.filter(m=>ARSEL.has(m.id)&&m.spots).length:0;
+  $('#arDelCount').innerHTML = ARSEL.size
+    ? `${ARSEL.size} selected`+(stuck?` · <span class="unused">${stuck} still in loops and will be skipped</span>`:'')
+    : 'none selected';
+}
+
+function arSelect(mode){
+  const d=ARDATA; if(!d) return;
+  ARSEL=new Set(mode==='none'?[]
+    :d.archived.filter(m=>mode==='all'||!m.spots).map(m=>m.id));
+  renderArchive();
+}
+
+async function archiveScan(){
+  const row=$('#arScanRow'),bar=$('#arScanBar'),pct=$('#arScanPct'),btn=$('#arScanBtn');
+  row.style.display=''; btn.disabled=true; bar.value=0; bar.max=100;
+  pct.textContent='starting…'; setBusy(1);
+  try{
+    const res=await readStream(await fetch('/api/archive/scan-stream',{method:'POST'}),m=>{
+      if(m.done===true) return;
+      if(m.total){ bar.max=m.total; bar.value=m.found;
+        pct.textContent=`${m.found} / ${m.total} files · ${m.calls} searches`; }
+    });
+    if(res){ ARDATA=res; ARSEL=new Set(); renderArchive();
+      bar.value=bar.max;
+      pct.textContent=`done — ${res.archived.length} archived of ${res.total} ✓`;
+      $('#arScanMsg').textContent = res.complete ? '' : 'scan may be incomplete — try again';
+      toast(`${res.archived.length} archived file(s) found`); }
+  }catch(e){ pct.textContent='failed'; toast('Scan failed: '+e.message,true); }
+  finally{ btn.disabled=false; setBusy(-1); }
+}
+
+function arMins(calls){ const s=calls*0.31; return s<90?`~${Math.max(5,Math.round(s))}s`:`~${Math.round(s/60)} min`; }
+function arDrift(s){ return s?`${Math.floor(s/60)}m${String(s%60).padStart(2,'0')}s under 2h`:'none'; }
+
+// per-loop mode, keyed by loop name; defaults to the plan's recommendation
+let ARMODE={};
+
+function arSetMode(mode){
+  if(!ARPLAN||!ARPLAN.plan) return;
+  ARPLAN.plan.forEach(e=>ARMODE[e.loop]=mode);
+  renderPurgePlan();
+}
+
+function renderPurgePlan(){
+  if(!ARPLAN||!ARPLAN.loops){
+    $('#arPlanReview').innerHTML='<p class="ok">No loop contains an archived file — nothing to purge.</p>';
+    $('#arPurgeRow').style.display='none'; return;
+  }
+  const p=ARPLAN;
+  const rows=p.plan.map(e=>{
+    const mode=ARMODE[e.loop]||e.recommend;
+    const warn=e.rebuildResizes
+      ? `<br><span class="unused" title="a rebuild forces this loop back to 6h">⚠ ${fmt(e.before.total_seconds)} loop — a full rebuild would resize it to 6h and drop the extra</span>`:'';
+    const hard=e.hardViolations.length
+      ? `<br><span class="bad">${e.hardViolations.length} rule break(s) surgery can’t fix</span>`:'';
+    return `<tr>
+      <td>${e.loop}${warn}${hard}</td>
+      <td class="dur">${e.removals.length}</td>
+      <td class="muted">${e.topups.length?e.topups.map(t=>`${t.title} <span class="dur">(${t.duration}s)</span>`).join('<br>'):'—'}</td>
+      <td class="dur">${fmt(e.before.total_seconds)} → ${fmt(e.after.total_seconds)}</td>
+      <td class="${e.worstDrift>p.tolerance?'bad':'muted'}">${arDrift(e.worstDrift)}</td>
+      <td><select class="tsel" onchange="ARMODE['${e.loop}']=this.value;renderPurgePlan()">
+        <option value="surgical"${mode==='surgical'?' selected':''}>Surgical</option>
+        <option value="rebuild"${mode==='rebuild'?' selected':''}>Full rebuild</option>
+      </select></td></tr>`;
+  }).join('');
+  const surg=p.plan.filter(e=>(ARMODE[e.loop]||e.recommend)==='surgical');
+  const reb=p.plan.filter(e=>(ARMODE[e.loop]||e.recommend)==='rebuild');
+  const calls=surg.reduce((a,e)=>a+1+e.removals.length+e.topups.length,0)
+             +reb.reduce((a,e)=>a+2*e.before.item_count,0);
+  $('#arPlanReview').innerHTML=
+    `<div class="card" style="background:#12161d">
+       <div class="row" style="margin-bottom:6px">
+         <span class="pill"><b>${p.loops}</b> loop(s) affected</span>
+         <span class="pill">${p.removals} archived item(s) to cut</span>
+         <span class="pill">worst drift ${arDrift(p.worstDrift)}</span>
+       </div>
+       <div class="muted" style="margin-bottom:10px">
+         All surgical: <b>${p.calls}</b> API calls (${arMins(p.calls)}) ·
+         All rebuild: <b>${p.rebuildCalls}</b> calls (${arMins(p.rebuildCalls)}) ·
+         <b>as selected: ${calls} calls (${arMins(calls)})</b>
+       </div>
+       <div style="overflow:auto"><table class="libtbl"><thead><tr>
+         <th>Loop</th><th>Cut</th><th>Topped up with</th><th>Length</th>
+         <th>Artist drift</th><th style="width:120px">Mode</th>
+       </tr></thead><tbody>${rows}</tbody></table></div>
+     </div>`;
+  $('#arRepairNote').textContent =
+    (surg.length?`${surg.length} surgical`:'')+(surg.length&&reb.length?' + ':'')
+    +(reb.length?`${reb.length} full rebuild`:'')+` · ${arMins(calls)}`;
+  $('#arPurgeRow').style.display='';
+}
+
+async function archivePurgePlan(){
+  const row=$('#arPlanRow'),bar=$('#arPlanBar'),pct=$('#arPlanPct'),btn=$('#arPlanBtn');
+  row.style.display=''; btn.disabled=true; bar.value=0; bar.max=100;
+  pct.textContent='reading loops…'; setBusy(1);
+  try{
+    ARPLAN=await readStream(await fetch('/api/archive/surgical-plan-stream',{method:'POST'}),m=>{
+      if(m.phase==='scan'){ bar.max=m.n; bar.value=m.i;
+        pct.textContent=`loop ${m.i}/${m.n}: ${m.name} · ${m.count} items`; }
+    });
+    bar.value=bar.max; pct.textContent='loops read &amp; audited ✓';
+    ARMODE={}; renderPurgePlan();
+    await loadArchive();
+  }catch(e){ pct.textContent='failed'; toast('Loop check failed: '+e.message,true); }
+  finally{ btn.disabled=false; setBusy(-1); }
+}
+
+async function archiveRepair(){
+  if(!ARPLAN||!ARPLAN.loops){ toast('Check loops first',true); return; }
+  const surg=ARPLAN.plan.filter(e=>(ARMODE[e.loop]||e.recommend)==='surgical').map(e=>e.loop);
+  const reb=ARPLAN.plan.filter(e=>(ARMODE[e.loop]||e.recommend)==='rebuild').map(e=>e.loop);
+  const worst=Math.max(0,...ARPLAN.plan.filter(e=>surg.includes(e.loop)).map(e=>e.worstDrift));
+  if(!confirm(`Repair ${ARPLAN.loops} loop(s)?\n\n`
+    +(surg.length?`• Surgical on ${surg.length}: cut the archived items, top back up to 6h.\n`
+      +`  Worst artist-spacing drift: ${arDrift(worst)}.\n`:'')
+    +(reb.length?`• Full rebuild on ${reb.length}: regenerated from scratch, music reshuffled.\n`:'')
+    +`\nSafe to interrupt — a rebuild resumes where it stopped, and surgery re-reads each loop live.`)) return;
+  const row=$('#arPlanRow'),bar=$('#arPlanBar'),pct=$('#arPlanPct'),btn=$('#arPurgeBtn');
+  row.style.display=''; btn.disabled=true; bar.value=0; bar.max=100;
+  pct.textContent='starting…'; setBusy(1);
+  try{
+    if(surg.length){
+      const res=await readStream(await fetch('/api/archive/surgical-execute',
+        {method:'POST',headers:{'Content-Type':'application/json'},
+         body:JSON.stringify({loops:surg})}),m=>{
+        if(m.done===true) return;
+        if(m.phase==='read'){ bar.max=1; bar.value=0;
+          pct.textContent=`surgical ${m.i}/${m.n} · ${m.loop}: reading…`; }
+        else if(m.total){ bar.max=m.total; bar.value=m.done;
+          pct.textContent=`surgical ${m.i}/${m.n} · ${m.loop}: ${m.phase==='remove'?'cutting':'topping up'} ${m.done}/${m.total}`; }
+      });
+      if(res) toast(`Surgical: ${res.loops} loop(s), −${res.removed} +${res.added}`);
+    }
+    if(reb.length){
+      const r=await fetch('/api/archive/purge-execute',{method:'POST',
+        headers:{'Content-Type':'application/json'},body:JSON.stringify({loops:reb})});
+      await consumeJobStream(r,bar,pct);
+    }
+    pct.textContent='repair complete ✓'; toast('Loops repaired ✓');
+    loadPlaylists(); checkJob(); await archivePurgePlan();
+  }catch(e){ pct.textContent='interrupted';
+    toast('Repair stopped: '+e.message+' — re-run to continue',true); checkJob(); }
+  finally{ btn.disabled=false; setBusy(-1); }
+}
+
+function archiveExport(){
+  const ids=ARSEL.size?'?ids='+[...ARSEL].join(','):'';
+  window.location='/api/archive/export'+ids;
+}
+
+async function archiveDelete(){
+  if(!ARSEL.size){ toast('Nothing selected',true); return; }
+  const stuck=ARDATA.archived.filter(m=>ARSEL.has(m.id)&&m.spots);
+  if(!confirm(`Permanently delete ${ARSEL.size} file(s) from ChannelCast?\n\n`
+    +(stuck.length?`${stuck.length} of them are still in loops and will be SKIPPED — run step 2 first.\n\n`:'')
+    +`This cannot be undone.`)) return;
+  const row=$('#arDelProgressRow'),bar=$('#arDelBar'),pct=$('#arDelPct'),btn=$('#arDelBtn');
+  row.style.display=''; btn.disabled=true; bar.value=0; bar.max=ARSEL.size;
+  pct.textContent='0 / '+ARSEL.size; setBusy(1);
+  let errs=0,skips=0;
+  try{
+    const res=await readStream(await fetch('/api/archive/delete-stream',
+      {method:'POST',headers:{'Content-Type':'application/json'},
+       body:JSON.stringify({mediaIds:[...ARSEL]})}),m=>{
+      if(m.done===true) return;
+      bar.value=m.i; if(m.error) errs++; if(m.skipped) skips++;
+      pct.textContent=`${m.i} / ${m.n}${errs?` · ${errs} failed`:''}${skips?` · ${skips} skipped`:''}`;
+    });
+    if(res){
+      pct.textContent=`done — ${res.deleted} deleted`
+        +(res.skipped.length?`, ${res.skipped.length} skipped`:'')
+        +(res.failed.length?`, ${res.failed.length} failed`:'')+' ✓';
+      if(res.failed.length) console.warn('delete failures:',res.failed);
+      ARDATA=res; ARSEL=new Set(); renderArchive();
+      toast(`Deleted ${res.deleted} file(s)`);
+    }
+  }catch(e){ pct.textContent='failed'; toast('Delete failed: '+e.message,true); }
+  finally{ btn.disabled=false; setBusy(-1); }
+}
+
 // ---- S3 import ----
 let S3OBJS=[];
 function fmtSize(b){ return b>=1e9?(b/1e9).toFixed(1)+' GB':b>=1e6?(b/1e6).toFixed(0)+' MB':(b/1e3).toFixed(0)+' KB'; }
@@ -801,7 +1226,7 @@ async function importSelected(){
       buf+=dec.decode(value,{stream:true}); let idx;
       while((idx=buf.indexOf('\n'))>=0){ const line=buf.slice(0,idx).trim(); buf=buf.slice(idx+1); if(!line) continue;
         const m=JSON.parse(line);
-        if(m.done){ sum=m; } else { bar.value=m.i; if(m.error) errs++; pct.textContent=`${m.i} / ${m.n}${errs?` · ${errs} err`:''}`; }
+        if(m.done===true){ sum=m; } else { bar.value=m.i; if(m.error) errs++; pct.textContent=`${m.i} / ${m.n}${errs?` · ${errs} err`:''}`; }
       } }
     pct.textContent=`done — imported ${sum?sum.imported:''}/${items.length}${errs?`, ${errs} failed`:''} ✓`;
     toast(`Imported ${sum?sum.imported:0} file(s); re-syncing library…`);

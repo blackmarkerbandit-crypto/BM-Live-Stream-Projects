@@ -19,6 +19,33 @@ timestamped spreadsheet you can edit.
   Specials don't repeat across loops until the pool is depleted, then it resets.
 - **Library tab** — *Sync library* pulls the full media list (run it after
   uploading new videos). *Load a new video* adds an MP4/HLS URL to ChannelCast.
+  Under *Media by type*, tick files (or *select all* within a section, which
+  respects the active filter) and set the whole selection to one type in a
+  single action. Sections stay expanded as you work — retyping a file no longer
+  collapses the list you're working through.
+- **Archive Cleanup tab** — three steps, in order:
+  1. **Scan** reads every file's real ChannelCast status (Active / Archived —
+     the one you set in the dashboard). ~2 minutes; it has to work around a
+     100-row cap on the media API. Once scanned, archived files are excluded
+     from every future loop the app builds.
+  2. **Purge** re-reads all the loops live, audits every one against every rule,
+     then offers two fixes per loop (the recommended one is preselected):
+     - **Surgical** — cut out just the archived items and top the loop back up
+       to 6h. A handful of API calls per loop instead of a few hundred;
+       everything else is left alone. Its one cost is *drift*: removing a
+       30-second promo shifts everything after it 30 seconds earlier, so an
+       artist pair sitting right on the 2h line can land a little under it. The
+       exact worst case is shown per loop, and anything past
+       `spacing_tolerance_seconds` (default 5 min) is recommended for rebuild.
+     - **Full rebuild** — regenerate the loop from scratch. Exact on every rule,
+       but it reshuffles all the music and is ~60× slower. Note it also forces
+       the loop back to 6h, so a deliberately longer loop (one built around a
+       3-hour show) gets resized — the table warns when that applies.
+     Both are safe to interrupt: a rebuild resumes where it stopped, and surgery
+     re-reads each loop live as it reaches it.
+  3. **Delete** removes the archived files from ChannelCast permanently, with a
+     progress bar. Anything still in a loop is skipped (purge first). *Export
+     CSV* gives you the list to work through by hand instead.
 
 ## First-time setup
 1. Install **Python 3** from https://python.org (tick "Add to PATH").
@@ -40,7 +67,10 @@ timestamped spreadsheet you can edit.
 |---|---|
 | `app.py` | web server + API |
 | `scheduler.py` | the loop-building rules |
+| `media_scan.py` | full-library status scan (works around the 100-row API cap) |
+| `surgical.py` | loop rule audit + surgical repair planning |
 | `channelcast_client.py` | talks to the ChannelCast API |
 | `index.html` | the interface |
 | `config.json` | your token + channel settings |
 | `library.json` / `usage.json` | local caches (auto-created) |
+| `media_status.json` | which media ChannelCast has archived (auto-created) |

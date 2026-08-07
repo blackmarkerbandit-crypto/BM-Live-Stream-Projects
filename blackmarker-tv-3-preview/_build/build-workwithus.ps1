@@ -3,6 +3,7 @@
 $ErrorActionPreference = "Stop"
 $PREVIEW = "C:\Users\imagi\OneDrive\Desktop\BlackMarkerTV-Preview"
 $SCR = $PSScriptRoot
+$SRC = Join-Path $PSScriptRoot "src"   # page bodies + css live here in the repo layout
 $utf8 = New-Object System.Text.UTF8Encoding($false)
 
 $bak = Join-Path $PREVIEW ("_backup-" + (Get-Date -Format "yyyyMMdd-HHmmss"))
@@ -21,7 +22,7 @@ $PAGES = @(
 
   @{ file="BlackMarkerTV-3-ADVERTISING.html"; body="wk-advertising.html"
      title="Advertising &amp; Promotions"; kicker="Work With Us &middot; Advertising"
-     desc="Run on the 24/7 Free Loop, sponsor a show, put your name on a live event broadcast, or promote your own event to our audience. Charter rates below &mdash; priced honestly for a network in its build phase."
+     desc="Run on the 24/7 Free Loop, sponsor a show, put your name on a live event broadcast, or promote your own event to our audience. Rates below, held for twelve months from signing."
      formH="Book a spot"; topicLabel="What are you interested in?"
      topics=@("Free Loop rotation spot","Show sponsorship","Live event broadcast sponsor","Event promotion package","Network Partner (everything)","Not sure &mdash; talk it through")
      budget=$true; media=$false; event=$false }
@@ -50,8 +51,8 @@ foreach ($p in $PAGES) {
   $budgetField = ""
   if ($p.budget) {
     $budgetField = @"
-          <div class="wk-field">
-            <label for="f-budget">Budget <span class="req">*</span></label>
+        <div class="wk-field">
+          <label for="f-budget">Budget <span class="req">*</span></label>
             <select id="f-budget" name="budget" required>
               <option value="">Select a range&hellip;</option>
               <option>Under &#36;500</option>
@@ -130,14 +131,13 @@ foreach ($p in $PAGES) {
         <p class="wk-form-sub">Fields marked <span class="req">*</span> are required.</p>
       </div>
 
-      <div class="wk-field">
-        <label for="f-topic">$($p.topicLabel) <span class="req">*</span></label>
-        <select id="f-topic" name="topic" required>
+      <div class="wk-row3">
+        <div class="wk-field">
+          <label for="f-topic">$($p.topicLabel) <span class="req">*</span></label>
+          <select id="f-topic" name="topic" required>
 $opts
-        </select>
-      </div>
-
-      <div class="wk-row">
+          </select>
+        </div>
         <div class="wk-field">
           <label for="f-name">Name <span class="req">*</span></label>
           <input type="text" id="f-name" name="name" placeholder="First and last" required>
@@ -148,7 +148,7 @@ $opts
         </div>
       </div>
 
-      <div class="wk-row">
+      <div class="wk-row3">
         <div class="wk-field">
           <label for="f-entity">Company / Artist / Organization</label>
           <input type="text" id="f-entity" name="entity" placeholder="How you want to be credited">
@@ -157,8 +157,9 @@ $opts
           <label for="f-phone">Phone</label>
           <input type="tel" id="f-phone" name="phone" placeholder="Optional">
         </div>
+$budgetField
       </div>
-$eventFields$budgetField$mediaFields
+$eventFields$mediaFields
       <div class="wk-field">
         <label for="f-message">Message <span class="req">*</span></label>
         <textarea id="f-message" name="message" rows="6" placeholder="Tell us what you&rsquo;re working with." required></textarea>
@@ -194,7 +195,8 @@ $eventFields$budgetField$mediaFields
 </section>
 "@
 
-  $content = [System.IO.File]::ReadAllText((Join-Path $SCR $p.body), [System.Text.Encoding]::UTF8)
+  $content = [System.IO.File]::ReadAllText((Join-Path $SRC $p.body), [System.Text.Encoding]::UTF8)
+
   $body = $hero + "`n" + $content + "`n" + $form
 
   $base = [System.IO.File]::ReadAllText((Join-Path $PREVIEW "BlackMarkerTV-3-CAN-YOU-DIG-IT.html"), [System.Text.Encoding]::UTF8)
@@ -203,7 +205,7 @@ $eventFields$budgetField$mediaFields
   if ($s -lt 0 -or $e -le $s) { throw "content boundaries not found" }
   $c = $base.Substring(0, $s) + $body + "`n`n" + $base.Substring($e)
 
-  $css = [System.IO.File]::ReadAllText((Join-Path $SCR "workwithus.css"), [System.Text.Encoding]::UTF8)
+  $css = [System.IO.File]::ReadAllText((Join-Path $SRC "workwithus.css"), [System.Text.Encoding]::UTF8)
   $i = $c.LastIndexOf("</style>")
   $c = $c.Substring(0, $i) + "`n" + $css + "`n" + $c.Substring($i)
 

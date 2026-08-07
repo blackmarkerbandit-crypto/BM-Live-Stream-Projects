@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>ChannelCast &mdash; Open Items for Jose</title>
+<style>
+body{font-family:Georgia,"Times New Roman",serif;font-size:16px;line-height:1.6;color:#111;background:#fff;max-width:820px;margin:32px auto;padding:0 20px;}
+h1{font-size:26px;} h2{font-size:20px;margin-top:34px;border-bottom:2px solid #111;padding-bottom:4px;} h3{font-size:17px;margin-top:26px;}
+code{font-family:Consolas,monospace;font-size:14px;background:#f2f2f2;padding:1px 4px;}
+.meta{font-size:14px;color:#333;margin:2px 0 10px;} .lbl{font-weight:bold;} hr{border:0;border-top:1px solid #ccc;margin:26px 0;}
+ul{margin:8px 0 0;} li{margin-bottom:9px;}
+</style></head><body>
+<h1>ChannelCast &mdash; Open Items for Jose</h1>
+<p><span class="lbl">Generated:</span> 2026-08-04 &nbsp;|&nbsp; <span class="lbl">Total open items:</span> 20</p>
+<h2>How to read this document</h2>
+<ul>
+<li>This is the complete list of everything still outstanding on ChannelCast for Black Marker TV. Anything already finished and verified has been removed, so <span class="lbl">every item on this page is still open</span>.</li>
+<li>There are two kinds of item. <span class="lbl">Section 1 (8 items)</span> is work that needs to be done. <span class="lbl">Section 2 (12 items)</span> is work already shipped that Eric still has to verify &mdash; those are not new requests, but several contain direct questions.</li>
+<li>Every item has a number (01, 02, 03&hellip;), a priority, and a status, all written out in words. Inside each item, every point is prefixed with a label: <span class="lbl">ACTION NEEDED</span> is something to do, <span class="lbl">CONTEXT</span> is background, <span class="lbl">SUGGESTION</span> is optional, <span class="lbl">ALREADY CONFIRMED WORKING</span> is a note that part of it is done.</li>
+<li>Items are ordered by importance. <span class="lbl">Items 01 and 02 matter most</span> and are described first.</li>
+<li>Nothing on this page is hidden, collapsed or interactive. What you can read is the whole thing.</li>
+</ul>
+<h2>Section 1 &mdash; Work that needs doing</h2>
+<h3>Item 01 &mdash; <b>The live stream doesn&rsquo;t hold.</b> The player drops back to the scheduled playlist mid-broadcast.</h3>
+<p class="meta"><span class="lbl">Priority:</span> P1 &ndash; highest &nbsp;|&nbsp; <span class="lbl">Status:</span> OPEN &ndash; needs to be built or fixed. This is a request. &nbsp;|&nbsp; <span class="lbl">Area:</span> Live Player &amp; Playback</p>
+<p><b>What should happen:</b> as long as an encoder is pushing a live signal, the player shows <b>LIVE</b> &mdash; full stop. When the signal genuinely ends, it falls back to the scheduled loop.<br><br><b>What actually happens:</b> the player sometimes drops out of the live stream and back into the playlist <b>while we are still live and still sending</b>. Viewers who came for the show end up watching the 24/7 loop instead, and they have no way of knowing they&rsquo;re in the wrong place. This is the single most damaging bug on the list for us &mdash; it burns the promotion for every live show it hits.</p>
+<ul>
+<li><span class="lbl">ACTION NEEDED:</span> <b>What we need:</b> something that <b>keeps checking</b> for a live signal and holds the player on live for as long as ingest is alive &mdash; with a <b>tolerance window</b> for a brief network hiccup instead of an instant fallback. A two-second blip should not end the broadcast.</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b>And the way back:</b> when the signal recovers, the player should return to live <b>on its own</b>. Right now the assumption seems to be that a viewer will refresh &mdash; they won&rsquo;t.</li>
+<li><span class="lbl">CONTEXT:</span> <b>Question for Jose:</b> what actually triggers the switch back to the playlist? A fixed ingest timeout, a missed-keyframe / GOP threshold, a gap between segments, or a health check that fails on one bad response? Knowing which one it is tells us whether this is a threshold to loosen or a reconnect path that isn&rsquo;t there.</li>
+<li><span class="lbl">SUGGESTION:</span> <b>Next time it happens we&rsquo;ll grab the wall-clock time</b> so it can be matched against the ingest logs. If there&rsquo;s a stream-health log we can see on our side, point us at it.</li>
+</ul>
+<hr>
+<h3>Item 02 &mdash; <b>A true grid layout for the single-category embed</b> &mdash; rows &amp; columns, plus copy-paste embed code.</h3>
+<p class="meta"><span class="lbl">Priority:</span> P1 &ndash; highest &nbsp;|&nbsp; <span class="lbl">Status:</span> OPEN &ndash; needs to be built or fixed. This is a request. &nbsp;|&nbsp; <span class="lbl">Area:</span> Live Player &amp; Playback</p>
+<p>The single-category embed itself works &mdash; <code>OTTRenderer.mount({ target, feedUrl, category, theme })</code> renders one category&rsquo;s episodes with playback, and we use it on every show page. <b>What&rsquo;s missing is layout control.</b> Every embed comes out as a horizontal scrolling rail, and the dashboard&rsquo;s <code>row|grid</code> toggle has no effect on it.<br><br><b>The ask, plainly:</b> give us a real <b>grid</b> where we can set <b>rows and columns</b>, and a <b>copy-paste embed snippet from the dashboard</b> with those options already baked in &mdash; so we can delete the CSS workaround we&rsquo;re running now. Everything below is the evidence for why it can&rsquo;t be done today.</p>
+<ul>
+<li><span class="lbl">ACTION NEEDED:</span> <b>What we want, concretely:</b> (1) grid layout with <b>rows &times; columns</b> we choose; (2) <b>generated embed code</b> from the dashboard for a single category, not just the whole catalog; (3) <b>pagination or &ldquo;load more&rdquo;</b> when the category has more items than rows &times; columns; (4) keep the theming we already have (<code>bg</code>, <code>tile</code>, <code>text</code>, <code>accent</code>).</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b> Grid is unreachable today &mdash; traced in the renderer source (Jul 22, verified on screen).</b> Eric flipped <i>The Weekly Interrupt</i> to <code>type: "grid"</code> in the dashboard; the embed still rendered a horizontal rail. Why: <b>(a)</b> <code>options.category</code> passed to <code>mount()</code> is only a <b>feed filter</b> &mdash; it trims <code>data.items</code> and nothing more. <b>(b)</b> <code>state.activeCategory</code> initialises to <code>""</code> and is <b>only</b> assigned inside the category-bar click handler. <b>(c)</b> Layout is decided by <code>verticalBrowseMode = Boolean(state.activeCategory)</code> &mdash; therefore <b>false on first render</b>, always. <b>(d)</b> The renderer <b>never reads a layout/type field from the feed</b>, so the dashboard&rsquo;s <code>row|grid</code> flag has zero effect on an embed. <b>(e)</b> <code>mount()</code> returns nothing (<code>window.OTTRenderer = { mount }</code>, no instance), so we can&rsquo;t set the view programmatically either. The grid CSS already exists (<code>.ott-track-vertical</code> &rarr; <code>repeat(auto-fill,minmax(220px,1fr))</code>) &mdash; it&rsquo;s just unreachable on load.</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Jose &mdash; smallest possible fix (pick one):</b> <b>(1) One-liner:</b> when <code>options.category</code> is supplied, also seed <code>state.activeCategory = options.category</code>. <b>(2) Explicit:</b> add a <code>layout: 'row' | 'grid'</code> option to <code>mount()</code>. <b>(3) Data-driven:</b> read the category&rsquo;s <code>type</code> from the feed and honour <code>grid</code> &mdash; what Eric expected the dashboard toggle to do. <b>Our preference: (2) + (3)</b> &mdash; an explicit override with the dashboard flag as the default. Please also make <code>mount()</code> <b>return an instance</b> so embeds can drive the view.</li>
+<li><span class="lbl">CONTEXT:</span> <b>Why our workaround isn&rsquo;t good enough.</b> We force ChannelCast&rsquo;s own <code>.ott-track-vertical</code> class on ourselves, which collides with the renderer&rsquo;s <b>horizontal</b> virtualization: <code>renderWindow()</code> derives its window from <code>track.scrollLeft</code> and <code>track.clientWidth</code> (<code>visibleCount = ceil(clientWidth / step) + HORIZONTAL_OVERSCAN*2</code>, overscan 3). Vertical track &rArr; <code>scrollLeft</code> is permanently 0 &rArr; it renders <b>one window of ~10&ndash;12 cards and never advances</b>. Net: <b>Can You Dig It!? has 22 episodes and the page can only ever show about 12</b> &mdash; the rest are unreachable by any amount of scrolling.</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Eric&rsquo;s test.</b> Is there a copy-paste option in the dashboard to grab a <b>single-category</b> embed (e.g. just <i>Can You Dig It!?</i>) rather than only the whole catalog?</li>
+<li><span class="lbl">SUGGESTION:</span> Nothing wrong with the rail for a homepage &ldquo;rows of shows&rdquo; layout &mdash; this is specifically about a <b>single-category archive page</b>, which is the main reason to use the per-category embed at all.</li>
+</ul>
+<hr>
+<h3>Item 03 &mdash; MRSS feed <b>throws away the curated episode order</b> and stamps every item with the same date.</h3>
+<p class="meta"><span class="lbl">Priority:</span> P1 &ndash; highest &nbsp;|&nbsp; <span class="lbl">Status:</span> OPEN &ndash; needs to be built or fixed. This is a request. &nbsp;|&nbsp; <span class="lbl">Area:</span> 3.0 Site &mdash; Data &amp; Embeds</p>
+<p>Episodes come out of the feed in a <b>seemingly random order</b> on every show page. Two separate causes, both in the feed: <b>(1)</b> the feed ignores the category's <code>sort</code> field entirely and emits items in <b>descending alphabetical order by title</b>; <b>(2)</b> every single item carries an <b>identical <code>pubDate</code></b> — <code>Fri, 03 Jul 2026 05:42:58 GMT</code>, the bulk-import timestamp — so nothing downstream can fall back to sorting by date either.</p>
+<ul>
+<li><span class="lbl">CONTEXT:</span> <b>Concrete example (Can You Dig It!?):</b> in the backend the newest episode <i>“Back from the NYC 2026 Weekend — 06-26-2026”</i> is correctly <code>sort 0</code>. In the feed it lands at <b>position 17 of 21</b>, because “B” sorts late in a descending A–Z list. The feed order runs Traxx → Tito → The Leftovers → Tampa Tony → … → Annex → 2Turnt. That's alphabetical, not chronological.</li>
+<li><span class="lbl">CONTEXT:</span> So the ordering <b>is right in ChannelCast</b> — the <code>sort</code> values are clean and newest-first. It's purely the feed that drops them.</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b>What we need:</b> the feed should emit items in the category's <code>sort</code> order (and ideally expose <code>sort</code> as a field so consumers can re-sort). Separately, give each item a <b>real <code>pubDate</code></b> — original episode/air date if you have it, upload date otherwise — so date sorting works at all.</li>
+<li><span class="lbl">SUGGESTION:</span> This also decides which episode shows up as the big <b>featured/hero tile</b> at the top of each show page, so right now the hero is effectively chosen alphabetically rather than “latest episode”.</li>
+</ul>
+<hr>
+<h3>Item 04 &mdash; Public <b>“Now Playing / Up Next”</b> feed for the 24/7 loop (no auth).</h3>
+<p class="meta"><span class="lbl">Priority:</span> P2 &ndash; medium &nbsp;|&nbsp; <span class="lbl">Status:</span> OPEN &ndash; needs to be built or fixed. This is a request. &nbsp;|&nbsp; <span class="lbl">Area:</span> 3.0 Site &mdash; Data &amp; Embeds</p>
+<p>The 3.0 homepage shows what's on the loop <b>now</b> and what's <b>coming up</b>. We can compute it (active weekly schedule → active daily loop → cursor = now − block-start → now/next from the playlist's <code>playsAtSeconds</code>), but the MCP endpoints are token-authed and can't be called from a public web page. Add a public, tokenless endpoint that returns the current + next few items (title, show/artist, duration, offset) for the channel.</p>
+<ul>
+<li><span class="lbl">SUGGESTION:</span> All the data already exists (schedules + playlist <code>playsAtSeconds</code>/<code>durationSeconds</code>). This is just a public server-side wrapper that resolves it and returns JSON.</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Question we need answered:</b> does the live player <b>wall-clock-sync</b> every viewer (everyone sees the same item at the same second), or does each session start the loop at position 0? It decides whether a schedule-computed “now playing” can actually match what viewers see.</li>
+</ul>
+<hr>
+<h3>Item 05 &mdash; Public <b>“Latest per On-Demand category”</b> feed.</h3>
+<p class="meta"><span class="lbl">Priority:</span> P2 &ndash; medium &nbsp;|&nbsp; <span class="lbl">Status:</span> OPEN &ndash; needs to be built or fixed. This is a request. &nbsp;|&nbsp; <span class="lbl">Area:</span> 3.0 Site &mdash; Data &amp; Embeds</p>
+<p>The homepage's Latest Videos row shows the <b>newest upload from each show</b> (The Weekly Interrupt, Can You Dig It!?, Talking Tipsy, The Alien Podcast, For The Record, Performance Battles). Add a public endpoint returning the newest item per category — title, <code>posterUrl</code>, duration, date, and watch URL.</p>
+<ul>
+<li><span class="lbl">SUGGESTION:</span> Categories already exist and media IDs are time-ordered (UUIDv7), so “newest per category” is trivial server-side. Pairs with the posterUrl work (shipped) (posters) and item 02 (per-category embed).</li>
+</ul>
+<hr>
+<h3>Item 06 &mdash; Expose <b>category landscape art + metadata</b> per On-Demand category.</h3>
+<p class="meta"><span class="lbl">Priority:</span> P2 &ndash; medium &nbsp;|&nbsp; <span class="lbl">Status:</span> OPEN &ndash; needs to be built or fixed. This is a request. &nbsp;|&nbsp; <span class="lbl">Area:</span> 3.0 Site &mdash; Data &amp; Embeds</p>
+<p>Each show page (e.g. The Weekly Interrupt) uses the show's <b>landscape category art</b> in the hero, plus its description and episode count. We're currently hardcoding the art from a local folder. Expose, per category: the <b>landscape art image URL</b>, description, episode count, and the OTT feed/category key — so show pages pull their own art and data instead of us baking it in per page.</p>
+<ul>
+<li><span class="lbl">SUGGESTION:</span> We already render the episode grid with the OTT renderer (<code>OTTRenderer.mount({ category, theme })</code>). This is about the surrounding hero <b>art + copy</b> coming from ChannelCast too.</li>
+</ul>
+<hr>
+<h3>Item 07 &mdash; Add a <b>public / hidden flag per VOD category</b> (so auto-created recording folders stay internal).</h3>
+<p class="meta"><span class="lbl">Priority:</span> P2 &ndash; medium &nbsp;|&nbsp; <span class="lbl">Status:</span> OPEN &ndash; needs to be built or fixed. This is a request. &nbsp;|&nbsp; <span class="lbl">Area:</span> 3.0 Site &mdash; Data &amp; Embeds</p>
+<p>Going live auto-creates a <b>“Live Stream Recordings”</b> category as Mux saves the file — that's working as intended, and it's useful in the backend. But it is a <b>staging/internal folder</b>: it should never surface on the public site or in a public feed. Right now every category comes back from <code>list_categories</code> with no visibility flag, so anything consuming the feed can't tell an internal folder from a real show. Add a per-category <b>public/hidden</b> (or <code>isPublic</code>) flag, and honour it in the OTT feed and any public category endpoint.</p>
+<ul>
+<li><span class="lbl">SUGGESTION:</span> Workflow Eric described: recordings land in that folder automatically; if one is worth publishing, they <b>manually</b> move it into a real show category and set its status. So the folder is permanently internal by design — not a one-off to hide.</li>
+<li><span class="lbl">CONTEXT:</span> Until this exists, the 3.0 site has to <b>hard-code a skip list</b> of category names, which breaks the moment a folder is renamed. Ties directly into <b>item 05</b> (latest-per-category) and <b>item 06</b> (category art) — both would otherwise happily surface “Live Stream Recordings” as if it were a show.</li>
+<li><span class="lbl">ALREADY CONFIRMED WORKING:</span> <b>Partial win spotted Aug 3:</b> the <b>MRSS/OTT feed already omits</b> “Live Stream Recordings” entirely — its 13 items don't appear in the feed at all, while every real show does. So the public <i>feed</i> is already behaving. <b>What's still missing is the flag itself:</b> <code>list_categories</code> continues to return the folder with no visibility field, so anything reading the category list (rather than the feed) still can't tell internal from public.</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Worth confirming:</b> is that omission <b>intentional</b> (feed already filters internal/auto-created folders) or a <b>side effect</b> of those recordings lacking something the feed requires? If it's deliberate, we mainly need the same rule exposed as a flag on <code>list_categories</code>. Related to <b>item 08</b>.</li>
+</ul>
+<hr>
+<h3>Item 08 &mdash; <code>list_categories.mediaCount</code> <b>over-reports</b> — doesn't match the feed, the item listing, or the UI grid.</h3>
+<p class="meta"><span class="lbl">Priority:</span> P2 &ndash; medium &nbsp;|&nbsp; <span class="lbl">Status:</span> OPEN &ndash; needs to be built or fixed. This is a request. &nbsp;|&nbsp; <span class="lbl">Area:</span> Data Accuracy</p>
+<p>Building the show pages we needed a real episode count per show and found <code>mediaCount</code> can't be trusted. We checked three surfaces independently — the <b>MRSS feed</b> the OTT renderer actually renders from, <code>list_category_items</code>, and the <b>count shown in the ChannelCast UI grid</b>. <b>All three agree with each other exactly; <code>mediaCount</code> is the lone outlier.</b> Crucially the gap <b>varies per category (0 to +3)</b>, so it isn't a simple off-by-one.</p>
+<ul>
+<li><span class="lbl">SUGGESTION:</span> <b>Strong lead on the cause:</b> the over-counted categories are each missing their <b>lowest <code>sort</code> indices</b> from <code>list_category_items</code>. Weekly Interrupt / Talking Tipsy / Alien Podcast are all missing <code>sort 0</code> (+1 each); For The Record is missing <code>sort 0</code> <i>and</i> <code>1</code> (+2); Performance Battles has <code>sort 0</code> present and matches perfectly (+0). Reads like <b>media rows still attached to the category that the listing and feed filter out</b> — deleted, unpublished, or failed transcode — while the count query still counts them. Can You Dig It is the odd one (contiguous sorts 0–20, yet +3), so it likely has 3 orphans elsewhere.</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Two things we need:</b> (1) fix the count so it reflects what's actually browsable/playable, and (2) if there really are orphaned rows, a way to <b>see and clear them</b> — right now they're invisible in the UI but still inflating totals.</li>
+<li><span class="lbl">CONTEXT:</span> <b>Why it matters to us:</b> this is the number we'd display as “N Episodes” on every show page. We're currently hard-coding counts read out of the MRSS feed. Folds directly into <b>item 06</b>, which asks for <code>episodeCount</code> per category — that field is only useful if it's accurate.</li>
+</ul>
+<hr>
+<h2>Section 2 &mdash; Already shipped, awaiting Eric's verification</h2>
+<p>Jose has already built these. They are listed so the picture is complete and because some carry a follow-up question. <span class="lbl">Do not treat these as new work unless a point inside them says ACTION NEEDED.</span></p>
+<h3>Item 09 &mdash; Image upload is <b>broken platform-wide</b> — nothing uploads anywhere.</h3>
+<p class="meta"><span class="lbl">Priority:</span> P1 &ndash; highest &nbsp;|&nbsp; <span class="lbl">Status:</span> ALREADY SHIPPED &ndash; Eric still needs to verify it. Not a new request, but read any questions in it. &nbsp;|&nbsp; <span class="lbl">Area:</span> Already Shipped &mdash; Needs My Test</p>
+<p>Every image-upload control in the app is dead. Confirmed broken (Jul 16) in <b>two places</b>: the VOD detail page (thumbnail + additional images) and the logo-watermark control in Channel Settings (item 15). In both, clicking to browse and drag-and-drop <b>do nothing at all</b> — no file picker, no progress, nothing saves. Because it blocks a P1 (item 15) and any client-facing VOD thumbnails, this is a launch blocker in its own right.</p>
+<ul>
+<li><span class="lbl">SUGGESTION:</span> <b>Treat this as ONE bug, fixed once at the shared upload component.</b> Same dead behaviour on both screens (VOD detail + Channel Settings logo) strongly implies a single broken uploader — a mis-wired input handler, a failing pre-signed-URL / upload endpoint, or a JS error killing the drop zone. Check the browser console + network tab on a drop: is any request even firing? Fixing the component clears both item 09 and item 15.</li>
+<li><span class="lbl">CONTEXT:</span> <b>Was P2 — bumped to P1 (Jul 16).</b> A P2 can’t gate a P1: this blocks the logo bug (item 15) and client VOD thumbnails.</li>
+<li><span class="lbl">ALREADY CONFIRMED WORKING:</span> <b>Strong evidence this is FIXED (Jul 22).</b> The library is now full of <b>uploaded</b> thumbnails served from <code>channelcast.tv/uploads/&lt;tenant&gt;/media-thumb/*.jpg</code> — hundreds of them, across CUDI / TWI / MV / LO7 items. Those are uploaded files, not Mux auto-frames, so the upload pipeline is demonstrably working. This should also unblock <b>item 15 (logo bug)</b>.</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Retest the one spot we can't see from the API: Channel Settings → logo watermark.</b> Upload a transparent PNG and confirm it lands and renders on the player. VOD thumbnails are already proven by the uploaded files above.</li>
+</ul>
+<hr>
+<h3>Item 10 &mdash; <b>Domain verification</b> on the Websites tab isn’t working.</h3>
+<p class="meta"><span class="lbl">Priority:</span> P1 &ndash; highest &nbsp;|&nbsp; <span class="lbl">Status:</span> ALREADY SHIPPED &ndash; Eric still needs to verify it. Not a new request, but read any questions in it. &nbsp;|&nbsp; <span class="lbl">Area:</span> Already Shipped &mdash; Needs My Test</p>
+<p>You currently can’t verify a domain on the Websites tab. Fix whatever’s needed so you can add a website and successfully verify it (get it through to a verified status).</p>
+<ul>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Your test.</b> Add a domain on the Websites tab and take it all the way through to <b>verified</b>.</li>
+</ul>
+<hr>
+<h3>Item 11 &mdash; Recurring playlist schedules aren’t actually recurring to the following week.</h3>
+<p class="meta"><span class="lbl">Priority:</span> P1 &ndash; highest &nbsp;|&nbsp; <span class="lbl">Status:</span> ALREADY SHIPPED &ndash; Eric still needs to verify it. Not a new request, but read any questions in it. &nbsp;|&nbsp; <span class="lbl">Area:</span> Already Shipped &mdash; Needs My Test</p>
+<p>When a playlist is scheduled with recurrence, it doesn’t re-schedule/repeat for the next week. Verify that (a) recurring schedules actually fire each week, and (b) upcoming/recurring scheduled playlists are visible on the playlist screen.</p>
+<ul>
+<li><span class="lbl">ALREADY CONFIRMED WORKING:</span> <b>Looks like it fired.</b> All 28 schedules read back as <code>Weekly</code>, starting the week of Jul 6–12. There are plays on Mon Jul 13 — including <code>TWI PRParadeWeekendCountdown</code> at 23:09 UTC, which is exactly the Monday Loop 4 opener, and Monday Loop 4 is scheduled for 22:00 UTC. That’s the weekly recurrence rolling over.</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Your test — but confirm it on screen.</b> Every play is tagged <code>source: "channel"</code>, never <code>"schedule"</code>, so I can’t tell from the API whether the schedule fired or the channel is just grinding its default loop. Check the schedule screen shows next week’s occurrences.</li>
+</ul>
+<hr>
+<h3>Item 12 &mdash; <b>“Gap between videos”</b> won’t actually go to 0 (always defaults to 1 second).</h3>
+<p class="meta"><span class="lbl">Priority:</span> P1 &ndash; highest &nbsp;|&nbsp; <span class="lbl">Status:</span> ALREADY SHIPPED &ndash; Eric still needs to verify it. Not a new request, but read any questions in it. &nbsp;|&nbsp; <span class="lbl">Area:</span> Already Shipped &mdash; Needs My Test</p>
+<p>In the playlist screen, setting the inter-video gap to 0 doesn’t stick — it reverts to 1s. Need a true 0-gap option so videos cut straight through. Confirmed on our end: every playlist currently plays with a forced ~1s gap per item, so a 6-hour content loop actually runs ~2 min long (e.g. 121 items = 121s of gaps).</p>
+<ul>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Your test.</b> Set a playlist’s gap to <b>0</b> and save. Does it stick, or snap back to 1s? If it sticks, a 6h loop should now run 6:00:00, not ~6:02.</li>
+<li><span class="lbl">SUGGESTION:</span> The API has always accepted <code>gapSeconds</code> on <code>update_playlist</code>, and it still does — so I can’t verify this one from my side. The bug was the UI clamping to a 1-second minimum.</li>
+</ul>
+<hr>
+<h3>Item 13 &mdash; Schedule screen should show the <b>next recurring date</b> for each scheduled playlist.</h3>
+<p class="meta"><span class="lbl">Priority:</span> P1 &ndash; highest &nbsp;|&nbsp; <span class="lbl">Status:</span> ALREADY SHIPPED &ndash; Eric still needs to verify it. Not a new request, but read any questions in it. &nbsp;|&nbsp; <span class="lbl">Area:</span> Already Shipped &mdash; Needs My Test</p>
+<p>The upcoming recurring date isn’t displayed on the schedule.</p>
+<ul>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Your test.</b> Does each scheduled playlist now show its next run date?</li>
+<li><span class="lbl">SUGGESTION:</span> <code>list_schedules</code> still returns only id / start / recurrence / playlist — <b>no next-occurrence field</b>. That’s not proof it’s missing (the UI may compute it), but there’s no API surface for it.</li>
+</ul>
+<hr>
+<h3>Item 14 &mdash; Plays are <b>double-logged</b> — one video counted several times in seconds.</h3>
+<p class="meta"><span class="lbl">Priority:</span> P2 &ndash; medium &nbsp;|&nbsp; <span class="lbl">Status:</span> ALREADY SHIPPED &ndash; Eric still needs to verify it. Not a new request, but read any questions in it. &nbsp;|&nbsp; <span class="lbl">Area:</span> Already Shipped &mdash; Needs My Test</p>
+<p>The raw play log records the same video multiple times in a tight cluster. This <b>inflates every play count we show a client</b> — the broadcast numbers that <i>are</i> working, and now the VOD numbers too.</p>
+<ul>
+<li><span class="lbl">ALREADY CONFIRMED WORKING:</span> <b>Still happening as of Jul 16.</b> <code>MV MichaelaPaladio RunThisTownPart2</code> logged 3× in 55s (03:52:54 · 03:53:05 · 03:53:49); <code>Theolodge BoardingPlanes</code>, <code>AnaTijoux EnLaMia</code> and <code>SnowThaProduct ClaseDeIngles</code> each doubled in the same hour. The smoking gun is Jul 14: <code>DVAliasKhryst NewJackCity</code> fired <b>twice 0.51s apart</b> (05:23:06.79 → 05:23:07.30). No human restarts a video in half a second.</li>
+<li><span class="lbl">SUGGESTION:</span> <b>Clues for Jose — the diagnosis.</b> Sub-second duplicates = a <b>double event binding</b>, not a real replay. Most likely, in order: (1) the tracking call is bound to <b>more than one media event</b> — e.g. both <code>play</code> and <code>playing</code>, or <code>play</code> + <code>loadeddata</code>/<code>seeked</code> — so one real start fires it 2–3×; (2) the listener is <b>re-attached on every render</b> (React re-render / StrictMode double-invoke) so handlers stack up; (3) both players from item 16 are mounted and each fires. It hits <b>both broadcast and VOD</b>, so the bug is in the <b>shared tracking call / its event binding</b>, not one specific player.</li>
+<li><span class="lbl">SUGGESTION:</span> <b>Fast way to confirm:</b> open DevTools → Network, filter to the play-tracking request, and start one video. If <b>2–3 identical requests fire in &lt;1s</b>, it’s the event binding. Then check how many listeners are attached to the <code>&lt;video&gt;</code> element (<code>getEventListeners($0)</code> in the console on the selected element).</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Two-part fix.</b> (a) <b>Client (root cause):</b> bind tracking to a single event (<code>play</code>), once per real start, and debounce — ignore repeats of the same mediaId in the same session within ~2s; audit for duplicate / re-registered listeners. (b) <b>Server (safety net):</b> dedupe on ingest — collapse identical <code>(mediaId + session/IP)</code> events inside a short window — so stray duplicates never reach a client’s numbers. Leave wider-spaced repeats (30–60s) alone; those may be genuine re-plays. <b>Ties into the VOD play-tracking fix (shipped)</b> — the newly-tracking overlay player may be adding to this.</li>
+<li><span class="lbl">CONTEXT:</span> <b>Jul 22 check — clean data, but do NOT read it as fixed.</b> No sub-second duplicates in the last 24h; every tight repeat traced to a <i>different viewer</i> (<code>EriqTrilly Lock</code> Omaha vs Denver; <code>KingCooley GetDown</code> US vs China; <code>Doechii Wait</code> ×4 from four countries). <b>Eric's read: that's lighter traffic, not a fix.</b> The VOD / on-demand areas <b>aren't public yet</b> — only the playlists and the main live embed are on the live site — so the overlay player that causes this barely runs right now.</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Still open.</b> Do the two-part fix above regardless, then <b>retest once the on-demand pages go public</b> and real traffic hits the overlay player. Clean numbers today prove nothing while the guilty player is effectively offline.</li>
+</ul>
+<hr>
+<h3>Item 15 &mdash; Add a <b>“logo bug”</b> option to the video player.</h3>
+<p class="meta"><span class="lbl">Priority:</span> P1 &ndash; highest &nbsp;|&nbsp; <span class="lbl">Status:</span> ALREADY SHIPPED &ndash; Eric still needs to verify it. Not a new request, but read any questions in it. &nbsp;|&nbsp; <span class="lbl">Area:</span> Already Shipped &mdash; Needs My Test</p>
+<p>There’s currently no option in the system to place a logo bug (a persistent channel logo/watermark overlaid on the video, like a TV network corner logo). Add the ability to enable and configure a logo bug on the player.</p>
+<ul>
+<li><span class="lbl">SUGGESTION:</span> <b> Update (Jul 16): UI is built but BLOCKED — the upload controls don’t work.</b> The logo-watermark option now shows in <b>Channel Settings</b>, but nothing actually uploads: neither clicking to browse nor drag-and-drop does anything. Eric can’t get an image in, so the feature is untestable. <b>This is the same platform-wide upload bug as item 09</b> — also confirmed broken on the VOD detail page. Both are now tracked as one fix under <b>item 09 (P1)</b>; do that first and this unblocks. <b>The build below is otherwise correct; it’s purely the upload that’s dead.</b></li>
+<li><span class="lbl">CONTEXT:</span> <b>Spec — where it lives:</b> a <b>per-channel setting</b>, in <b>Channel Settings</b>, alongside the channel hero and other branding. Jose put it here — correct.</li>
+<li><span class="lbl">CONTEXT:</span> <b>Spec — how to build it: a player-side overlay</b>, not a burned-in watermark. Draw the logo as a DOM/CSS layer on top of the video. It’s cheap, instantly toggleable, and needs no re-encoding. (Burning it into the video via Mux would survive someone pulling the raw HLS stream, but costs encoding and can’t be changed without re-processing every asset — not worth it for launch. If we ever need that, it’s a separate job.)</li>
+<li><span class="lbl">CONTEXT:</span> <b>Spec — controls:</b> on/off toggle · upload a <b>transparent PNG</b> (SVG welcome) · <b>corner</b> (top-left / top-right / bottom-left / bottom-right) · <b>size</b> · <b>opacity</b>.</li>
+<li><span class="lbl">CONTEXT:</span> <b>Spec — behaviour:</b> size should be a <b>% of player width</b>, not fixed pixels, so it scales with the player. It must stay <b>above the video but below the player controls</b>, persist through <b>fullscreen</b>, and appear on <b>all three players</b> — the live/broadcast player, the VOD player, and the embeddable players clients drop on their own sites.</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Blocked — can’t test until upload is fixed.</b> Once it is: upload a transparent PNG, set it bottom-right, and confirm it shows on the live stream, on a VOD, and inside an embed — and that it survives going fullscreen.</li>
+</ul>
+<hr>
+<h3>Item 16 &mdash; Clicking a VOD item plays <b>two videos at once</b> (overlay + feature block).</h3>
+<p class="meta"><span class="lbl">Priority:</span> P2 &ndash; medium &nbsp;|&nbsp; <span class="lbl">Status:</span> ALREADY SHIPPED &ndash; Eric still needs to verify it. Not a new request, but read any questions in it. &nbsp;|&nbsp; <span class="lbl">Area:</span> Already Shipped &mdash; Needs My Test</p>
+<p>On the on-demand page, clicking a video opens it in an overlay/modal player (good), but the featured “feature block” keeps playing in the background at the same time — so two videos (and two audio tracks) play simultaneously. It should be either/or: when the overlay opens, pause the background feature-block playback (resume or leave it paused when the overlay closes). Only one plays at a time.</p>
+<ul>
+<li><span class="lbl">SUGGESTION:</span> <b>Jose — do this one together with the VOD play-tracking fix (shipped) (and check item 14 while you’re in there). They look like the same root cause.</b> This page runs two player instances that clearly aren’t aware of each other: the inline feature block and the click-through overlay. That same split explains why <b>VOD plays never get recorded</b> (the VOD play-tracking fix (shipped)) — the tracking hook almost certainly lives on the feature-block player and never made it onto the overlay, which is the one people actually watch in. One player is playing but not counted; the other is counted but shouldn’t be playing. Fix how these two are wired and you likely close both tickets — and the <b>double-logging in item 14</b> may be the flip side of it (two players, two event bindings, one video).</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Your test.</b> Click a video on the on-demand page. Does the background feature block pause, or do you still hear two audio tracks?</li>
+</ul>
+<hr>
+<h3>Item 17 &mdash; Add <b>theming / customization</b> options for the VOD embed (colors).</h3>
+<p class="meta"><span class="lbl">Priority:</span> P2 &ndash; medium &nbsp;|&nbsp; <span class="lbl">Status:</span> ALREADY SHIPPED &ndash; Eric still needs to verify it. Not a new request, but read any questions in it. &nbsp;|&nbsp; <span class="lbl">Area:</span> Already Shipped &mdash; Needs My Test</p>
+<p>Give clients general options to match the embed to their brand: the main background color of the VOD embed, the color of the content boxes/tiles in the sliding rails, and the font colors. (White-label branding for client sites.)</p>
+<ul>
+<li><span class="lbl">ALREADY CONFIRMED WORKING:</span> <b>Confirmed on the OTT renderer.</b> It accepts <code>theme:{ bg, tile, text, accent }</code> — background, tile, font (text) and accent are all themeable. We set brand colors on the 3.0 show pages and it worked.</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Your test.</b> Are these color options exposed in the dashboard embed builder too, not just the raw mount call?</li>
+</ul>
+<hr>
+<h3>Item 18 &mdash; Expand the live monitor page with <b>viewer / traffic analytics</b>.</h3>
+<p class="meta"><span class="lbl">Priority:</span> P2 &ndash; medium &nbsp;|&nbsp; <span class="lbl">Status:</span> ALREADY SHIPPED &ndash; Eric still needs to verify it. Not a new request, but read any questions in it. &nbsp;|&nbsp; <span class="lbl">Area:</span> Already Shipped &mdash; Needs My Test</p>
+<p>Make sure we’re pulling in all data Mux actually exposes, and add monitoring of who’s tuned into the live stream — IP addresses, city/state/location, concurrent viewers, etc.</p>
+<ul>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Your test.</b> What does the live monitor show now — concurrent viewers? locations?</li>
+<li><span class="lbl">SUGGESTION:</span> <b>Geo now unblocked (Jul 16):</b> <code>play_report</code> returns per-play <code>ip</code> + <code>geo</code> {city, region, country}. The API data is there — the question is whether the live monitor page actually surfaces it. Pairs with the internal-IP exclusion (shipped) (exclude our own test IPs).</li>
+</ul>
+<hr>
+<h3>Item 19 &mdash; Show a <b>full list of all episodes</b> on the analytics page (not just the top 20).</h3>
+<p class="meta"><span class="lbl">Priority:</span> P3 &ndash; lowest &nbsp;|&nbsp; <span class="lbl">Status:</span> ALREADY SHIPPED &ndash; Eric still needs to verify it. Not a new request, but read any questions in it. &nbsp;|&nbsp; <span class="lbl">Area:</span> Already Shipped &mdash; Needs My Test</p>
+<p>Currently only the top ~20 episodes are shown. Add a way to open it up to all episodes with their full traffic — plays and shares — for every episode.</p>
+<ul>
+<li><span class="lbl">ALREADY CONFIRMED WORKING:</span> <b>The data is live.</b> <code>play_report</code> with <code>perEpisode=true</code> returned all <b>160 episodes</b>, not a top-20 slice.</li>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Your test.</b> Does the analytics page let you open up the full list? (Note: <b>share counts are still missing</b> from the API — see the play_report work (shipped).)</li>
+</ul>
+<hr>
+<h3>Item 20 &mdash; Make each day <b>collapsible</b> on the schedule screen.</h3>
+<p class="meta"><span class="lbl">Priority:</span> P3 &ndash; lowest &nbsp;|&nbsp; <span class="lbl">Status:</span> ALREADY SHIPPED &ndash; Eric still needs to verify it. Not a new request, but read any questions in it. &nbsp;|&nbsp; <span class="lbl">Area:</span> Already Shipped &mdash; Needs My Test</p>
+<p>All days show their playlists expanded, so you scroll a long way. Let each day collapse/expand so the schedule is easier to scan.</p>
+<ul>
+<li><span class="lbl">ACTION NEEDED:</span> <b>Your test.</b> Can each day collapse and expand?</li>
+</ul>
+<hr>
+<h2>End of list</h2>
+<p>That is all 20 open items. Nothing has been omitted or truncated.</p>
+</body></html>

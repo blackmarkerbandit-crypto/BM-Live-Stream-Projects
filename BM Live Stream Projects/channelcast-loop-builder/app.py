@@ -15,15 +15,22 @@ import random
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import FileResponse, StreamingResponse, Response
 from starlette.concurrency import run_in_threadpool
 from pydantic import BaseModel
 
 # streaming responses must not be buffered, or progress bars sit blank until the end
 NDJSON_HEADERS = {"X-Accel-Buffering": "no", "Cache-Control": "no-cache"}
 
+# NDJSON progress protocol: a progress line carries "done" as an integer COUNT,
+# while the final summary carries "done": true. Readers must test `done === true`
+# -- a truthy test reads the first progress line as the summary, which silently
+# swallowed every write/clear update the progress bars were meant to show.
+
 from channelcast_client import ChannelcastClient, ChannelcastError
 import scheduler
+import media_scan
+import surgical
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CONFIG = json.load(open(os.path.join(HERE, "config.json"), encoding="utf-8"))
@@ -33,6 +40,7 @@ PLAYLISTS_PATH = os.path.join(HERE, "playlists_cache.json")
 OVERRIDES_PATH = os.path.join(HERE, "overrides.json")  # mediaId -> type (manual reclassify / archive)
 IMPORTED_S3_PATH = os.path.join(HERE, "imported_s3.json")  # list of S3 keys already imported
 JOB_PATH = os.path.join(HERE, "job_state.json")  # in-flight loop rebuild, for resume-after-crash
+MEDIA_STATUS_PATH = os.path.join(HERE, "media_status.json")  # ChannelCast Active/Archived per media
 
 client = ChannelcastClient(CONFIG["base_url"], CONFIG["token"])
 app = FastAPI(title="ChannelCast Loop Builder")
@@ -81,7 +89,11 @@ SEARCH_TERMS = (
 # ---- routes ---------------------------------------------------------------
 @app.get("/")
 def index():
-    return FileResponse(os.path.join(HERE, "index.html"))
+    # no-store, or the browser heuristically caches the page and keeps showing an
+    # old build after an update -- FileResponse only sends ETag/Last-Modified,
+    # which a browser is free to ignore until its own heuristic expiry.
+    return FileResponse(os.path.join(HERE, "index.html"),
+                        headers={"Cache-Control": "no-store, must-revalidate"})
 
 
 @app.get("/api/config")
@@ -114,38 +126,52 @@ def playlist_items(playlist_id: str):
     return {"items": items, "total_seconds": total, "count": len(items)}
 
 
+async def _sync_playlists():
+    """Pull every playlist and its items, cache them, and build a
+    media -> [playlists it appears in] usage index.
+
+    Yields one progress dict per playlist, then a final {"_saved": cache}. The
+    archive purge reuses this so it acts on live membership rather than on a
+    usage index that may be days old.
+    """
+    pls = await run_in_threadpool(client.list_playlists, CONFIG["channel_id"])
+    pls = pls.get("playlists", pls)
+    n = len(pls)
+    out, usage = [], {}
+    for i, p in enumerate(pls):
+        items = []
+        data = await run_in_threadpool(client.list_playlist_items, p["id"])
+        for it in data.get("items", []):
+            items.append({
+                "mediaId": it["mediaId"], "title": it["title"],
+                "playlistItemId": it["playlistItemId"],
+                "durationSeconds": it.get("durationSeconds", 0),
+                "playsAtSeconds": it.get("playsAtSeconds", 0),
+            })
+            usage.setdefault(it["mediaId"], []).append({
+                "playlistId": p["id"], "playlistName": p["name"],
+                "playlistItemId": it["playlistItemId"],
+            })
+        total = sum(x["durationSeconds"] for x in items)
+        out.append({"id": p["id"], "name": p["name"],
+                    "count": len(items), "total_seconds": total, "items": items})
+        yield {"i": i + 1, "n": n, "name": p["name"], "count": len(items)}
+    cache = {"synced_at": time.time(), "playlists": out, "usage": usage}
+    await run_in_threadpool(save_json, PLAYLISTS_PATH, cache)
+    yield {"_saved": cache}
+
+
 @app.post("/api/sync-playlists-stream")
 async def sync_playlists_stream():
-    """Pull every playlist and its items, cache them, and build a
-    media -> [playlists it appears in] usage index. Streams progress."""
+    """Pull every playlist and its items and cache them. Streams progress."""
     async def gen():
-        pls = await run_in_threadpool(client.list_playlists, CONFIG["channel_id"])
-        pls = pls.get("playlists", pls)
-        n = len(pls)
-        out, usage = [], {}
-        for i, p in enumerate(pls):
-            items = []
-            data = await run_in_threadpool(client.list_playlist_items, p["id"])
-            for it in data.get("items", []):
-                items.append({
-                    "mediaId": it["mediaId"], "title": it["title"],
-                    "playlistItemId": it["playlistItemId"],
-                    "durationSeconds": it.get("durationSeconds", 0),
-                    "playsAtSeconds": it.get("playsAtSeconds", 0),
-                })
-                usage.setdefault(it["mediaId"], []).append({
-                    "playlistId": p["id"], "playlistName": p["name"],
-                    "playlistItemId": it["playlistItemId"],
-                })
-            total = sum(x["durationSeconds"] for x in items)
-            out.append({"id": p["id"], "name": p["name"],
-                        "count": len(items), "total_seconds": total, "items": items})
-            yield json.dumps({"i": i + 1, "n": n, "name": p["name"],
-                              "count": len(items)}) + "\n"
-        save_json(PLAYLISTS_PATH, {"synced_at": time.time(),
-                                   "playlists": out, "usage": usage})
-        yield json.dumps({"done": True, "playlists": len(out),
-                          "with_items": sum(1 for p in out if p["count"] > 0)}) + "\n"
+        async for msg in _sync_playlists():
+            if "_saved" in msg:
+                out = msg["_saved"]["playlists"]
+                yield json.dumps({"done": True, "playlists": len(out),
+                                  "with_items": sum(1 for p in out if p["count"] > 0)}) + "\n"
+            else:
+                yield json.dumps(msg) + "\n"
     return StreamingResponse(gen(), media_type="application/x-ndjson", headers=NDJSON_HEADERS)
 
 
@@ -243,15 +269,35 @@ def get_overrides():
     return load_json(OVERRIDES_PATH, {})
 
 
+def _apply_override(ov, media_id, kind):
+    if kind in ("", "clear", "auto", None):
+        ov.pop(media_id, None)
+    else:
+        ov[media_id] = kind
+
+
 @app.post("/api/override")
 def set_override(req: OverrideReq):
     ov = load_json(OVERRIDES_PATH, {})
-    if req.type in ("", "clear", "auto", None):
-        ov.pop(req.mediaId, None)
-    else:
-        ov[req.mediaId] = req.type
+    _apply_override(ov, req.mediaId, req.type)
     save_json(OVERRIDES_PATH, ov)
     return {"ok": True, "count": len(ov)}
+
+
+class OverrideBulkReq(BaseModel):
+    mediaIds: list = []
+    type: str      # same values as OverrideReq; "" / "clear" removes the override
+
+
+@app.post("/api/override-bulk")
+def set_override_bulk(req: OverrideBulkReq):
+    """Retype a whole selection at once -- one file write instead of one per
+    item, so reclassifying fifty promos doesn't mean fifty round trips."""
+    ov = load_json(OVERRIDES_PATH, {})
+    for mid in req.mediaIds:
+        _apply_override(ov, mid, req.type)
+    save_json(OVERRIDES_PATH, ov)
+    return {"ok": True, "changed": len(req.mediaIds), "count": len(ov)}
 
 
 class GenerateReq(BaseModel):
@@ -271,7 +317,9 @@ def build_library_pools():
     if not lib:
         raise HTTPException(400, "Library is empty -- click 'Sync Library' first.")
     lib = apply_overrides(lib)                        # manual type overrides
-    lib = [m for m in lib if m["kind"] != "archive"]  # drop archived (out of rotation)
+    lib = [m for m in lib if m["kind"] != "archive"]  # locally archived
+    arch = archived_ids()                             # Archived in ChannelCast itself
+    lib = [m for m in lib if m["id"] not in arch]
     excl = [a.lower() for a in CONFIG.get("excluded_artists", [])]
     by_id = {m["id"]: m for m in lib}
     intro_id = CONFIG["intro_media_id"]
@@ -300,21 +348,29 @@ def generate_sequence(openers_spec, num_specials=3, reshuffle=True, avoid_ids=No
     by_id, mv_pool, promo_pool, special_pool, intro = build_library_pools()
     avoid = set(avoid_ids or [])
     depleted = False
+    specials = [{"id": by_id[s]["id"], "title": by_id[s]["title"],
+                 "duration": by_id[s]["duration"]}
+                for s in (keep_special_ids or []) if s in by_id]
+    # How many slots still need filling. A plain generate keeps nothing and draws
+    # the full count. A "keep what's on the loop" rebuild normally draws none --
+    # unless one of those specials has since been archived out of the pool, in
+    # which case we backfill just that hole instead of leaving the loop short.
     if keep_special_ids:
-        specials = [{"id": by_id[s]["id"], "title": by_id[s]["title"],
-                     "duration": by_id[s]["duration"]}
-                    for s in keep_special_ids if s in by_id]
+        need = min(len(keep_special_ids), num_specials) - len(specials)
     else:
+        need = num_specials
+    if need > 0:
+        have = {s["id"] for s in specials}
         usage = load_json(USAGE_PATH, {"specials": []})
         used_specials = set(usage.get("specials", []))
-        available = [s for s in special_pool if s["id"] not in used_specials]
-        if len(available) < num_specials:
+        available = [s for s in special_pool
+                     if s["id"] not in used_specials and s["id"] not in have]
+        if len(available) < need:
             depleted = True
-            available = list(special_pool)
+            available = [s for s in special_pool if s["id"] not in have]
         random.Random(seed or int(time.time())).shuffle(available)
-        chosen = available[:num_specials]
-        specials = [{"id": s["id"], "title": s["title"], "duration": s["duration"]}
-                    for s in chosen]
+        specials += [{"id": s["id"], "title": s["title"], "duration": s["duration"]}
+                     for s in available[:need]]
     must_mvs = [m for m in mv_pool if m["id"] in set(must_ids or [])]
     openers = []
     for spec in (openers_spec or []):
@@ -763,12 +819,16 @@ def _shows_in(items):
 
     Matches on the library's naming-convention name rather than the playlist
     item's title -- playlist items carry the viewer-facing title, which may no
-    longer start with "TWI "/"CUDI " at all.
+    longer start with "TWI "/"CUDI " at all. Archived shows are dropped: a
+    rebuild that "keeps the existing openers" must not put one back.
     """
     lib = load_json(LIBRARY_PATH, {"items": []}).get("items", [])
     names = {m["id"]: m["title"] for m in lib}
+    arch = archived_ids()
     out = []
     for it in items:
+        if it["mediaId"] in arch:
+            continue
         name = names.get(it["mediaId"], it["title"])
         if name.startswith(_show_prefixes()):
             out.append({"mediaId": it["mediaId"], "title": name,
@@ -981,12 +1041,16 @@ class MusicDropReq(BaseModel):
 
 
 def _specials_in(items):
-    """Performances/interviews already on a loop, in play order, deduped."""
+    """Performances/interviews already on a loop, in play order, deduped.
+    Archived ones are dropped -- generate_sequence tops the loop back up to the
+    requested count from the fresh pool."""
     lib = apply_overrides(load_json(LIBRARY_PATH, {"items": []}).get("items", []))
     kinds = {m["id"]: m["kind"] for m in lib}
+    arch = archived_ids()
     out = []
     for it in items:
-        if kinds.get(it["mediaId"]) == "special" and it["mediaId"] not in out:
+        if (kinds.get(it["mediaId"]) == "special" and it["mediaId"] not in out
+                and it["mediaId"] not in arch):
             out.append(it["mediaId"])
     return out
 
@@ -1006,6 +1070,490 @@ async def music_drop_execute(req: MusicDropReq):
                    for e in plan["plan"]])
     return StreamingResponse(run_job_stream(job), media_type="application/x-ndjson",
                              headers=NDJSON_HEADERS)
+
+
+# ---- archive cleanup ------------------------------------------------------
+# ChannelCast media carry their own status (Active / Archived), set in the
+# dashboard -- separate from this app's local "archive" type override. Archiving
+# something there does NOT pull it out of the loops it is already in, and the
+# builder never knew the field existed, so archived files kept getting scheduled.
+#
+# The tab this drives does three things in order:
+#   1. scan   -- read every media item's real status (see media_scan.py)
+#   2. purge  -- rebuild every loop holding an archived file, by the normal rules
+#   3. delete -- remove the archived files themselves, or export the list
+
+def load_status():
+    return load_json(MEDIA_STATUS_PATH,
+                     {"scanned_at": None, "archived": {}, "total": 0,
+                      "active": 0, "complete": False})
+
+
+def archived_ids():
+    """Media ChannelCast itself has archived. Empty until the first scan, which
+    keeps every existing workflow behaving exactly as before."""
+    return set(load_status().get("archived", {}).keys())
+
+
+def archive_report():
+    """The archived list, annotated with what each file is and where it still
+    plays. Loop membership comes from the playlist cache, so the report carries
+    its timestamp and the UI can say how fresh it is."""
+    st = load_status()
+    cache = load_json(PLAYLISTS_PATH, {"usage": {}, "synced_at": None})
+    usage = cache.get("usage", {})
+    ov = load_json(OVERRIDES_PATH, {})
+    out = []
+    for mid, m in st.get("archived", {}).items():
+        u = usage.get(mid, [])
+        name = m.get("filename") or m.get("title") or ""
+        out.append({
+            "id": mid,
+            "filename": name,
+            "title": m.get("title", ""),
+            "duration": m.get("durationSeconds", 0),
+            "kind": ov.get(mid) or classify(name),
+            "spots": len(u),
+            "loops": sorted({e["playlistName"] for e in u}),
+        })
+    # still-in-a-loop first: those are the ones the purge has to deal with
+    out.sort(key=lambda x: (-x["spots"], x["filename"].lower()))
+    return {
+        "scanned_at": st.get("scanned_at"),
+        "complete": st.get("complete", False),
+        "total": st.get("total", 0),
+        "active": st.get("active", 0),
+        "archived": out,
+        "inLoops": sum(1 for x in out if x["spots"]),
+        "spots": sum(x["spots"] for x in out),
+        "usage_synced_at": cache.get("synced_at"),
+    }
+
+
+@app.get("/api/archive/list")
+def archive_list():
+    return archive_report()
+
+
+@app.post("/api/archive/scan-stream")
+async def archive_scan_stream():
+    """Read every media item's status straight from ChannelCast and cache the
+    archived ones. Streams a progress line per API call."""
+    import queue
+    import threading
+
+    q = queue.Queue()
+
+    def work():
+        try:
+            res = media_scan.scan_all_media(client, SEARCH_TERMS, on_progress=q.put)
+            q.put({"_result": res})
+        except Exception as e:                      # noqa: BLE001 - surfaced to UI
+            q.put({"_error": str(e)})
+        finally:
+            q.put(None)
+
+    threading.Thread(target=work, daemon=True).start()
+
+    async def gen():
+        while True:
+            msg = await run_in_threadpool(q.get)
+            if msg is None:
+                break
+            if "_error" in msg:
+                yield json.dumps({"error": msg["_error"]}) + "\n"
+                break
+            if "_result" in msg:
+                res = msg["_result"]
+                archived = {m["id"]: m for m in res["items"] if m["status"] != "Active"}
+                save_json(MEDIA_STATUS_PATH, {
+                    "scanned_at": time.time(),
+                    "total": len(res["items"]),
+                    "active": len(res["items"]) - len(archived),
+                    "complete": res["complete"],
+                    "calls": res["calls"],
+                    "archived": archived,
+                })
+                yield json.dumps({"done": True, **archive_report()}) + "\n"
+                continue
+            yield json.dumps(msg) + "\n"
+
+    return StreamingResponse(gen(), media_type="application/x-ndjson", headers=NDJSON_HEADERS)
+
+
+def build_purge_plan():
+    """Which loops still hold an archived file, off the cached playlist sync."""
+    arch = archived_ids()
+    cache = load_json(PLAYLISTS_PATH, {"playlists": [], "synced_at": None})
+    plan = []
+    for p in cache.get("playlists", []):
+        hits = [it for it in p.get("items", []) if it["mediaId"] in arch]
+        if hits:
+            plan.append({"loop": p["name"], "id": p["id"], "spots": len(hits),
+                         "titles": sorted({it["title"] for it in hits})})
+    plan.sort(key=lambda x: x["loop"])
+    return {"plan": plan, "loops": len(plan),
+            "spots": sum(x["spots"] for x in plan),
+            "synced_at": cache.get("synced_at")}
+
+
+@app.post("/api/archive/purge-plan-stream")
+async def archive_purge_plan_stream():
+    """Re-read every loop live, then report which ones need rebuilding. The
+    live re-read matters: acting on a stale usage index could rebuild loops that
+    are already clean and miss ones that aren't."""
+    async def gen():
+        async for msg in _sync_playlists():
+            if "_saved" in msg:
+                yield json.dumps({"done": True, **build_purge_plan()}) + "\n"
+            else:
+                yield json.dumps({"phase": "scan", **msg}) + "\n"
+    return StreamingResponse(gen(), media_type="application/x-ndjson", headers=NDJSON_HEADERS)
+
+
+@app.get("/api/archive/purge-plan")
+def archive_purge_plan():
+    return build_purge_plan()
+
+
+class PurgeReq(BaseModel):
+    loops: list = []          # loop names to rebuild; empty = every affected loop
+
+
+@app.post("/api/archive/purge-execute")
+async def archive_purge_execute(req: PurgeReq = None):
+    """Rebuild every affected loop from scratch under the normal rules.
+
+    A rebuild regenerates the whole loop rather than snipping the archived items
+    out, which is the only way to land back inside the 6h window with the artist
+    spacing and no-repeat rules intact -- pulling three promos out of a loop
+    otherwise leaves it minutes short. Each loop keeps its own shows and
+    performances (minus any that are themselves archived); only the music is
+    redrawn. Archived media can't come back because the pools now exclude them.
+    """
+    plan = await run_in_threadpool(build_purge_plan)
+    entries = plan["plan"]
+    if req and req.loops:
+        want = set(req.loops)
+        entries = [e for e in entries if e["loop"] in want]
+    if not entries:
+        raise HTTPException(400, "No loops contain archived media -- run the scan first.")
+    job = new_job("archive-purge",
+                  "Purge archived media from %d loop(s)" % len(entries),
+                  [{"loop": e["loop"], "playlistId": e["id"],
+                    "gen": {"numSpecials": 3, "keepFromLive": True,
+                            "openersFromLive": True}}
+                   for e in entries])
+    return StreamingResponse(run_job_stream(job), media_type="application/x-ndjson",
+                             headers=NDJSON_HEADERS)
+
+
+# --- surgical purge ---------------------------------------------------------
+# The fast path: cut the archived items out of a loop and top it back up,
+# leaving everything else untouched. Roughly 5 calls per loop instead of 240.
+# See surgical.py for how the rules are held up without a full regeneration.
+
+def _audit_args():
+    floor = int(CONFIG.get("target_seconds", 21600))
+    return {"floor": floor, "ceil": floor + 10,
+            "gap": int(CONFIG.get("gap_seconds", 7200)),
+            "excluded_artists": CONFIG.get("excluded_artists", []),
+            "archived": archived_ids()}
+
+
+def _loop_index():
+    """Library indexed by id, with overrides applied -- what the audit reads
+    kinds and artists from."""
+    lib = apply_overrides(load_json(LIBRARY_PATH, {"items": []}).get("items", []))
+    for m in lib:
+        if m["kind"] == "mv" and "artists" not in m:
+            m["artists"] = scheduler.artist_tokens(m["title"])
+    return {m["id"]: m for m in lib}
+
+
+def _vkey(v):
+    return (v["type"], v.get("artist", ""), v.get("title", ""))
+
+
+def plan_surgical_loop(items, by_id, pools=None):
+    """Work out the repair for one loop from its live items.
+
+    Returns removals, what to append, and an audit of the loop before and after.
+    The audits are the point: diffing them shows exactly what the repair changed,
+    separating problems it introduced from ones that were already there.
+
+    One effect is worth understanding, because it shows up on real loops. The
+    builder places an artist at the earliest legal moment, so repeat plays sit at
+    almost exactly the 2h line. Cutting a 30-second promo out of the middle pulls
+    everything after it 30 seconds earlier, which drops those pairs a few seconds
+    under the line. That is unavoidable for any edit that isn't a full rebuild,
+    and it is reported as `worstDrift` -- how far under 2h the closest pair ends
+    up -- rather than as a plain pass/fail, so it can be judged on size.
+    """
+    arch = archived_ids()
+    args = _audit_args()
+    gap = args["gap"]
+    tol = int(CONFIG.get("spacing_tolerance_seconds", 300))
+
+    before = surgical.audit(items, by_id, intro_id=CONFIG["intro_media_id"], **args)
+    removals = [{"playlistItemId": it["playlistItemId"], "mediaId": it["mediaId"],
+                 "title": by_id.get(it["mediaId"], {}).get("title") or it["title"],
+                 "duration": it.get("durationSeconds", 0)}
+                for it in items if it["mediaId"] in arch]
+    kept = [it for it in items if it["mediaId"] not in arch]
+
+    if pools is None:
+        _, mv_pool, promo_pool, _, _ = build_library_pools()
+    else:
+        mv_pool, promo_pool = pools
+    picks, reached = surgical.plan_topup(
+        kept, by_id, mv_pool, promo_pool,
+        floor=args["floor"], ceil=args["ceil"], gap=gap)
+
+    projected = kept + [{"mediaId": p["id"], "title": p["title"],
+                         "durationSeconds": p["duration"]} for p in picks]
+    after = surgical.audit(projected, by_id, intro_id=CONFIG["intro_media_id"], **args)
+
+    had = {_vkey(v) for v in before["violations"]}
+    new = [v for v in after["violations"]
+           if _vkey(v) not in had and v["type"] != "archived"]
+    drifts = [gap - v["since"] for v in new if v["type"] == "spacing"]
+    worst_drift = max(drifts) if drifts else 0
+    hard = [v for v in new if v["type"] in ("duplicate", "excluded")]
+
+    # A loop already outside the runtime window is one a rebuild would resize --
+    # e.g. a 9h loop built around a 3h show gets forced back to 6h, dropping
+    # hours of music. Worth knowing before choosing to rebuild it.
+    rebuild_resizes = before["total_seconds"] > args["ceil"]
+
+    ok_surgical = not hard and reached and worst_drift <= tol
+    return {"removals": removals, "topups": picks, "reachedFloor": reached,
+            "before": before, "after": after,
+            "newViolations": new, "worstDrift": worst_drift,
+            "hardViolations": hard, "rebuildResizes": rebuild_resizes,
+            "surgicalOk": ok_surgical,
+            "recommend": "surgical" if (ok_surgical or rebuild_resizes) else "rebuild"}
+
+
+def build_surgical_plan():
+    """The repair for every loop that still holds archived media, off the
+    cached playlist sync."""
+    arch = archived_ids()
+    by_id = _loop_index()
+    _, mv_pool, promo_pool, _, _ = build_library_pools()
+    cache = load_json(PLAYLISTS_PATH, {"playlists": [], "synced_at": None})
+    out = []
+    for p in cache.get("playlists", []):
+        items = p.get("items", [])
+        if not any(it["mediaId"] in arch for it in items):
+            continue
+        r = plan_surgical_loop(items, by_id, pools=(mv_pool, promo_pool))
+        out.append({"loop": p["name"], "id": p["id"], **r})
+    out.sort(key=lambda x: x["loop"])
+    calls = sum(1 + len(e["removals"]) + len(e["topups"]) for e in out)
+    # what the same job would cost as full rebuilds, for an honest comparison
+    rebuild_calls = sum(2 * e["before"]["item_count"] for e in out)
+    return {
+        "plan": out,
+        "loops": len(out),
+        "removals": sum(len(e["removals"]) for e in out),
+        "topups": sum(len(e["topups"]) for e in out),
+        "calls": calls,
+        "rebuildCalls": rebuild_calls,
+        "tolerance": int(CONFIG.get("spacing_tolerance_seconds", 300)),
+        "worstDrift": max([e["worstDrift"] for e in out], default=0),
+        "recommendRebuild": [e["loop"] for e in out if e["recommend"] == "rebuild"],
+        "resizeWarn": [e["loop"] for e in out if e["rebuildResizes"]],
+        "synced_at": cache.get("synced_at"),
+    }
+
+
+@app.get("/api/archive/surgical-plan")
+def archive_surgical_plan():
+    return build_surgical_plan()
+
+
+@app.post("/api/archive/surgical-plan-stream")
+async def archive_surgical_plan_stream():
+    """Re-read every loop live, then plan the surgical repair for each."""
+    async def gen():
+        async for msg in _sync_playlists():
+            if "_saved" in msg:
+                plan = await run_in_threadpool(build_surgical_plan)
+                yield json.dumps({"done": True, **plan}) + "\n"
+            else:
+                yield json.dumps({"phase": "scan", **msg}) + "\n"
+    return StreamingResponse(gen(), media_type="application/x-ndjson", headers=NDJSON_HEADERS)
+
+
+@app.get("/api/archive/audit")
+def archive_audit():
+    """Rule check for every loop as it stands, off the cached sync. Nothing is
+    changed -- this is the 'is the rest of the loop actually clean?' report."""
+    by_id = _loop_index()
+    args = _audit_args()
+    cache = load_json(PLAYLISTS_PATH, {"playlists": [], "synced_at": None})
+    out = []
+    for p in cache.get("playlists", []):
+        items = p.get("items", [])
+        if not items:
+            continue
+        a = surgical.audit(items, by_id, intro_id=CONFIG["intro_media_id"], **args)
+        out.append({"loop": p["name"], "id": p["id"], **a})
+    out.sort(key=lambda x: x["loop"])
+    return {"loops": out, "synced_at": cache.get("synced_at"),
+            "clean": sum(1 for e in out if e["ok"]),
+            "total": len(out)}
+
+
+class SurgicalReq(BaseModel):
+    loops: list = []          # loop names to repair; empty = every planned loop
+
+
+@app.post("/api/archive/surgical-execute")
+async def archive_surgical_execute(req: SurgicalReq):
+    """Do the repair, one loop at a time, streaming progress.
+
+    Each loop is re-read immediately before it's touched and its plan recomputed
+    from that -- so this is safe to re-run after an interruption (a loop already
+    repaired simply has nothing left to remove) and never acts on a snapshot
+    that went stale while an earlier loop was being processed.
+    """
+    async def gen():
+        arch = await run_in_threadpool(archived_ids)
+        by_id = await run_in_threadpool(_loop_index)
+        pools = await run_in_threadpool(build_library_pools)
+        pools = (pools[1], pools[2])
+        cache = load_json(PLAYLISTS_PATH, {"playlists": []})
+        targets = [p for p in cache.get("playlists", [])
+                   if any(it["mediaId"] in arch for it in p.get("items", []))]
+        if req.loops:
+            want = set(req.loops)
+            targets = [p for p in targets if p["name"] in want]
+        targets.sort(key=lambda p: p["name"])
+
+        n = len(targets)
+        done_loops, removed, added = 0, 0, 0
+        results = []
+        for i, p in enumerate(targets):
+            yield json.dumps({"phase": "read", "loop": p["name"],
+                              "i": i + 1, "n": n}) + "\n"
+            live = await run_in_threadpool(client.list_playlist_items, p["id"])
+            items = live.get("items", [])
+            r = await run_in_threadpool(plan_surgical_loop, items, by_id, pools)
+            total = len(r["removals"]) + len(r["topups"])
+            step = 0
+
+            for rem in r["removals"]:
+                try:
+                    await run_in_threadpool(client.remove_playlist_item,
+                                            rem["playlistItemId"])
+                    removed += 1
+                except ChannelcastError:
+                    pass            # already gone -- a re-run after a crash
+                step += 1
+                yield json.dumps({"phase": "remove", "loop": p["name"], "i": i + 1,
+                                  "n": n, "done": step, "total": total,
+                                  "title": rem["title"]}) + "\n"
+
+            for t in r["topups"]:
+                await run_in_threadpool(client.add_media_to_playlist, p["id"], t["id"])
+                added += 1
+                step += 1
+                yield json.dumps({"phase": "add", "loop": p["name"], "i": i + 1,
+                                  "n": n, "done": step, "total": total,
+                                  "title": t["title"]}) + "\n"
+
+            done_loops += 1
+            results.append({"loop": p["name"],
+                            "removed": len(r["removals"]),
+                            "added": len(r["topups"]),
+                            "seconds": r["after"]["total_seconds"],
+                            "ok": r["after"]["ok"],
+                            "violations": r["after"]["violations"]})
+            yield json.dumps({"phase": "loopdone", "loop": p["name"],
+                              "total_seconds": r["after"]["total_seconds"],
+                              "violations": len(r["after"]["violations"])}) + "\n"
+
+        yield json.dumps({"done": True, "loops": done_loops, "removed": removed,
+                          "added": added, "results": results}) + "\n"
+
+    return StreamingResponse(gen(), media_type="application/x-ndjson", headers=NDJSON_HEADERS)
+
+
+class ArchiveDeleteReq(BaseModel):
+    mediaIds: list = []
+    force: bool = False          # delete even if the file is still in a loop
+
+
+@app.post("/api/archive/delete-stream")
+async def archive_delete_stream(req: ArchiveDeleteReq):
+    """Delete media from ChannelCast for good. Streams one line per file.
+
+    Anything still sitting in a loop is skipped unless force is set -- deleting
+    it out from under a playlist is how you end up with loops full of dead
+    entries. Run the purge first and the skip list will be empty.
+    """
+    async def gen():
+        cache = load_json(PLAYLISTS_PATH, {"usage": {}})
+        usage = cache.get("usage", {})
+        n = len(req.mediaIds)
+        st = load_status()
+        names = st.get("archived", {})
+        deleted, skipped, failed = 0, [], []
+        for i, mid in enumerate(req.mediaIds):
+            meta = names.get(mid, {})
+            title = meta.get("filename") or meta.get("title") or mid
+            spots = len(usage.get(mid, []))
+            if spots and not req.force:
+                skipped.append({"id": mid, "title": title, "spots": spots})
+                yield json.dumps({"i": i + 1, "n": n, "title": title,
+                                  "skipped": f"still in {spots} loop spot(s)"}) + "\n"
+                continue
+            err = None
+            try:
+                res = await run_in_threadpool(client.call_tool, "delete_media",
+                                              {"mediaId": mid})
+                if res.get("deleted"):
+                    deleted += 1
+                    names.pop(mid, None)
+                else:
+                    err = "ChannelCast reported deleted=false"
+            except Exception as e:                  # noqa: BLE001 - surfaced to UI
+                err = str(e)
+            if err:
+                failed.append({"id": mid, "title": title, "error": err})
+            yield json.dumps({"i": i + 1, "n": n, "title": title, "error": err}) + "\n"
+        # forget what's gone, so the list reflects reality without a full re-scan
+        st["archived"] = names
+        await run_in_threadpool(save_json, MEDIA_STATUS_PATH, st)
+        yield json.dumps({"done": True, "deleted": deleted,
+                          "skipped": skipped, "failed": failed,
+                          **archive_report()}) + "\n"
+
+    return StreamingResponse(gen(), media_type="application/x-ndjson", headers=NDJSON_HEADERS)
+
+
+@app.get("/api/archive/export")
+def archive_export(ids: str = ""):
+    """CSV of the archived files, for deleting by hand in the dashboard."""
+    wanted = {i for i in ids.split(",") if i}
+    rows = [r for r in archive_report()["archived"]
+            if not wanted or r["id"] in wanted]
+
+    def esc(v):
+        v = str(v)
+        return '"%s"' % v.replace('"', '""') if any(c in v for c in ',"\n') else v
+
+    lines = ["Filename,Display Title,Type,Length,In Loops,Loops,Media ID"]
+    for r in rows:
+        lines.append(",".join(esc(x) for x in [
+            r["filename"], r["title"], r["kind"],
+            time.strftime("%H:%M:%S", time.gmtime(r["duration"])),
+            r["spots"], "; ".join(r["loops"]), r["id"]]))
+    stamp = time.strftime("%Y-%m-%d")
+    return Response("\n".join(lines), media_type="text/csv", headers={
+        "Content-Disposition": f'attachment; filename="channelcast-archived-{stamp}.csv"'})
 
 
 if __name__ == "__main__":
