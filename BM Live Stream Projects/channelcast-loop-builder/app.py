@@ -6,18 +6,31 @@ Run:  python app.py     (then open http://127.0.0.1:8765 )
 Everything talks to ChannelCast directly with your token, so once this is
 running you can view, edit, generate and push loops without spending Claude
 tokens.
+
+Login is required for every route except /login (see the auth block below) --
+this app can push, delete, and rewrite ChannelCast media using a token stored
+in config.json, so it must not sit open once it's reachable from outside the
+house. Accounts are NOT stored here: it reads the same users.json the BMB
+Virtual Office uses (../virtual-office/users.json), so staff log into both
+tools with the same username/password. Create/manage accounts from
+../virtual-office/manage_users.py -- there is nothing to run in this folder.
 """
 
 import os
 import json
 import time
 import random
+import secrets
 from typing import Optional
 
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse, StreamingResponse, Response
+import bcrypt
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import FileResponse, StreamingResponse, Response, RedirectResponse, JSONResponse
 from starlette.concurrency import run_in_threadpool
+from starlette.middleware.sessions import SessionMiddleware
 from pydantic import BaseModel
+
+PORT = 8765  # kept in a named constant so service.py can import it directly
 
 # streaming responses must not be buffered, or progress bars sit blank until the end
 NDJSON_HEADERS = {"X-Accel-Buffering": "no", "Cache-Control": "no-cache"}
@@ -84,6 +97,111 @@ SEARCH_TERMS = (
        "RoundsOn7th", "Interview", "IA ", "Promo"]
     + [p.strip() + " " for p in SHOW_PREFIXES]
 )
+
+
+# ---- auth: shared login with the BMB Virtual Office ------------------------
+# users.json lives in the sibling virtual-office folder -- this app reads it
+# (login only) rather than owning a copy, so one account works for both
+# tools. If that folder is ever moved without updating this path, login here
+# breaks; see SERVICE_INSTALL.md.
+VIRTUAL_OFFICE_DIR = os.path.join(HERE, "..", "virtual-office")
+USERS_PATH = os.path.join(VIRTUAL_OFFICE_DIR, "users.json")
+SECRET_KEY_PATH = os.path.join(HERE, "secret_key.txt")
+SESSION_MAX_AGE = 7 * 24 * 60 * 60  # a week -- fine for an internal tool this size
+
+
+def load_or_create_secret_key() -> str:
+    """Signing key for session cookies. Own file, own key -- session cookies
+    are scoped per-domain by the browser anyway, so there's no benefit to
+    sharing the Virtual Office's key, only a needless coupling."""
+    if os.path.exists(SECRET_KEY_PATH):
+        with open(SECRET_KEY_PATH, encoding="utf-8") as f:
+            key = f.read().strip()
+        if key:
+            return key
+    key = secrets.token_hex(32)
+    with open(SECRET_KEY_PATH, "w", encoding="utf-8") as f:
+        f.write(key)
+    return key
+
+
+def find_user(username: str):
+    for u in load_json(USERS_PATH, []):
+        if u.get("username") == username:
+            return u
+    return None
+
+
+def verify_password(password: str, password_hash: str) -> bool:
+    if not password_hash:
+        return False
+    try:
+        return bcrypt.checkpw(password.encode("utf-8"), password_hash.encode("utf-8"))
+    except (ValueError, TypeError):
+        return False
+
+
+# Default-deny: every route requires a session except /login itself. Unlike
+# the Virtual Office there's only one HTML page ("/") and no server-to-server
+# hook routes to exempt.
+LOGIN_EXEMPT_PATHS = {"/login"}
+PAGE_PATHS = {"/"}
+
+
+@app.middleware("http")
+async def enforce_login(request: Request, call_next):
+    path = request.url.path
+    if path in LOGIN_EXEMPT_PATHS:
+        return await call_next(request)
+    user = request.session.get("user")
+    if not user:
+        if path in PAGE_PATHS:
+            return RedirectResponse(url="/login", status_code=303)
+        return JSONResponse({"detail": "Login required."}, status_code=401)
+    request.state.user = user
+    return await call_next(request)
+
+
+# Registered AFTER enforce_login is defined, deliberately -- Starlette wraps
+# middleware last-registered-outermost, so SessionMiddleware must be the last
+# add_middleware call for request.session to already be populated by the time
+# enforce_login's dispatch reads it (same gotcha noted in the Virtual Office's
+# app.py; verified there the hard way).
+app.add_middleware(SessionMiddleware, secret_key=load_or_create_secret_key(),
+                    max_age=SESSION_MAX_AGE, same_site="lax")
+
+
+@app.get("/login")
+def login_page(request: Request):
+    if request.session.get("user"):
+        return RedirectResponse(url="/", status_code=303)
+    return FileResponse(os.path.join(HERE, "login.html"),
+                        headers={"Cache-Control": "no-store, must-revalidate"})
+
+
+class LoginReq(BaseModel):
+    username: str
+    password: str
+
+
+@app.post("/login")
+def login_submit(req: LoginReq, request: Request):
+    user = find_user(req.username.strip())
+    if not user or not verify_password(req.password, user.get("password_hash", "")):
+        raise HTTPException(401, "Invalid username or password.")
+    request.session["user"] = {"username": user["username"], "role": user["role"]}
+    return {"username": user["username"], "role": user["role"]}
+
+
+@app.post("/logout")
+def logout(request: Request):
+    request.session.clear()
+    return {"ok": True}
+
+
+@app.get("/api/me")
+def api_me(request: Request):
+    return request.state.user
 
 
 # ---- routes ---------------------------------------------------------------
@@ -235,7 +353,16 @@ def summarize(library):
     by_kind = {}
     for m in library:
         by_kind[m["kind"]] = by_kind.get(m["kind"], 0) + 1
-    return {"total": len(library), "by_kind": by_kind}
+    # Duration 0 almost always means ChannelCast hadn't finished processing the
+    # clip yet when this sync ran. Left unnoticed, a generation happily schedules
+    # it as free runtime -- that's the exact bug that pushed every loop on the
+    # network past the 6h ceiling in Aug 2026. Surfacing it here, at sync time,
+    # is the cheapest place to catch it: re-sync once the clip finishes
+    # processing, before it ever reaches a loop.
+    pending = [m["title"] for m in library
+               if m["kind"] in ("mv", "promo", "special") and m.get("duration", 0) <= 0]
+    return {"total": len(library), "by_kind": by_kind,
+            "duration_pending_count": len(pending), "duration_pending": pending[:20]}
 
 
 def apply_overrides(items):
@@ -323,10 +450,19 @@ def build_library_pools():
     excl = [a.lower() for a in CONFIG.get("excluded_artists", [])]
     by_id = {m["id"]: m for m in lib}
     intro_id = CONFIG["intro_media_id"]
-    mv_pool = [m for m in lib if m["kind"] == "mv"]
-    promo_pool = [m for m in lib if m["kind"] == "promo" and m["id"] != intro_id]
+    # A clip ChannelCast hasn't finished processing yet reports duration 0/missing.
+    # Scheduling it costs the loop its real runtime while the scheduler's own math
+    # counts it as free -- exactly how 32 such clips pushed every loop on the
+    # network past the 6h ceiling in Aug 2026 with a perfectly clean-looking
+    # generation report. by_id above is left unfiltered (generate_sequence needs
+    # it to detect and report a *requested* must-play that's stuck this way,
+    # rather than have it silently vanish); only the general pools exclude them.
+    mv_pool = [m for m in lib if m["kind"] == "mv" and m.get("duration", 0) > 0]
+    promo_pool = [m for m in lib if m["kind"] == "promo" and m["id"] != intro_id
+                  and m.get("duration", 0) > 0]
     special_pool = [m for m in lib if m["kind"] == "special"
-                    and not scheduler.is_excluded(m["title"], excl)]
+                    and not scheduler.is_excluded(m["title"], excl)
+                    and m.get("duration", 0) > 0]
     intro = by_id.get(intro_id)
     if not intro:
         raise HTTPException(400, "Intro plug clip not found in library; re-sync.")
@@ -348,9 +484,14 @@ def generate_sequence(openers_spec, num_specials=3, reshuffle=True, avoid_ids=No
     by_id, mv_pool, promo_pool, special_pool, intro = build_library_pools()
     avoid = set(avoid_ids or [])
     depleted = False
+    # duration>0 guard: a kept special ChannelCast hasn't finished processing yet
+    # is treated the same as one that's been archived out from under us -- the
+    # backfill below (`need`) redraws a replacement from the (duration-checked)
+    # special_pool instead of silently keeping a clip that would miscount.
     specials = [{"id": by_id[s]["id"], "title": by_id[s]["title"],
                  "duration": by_id[s]["duration"]}
-                for s in (keep_special_ids or []) if s in by_id]
+                for s in (keep_special_ids or [])
+                if s in by_id and by_id[s].get("duration", 0) > 0]
     # How many slots still need filling. A plain generate keeps nothing and draws
     # the full count. A "keep what's on the loop" rebuild normally draws none --
     # unless one of those specials has since been archived out of the pool, in
@@ -371,14 +512,31 @@ def generate_sequence(openers_spec, num_specials=3, reshuffle=True, avoid_ids=No
         random.Random(seed or int(time.time())).shuffle(available)
         specials += [{"id": s["id"], "title": s["title"], "duration": s["duration"]}
                      for s in available[:need]]
-    must_mvs = [m for m in mv_pool if m["id"] in set(must_ids or [])]
+    want_must = set(must_ids or [])
+    must_mvs = [m for m in mv_pool if m["id"] in want_must]
+    # mv_pool already excludes duration<=0 clips, which is exactly wrong for a
+    # must-play: a new-music drop is the single most likely thing to still be
+    # duration 0 (freshly imported, not yet processed by ChannelCast), and
+    # silently dropping it off the loop is worse than silently overrunning was.
+    # Surface it as pending instead so it's visible, not vanished.
+    found_must = {m["id"] for m in must_mvs}
+    must_duration_pending = [{"id": mid, "title": by_id[mid]["title"]}
+                             for mid in want_must
+                             if mid in by_id and mid not in found_must
+                             and by_id[mid].get("duration", 0) <= 0]
+
     openers = []
+    opener_duration_pending = []
     for spec in (openers_spec or []):
         mid = spec.get("mediaId")
         if mid and mid in by_id:
             o = by_id[mid]
+            if o.get("duration", 0) <= 0:
+                opener_duration_pending.append({"id": o["id"], "title": o["title"]})
+                continue
             openers.append({"id": o["id"], "title": o["title"], "duration": o["duration"],
                             "hour": float(spec.get("hour", 0) or 0)})
+
     floor = int(target_hours * 3600)
     seq, report = scheduler.build_loop(
         mv_pool, promo_pool, intro, specials,
@@ -392,6 +550,8 @@ def generate_sequence(openers_spec, num_specials=3, reshuffle=True, avoid_ids=No
     for s in seq:
         s["playsAtSeconds"] = ts
         ts += s["duration"]
+    report["must_duration_pending"] = must_duration_pending
+    report["opener_duration_pending"] = opener_duration_pending
     return {"sequence": seq, "report": report, "specials_depleted_reset": depleted,
             "media_ids": [s["id"] for s in seq],
             "chosen_special_ids": [s["id"] for s in specials]}
@@ -709,7 +869,10 @@ async def run_job_stream(job):
             L["totalSeconds"] = res["report"]["total_seconds"]
             L["violations"] = len(res["report"].get("violations", []))
             L["specialIds"] = res["chosen_special_ids"]
-            L["unplaced"] = res["report"].get("must_unplaced", [])
+            L["unplaced"] = (res["report"].get("must_unplaced", [])
+                             + res["report"].get("must_duration_pending", [])
+                             + res["report"].get("opener_duration_pending", [])
+                             + res["report"].get("opener_unplaced", []))
             L["status"] = "writing"
             await run_in_threadpool(save_job, job)
 
@@ -733,8 +896,18 @@ async def run_job_stream(job):
             while L["removed"] < len(olds):
                 try:
                     await run_in_threadpool(client.remove_playlist_item, olds[L["removed"]])
-                except ChannelcastError:
-                    pass          # already gone (e.g. removed before a crash) -- fine
+                except ChannelcastError as e:
+                    # A resume-after-crash re-removing an item a prior attempt
+                    # already cleared is fine and expected -- that's what this
+                    # except exists for. Anything else (rate limit, timeout, a
+                    # real API error) must not be swallowed the same way: doing
+                    # so used to leave stale items mixed into an otherwise-clean
+                    # rebuild with no signal anywhere. Let a genuine failure stop
+                    # the job here, in "clearing", with an accurate removed-count
+                    # so /api/job/resume picks it back up cleanly.
+                    msg = str(e).lower()
+                    if "not found" not in msg and "does not exist" not in msg:
+                        raise
                 L["removed"] += 1
                 await run_in_threadpool(save_job, job)
                 yield json.dumps({"phase": "clear", "loop": name, "i": li + 1, "n": n,
@@ -1558,5 +1731,5 @@ def archive_export(ids: str = ""):
 
 if __name__ == "__main__":
     import uvicorn
-    print("\n  ChannelCast Loop Builder running at  http://127.0.0.1:8765\n")
-    uvicorn.run(app, host="127.0.0.1", port=8765, log_level="warning")
+    print(f"\n  ChannelCast Loop Builder running at  http://127.0.0.1:{PORT}\n")
+    uvicorn.run(app, host="127.0.0.1", port=PORT, log_level="warning")

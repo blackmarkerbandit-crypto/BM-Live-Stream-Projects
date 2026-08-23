@@ -102,7 +102,14 @@ def build_loop(mv_pool, promo_pool, intro, specials,
     opener_placements = []
 
     def opener_due():
-        return opener_i < len(prepared_openers) and running >= prepared_openers[opener_i]["_target"]
+        # The _target clamp above (floor - duration) keeps a *normal* opener
+        # always fitting by construction, but one whose duration alone exceeds
+        # the ceiling (or that got crowded out by other content first) needs the
+        # same explicit fit check specials get, or this is the first line that
+        # would force it in over the 6h hard limit.
+        return (opener_i < len(prepared_openers)
+                and running >= prepared_openers[opener_i]["_target"]
+                and running + prepared_openers[opener_i]["duration"] <= ceil)
 
     def place_opener():
         nonlocal running, opener_i, mv_since_promo
@@ -147,7 +154,13 @@ def build_loop(mv_pool, promo_pool, intro, specials,
     def special_due():
         return (special_i < len(specials)
                 and running >= targets[special_i]
-                and (running - last_special_end) >= special_gap)
+                and (running - last_special_end) >= special_gap
+                # A special used to be placed the instant its target hour arrived,
+                # with no check that intro+special still fit under the ceiling --
+                # the one thing standing between a normal loop and quietly blowing
+                # the 6h hard limit. One that no longer fits stays pending and
+                # shows up in specials_placed < specials_requested instead.
+                and running + intro["duration"] + specials[special_i]["duration"] <= ceil)
 
     while running < floor:
         if opener_due():
@@ -216,8 +229,18 @@ def build_loop(mv_pool, promo_pool, intro, specials,
             else:
                 break
 
-    # Safety: place any openers that didn't get reached in the body.
+    # Safety: place any openers that didn't get reached in the body -- but never
+    # blow the ceiling to do it. This used to force every remaining opener in
+    # unconditionally, which is exactly how a loop could end up running well
+    # past 6h15s with a perfectly clean violations report otherwise. One that no
+    # longer fits under the ceiling is left off and reported instead.
+    opener_unplaced = []
     while opener_i < len(prepared_openers):
+        o = prepared_openers[opener_i]
+        if running + o["duration"] > ceil:
+            opener_unplaced.append({"id": o["id"], "title": o["title"]})
+            opener_i += 1
+            continue
         place_opener()
 
     # --- floor guarantee: never end below 6h -------------------------------
@@ -228,11 +251,12 @@ def build_loop(mv_pool, promo_pool, intro, specials,
     running = _fill_to_floor(seq, running, promo_pool, mv_pool, pool,
                              floor, ceil, excluded_artists)
 
-    report = verify(seq, gap, excluded_artists, avoid)
+    report = verify(seq, gap, excluded_artists, avoid, ceil)
     report["total_seconds"] = running
     report["specials_placed"] = special_i
     report["specials_requested"] = len(specials)
     report["opener_placements"] = opener_placements
+    report["opener_unplaced"] = opener_unplaced
     report["below_floor"] = running < floor
     report["must_requested"] = len(must)
     report["must_placed"] = len(must) - len(must_left)
@@ -264,7 +288,7 @@ def _fill_to_floor(seq, running, promo_pool, mv_pool, remaining_pool,
     return running
 
 
-def verify(seq, gap, excluded_artists, avoid):
+def verify(seq, gap, excluded_artists, avoid, ceil=None):
     ts = 0
     last = {}
     seen = set()
@@ -284,6 +308,11 @@ def verify(seq, gap, excluded_artists, avoid):
             if s["id"] in avoid:
                 violations.append({"type": "repeat_from_prior", "title": s["title"]})
         ts += s["duration"]
+    # The 6h ceiling is a hard rule, not a soft target -- a loop that ends up past
+    # it needs to show up the same way every other broken rule does, not just as
+    # a total_seconds number nobody happens to compare against the ceiling.
+    if ceil is not None and ts > ceil:
+        violations.append({"type": "over_ceiling", "at": ts, "over_by": ts - ceil})
     return {
         "violations": violations,
         "ok": not violations,

@@ -86,6 +86,7 @@
     <div class="tab" data-tab="archive">Archive Cleanup</div>
   </div>
   <span id="chan" class="muted"></span>
+  <a href="#" id="logoutLink" class="muted" style="margin-left:12px" onclick="fetch('/logout',{method:'POST'}).then(()=>location.href='/login');return false;">Log out</a>
 </header>
 <main>
 
@@ -697,7 +698,8 @@ async function refreshLibraryView(){
   const by=data.by_kind||{};
   $('#libStats').textContent = data.total
     ? `${data.total} items — `+Object.entries(by).map(([k,v])=>`${k}:${v}`).join('  ')+
-      (data.synced_at?`  · synced ${new Date(data.synced_at*1000).toLocaleString()}`:'')
+      (data.synced_at?`  · synced ${new Date(data.synced_at*1000).toLocaleString()}`:'')+
+      (data.duration_pending_count?`  ⚠ ${data.duration_pending_count} still processing on ChannelCast (duration unknown) — re-sync before scheduling`:'')
     : 'Library not synced yet.';
   // opener datalist = shows
   $('#showlist').innerHTML = LIB.filter(m=>m.kind==='show')
