@@ -1,0 +1,235 @@
+<!-- =====================================================================
+     BlackMarker.TV 3.0 - SCHEDULE PAGE BODY
+     Paste into the CMS page editor for the Schedule page, between the shared
+     header and footer templates.
+
+     CSS      : nothing extra. All 43 classes on this page are already in
+                blackmarker-tv.css. No secondary stylesheet needed.
+
+     IMAGES   : SEVEN to upload, one per show card. They were base64-embedded,
+                which is most of why the preview page was 915 KB:
+
+                  /images/show-can-you-dig-it-live-music-review.jpg
+                  /images/show-weekly-interrupt.jpg
+                  /images/show-for-the-record-album-reviews.jpg
+                  /images/show-alien-podcast.jpg
+                  /images/show-talking-tipsy-podcast.jpg
+                  /images/show-duh-diggity-show.jpg
+                  /images/show-2-bafoonz-1-lagoon.jpg
+
+                Named from each image's own alt text, so a card and its artwork
+                cannot drift apart.
+
+     HERO     : uses the shared .page-hero / .pg-* classes. The timezone chip
+                and Watch button keep their own .sch-tz / .sch-hero-btn classes
+                and sit inside .pg-hero-side unchanged.
+
+     TITLE    : this page supplies its own <h1>Schedule</h1>, so the footer
+                script hides the CMS page-title h1 as a duplicate. To have the
+                CMS drive the title instead, replace the h1's TEXT with the
+                page-title macro and the script will move it into the hero.
+
+     SCRIPT   : none. Everything this page needs is in the shared footer script.
+
+     LINKS    : still the preview filenames. Repoint to CMS URLs as pages go up.
+
+     &#9888; TIMES ARE HARDCODED. Every day/time below is typed into the markup, so
+     a schedule change means editing this page. See the note above the grid.
+     ===================================================================== -->
+
+<!-- SCHEDULE HERO -->
+<section class="page-hero">
+  <div class="wrap">
+    <div class="pg-crumb"><a href="BlackMarkerTV-3-LIVE-PREVIEW.html">Home</a> <span class="sep">/</span> <span>Schedule</span></div>
+    <div class="pg-hero-in">
+      <div>
+        <div class="pg-kicker">What&rsquo;s On &middot; Live &amp; Replays</div>
+        <h1 class="pg-title">Schedule</h1>
+        <p class="pg-desc">Tune in for the live streams and special events. Everything we air lands on
+        <b>The Loop</b> afterward, so if you miss it live you can still catch it on the site &mdash; but live is
+        where the chat, the calls and the chaos happen.</p>
+      </div>
+      <div class="pg-hero-side">
+        <div class="sch-tz">
+          <span class="sch-tz-k">All times</span>
+          <span class="sch-tz-v">Eastern (ET)</span>
+        </div>
+        <a class="btn btn-red sch-hero-btn" href="BlackMarkerTV-3-LIVE-PREVIEW.html">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="margin-right:7px;vertical-align:-2px;"><path d="M8 5v14l11-7z"/></svg>Watch The Loop
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE SHOWS -->
+<section class="section wrap">
+  <div class="sec-head">
+    <div>
+      <div class="eyebrow">The Lineup</div>
+      <h2 class="sec-title">Original Shows &amp; Live Streams</h2>
+    </div>
+    <span class="sec-link">New episodes + replay windows</span>
+  </div>
+
+  <!-- NOTE: Schedule times are hardcoded &mdash; candidate for ChannelCast data -->
+    <div class="sch-grid">
+      <article class="sch-card">
+        <a class="sch-art" href="BlackMarkerTV-3-CAN-YOU-DIG-IT.html">
+          <img src="/images/show-can-you-dig-it-live-music-review.jpg" alt="Can You Dig It!? Live Music Review" loading="lazy">
+          <span class="sch-badge">Live</span>
+        </a>
+        <div class="sch-body">
+          <h3 class="sch-name">Can You Dig It!? Live Music Review</h3>
+          <div class="sch-slot is-live">
+            <span class="sch-lbl">New</span>
+            <span class="sch-when">Last Fridays &middot; 8:00 PM ET</span>
+          </div>
+          <div class="sch-slot">
+            <span class="sch-lbl">Replays</span>
+            <span class="sch-when">Sat &amp; Sun &middot; 12:00 PM ET</span>
+          </div>
+          <a class="sch-link" href="BlackMarkerTV-3-CAN-YOU-DIG-IT.html">Watch episodes <span>&rarr;</span></a>
+        </div>
+      </article>
+      <article class="sch-card">
+        <a class="sch-art" href="BlackMarkerTV-3-WEEKLY-INTERRUPT.html">
+          <img src="/images/show-weekly-interrupt.jpg" alt="The Weekly Interrupt" loading="lazy">
+          <span class="sch-badge">Live</span>
+        </a>
+        <div class="sch-body">
+          <h3 class="sch-name">The Weekly Interrupt</h3>
+          <div class="sch-slot is-live">
+            <span class="sch-lbl">New</span>
+            <span class="sch-when">1st &amp; 3rd Tuesdays &middot; 8:00 PM ET</span>
+          </div>
+          <div class="sch-slot">
+            <span class="sch-lbl">Replays</span>
+            <span class="sch-when">Fri&ndash;Wed &middot; 6:00 PM ET</span>
+          </div>
+          <a class="sch-link" href="BlackMarkerTV-3-WEEKLY-INTERRUPT.html">Watch episodes <span>&rarr;</span></a>
+        </div>
+      </article>
+      <article class="sch-card">
+        <a class="sch-art" href="BlackMarkerTV-3-FOR-THE-RECORD.html">
+          <img src="/images/show-for-the-record-album-reviews.jpg" alt="For The Record Album Reviews" loading="lazy">
+          <span class="sch-badge">Live</span>
+        </a>
+        <div class="sch-body">
+          <h3 class="sch-name">For The Record Album Reviews</h3>
+          <div class="sch-slot is-live">
+            <span class="sch-lbl">New</span>
+            <span class="sch-when">Last Mondays &middot; 9:00 PM ET</span>
+          </div>
+          <div class="sch-slot">
+            <span class="sch-lbl">Replays</span>
+            <span class="sch-when">Wednesdays &middot; 6:00 PM ET</span>
+          </div>
+          <a class="sch-link" href="BlackMarkerTV-3-FOR-THE-RECORD.html">Watch episodes <span>&rarr;</span></a>
+        </div>
+      </article>
+      <article class="sch-card">
+        <a class="sch-art" href="BlackMarkerTV-3-ALIEN-PODCAST.html">
+          <img src="/images/show-alien-podcast.jpg" alt="The Alien Podcast" loading="lazy">
+          <span class="sch-badge">Live</span>
+        </a>
+        <div class="sch-body">
+          <h3 class="sch-name">The Alien Podcast</h3>
+          <div class="sch-slot is-live">
+            <span class="sch-lbl">New</span>
+            <span class="sch-when">3rd Sundays &middot; 6:00 PM ET</span>
+          </div>
+          <div class="sch-slot">
+            <span class="sch-lbl">Replays</span>
+            <span class="sch-when">Thursdays &middot; 6:00 PM ET</span>
+          </div>
+          <a class="sch-link" href="BlackMarkerTV-3-ALIEN-PODCAST.html">Watch episodes <span>&rarr;</span></a>
+        </div>
+      </article>
+    </div>
+    <!-- NOTE: These day/time strings are typed into the page. ChannelCast already stores the real weekly schedules (see CC-23 on the punchlist) &mdash; once a public endpoint exposes them, this grid can render itself and stop drifting from what actually airs. -->
+  
+</section>
+
+<!-- ON DEMAND ONLY -->
+<section class="section wrap">
+  <div class="sec-head">
+    <div>
+      <div class="eyebrow">No Live Broadcast</div>
+      <h2 class="sec-title">On Demand Only</h2>
+    </div>
+    <span class="sec-link">Watch anytime</span>
+  </div>
+  <div class="sch-grid sch-grid-vod">
+      <article class="sch-card is-vod">
+        <a class="sch-art" href="BlackMarkerTV-3-TALKING-TIPSY.html">
+          <img src="/images/show-talking-tipsy-podcast.jpg" alt="Talking Tipsy Podcast" loading="lazy">
+          <span class="sch-badge is-vod">On Demand</span>
+        </a>
+        <div class="sch-body">
+          <h3 class="sch-name">Talking Tipsy Podcast</h3>
+          <div class="sch-slot">
+            <span class="sch-lbl">Live</span>
+            <span class="sch-when is-off">No live broadcasts</span>
+          </div>
+          <div class="sch-slot">
+            <span class="sch-lbl">Watch</span>
+            <span class="sch-when">On demand, anytime on The Loop</span>
+          </div>
+          <a class="sch-link" href="BlackMarkerTV-3-TALKING-TIPSY.html">Watch episodes <span>&rarr;</span></a>
+        </div>
+      </article>
+      <article class="sch-card is-vod">
+        <div class="sch-art">
+          <img src="/images/show-duh-diggity-show.jpg" alt="Duh Diggity Show" loading="lazy">
+          <span class="sch-badge is-vod">On Demand</span>
+        </div>
+        <div class="sch-body">
+          <h3 class="sch-name">Duh Diggity Show</h3>
+          <div class="sch-slot">
+            <span class="sch-lbl">Live</span>
+            <span class="sch-when is-off">No live broadcasts</span>
+          </div>
+          <div class="sch-slot">
+            <span class="sch-lbl">Watch</span>
+            <span class="sch-when">On demand, anytime on The Loop</span>
+          </div>
+          
+        </div>
+      </article>
+      <article class="sch-card is-vod">
+        <div class="sch-art">
+          <img src="/images/show-2-bafoonz-1-lagoon.jpg" alt="2 Bafoonz, 1 Lagoon" loading="lazy">
+          <span class="sch-badge is-vod">On Demand</span>
+        </div>
+        <div class="sch-body">
+          <h3 class="sch-name">2 Bafoonz, 1 Lagoon</h3>
+          <div class="sch-slot">
+            <span class="sch-lbl">Live</span>
+            <span class="sch-when is-off">No live broadcasts</span>
+          </div>
+          <div class="sch-slot">
+            <span class="sch-lbl">Watch</span>
+            <span class="sch-when">On demand, anytime on The Loop</span>
+          </div>
+          
+        </div>
+      </article>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section wrap">
+  <div class="cc cc-review">
+    <div class="cc-txt">
+      <div class="cc-eye">Artists &mdash; Get Reviewed</div>
+      <h2 class="cc-h">Want your record<br>on the schedule?</h2>
+      <p class="cc-p">Send a video link and we&rsquo;ll put it in front of the panel on <b>Can You Dig It!?</b>
+      Submissions are free.</p>
+      <div class="cc-actions">
+        <a class="btn btn-red" href="BlackMarkerTV-3-CONTACT.html#contact-form">Submit Your Music for Reviews &amp; Features</a>
+        <a class="btn btn-ghost" href="BlackMarkerTV-3-CONTACT.html">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
