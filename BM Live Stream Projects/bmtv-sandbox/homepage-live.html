@@ -35,6 +35,8 @@
 
 <style>
   .up-row.is-stale{opacity:.55;}
+  /* the show cards become links; grid blockifies them anyway, but be explicit */
+  a.card{display:block;color:inherit;text-decoration:none;}
   .lv-note{font-size:11px;color:var(--muted2);margin-top:9px;letter-spacing:.02em;}
   .lv-note b{color:var(--ann);font-weight:700;}
   .pb-prog{height:3px;border-radius:2px;background:var(--surface3,#242019);
@@ -159,7 +161,15 @@
     if (!elCats || !data.shows || !data.shows.length) return;
     var frag = document.createDocumentFragment();
     data.shows.forEach(function (s) {
-      var card = el('div', 'card full');
+      // The card links to the SHOW page, not the episode. ChannelCast's embed
+      // plays a channel and has no VOD mode, and playing the S3 file straight
+      // would skip ChannelCast's own play tracking. Landing on the show page
+      // also beats dropping someone into hour two of a three-hour podcast.
+      var card = el(s.page ? 'a' : 'div', 'card full');
+      if (s.page) {
+        card.href = s.page;
+        card.setAttribute('aria-label', s.category + ' — ' + s.title);
+      }
       var thumb = el('div', 'thumb');
       thumb.appendChild(el('span', 'cat-tag', s.category));
       if (s.poster) {

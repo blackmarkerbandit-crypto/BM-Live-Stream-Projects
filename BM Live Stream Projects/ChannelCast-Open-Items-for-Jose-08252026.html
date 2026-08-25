@@ -1,0 +1,114 @@
+<title>ChannelCast — Open Items for Jose (August 25, 2026)</title>
+
+<style>
+:root{
+  --ground:#ffffff; --ink:#16130f; --ink-2:#4b443c; --ink-3:#7a7168;
+  --line:#ddd6cc; --line-2:#eae4da; --panel:#faf7f2; --accent:#8c2f18;
+  --body:Georgia,"Iowan Old Style","Times New Roman",serif;
+  --ui:"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:"Cascadia Mono",Consolas,ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#14120f; --ink:#efe9e0; --ink-2:#b5aca0; --ink-3:#8a8177;
+    --line:#332e28; --line-2:#262119; --panel:#1c1813; --accent:#e07a5f;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14120f; --ink:#efe9e0; --ink-2:#b5aca0; --ink-3:#8a8177;
+  --line:#332e28; --line-2:#262119; --panel:#1c1813; --accent:#e07a5f;
+}
+*{box-sizing:border-box;}
+body{background:var(--ground);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.65;margin:0;padding:0 22px 90px;}
+.wrap{max-width:830px;margin:0 auto;}
+h1{font-family:var(--ui);font-size:30px;line-height:1.15;font-weight:700;margin:44px 0 6px;letter-spacing:-.01em;}
+.dateline{font-family:var(--ui);font-size:14px;color:var(--ink-3);margin:0 0 30px;padding-bottom:22px;border-bottom:2px solid var(--line);}
+h2{font-family:var(--ui);font-size:21px;font-weight:700;margin:46px 0 4px;padding-top:22px;border-top:1px solid var(--line);}
+h3{font-family:var(--ui);font-size:17.5px;font-weight:700;margin:34px 0 8px;line-height:1.35;}
+p{margin:0 0 13px;}
+.label{font-family:var(--ui);font-size:12.5px;font-weight:700;letter-spacing:.06em;color:var(--accent);}
+.meta{font-family:var(--ui);font-size:14px;color:var(--ink-2);margin:0 0 14px;}
+.howto{background:var(--panel);border:1px solid var(--line);padding:20px 24px 22px;margin:0 0 8px;}
+.howto p:last-child{margin-bottom:0;}
+pre{background:var(--panel);border:1px solid var(--line);padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.55;margin:0 0 14px;color:var(--ink);}
+code{font-family:var(--mono);font-size:14px;background:var(--panel);border:1px solid var(--line-2);padding:1px 4px;}
+ul{margin:0 0 14px;padding-left:22px;}
+li{margin-bottom:7px;}
+table{border-collapse:collapse;width:100%;font-size:15px;margin:0 0 16px;font-family:var(--ui);}
+th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top;}
+th{background:var(--panel);font-size:13px;letter-spacing:.04em;}
+.end{font-family:var(--ui);font-size:15px;color:var(--ink-2);margin-top:42px;padding-top:20px;border-top:2px solid var(--line);}
+</style>
+
+<div class="wrap">
+
+<h1>ChannelCast — Open Items for Jose</h1>
+<p class="dateline">August 25, 2026 &nbsp;·&nbsp; Black Marker TV &nbsp;·&nbsp; channel 019eba4d-bb24-746e-afa6-19f8fea1e9aa</p>
+
+<div class="howto">
+<p><span class="label">HOW TO READ THIS DOCUMENT</span></p>
+<p>One question, in Section 1. It is a <strong>product question, not a bug</strong> — nothing is broken, and nothing here blocks the 3.0 front end. Section 2 records what we built against the API this week and what we found, so you can see exactly which endpoints the site now depends on. There is no JavaScript and nothing is collapsed.</p>
+<p>Labels used: <strong>QUESTION</strong>, <strong>CONTEXT</strong>, <strong>EVIDENCE</strong>, <strong>RULED OUT</strong>, <strong>IMPACT</strong>, <strong>WHAT WE DID</strong>.</p>
+</div>
+
+
+<h2>Section 1 — The question (1 item)</h2>
+
+<h3>Item 1 — Can a viewer watch one specific episode on demand?</h3>
+<p class="meta">Status: OPEN QUESTION — needs a yes/no before we design around it.</p>
+
+<p><span class="label">QUESTION</span> Does ChannelCast have any way to play a <strong>single media item</strong> to a viewer — a VOD mode on the embed, a hosted watch page, or an endpoint that returns a playable URL for a given <code>mediaId</code>? If it does not exist today, is it on the roadmap?</p>
+
+<p><span class="label">CONTEXT</span> The BlackMarker.TV 3.0 homepage has a “Latest Videos” row: one card per show, each showing that show’s newest episode with its real poster and duration, pulled live from <code>list_category_items</code>. The obvious behaviour when someone clicks a card is “play this episode.” We could not build that.</p>
+
+<p><span class="label">EVIDENCE</span> The embed player accepts exactly three options and requires a channel:</p>
+<pre>class Player {
+  constructor(opts) {
+    this.apiBase   = opts.apiBase || defaultApiBase();
+    this.channelId = opts.channelId;
+    if (!this.channelId) throw new Error("ChannelCastPlayer: channelId is required");
+    this.host      = resolveTarget(opts.target);
+</pre>
+<p>The only options read anywhere in <code>embed/player.js</code> are <code>apiBase</code>, <code>channelId</code> and <code>target</code>. There is no <code>mediaId</code> path, and no VOD state — the player is a channel player: it watches <code>/api/v1/playback/status</code> and <code>/api/v1/playback/timeseek</code> and switches between live and the scheduled loop.</p>
+
+<p><span class="label">RULED OUT</span> We checked for a hosted watch page before asking. Both return 404:</p>
+<pre>GET https://channelcast.tv/watch/019fbbd1-bdac-7b70-a80b-15b18e2495c6   404
+GET https://channelcast.tv/media/019fbbd1-bdac-7b70-a80b-15b18e2495c6   404</pre>
+<p>We also confirmed <code>list_media</code> returns no playable URL — the fields are <code>id</code>, <code>title</code>, <code>filename</code>, <code>status</code>, <code>durationSeconds</code>, <code>processing</code>, <code>posterUrl</code>.</p>
+
+<p><span class="label">RULED OUT</span> We <em>could</em> play the S3 object directly in a plain <code>&lt;video&gt;</code> tag — the bucket is publicly readable and we have the paths. <strong>We deliberately did not.</strong> It would bypass ChannelCast completely: no play recorded through <code>/api/v1/playback/track</code>, so those views would never appear in <code>play_report</code>; no lower-third overlay; no logo bug; and a hardcoded S3 path that breaks silently if a file is moved or re-encoded. Under-counting our own best content to save a click is a bad trade.</p>
+
+<p><span class="label">WHAT WE DID INSTEAD</span> Each card links to that show’s page rather than to the episode. That is also the better product call on its own merits — a card that drops a viewer into hour two of a three-hour podcast is worse than one that lands them on the show, where they can see every episode and choose. So this is not urgent for us.</p>
+
+<p><span class="label">IMPACT</span> Beyond this site: a broadcaster running a back catalogue on ChannelCast has no way to let a viewer watch a specific episode. Everything is “what is on the channel right now.” For a platform sold to other broadcasters, on-demand viewing of your own library seems like it belongs in the product rather than in each customer’s front end. Worth knowing whether that is a gap, a deliberate scope decision, or already planned.</p>
+
+<p><span class="label">NOT A BUG</span> To be explicit: nothing here is broken and nothing is blocked. We have shipped around it. This is a question about where the capability should live.</p>
+
+
+<h2>Section 2 — What the 3.0 homepage now depends on (for your awareness)</h2>
+
+<p>Three sections of the homepage went live against real ChannelCast data this week. Recording the endpoints here so nothing surprises you if any of them change.</p>
+
+<table>
+<tr><th>Homepage section</th><th>Source</th><th>Auth</th></tr>
+<tr><td>Now Playing</td><td><code>GET /api/v1/playback/timeseek/{channelId}</code></td><td>None — called from the browser</td></tr>
+<tr><td>Upcoming</td><td><code>list_schedules</code> + <code>list_playlist_items</code></td><td>MCP token, server-side only</td></tr>
+<tr><td>Latest Videos</td><td><code>list_categories</code> + <code>list_category_items</code> + <code>list_media</code></td><td>MCP token, server-side only</td></tr>
+</table>
+
+<p><span class="label">CONTEXT</span> The MCP token can <code>delete_media</code> and <code>delete_playlist</code>, so it never goes near a browser. A generator runs server-side and writes a static JSON file holding only titles, schedule offsets and poster URLs. The page reads that plus the public <code>timeseek</code> feed, and cross-checks the two — if <code>timeseek</code> names a <code>mediaId</code> that is not where the stored schedule says it should be, the page trusts <code>timeseek</code> and flags that its generated data is stale.</p>
+
+<p><span class="label">EVIDENCE</span> Useful confirmations from building it, in case they are worth documenting on your side:</p>
+<ul>
+<li><code>timeseek</code> serves <code>Access-Control-Allow-Origin: *</code>, which is what makes browser-side Now Playing possible at all. If that ever tightens, the homepage loses its live now-playing.</li>
+<li><code>list_schedules</code> returns 28 weekly entries with real <code>startUtc</code> values. We use these rather than assuming Eastern is UTC−4 — that assumption is correct today and would break at the November DST change.</li>
+<li><code>list_category_items</code> exposes <code>sort</code>, and <code>sort</code> 0 being the newest is what makes the “latest episode” cards correct. We rely on that ordering.</li>
+<li><code>list_media</code>’s <code>search</code> behaves as a SQL <code>LIKE</code> over the title. A multi-word phrase fails whenever punctuation sits between the words — three of six poster lookups came back empty until we switched to probing with single words. Worth a line in the docs.</li>
+</ul>
+
+<p><span class="label">QUESTION (minor)</span> Is there a supported way to fetch a media record by <code>mediaId</code> directly? Today the only route to a poster is <code>list_media</code> with a search string that happens to match, which is indirect and a little fragile.</p>
+
+
+<p class="end">Prepared by Eric Gomez · Black Marker Media LLC · August 25, 2026</p>
+
+</div>

@@ -41,20 +41,29 @@ OUT = os.path.join(HERE, "loop-data.json")
 
 sys.path.insert(0, BUILDER)
 
-# Editorial order for the Latest Shows row, by ChannelCast category name.
+# Editorial order for the Latest Shows row: ChannelCast category name, the
+# label the card shows, and the page a click goes to.
+#
+# The card links to the SHOW, not to the episode. The ChannelCast embed only
+# plays a channel -- it takes apiBase/channelId/target and throws without a
+# channelId, so there is no way to point it at one episode, and there is no
+# public watch page either (checked: /watch/{id} and /media/{id} both 404).
+# Playing the S3 file directly in a <video> would work but bypasses ChannelCast
+# entirely: no play tracking through /api/v1/playback/track, so those views
+# would never reach play_report, plus no lower-thirds and no logo bug. Dropping
+# a viewer into hour two of a three-hour podcast is also worse than landing them
+# on the show page where they can choose. See the 2026-08-25 punchlist for Jose.
+#
 # Performance Battles is deliberately absent -- it lives in the Event Streams
 # dropdown only.
 SHOW_CATEGORIES = [
-    "Can You Dig It!? Live Music Review",
-    "The Weekly Interrupt",
-    "For The Record",
-    "The Alien Podcast",
-    "Talking Tipsy",
-    "Special Interrupts",
+    ("Can You Dig It!? Live Music Review", "Can You Dig It!?",      "BlackMarkerTV-3-CAN-YOU-DIG-IT.html"),
+    ("The Weekly Interrupt",               "The Weekly Interrupt",  "BlackMarkerTV-3-WEEKLY-INTERRUPT.html"),
+    ("For The Record",                     "For The Record",        "BlackMarkerTV-3-FOR-THE-RECORD.html"),
+    ("The Alien Podcast",                  "The Alien Podcast",     "BlackMarkerTV-3-ALIEN-PODCAST.html"),
+    ("Talking Tipsy",                      "Talking Tipsy",         "BlackMarkerTV-3-TALKING-TIPSY.html"),
+    ("Special Interrupts",                 "Special Interrupts",    "BlackMarkerTV-3-SPECIAL-INTERRUPTS.html"),
 ]
-
-# Display names, where the category name is longer than the row can carry.
-SHORT_NAME = {"Can You Dig It!? Live Music Review": "Can You Dig It!?"}
 
 WEEK = 7 * 86400
 
@@ -219,24 +228,25 @@ def build_shows(client, channel_id):
     by_name = {c["name"]: c for c in cats}
     rows, need = [], {}
 
-    for name in SHOW_CATEGORIES:
+    for name, label, page in SHOW_CATEGORIES:
         cat = by_name.get(name)
         if not cat:
-            print("   %-24s no such category" % name[:24])
+            print("   %-24s no such category" % label[:24])
             continue
         items = unwrap(client.call_tool("list_category_items", {"categoryId": cat["id"]}),
                        "items", "media")
         if not items:
-            print("   %-24s empty" % name[:24])
+            print("   %-24s empty" % label[:24])
             continue
         # sort 0 is the newest -- ChannelCast's own editorial order.
         items.sort(key=lambda x: x.get("sort", 999))
         top = items[0]
         raw = top.get("title") or ""
         row = {
-            "category": SHORT_NAME.get(name, name),
+            "category": label,
             "title": TRAILING_DATE.sub("", raw).strip(),
             "date": episode_date(raw),
+            "page": page,
             "poster": "", "duration": 0,
             "_id": top.get("mediaId"),
         }
