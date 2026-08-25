@@ -204,11 +204,18 @@
 
 
 /* =====================================================================
-   "ARTISTS - GET REVIEWED" CTA  (.cc)
+   "ARTISTS - GET REVIEWED" CTA  (.cc.cc-review)
 
    Adds a full-bleed photo from the Can You Dig It!? studio so the block stops
-   reading as a flat panel. This lives in the MAIN stylesheet rather than a
-   page-specific one because the block appears on all 18 pages.
+   reading as a flat panel. In the main stylesheet rather than a page-specific
+   one, because the block is on 10 pages.
+
+   SCOPED TO .cc-review ON PURPOSE. The .cc container is used for three
+   different CTAs: "Artists - Get Reviewed" (10 pages), "Powered by
+   ChannelCast" (homepage) and "Never Miss a Drop" (Weekly Interrupt). Styling
+   bare .cc would put a Can You Dig It studio photo behind the ChannelCast
+   platform pitch, which is the wrong show entirely. Add cc-review alongside cc
+   on the markup that should carry the photo; the other two are untouched.
 
    Full bleed rather than a right-hand panel, for two reasons. A part-width
    layer has an inner edge, and no amount of gradient hides it when the photo
@@ -244,7 +251,7 @@
    drop the burned-in lower-third graphics, then desaturated and darkened in
    the file so the stylesheet only handles the scrim. /images/cta-review.jpg
    ===================================================================== */
-.cc::after{
+.cc-review::after{
   content:"";
   position:absolute;
   inset:0;                       /* full bleed -- no partial-width edge to fade */
@@ -272,7 +279,7 @@
 /* Narrow screens: less width means the copy sits over more of the photo, so
    the scrim goes vertical and heavier at the top where the headline is. */
 @media (max-width:899px){
-  .cc::after{
+  .cc-review::after{
     background-image:
       radial-gradient(ellipse 140% 120% at 50% 50%,
         rgba(13,11,10,0) 30%, rgba(13,11,10,.60) 78%, rgba(13,11,10,.92) 100%),
