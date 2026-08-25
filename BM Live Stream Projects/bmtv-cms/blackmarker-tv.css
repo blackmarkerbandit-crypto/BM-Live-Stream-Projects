@@ -1612,6 +1612,174 @@ ul{margin:0;}
 
 
 /* =====================================================================
+   MEMBER AREA  (.bmtv-account)
+
+   Skins the CMS member-profile macro. Unlike the calendar and store, this
+   one was written BEFORE seeing the macro's output, so it deliberately
+   targets the primitives this CMS uses across all of its apps rather than
+   app-specific class names. Confirmed in use on this site by the store app,
+   the calendar app and the forms app:
+
+       .form-control        every input, select and textarea
+       .submit-button       the forms app's submit
+       .appButton / .btn    app action buttons
+       .row / .col-*        Bootstrap grid
+       #formHeader          the forms app's heading block
+       table                account history / subscription tables
+
+   Scoped under .bmtv-account so it outranks the framework and any styles the
+   app writes for itself, same as .bmtv-calendar and .bmtv-store.
+
+   If the member macro turns out to add its own classes on top of these, they
+   need adding here -- the page body says as much where whoever hits it will
+   look.
+   ===================================================================== */
+
+/* the placeholder that shows until the macro is dropped in */
+.bmtv-account .ac-slot{min-height:200px;}
+
+/* ---- form controls ---- */
+.bmtv-account .form-control,
+.bmtv-account input[type="text"],
+.bmtv-account input[type="email"],
+.bmtv-account input[type="tel"],
+.bmtv-account input[type="password"],
+.bmtv-account select,
+.bmtv-account textarea{
+  background-color:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:var(--text);
+  height:auto;
+  padding:11px 13px;
+  font:inherit;
+  font-size:13.5px;
+  box-shadow:none;
+  width:100%;
+  margin-bottom:12px;
+}
+.bmtv-account .form-control:focus,
+.bmtv-account input:focus,
+.bmtv-account select:focus,
+.bmtv-account textarea:focus{
+  border-color:var(--red);
+  box-shadow:none;
+  outline:none;
+}
+.bmtv-account select option{background:var(--surface2);color:var(--text);}
+.bmtv-account ::placeholder{color:var(--muted2);}
+
+/* labels: the framework neutraliser makes bare labels inline again, which is
+   right elsewhere on the site and wrong inside a form */
+.bmtv-account label{
+  display:block;
+  font-size:11.5px;
+  font-weight:800;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+
+/* ---- buttons ---- */
+.bmtv-account .submit-button,
+.bmtv-account input[type="submit"],
+.bmtv-account button[type="submit"],
+.bmtv-account .appButton,
+.bmtv-account .btn.appButton{
+  background:var(--red);
+  border:0;
+  border-radius:8px;
+  color:#fff;
+  font:inherit;
+  font-weight:800;
+  font-size:13.5px;
+  padding:12px 20px;
+  cursor:pointer;
+  transition:.15s;
+  -webkit-appearance:none;
+  appearance:none;
+}
+.bmtv-account .submit-button:hover,
+.bmtv-account input[type="submit"]:hover,
+.bmtv-account .appButton:hover{filter:brightness(1.1);color:#fff;}
+
+/* ---- the forms app's heading block ---- */
+.bmtv-account #formHeader,
+.bmtv-account #headerForm > div:first-child{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ann);
+  margin-bottom:16px;
+}
+
+/* ---- grid gutters, matched to the rest of the site ---- */
+.bmtv-account .row{margin-left:-8px;margin-right:-8px;}
+.bmtv-account .row > [class*="col-"]{padding-left:8px;padding-right:8px;}
+
+/* ---- panels the app may render around sections ---- */
+.bmtv-account .panel,
+.bmtv-account .well,
+.bmtv-account fieldset{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:20px;
+}
+
+/* ---- tables: order history, subscription details ---- */
+.bmtv-account table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13.5px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:20px;
+}
+.bmtv-account th{
+  text-align:left;
+  font-size:10.5px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--muted2);
+  font-weight:800;
+  padding:11px 13px;
+  border-bottom:1px solid var(--border);
+  background:var(--surface2);
+}
+.bmtv-account td{
+  padding:11px 13px;
+  border-bottom:1px solid var(--border);
+  color:var(--muted);
+  vertical-align:middle;
+}
+.bmtv-account tr:last-child td{border-bottom:0;}
+.bmtv-account td a{color:var(--red);font-weight:700;}
+
+/* ---- headings the macro may emit ---- */
+.bmtv-account h2,
+.bmtv-account h3{
+  font-weight:900;
+  letter-spacing:var(--disp);
+  color:var(--text);
+  margin:0 0 12px;
+}
+.bmtv-account h2{font-size:22px;}
+.bmtv-account h3{font-size:17px;}
+.bmtv-account p{color:var(--muted);font-size:14px;line-height:1.7;margin:0 0 12px;}
+.bmtv-account a{color:var(--red);}
+
+@media (max-width:680px){
+  .bmtv-account table{display:block;overflow-x:auto;}
+}
+
+
+/* =====================================================================
    "ARTISTS - GET REVIEWED" CTA  (.cc.cc-review)
 
    Adds a full-bleed photo from the Can You Dig It!? studio so the block stops

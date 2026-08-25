@@ -1,0 +1,65 @@
+<!-- =====================================================================
+     BlackMarker.TV 3.0 - ACCOUNT PAGE BODY
+     Paste into the CMS page editor, between the shared header and footer.
+
+     CSS      : nothing extra to paste - the member-area styling is already in
+                blackmarker-tv.css, under .bmtv-account.
+     IMAGES   : none.
+     SCRIPT   : none.
+
+     THE MACRO: fenced as BEGIN MEMBER MACRO / END MEMBER MACRO below, inside
+                a .bmtv-account wrapper. Keep the macro inside that wrapper or
+                the member area falls back to Bootstrap defaults - white
+                inputs and blue links on a black page.
+
+     HERO     : shared .page-hero / .pg-* classes, with is-solo since there is
+                no side column.
+
+     TITLE    : the page supplies its own <h1>, so the footer script hides the
+                CMS page-title h1 as a duplicate. To let the CMS drive it,
+                replace the h1 TEXT with the page-title macro.
+     ===================================================================== -->
+
+<!-- ACCOUNT HERO -->
+<section class="page-hero">
+  <div class="wrap">
+    <div class="pg-crumb"><a href="BlackMarkerTV-3-LIVE-PREVIEW.html">Home</a> <span class="sep">/</span> <span>Account</span></div>
+    <div class="pg-hero-in is-solo">
+      <div>
+        <div class="pg-kicker">Your Account</div>
+        <h1 class="pg-title">Account</h1>
+        <p class="pg-desc">Sign in to manage your profile, subscription and viewing preferences.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCOUNT DATA PLACEHOLDER -->
+<section class="section wrap">
+    <div class="bmtv-account">
+
+    <!-- ================= BEGIN MEMBER MACRO =================
+         Replace the placeholder below with the CMS member-profile macro:
+         sign-in, profile, subscription and account management.
+
+         KEEP IT INSIDE .bmtv-account. That wrapper is what the styling hangs
+         off, and it is load-bearing for the same reason .bmtv-calendar and
+         .bmtv-store are: the CMS apps emit Bootstrap markup and write their
+         own styles, so our rules need the extra class to outrank them.
+
+         The stylesheet already skins the primitives this CMS uses across its
+         apps -- .form-control, .submit-button, .appButton, .btn, Bootstrap
+         rows and columns, tables, labels and headings. That should carry most
+         of a member area without further work.
+
+         If parts still look like framework defaults once the macro is in,
+         send me the URL and I will skin whatever classes it turns out to add.
+         ====================================================== -->
+    <div class="ac-slot">
+      <div class="ac-slot-mark">[ACCOUNT DATA]</div>
+      <p class="ac-slot-p">Login, profile, subscription and account management render in this block.</p>
+    </div>
+    <!-- ================== END MEMBER MACRO ================== -->
+
+    </div><!-- /.bmtv-account -->
+</section>
