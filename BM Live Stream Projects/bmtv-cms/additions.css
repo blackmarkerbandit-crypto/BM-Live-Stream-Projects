@@ -572,6 +572,203 @@ ul{margin:0;}
 
 
 /* =====================================================================
+   STORE APP  (.bmtv-store)
+
+   Skins the CMS store macro's output. Two views come out of the same macro:
+   the product grid, and a single product when the URL carries ?productid=.
+
+   Scoped under .bmtv-store for the same reason .bmtv-calendar is: the app
+   loads fancybox and elevatezoom stylesheets of its own and writes inline
+   styles onto its elements, so our rules need the extra class to outrank
+   them. The wrapper is in the page body; keep the macro inside it.
+
+   TWO DEFECTS IN THE APP'S OUTPUT, styled around rather than papered over:
+
+   1. Every product card carries style="$$DIVSTYLE$$" -- an unreplaced macro
+      token. Browsers discard the invalid attribute so nothing breaks, but it
+      means a template placeholder is not being substituted. Worth raising
+      with the CMS vendor; nothing here depends on it either way.
+
+   2. On the detail page the option labels are written as
+          <label for="name="fldOption1" ">Shirt Colors</label>
+      The nested quotes break the for attribute, so the label is not tied to
+      its select: clicking "Shirt Colors" does not focus the dropdown and a
+      screen reader does not announce them together. It cannot be fixed in
+      CSS. Also one for the vendor.
+
+   The product title and price on the detail page are UNCLASSED divs with
+   inline font-size, so they are selected structurally and need !important.
+   ===================================================================== */
+
+/* ---- search / filter bar, shared by both views ---- */
+.bmtv-store #frmStoreSearch{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px 16px 6px;
+  margin-bottom:26px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+}
+.bmtv-store #frmStoreSearch .form-group{margin:0 0 10px;}
+.bmtv-store #frmStoreSearch .form-group:empty{display:none;}   /* app emits two empty ones */
+
+.bmtv-store .form-control{
+  background-color:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:var(--text);
+  height:auto;
+  padding:10px 12px;
+  font-size:13.5px;
+  box-shadow:none;
+  width:auto;
+}
+.bmtv-store .form-control:focus{border-color:var(--red);box-shadow:none;outline:none;}
+.bmtv-store select.form-control option{background:var(--surface2);color:var(--text);}
+.bmtv-store .form-control::placeholder{color:var(--muted2);}
+
+.bmtv-store .appButton,
+.bmtv-store .btn.appButton,
+.bmtv-store input.appButton{
+  background:var(--red);
+  border:0;
+  border-radius:8px;
+  color:#fff;
+  font-weight:800;
+  font-size:13px;
+  padding:11px 18px;
+  transition:.15s;
+  -webkit-appearance:none;
+  appearance:none;
+}
+.bmtv-store .appButton:hover{filter:brightness(1.1);color:#fff;}
+
+/* ---- product grid ---- */
+.bmtv-store .row{margin-left:-9px;margin-right:-9px;}
+.bmtv-store .row > [class*="col-"]{padding-left:9px;padding-right:9px;}
+
+.bmtv-store [class*="col-md-3"]{margin-bottom:18px;}
+.bmtv-store [class*="col-md-3"] > div{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  height:100%;
+  transition:border-color .15s, transform .15s;
+}
+.bmtv-store [class*="col-md-3"] > div:hover{
+  border-color:var(--red);
+  transform:translateY(-2px);
+}
+.bmtv-store .store-thumbs{
+  width:100%;
+  height:auto;
+  display:block;
+  background:var(--surface2);
+}
+.bmtv-store [class*="col-md-3"] .text-center{padding:14px 14px 16px !important;}
+.bmtv-store [class*="col-md-3"] .text-center b a{
+  color:var(--text);
+  font-weight:800;
+  font-size:14px;
+  line-height:1.3;
+}
+.bmtv-store [class*="col-md-3"] > div:hover .text-center b a{color:var(--red);}
+.bmtv-store [class*="col-md-3"] .text-center > div + div{
+  color:var(--red);
+  font-weight:800;
+  font-size:12.5px;
+  letter-spacing:.05em;
+  margin-top:6px;
+}
+
+/* sort control + View All row */
+.bmtv-store .divAppStoreViewAllProducts a.appButton{display:inline-block;text-decoration:none;}
+.bmtv-store .divClearLine{clear:both;}
+
+/* ---- product detail ---- */
+.bmtv-store #divProductImage img,
+.bmtv-store #imageMain{
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:var(--surface2);
+}
+/* the thumbnail strip under the main image */
+.bmtv-store [class*="col-xs-4"] img{
+  border-radius:10px;
+  border:1px solid var(--border);
+  margin:6px 3px 0;
+  transition:border-color .15s;
+}
+.bmtv-store [class*="col-xs-4"] a:hover img{border-color:var(--red);}
+
+/* title: an unclassed div with inline font-size:1.6em */
+.bmtv-store [class*="col-sm-7"] > div:first-child{
+  font-size:clamp(22px,2.6vw,30px) !important;
+  font-weight:900 !important;
+  letter-spacing:var(--disp);
+  line-height:1.1;
+  margin-bottom:8px;
+  color:var(--text);
+}
+/* brand line + SKU */
+.bmtv-store [class*="col-sm-7"] > div a[href*="author:"]{color:var(--muted);font-size:13px;}
+.bmtv-store [class*="col-sm-7"] > div a[href*="author:"]:hover{color:var(--red);}
+
+/* price */
+.bmtv-store .textEmphasis{
+  font-size:20px !important;
+  font-weight:900 !important;
+  color:var(--text);
+  letter-spacing:var(--disp);
+}
+.bmtv-store #spanDisplayPrice{color:var(--red);}
+
+/* option fields -- the neutraliser makes bare labels inline again, which is
+   right for the rest of the site but wrong for a form, so put them back */
+.bmtv-store #frmStore label{
+  display:block;
+  font-size:11.5px;
+  font-weight:800;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.bmtv-store #frmStore .form-inline{display:block;}
+.bmtv-store #frmStore select.form-control,
+.bmtv-store #frmStore input[name="fldQuantity"]{min-width:160px;}
+.bmtv-store #frmStore input[name="fldQuantity"]{min-width:0;width:80px;text-align:center;}
+
+.bmtv-store #btnAddToCart{
+  width:100%;
+  padding:14px 18px;
+  font-size:14px;
+  letter-spacing:.04em;
+  margin-top:6px;
+}
+
+/* description under the buy box */
+.bmtv-store [class*="col-sm-7"] p{
+  color:var(--muted);
+  font-size:14.5px;
+  line-height:1.7;
+  margin:0 0 12px;
+}
+.bmtv-store [class*="col-sm-7"] strong,
+.bmtv-store [class*="col-sm-7"] b{color:var(--text);}
+
+@media (max-width:680px){
+  .bmtv-store #frmStoreSearch{flex-direction:column;align-items:stretch;}
+  .bmtv-store #frmStoreSearch .form-control{width:100%;}
+  .bmtv-store [class*="col-md-3"]{margin-bottom:14px;}
+}
+
+
+/* =====================================================================
    "ARTISTS - GET REVIEWED" CTA  (.cc.cc-review)
 
    Adds a full-bleed photo from the Can You Dig It!? studio so the block stops

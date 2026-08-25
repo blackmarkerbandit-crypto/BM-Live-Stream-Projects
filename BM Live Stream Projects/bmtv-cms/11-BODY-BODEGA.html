@@ -119,17 +119,29 @@
     </div>
   </div>
 
+    <!-- The wrapper is load-bearing, exactly like .bmtv-calendar: the store
+         app ships fancybox and elevatezoom stylesheets and writes inline
+         styles of its own, so our rules need the extra class to outrank them.
+         Keep the macro INSIDE this div. -->
+    <div class="bmtv-store">
+
     <!-- ================= BEGIN STORE EMBED =================
          Replace the placeholder below with the storefront: a hosted cart
          embed, a CMS commerce module, or a Shopify / Square buy-button grid.
-         Whatever it turns out to be, it drops inside this section -- the
-         banner above and the page shell around it stay as they are.
+         Whatever it turns out to be, it drops inside the .bmtv-store div --
+         the banner above and the page shell around it stay as they are.
+
+         The store app renders TWO views from the same macro: the product
+         grid, and a single product when the URL carries ?productid=. Both
+         are styled.
          ====================================================== -->
     <div class="bd-store">
       <div class="bd-store-mark">[STORE]</div>
       <p class="bd-store-p">Product grid, cart and checkout mount in this block.</p>
     </div>
     <!-- ================== END STORE EMBED ================== -->
+
+    </div><!-- /.bmtv-store -->
     <!-- NOTE: Placeholder for the storefront. Whatever we land on &mdash; a hosted cart embed, a CMS commerce module, or a Shopify/Square buy-button grid &mdash; it drops into this container. The banner above and the page shell around it stay as they are. -->
   
 </section>
