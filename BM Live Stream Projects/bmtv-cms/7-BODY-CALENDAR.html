@@ -105,6 +105,35 @@
 </section>
 
 
+<!-- =====================================================================
+     DETAIL-VIEW TIDY-UP
+     The same page renders two things: the event LIST, and a single event when
+     the URL carries ?fldEventID=. On the detail view the list intro ("search
+     by keyword or jump to a month") describes controls that are not on screen,
+     so it is hidden and the section heading is retitled.
+
+     Done in script because the difference is a query string, which CSS cannot
+     see. Both lookups are guarded; if the markup changes this does nothing.
+     ===================================================================== -->
+<script>
+(function () {
+  if (location.search.indexOf('fldEventID=') < 0) return;   // list view, leave it
+
+  var cal = document.querySelector('.bmtv-calendar');
+  if (cal) cal.classList.add('is-event-detail');
+
+  var intro = document.querySelector('.cal-intro');
+  if (intro) intro.classList.add('is-hidden');
+
+  var eyebrow = document.querySelector('.sec-head .eyebrow');
+  if (eyebrow) eyebrow.textContent = 'Event Details';
+
+  var heading = document.querySelector('.sec-head .sec-title');
+  if (heading) heading.textContent = 'On the Calendar';
+})();
+</script>
+
+
 <!-- ============ CTA ============ -->
 <!-- Same block as the "Artists - Get Reviewed" snippet. If that is already a
      reusable snippet in the CMS, insert the snippet here instead of this copy. -->

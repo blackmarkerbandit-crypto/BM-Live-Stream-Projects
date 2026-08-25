@@ -71,6 +71,35 @@
     document.addEventListener('keydown', function(e){ if (e.key === 'Escape') subModal.classList.remove('open'); });
   }
 
+  // Page title.
+  //
+  // The CMS prints the page title as <h1><pagetitle>...</pagetitle></h1> as the
+  // FIRST thing inside .page-body -- above our hero, with no styling. Meanwhile
+  // the hero's own title slot is a CMS macro that renders empty. So every page
+  // ends up with a bare heading floating above the band and a hole where the
+  // headline should be.
+  //
+  // This moves the real h1 into the slot. The heading lands where the design
+  // puts it, keeps its h1 semantics rather than being duplicated into a div,
+  // and on calendar detail pages it carries the event name automatically --
+  // which is the whole reason not to hardcode a title in the body.
+  //
+  // If the page DOES supply its own title, the CMS h1 is then a duplicate
+  // sitting above the band, so it is hidden rather than left to stack two
+  // headings on the page.
+  (function () {
+    var h1 = document.querySelector('.page-body > h1');
+    if (!h1) return;
+    var slot = document.querySelector('.page-hero .pg-title');
+
+    if (slot && !slot.textContent.trim()) {
+      h1.classList.add('pg-title');
+      slot.parentNode.replaceChild(h1, slot);   // move it into the hero
+      return;
+    }
+    if (slot) h1.style.display = 'none';        // hero already has a title
+  })();
+
   // Active nav item (the black block).
   //
   // In the preview each page hardcoded class="on" into its own copy of the

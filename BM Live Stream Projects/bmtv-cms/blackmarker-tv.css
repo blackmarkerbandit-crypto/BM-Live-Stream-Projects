@@ -1296,6 +1296,88 @@ ul{margin:0;}
   line-height:1.55;
 }
 
+/* ---------------------------------------------------------------------
+   EVENT DETAIL VIEW
+
+   Same page, different output: with ?fldEventID=... the app renders one
+   event instead of the list.
+
+       .divCalendarInfoArea      date/time header, with .divSocialShare
+                                 floated right and a .divClearLine after
+       .divCalendarMainArea      body copy with the event image floated right
+       .divClearLine             the app's clearfix
+       a.btn.appButton           Add to Calendar
+       a.btn.appButton.appCalendarButtonBack   Back To Calendar
+
+   The date/time sits in an UNCLASSED div, so it is selected by exclusion
+   rather than by name -- there is nothing else to hook. It also carries
+   inline font-size/font-weight, hence the !important.
+   --------------------------------------------------------------------- */
+.bmtv-calendar .divCalendarInfoArea{
+  border-bottom:1px solid var(--border);
+  padding-bottom:14px;
+  margin-bottom:20px !important;
+}
+.bmtv-calendar .divCalendarInfoArea > div:not(.divSocialShare):not(.divClearLine){
+  color:var(--red) !important;
+  font-size:12.5px !important;
+  font-weight:800 !important;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+  margin-bottom:0 !important;
+}
+.bmtv-calendar .divSocialShare{margin-left:16px;}
+
+.bmtv-calendar .divCalendarMainArea{
+  color:var(--muted);
+  font-size:14.5px;
+  line-height:1.7;
+}
+.bmtv-calendar .divCalendarMainArea p{margin:0 0 14px;}
+.bmtv-calendar .divCalendarMainArea p:last-child{margin-bottom:0;}
+.bmtv-calendar .divCalendarMainArea b,
+.bmtv-calendar .divCalendarMainArea strong{color:var(--text);}
+.bmtv-calendar .divCalendarMainArea a{color:var(--red);font-weight:700;}
+.bmtv-calendar .divCalendarMainArea u{text-decoration:none;color:var(--text);font-weight:700;}
+
+/* the event image is floated right with an inline max-width:400px */
+.bmtv-calendar .divCalendarMainArea img{
+  border-radius:12px;
+  border:1px solid var(--border);
+}
+
+.bmtv-calendar .divClearLine{clear:both;}
+
+/* Back To Calendar is the secondary action; the app gives both buttons the
+   same classes plus an inline color, so the ghost treatment needs !important */
+.bmtv-calendar .appCalendarButtonBack{
+  background:transparent !important;
+  border:1px solid var(--border2) !important;
+  color:var(--muted) !important;
+}
+.bmtv-calendar .appCalendarButtonBack:hover{
+  border-color:var(--muted) !important;
+  color:var(--text) !important;
+}
+
+/* On a detail view the list-page intro ("search by keyword, jump to a month")
+   is describing something that is not on screen. The body script adds
+   is-event-detail when ?fldEventID= is present. */
+/* The intro sits BEFORE the calendar wrapper, so no sibling combinator can
+   reach it from the wrapper -- the body script sets the class directly. */
+.cal-intro.is-hidden{display:none;}
+
+@media (max-width:680px){
+  /* inline max-width:400px + left margin would leave the copy in a narrow
+     gutter on a phone, so the image goes full width above the text */
+  .bmtv-calendar .divCalendarMainArea img{
+    float:none !important;
+    max-width:100% !important;
+    margin:0 0 16px !important;
+  }
+  .bmtv-calendar .divSocialShare{float:none !important;margin:0 0 12px;}
+}
+
 /* ---- pagination ---- */
 .bmtv-calendar .pagination{display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:22px 0 0;}
 .bmtv-calendar .pagination > li{list-style:none;}
