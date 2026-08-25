@@ -1,9 +1,4 @@
-_TEST-header-footer.html
-_TEST-contact.html
-_TEST-calendar.html
-_TEST-schedule.html
-_TEST-bodega.html
-_TEST-partnerships.html
+_TEST-*.html
 _cand/
 _*.tmp
 _cudi*.json
