@@ -206,62 +206,80 @@
 /* =====================================================================
    "ARTISTS - GET REVIEWED" CTA  (.cc)
 
-   Adds a right-aligned photo from the Can You Dig It!? studio so the block
-   stops reading as a flat panel. This lives in the MAIN stylesheet rather
-   than a page-specific one because the block appears on all 18 pages.
+   Adds a full-bleed photo from the Can You Dig It!? studio so the block stops
+   reading as a flat panel. This lives in the MAIN stylesheet rather than a
+   page-specific one because the block appears on all 18 pages.
+
+   Full bleed rather than a right-hand panel, for two reasons. A part-width
+   layer has an inner edge, and no amount of gradient hides it when the photo
+   itself has a dark vertical band near the seam -- it just reads as a line
+   down the middle of the box. And the photo has three hosts spread across the
+   frame; cropping to one side throws away the other two.
 
    The image is muted twice over, on purpose:
-     * In the file. It was desaturated, darkened and slightly flattened when
-       it was cropped, so it already sits back from the page.
-     * In CSS. A dark gradient is layered OVER it, fading left-to-right, and
-       the whole layer is dropped to 55% opacity.
+     * In the file. Desaturated to 50%, darkened to 72% and slightly flattened
+       when it was cropped, so it already sits back from the page.
+     * In CSS. Dark gradients are layered OVER it rather than dropping the
+       whole layer's opacity -- opacity would fade the scrim along with the
+       photo, and the scrim is what keeps the copy readable.
 
-   The fade is done with a gradient layer rather than mask-image so it
-   degrades to something sensible where masks are not supported -- a hard
-   edged block would look like a mistake, a gradient never does.
+   To tune it: the alpha values in the scrim are the dial. Higher = the photo
+   recedes, lower = it comes forward. The first two stops sit under the
+   headline and body copy, so those are the ones that affect legibility.
+
+   Three background layers do the work, in order: a vignette that pulls every
+   edge back into the panel so nothing meets the border as a hard line; a
+   directional scrim, heaviest on the left where the copy sits and lifting
+   toward the right where the third host is; then the photo.
+
+   Gradients rather than mask-image, so it degrades to a softer version of the
+   same idea where masks are unsupported instead of a hard-edged rectangle.
 
    .cc already sets position:relative and overflow:hidden, so the ::after is
    clipped by the panel's 16px radius for free, and it already carries a red
    radial glow anchored at 15% -- glow left, photo right, they do not fight.
 
-   Source: Can You Dig It!? episode still from ChannelCast, cropped to drop
-   the burned-in lower-third graphics. /images/cta-review.jpg
+   Source: Can You Dig It!? episode still from ChannelCast -- three hosts at
+   the desk with the set's own CAN YOU DIG IT! banner behind them. Cropped to
+   drop the burned-in lower-third graphics, then desaturated and darkened in
+   the file so the stylesheet only handles the scrim. /images/cta-review.jpg
    ===================================================================== */
 .cc::after{
   content:"";
   position:absolute;
-  top:0;right:0;bottom:0;
-  width:min(56%,640px);
+  inset:0;                       /* full bleed -- no partial-width edge to fade */
   background-image:
-    linear-gradient(to right, #0d0b0a 0%, rgba(13,11,10,.72) 34%, rgba(13,11,10,.10) 100%),
+    /* 1. vignette: pulls every edge back into the panel so nothing meets the
+          border as a hard line, and keeps the eye on the middle */
+    radial-gradient(ellipse 118% 130% at 62% 45%,
+      rgba(13,11,10,0) 34%, rgba(13,11,10,.55) 74%, rgba(13,11,10,.88) 100%),
+    /* 2. scrim: heaviest on the left, where the headline and copy sit,
+          lifting toward the right where the third host is */
+    linear-gradient(100deg,
+      rgba(13,11,10,.96) 0%, rgba(13,11,10,.90) 30%,
+      rgba(13,11,10,.68) 58%, rgba(13,11,10,.58) 100%),
+    /* 3. the photo */
     url('/images/cta-review.jpg');
-  background-size:cover, cover;
-  background-position:center, center right;
-  background-repeat:no-repeat, no-repeat;
-  opacity:.55;
+  background-size:cover, cover, cover;
+  background-position:center, center, center right;
+  background-repeat:no-repeat, no-repeat, no-repeat;
   pointer-events:none;
   z-index:0;
 }
 /* copy sits above the photo */
 .cc-txt{position:relative;z-index:1;}
 
-/* .cc-txt is flex:1 and the only child, so it spans the whole panel. Cap it
-   on wide screens or the headline runs underneath the photo. */
-@media (min-width:900px){
-  .cc-txt{max-width:58%;}
-}
-
-/* Narrow screens: the photo would sit directly behind the headline, so it
-   drops to a faint wash across the bottom instead, well under the text. */
+/* Narrow screens: less width means the copy sits over more of the photo, so
+   the scrim goes vertical and heavier at the top where the headline is. */
 @media (max-width:899px){
   .cc::after{
-    width:auto;
-    left:0;
     background-image:
-      linear-gradient(to bottom, #0d0b0a 0%, rgba(13,11,10,.80) 45%, rgba(13,11,10,.35) 100%),
+      radial-gradient(ellipse 140% 120% at 50% 50%,
+        rgba(13,11,10,0) 30%, rgba(13,11,10,.60) 78%, rgba(13,11,10,.92) 100%),
+      linear-gradient(to bottom,
+        rgba(13,11,10,.95) 0%, rgba(13,11,10,.88) 45%, rgba(13,11,10,.74) 100%),
       url('/images/cta-review.jpg');
-    background-position:center, center;
-    opacity:.30;
+    background-position:center, center, center;
   }
 }
 
