@@ -204,6 +204,69 @@
 
 
 /* =====================================================================
+   "ARTISTS - GET REVIEWED" CTA  (.cc)
+
+   Adds a right-aligned photo from the Can You Dig It!? studio so the block
+   stops reading as a flat panel. This lives in the MAIN stylesheet rather
+   than a page-specific one because the block appears on all 18 pages.
+
+   The image is muted twice over, on purpose:
+     * In the file. It was desaturated, darkened and slightly flattened when
+       it was cropped, so it already sits back from the page.
+     * In CSS. A dark gradient is layered OVER it, fading left-to-right, and
+       the whole layer is dropped to 55% opacity.
+
+   The fade is done with a gradient layer rather than mask-image so it
+   degrades to something sensible where masks are not supported -- a hard
+   edged block would look like a mistake, a gradient never does.
+
+   .cc already sets position:relative and overflow:hidden, so the ::after is
+   clipped by the panel's 16px radius for free, and it already carries a red
+   radial glow anchored at 15% -- glow left, photo right, they do not fight.
+
+   Source: Can You Dig It!? episode still from ChannelCast, cropped to drop
+   the burned-in lower-third graphics. /images/cta-review.jpg
+   ===================================================================== */
+.cc::after{
+  content:"";
+  position:absolute;
+  top:0;right:0;bottom:0;
+  width:min(56%,640px);
+  background-image:
+    linear-gradient(to right, #0d0b0a 0%, rgba(13,11,10,.72) 34%, rgba(13,11,10,.10) 100%),
+    url('/images/cta-review.jpg');
+  background-size:cover, cover;
+  background-position:center, center right;
+  background-repeat:no-repeat, no-repeat;
+  opacity:.55;
+  pointer-events:none;
+  z-index:0;
+}
+/* copy sits above the photo */
+.cc-txt{position:relative;z-index:1;}
+
+/* .cc-txt is flex:1 and the only child, so it spans the whole panel. Cap it
+   on wide screens or the headline runs underneath the photo. */
+@media (min-width:900px){
+  .cc-txt{max-width:58%;}
+}
+
+/* Narrow screens: the photo would sit directly behind the headline, so it
+   drops to a faint wash across the bottom instead, well under the text. */
+@media (max-width:899px){
+  .cc::after{
+    width:auto;
+    left:0;
+    background-image:
+      linear-gradient(to bottom, #0d0b0a 0%, rgba(13,11,10,.80) 45%, rgba(13,11,10,.35) 100%),
+      url('/images/cta-review.jpg');
+    background-position:center, center;
+    opacity:.30;
+  }
+}
+
+
+/* =====================================================================
    MOBILE FOOTER
 
    Centred from the logo all the way down to the copyright line. Pinned to
