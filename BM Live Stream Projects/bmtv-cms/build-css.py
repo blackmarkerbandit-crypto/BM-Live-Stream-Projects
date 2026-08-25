@@ -273,13 +273,54 @@ def main():
     # top bar's grey. Emitting the same pseudo-class states alongside each
     # selector lifts it above the reset in every state.
     STATES = (":link", ":visited", ":hover", ":active", ":focus")
+    REST_ONLY = (":link", ":visited")
+
+    # Which selectors already have a deliberate hover COLOUR in the design?
+    # Propagating a rest-state colour into :hover would override them --
+    # .socials a.s-yt:hover at (0,3,1) beats .socials a:hover at (0,2,1), which
+    # is how the social icons stopped turning white on hover while their
+    # backgrounds still went brand-colour.
+    hover_colour_sels = []
+    for it in merged:
+        if it[0] != "rule" or ":hover" not in it[2]:
+            continue
+        if not any(p.strip().startswith("color:") for p in it[3].split(";")):
+            continue
+        for one in it[2].split(","):
+            one = one.strip()
+            if ":hover" in one:
+                hover_colour_sels.append(one.replace(":hover", ""))
+
+    def compounds(sel):
+        return [c for c in re.split(r'\s*[>+~]\s*|\s+', sel.strip()) if c]
+
+    def simples(compound):
+        return set(re.findall(r'(?:[.#]?[\w-]+|\[[^\]]*\]|::?[\w-]+(?:\([^)]*\))?)', compound))
+
+    def generalises(general, specific):
+        """True if `general` matches at least everything `specific` does."""
+        g, s = compounds(general), compounds(specific)
+        if not g or len(g) > len(s):
+            return False
+        if not simples(g[-1]) <= simples(s[-1]):
+            return False
+        # remaining ancestor parts must appear, in order, among s's ancestors
+        gi = 0
+        for part in s[:-1]:
+            if gi < len(g) - 1 and simples(g[gi]) <= simples(part):
+                gi += 1
+        return gi == len(g) - 1
 
     def with_states(sel):
         parts = []
         for one in [s.strip() for s in sel.split(",") if s.strip()]:
             parts.append(one)
-            if not re.search(r':(link|visited|hover|active|focus)\b', one):
-                parts += [one + st for st in STATES]
+            if re.search(r':(link|visited|hover|active|focus)\b', one):
+                continue
+            # If the design defines a hover colour that covers this element,
+            # leave the interactive states alone and protect the rest state only.
+            covered = any(generalises(h, one) for h in hover_colour_sels)
+            parts += [one + st for st in (REST_ONLY if covered else STATES)]
         return ",".join(parts)
 
     ctx2 = ""

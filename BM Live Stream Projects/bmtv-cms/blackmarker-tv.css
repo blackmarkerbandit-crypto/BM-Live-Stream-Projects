@@ -1131,43 +1131,43 @@ a:focus-visible{outline:2px solid var(--red);outline-offset:2px;}
 /* the design's own link colours, re-asserted so the reset above cannot eat them */
 a,a:link,a:visited,a:hover,a:active,a:focus{color:inherit !important;}
 .topbar-btn,.topbar-btn:link,.topbar-btn:visited,.topbar-btn:hover,.topbar-btn:active,.topbar-btn:focus{color:#1a1206 !important;}
-.socials a.s-yt,.socials a.s-yt:link,.socials a.s-yt:visited,.socials a.s-yt:hover,.socials a.s-yt:active,.socials a.s-yt:focus{color:#FF0000 !important;}
-.socials a.s-ig,.socials a.s-ig:link,.socials a.s-ig:visited,.socials a.s-ig:hover,.socials a.s-ig:active,.socials a.s-ig:focus{color:#E1306C !important;}
-.socials a.s-fb,.socials a.s-fb:link,.socials a.s-fb:visited,.socials a.s-fb:hover,.socials a.s-fb:active,.socials a.s-fb:focus{color:#1877F2 !important;}
-.socials a.s-tw,.socials a.s-tw:link,.socials a.s-tw:visited,.socials a.s-tw:hover,.socials a.s-tw:active,.socials a.s-tw:focus{color:#9146FF !important;}
+.socials a.s-yt,.socials a.s-yt:link,.socials a.s-yt:visited{color:#FF0000 !important;}
+.socials a.s-ig,.socials a.s-ig:link,.socials a.s-ig:visited{color:#E1306C !important;}
+.socials a.s-fb,.socials a.s-fb:link,.socials a.s-fb:visited{color:#1877F2 !important;}
+.socials a.s-tw,.socials a.s-tw:link,.socials a.s-tw:visited{color:#9146FF !important;}
 .socials a:hover{color:#fff !important;}
 .btn-red,.btn-red:link,.btn-red:visited,.btn-red:hover,.btn-red:active,.btn-red:focus{color:#fff !important;}
 .btn-ghost,.btn-ghost:link,.btn-ghost:visited,.btn-ghost:hover,.btn-ghost:active,.btn-ghost:focus{color:var(--text) !important;}
-.nav-in a,.nav-in a:link,.nav-in a:visited,.nav-in a:hover,.nav-in a:active,.nav-in a:focus{color:#fff !important;}
+.nav-in a,.nav-in a:link,.nav-in a:visited{color:#fff !important;}
 .nav-in a:hover{color:#fff !important;}
-.nav-in a.on,.nav-in a.on:link,.nav-in a.on:visited,.nav-in a.on:hover,.nav-in a.on:active,.nav-in a.on:focus{color:#fff !important;}
+.nav-in a.on,.nav-in a.on:link,.nav-in a.on:visited{color:#fff !important;}
 .nav-in a.on:hover{color:#fff !important;}
 .has-sub>a::after,.has-sub>a::after:link,.has-sub>a::after:visited,.has-sub>a::after:hover,.has-sub>a::after:active,.has-sub>a::after:focus{color:currentColor !important;}
-.submenu a,.submenu a:link,.submenu a:visited,.submenu a:hover,.submenu a:active,.submenu a:focus{color:var(--text) !important;}
+.submenu a,.submenu a:link,.submenu a:visited{color:var(--text) !important;}
 .submenu a:hover{color:#fff !important;}
-.nav-in a.acct,.nav-in a.acct:link,.nav-in a.acct:visited,.nav-in a.acct:hover,.nav-in a.acct:active,.nav-in a.acct:focus{color:#fff !important;}
+.nav-in a.acct,.nav-in a.acct:link,.nav-in a.acct:visited{color:#fff !important;}
 .nav-in a.acct:hover{color:#fff !important;}
-.sec-link,.sec-link:link,.sec-link:visited,.sec-link:hover,.sec-link:active,.sec-link:focus{color:var(--muted) !important;}
+.sec-link,.sec-link:link,.sec-link:visited{color:var(--muted) !important;}
 .sec-link:hover{color:var(--red) !important;}
-.foot-col a,.foot-col a:link,.foot-col a:visited,.foot-col a:hover,.foot-col a:active,.foot-col a:focus{color:var(--muted) !important;}
+.foot-col a,.foot-col a:link,.foot-col a:visited{color:var(--muted) !important;}
 .foot-col a:hover{color:#fff !important;}
-.foot-socials a,.foot-socials a:link,.foot-socials a:visited,.foot-socials a:hover,.foot-socials a:active,.foot-socials a:focus{color:var(--muted) !important;}
+.foot-socials a,.foot-socials a:link,.foot-socials a:visited{color:var(--muted) !important;}
 .foot-socials a:hover{color:#fff !important;}
-.show-crumb a,.show-crumb a:link,.show-crumb a:visited,.show-crumb a:hover,.show-crumb a:active,.show-crumb a:focus{color:var(--muted) !important;}
+.show-crumb a,.show-crumb a:link,.show-crumb a:visited{color:var(--muted) !important;}
 .show-crumb a:hover{color:#fff !important;}
-.ac-crumb a,.ac-crumb a:link,.ac-crumb a:visited,.ac-crumb a:hover,.ac-crumb a:active,.ac-crumb a:focus{color:var(--muted) !important;}
+.ac-crumb a,.ac-crumb a:link,.ac-crumb a:visited{color:var(--muted) !important;}
 .ac-crumb a:hover{color:var(--red) !important;}
-.sch-crumb a,.sch-crumb a:link,.sch-crumb a:visited,.sch-crumb a:hover,.sch-crumb a:active,.sch-crumb a:focus{color:var(--muted) !important;}
+.sch-crumb a,.sch-crumb a:link,.sch-crumb a:visited{color:var(--muted) !important;}
 .sch-crumb a:hover{color:var(--red) !important;}
-.sch-link,.sch-link:link,.sch-link:visited,.sch-link:hover,.sch-link:active,.sch-link:focus{color:var(--muted) !important;}
+.sch-link,.sch-link:link,.sch-link:visited{color:var(--muted) !important;}
 .sch-link:hover{color:var(--red) !important;}
-.bd-crumb a,.bd-crumb a:link,.bd-crumb a:visited,.bd-crumb a:hover,.bd-crumb a:active,.bd-crumb a:focus{color:var(--muted) !important;}
+.bd-crumb a,.bd-crumb a:link,.bd-crumb a:visited{color:var(--muted) !important;}
 .bd-crumb a:hover{color:var(--red) !important;}
-.ct-crumb a,.ct-crumb a:link,.ct-crumb a:visited,.ct-crumb a:hover,.ct-crumb a:active,.ct-crumb a:focus{color:var(--muted) !important;}
+.ct-crumb a,.ct-crumb a:link,.ct-crumb a:visited{color:var(--muted) !important;}
 .ct-crumb a:hover{color:var(--red) !important;}
-.ct-mail a,.ct-mail a:link,.ct-mail a:visited,.ct-mail a:hover,.ct-mail a:active,.ct-mail a:focus{color:var(--text) !important;}
+.ct-mail a,.ct-mail a:link,.ct-mail a:visited{color:var(--text) !important;}
 .ct-mail a:hover{color:var(--red) !important;}
-.ct-soc,.ct-soc:link,.ct-soc:visited,.ct-soc:hover,.ct-soc:active,.ct-soc:focus{color:var(--muted) !important;}
+.ct-soc,.ct-soc:link,.ct-soc:visited{color:var(--muted) !important;}
 .ct-soc:hover{color:#fff !important;}
-.wk-crumb a,.wk-crumb a:link,.wk-crumb a:visited,.wk-crumb a:hover,.wk-crumb a:active,.wk-crumb a:focus{color:var(--muted) !important;}
+.wk-crumb a,.wk-crumb a:link,.wk-crumb a:visited{color:var(--muted) !important;}
 .wk-crumb a:hover{color:var(--red) !important;}
