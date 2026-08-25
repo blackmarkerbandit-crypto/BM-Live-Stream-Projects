@@ -134,3 +134,133 @@
   nav{transition:none;}
   .nav-in .has-sub > a::after{transition:none;}
 }
+
+
+/* =====================================================================
+   MOBILE HEADER + TOP BAR
+
+   The desktop header is a two-column flex row: brand on the left, socials
+   and Subscribe on the right. On a phone that squeezes both sides until
+   neither reads. Below 900px it becomes a centred stack instead, one thing
+   per row.
+   ===================================================================== */
+@media (max-width:900px){
+
+  /* ---- top bar: message left, hamburger right, CTA on its own row ---- */
+  .topbar-in{
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+    padding:8px 16px;
+  }
+  .topbar-in .msg{
+    flex:1 1 auto;
+    min-width:0;
+    text-align:left;
+    font-size:11px;
+    letter-spacing:.04em;
+    line-height:1.35;
+  }
+  .nav-burger{order:2;}            /* pinned right, opposite the message */
+  /* full width on its own row -- a wrapped CTA squeezed next to the burger
+     reads as an afterthought, and this matches the Subscribe button below */
+  .topbar-btn{
+    order:3;
+    width:100%;
+    justify-content:center;
+    padding:10px 14px;
+  }
+
+  /* ---- header: everything centred, one per row ---- */
+  .head-in{
+    flex-direction:column;
+    align-items:center;
+    gap:16px;
+    padding:18px 16px;
+    text-align:center;
+  }
+  .brand-col{
+    align-items:center;
+    text-align:center;
+    width:100%;
+  }
+  .brand-tag{text-align:center;}
+
+  .head-actions{
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+    width:100%;
+  }
+  .socials{
+    justify-content:center;
+    width:100%;
+  }
+  .btn-subscribe{
+    width:100%;
+    justify-content:center;
+  }
+}
+
+
+/* =====================================================================
+   MOBILE FOOTER
+
+   Centred from the logo all the way down to the copyright line. Pinned to
+   680px rather than 900px on purpose: that is where .foot-top collapses to
+   a single column. Centring three side-by-side columns would just look
+   broken.
+   ===================================================================== */
+@media (max-width:680px){
+
+  /* Columns stretch to full width -- the grid default. NOT justify-items:center,
+     which shrinks each column to its content and leaves the blocks looking
+     ragged even though their text is centred. */
+  .foot-top{
+    grid-template-columns:1fr;
+    justify-items:stretch;
+    text-align:center;
+    gap:34px;
+  }
+
+  .foot-brand,
+  .foot-col,
+  .foot-signup{
+    width:100%;
+    text-align:center;
+  }
+
+  /* The logo is an inline-block anchor, so auto margins need a block box. */
+  .foot-logo{display:block;margin-left:auto;margin-right:auto;}
+  .foot-logo img{margin-left:auto;margin-right:auto;}
+
+  /* The blurb is capped at 300px by the desktop rule. text-align:center only
+     centres the text INSIDE that box -- the box itself stays flush left, which
+     is what made the logo copy look left-aligned while everything under it
+     looked centred. Full width on a phone, centred, no cap. */
+  .foot-brand p{
+    max-width:none;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+  }
+
+  /* Flex containers ignore text-align on their items -- these need
+     justify-content or they stay hard left no matter what. */
+  .foot-cc{justify-content:center;flex-wrap:wrap;}
+  .socials-sm{justify-content:center;width:100%;}
+
+  .foot-col h4,
+  .foot-col a,
+  .foot-signup .lbl{text-align:center;}
+
+  /* the footer Subscribe matches the header's: full width, centred */
+  .foot-signup .btn-subscribe{width:100%;justify-content:center;}
+
+  .foot-bot{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:8px;
+  }
+}

@@ -71,6 +71,56 @@
     document.addEventListener('keydown', function(e){ if (e.key === 'Escape') subModal.classList.remove('open'); });
   }
 
+  // Active nav item (the black block).
+  //
+  // In the preview each page hardcoded class="on" into its own copy of the
+  // nav. With one shared header template that is impossible -- every page
+  // would light up the same link. This works it out from the current URL
+  // instead, so the header stays identical on every page.
+  //
+  // IT DEFERS TO THE SERVER. If the CMS can emit class="on" itself, it wins
+  // and this does nothing -- so moving to a template conditional later needs
+  // no change here.
+  //
+  // Convention kept from the preview: a submenu match lights up its PARENT
+  // ("Exclusive Shows"), not the child.
+  (function () {
+    var nav = document.getElementById('mainNav');
+    if (!nav || nav.querySelector('a.on')) return;   // server already decided
+
+    function norm(p) {
+      try { p = decodeURIComponent(p); } catch (e) {}
+      p = p.toLowerCase().split('?')[0].split('#')[0];
+      p = p.replace(/\/(index|default|home)\.(html?|php|aspx)$/, '/');
+      p = p.replace(/\.(html?|php|aspx)$/, '');
+      if (p.length > 1) p = p.replace(/\/+$/, '');
+      return p || '/';
+    }
+
+    var here = norm(location.pathname);
+    var best = null, bestLen = -1;
+
+    nav.querySelectorAll('a[href]').forEach(function (a) {
+      var raw = a.getAttribute('href');
+      if (!raw || raw.charAt(0) === '#') return;         // dropdown parents
+      var path;
+      try { path = norm(new URL(a.href, location.href).pathname); }
+      catch (e) { return; }
+
+      // exact match wins outright; otherwise prefer the longest section
+      // prefix, so /shows/talking-tipsy can light up a /shows entry
+      var score = -1;
+      if (path === here) score = 1000;
+      else if (path !== '/' && here.indexOf(path + '/') === 0) score = path.length;
+
+      if (score > bestLen) { bestLen = score; best = a; }
+    });
+
+    if (!best) return;
+    var sub = best.closest ? best.closest('.has-sub') : null;
+    (sub ? sub.querySelector(':scope > a') || best : best).classList.add('on');
+  })();
+
   // Mobile menu.
   //
   // Two things the desktop nav cannot do on a touch screen, both handled here:
