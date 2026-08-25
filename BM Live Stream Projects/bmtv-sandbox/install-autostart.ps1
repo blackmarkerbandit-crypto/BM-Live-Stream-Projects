@@ -13,16 +13,19 @@
 param([switch]$Remove)
 
 $TaskName = "BMB Sandbox Server"
+$DataTask = "BMB Loop Data Refresh"
 $Here     = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Script   = Join-Path $Here "serve.py"
 
 if ($Remove) {
-    if (Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue) {
-        Stop-ScheduledTask  -TaskName $TaskName -ErrorAction SilentlyContinue
-        Unregister-ScheduledTask -TaskName $TaskName -Confirm:$false
-        Write-Host "Removed scheduled task '$TaskName'." -ForegroundColor Yellow
-    } else {
-        Write-Host "No task named '$TaskName' -- nothing to remove."
+    foreach ($t in @($TaskName, $DataTask)) {
+        if (Get-ScheduledTask -TaskName $t -ErrorAction SilentlyContinue) {
+            Stop-ScheduledTask  -TaskName $t -ErrorAction SilentlyContinue
+            Unregister-ScheduledTask -TaskName $t -Confirm:$false
+            Write-Host "Removed scheduled task '$t'." -ForegroundColor Yellow
+        } else {
+            Write-Host "No task named '$t' -- nothing to remove."
+        }
     }
     return
 }
@@ -59,7 +62,24 @@ if (Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue) {
 Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger `
     -Settings $settings -Description "Static host for BlackMarker.TV work in progress (http://127.0.0.1:8790)" | Out-Null
 
+# --- nightly refresh of loop-data.json ---------------------------------------
+# Upcoming and Latest Shows read a generated file, because building it needs the
+# ChannelCast token and that can never reach a browser. 4am so it never lands
+# mid-show. StartWhenAvailable catches up if the laptop was asleep.
+$dataAction  = New-ScheduledTaskAction -Execute $pythonw -Argument "build-loop-data.py" -WorkingDirectory $Here
+$dataTrigger = New-ScheduledTaskTrigger -Daily -At 4am
+$dataSettings = New-ScheduledTaskSettingsSet `
+    -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries `
+    -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Minutes 20)
+
+if (Get-ScheduledTask -TaskName $DataTask -ErrorAction SilentlyContinue) {
+    Unregister-ScheduledTask -TaskName $DataTask -Confirm:$false
+}
+Register-ScheduledTask -TaskName $DataTask -Action $dataAction -Trigger $dataTrigger `
+    -Settings $dataSettings -Description "Rebuild loop-data.json for the BlackMarker.TV homepage" | Out-Null
+
 Write-Host ""
+Write-Host "Registered '$DataTask' -- runs daily at 4:00am." -ForegroundColor Green
 Write-Host "Registered '$TaskName' -- starts at logon." -ForegroundColor Green
 Write-Host "  Runs   : $pythonw serve.py"
 Write-Host "  From   : $Here"

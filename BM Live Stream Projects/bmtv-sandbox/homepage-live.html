@@ -1,0 +1,267 @@
+<!-- =====================================================================
+     BlackMarker.TV homepage — live data
+
+     Fills three sections from real ChannelCast data:
+       Now Playing   #pbTitle / #pbNow
+       Upcoming      .up-list
+       Latest Shows  .grid-cat
+
+     TWO SOURCES, ON PURPOSE
+
+     1. https://channelcast.tv/api/v1/playback/timeseek/{channelId}
+        Public, no auth, CORS '*'. This is what the ChannelCast player itself
+        calls. It returns the mediaId playing right now plus the offset into
+        it, so Now Playing is authoritative to the second.
+
+     2. loop-data.json, written server-side by build-loop-data.py
+        Titles, the weekly schedule and show posters all live behind the
+        ChannelCast MCP API, which authenticates with a token that can delete
+        media and playlists. That token can never be in a page, so a generator
+        pulls what the page needs into a static file.
+
+     The schedule in loop-data.json comes from ChannelCast's own
+     list_schedules, so the airing block is looked up rather than guessed from
+     an assumed Eastern offset -- a schedule change or a DST shift needs no
+     code edit here.
+
+     Both sources are cross-checked: if timeseek names a mediaId that is not
+     where the schedule says it should be, the page trusts timeseek and
+     re-syncs the list around it. That is also the signal that loop-data.json
+     has gone stale and wants regenerating.
+
+     Degrades quietly: if either source fails the page keeps whatever markup
+     was already there rather than blanking a section.
+     ===================================================================== -->
+
+<style>
+  .up-row.is-stale{opacity:.55;}
+  .lv-note{font-size:11px;color:var(--muted2);margin-top:9px;letter-spacing:.02em;}
+  .lv-note b{color:var(--ann);font-weight:700;}
+  .pb-prog{height:3px;border-radius:2px;background:var(--surface3,#242019);
+    margin-top:7px;overflow:hidden;max-width:320px;}
+  .pb-prog i{display:block;height:100%;background:var(--red);width:0;
+    transition:width .9s linear;}
+</style>
+
+<script>
+(function () {
+  'use strict';
+
+  var CFG = window.BMTV_LIVE || {};
+  var DATA_URL = CFG.dataUrl || '/sandbox/loop-data.json';
+  var API      = CFG.apiBase || 'https://channelcast.tv';
+  var RESYNC_MS = 30000;          // how often to re-ask the player where it is
+  var WEEK = 7 * 86400;
+
+  var data = null, blk = null, items = [], idx = -1;
+  var cursor = 0, tickAt = 0, lastSeekAt = 0, seekOffset = 0;
+
+  var elTitle = document.getElementById('pbTitle');
+  var elList  = document.querySelector('.up-list');
+  var elCats  = document.querySelector('.grid-cat');
+
+  /* ---------- helpers ---------- */
+  function mmss(s) {
+    s = Math.max(0, Math.round(s));
+    var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), x = s % 60;
+    return h ? h + ':' + String(m).padStart(2, '0') + ':' + String(x).padStart(2, '0')
+             : m + ':' + String(x).padStart(2, '0');
+  }
+  function rel(s) {
+    s = Math.round(s);
+    if (s <= 0) return 'Now';
+    var m = Math.floor(s / 60);
+    return '+' + m + ':' + String(s % 60).padStart(2, '0');
+  }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function niceDate(iso) {
+    if (!iso) return '';
+    var p = iso.split('-');
+    var d = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2]));
+    return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', timeZone: 'UTC' });
+  }
+
+  /* ---------- where are we in the week ---------- */
+  function weekSeconds() {
+    var n = new Date();
+    // getUTCDay() is Sunday-based; loop-data uses Monday-based, like Python.
+    var dow = (n.getUTCDay() + 6) % 7;
+    return dow * 86400 + n.getUTCHours() * 3600 + n.getUTCMinutes() * 60 + n.getUTCSeconds();
+  }
+
+  function pickBlock() {
+    var w = weekSeconds();
+    for (var i = 0; i < data.blocks.length; i++) {
+      var b = data.blocks[i];
+      var into = ((w - b.o) % WEEK + WEEK) % WEEK;
+      if (into < b.len) { blk = b; cursor = into; return true; }
+    }
+    return false;
+  }
+
+  function indexAt(c) {
+    var found = -1;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].t <= c) found = i; else break;
+    }
+    return found;
+  }
+
+  /* ---------- render ---------- */
+  function renderNow() {
+    if (idx < 0 || !items[idx]) return;
+    var it = items[idx];
+    var label = it.a ? it.a + ' — ' + it.s : it.s;
+    if (elTitle && elTitle.textContent !== label) elTitle.textContent = label;
+
+    var bar = document.getElementById('pbProg');
+    if (bar) {
+      var into = Math.min(it.d, Math.max(0, cursor - it.t));
+      bar.style.width = (it.d ? (into / it.d * 100) : 0).toFixed(1) + '%';
+    }
+  }
+
+  function renderList() {
+    if (!elList || idx < 0) return;
+    var frag = document.createDocumentFragment();
+    for (var n = idx; n < Math.min(idx + 7, items.length); n++) {
+      var it = items[n];
+      var row = el('div', 'up-row' + (n === idx ? ' now' : ''));
+
+      var when = el('span', 'up-when');
+      if (n === idx) { when.appendChild(el('span', 'd')); when.appendChild(document.createTextNode('Now')); }
+      else if (n === idx + 1) { when.textContent = 'Next'; }
+      else { when.textContent = rel(it.t - cursor); }
+      row.appendChild(when);
+
+      var mid = el('span', 'up-mid');
+      if (it.a) {
+        mid.appendChild(el('span', 'up-artist', it.a));
+        mid.appendChild(document.createTextNode(' '));
+        mid.appendChild(el('span', 'up-song', '— ' + it.s));
+      } else {
+        mid.appendChild(el('span', 'up-song', it.s));
+      }
+      row.appendChild(mid);
+      row.appendChild(el('span', 'up-dur', mmss(it.d)));
+      frag.appendChild(row);
+    }
+    elList.innerHTML = '';
+    elList.appendChild(frag);
+  }
+
+  function renderShows() {
+    if (!elCats || !data.shows || !data.shows.length) return;
+    var frag = document.createDocumentFragment();
+    data.shows.forEach(function (s) {
+      var card = el('div', 'card full');
+      var thumb = el('div', 'thumb');
+      thumb.appendChild(el('span', 'cat-tag', s.category));
+      if (s.poster) {
+        var img = el('img', 'thumb-img');
+        img.src = s.poster; img.alt = s.title; img.loading = 'lazy';
+        thumb.appendChild(img);
+      }
+      if (s.duration) thumb.appendChild(el('span', 'dur', mmss(s.duration)));
+      card.appendChild(thumb);
+      card.appendChild(el('div', 'c-title', s.title));
+      var when = niceDate(s.date);
+      card.appendChild(el('div', 'c-meta', when ? 'Newest episode · ' + when : 'Newest episode'));
+      frag.appendChild(card);
+    });
+    elCats.innerHTML = '';
+    elCats.appendChild(frag);
+  }
+
+  /* ---------- the player is the authority on 'now' ---------- */
+  function resync() {
+    if (!data) return;
+    fetch(API + '/api/v1/playback/timeseek/' + data.channel_id, { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (seek) {
+        lastSeekAt = Date.now();
+        if (!seek || !seek.mediaId) return;
+
+        // Trust the player over the schedule. If the media it names sits
+        // somewhere else in this loop, move the cursor there; that also tells
+        // us loop-data.json is behind and wants regenerating.
+        var want = seek.mediaId, at = -1;
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].i === want) { at = i; break; }
+        }
+        if (at >= 0) {
+          idx = at;
+          cursor = items[at].t + (seek.offsetSeconds || 0);
+          markFresh(true);
+        } else {
+          markFresh(false);
+        }
+        renderNow(); renderList();
+      })
+      .catch(function () { /* keep ticking on the clock */ });
+  }
+
+  function markFresh(ok) {
+    var note = document.getElementById('lvNote');
+    if (!note) return;
+    note.innerHTML = ok
+      ? 'Live from ChannelCast · <b>now playing from the player</b>, schedule from your loops.'
+      : 'Live from the player — <b>this track is not in the stored loop</b>, so loop-data.json is behind. Re-run build-loop-data.py.';
+  }
+
+  /* ---------- one-second tick ---------- */
+  function tick() {
+    if (!data) return;
+    var now = Date.now();
+    if (tickAt) cursor += (now - tickAt) / 1000;
+    tickAt = now;
+
+    // rolled past the end of the current item?
+    var next = idx + 1;
+    if (next < items.length && cursor >= items[next].t) {
+      idx = next;
+      renderList();
+    } else if (next >= items.length) {
+      // block finished -- pick the next one up
+      if (pickBlock()) { items = data.loops[blk.p] || []; idx = indexAt(cursor); renderList(); }
+    }
+    renderNow();
+
+    if (now - lastSeekAt > RESYNC_MS) resync();
+  }
+
+  /* ---------- start ---------- */
+  fetch(DATA_URL, { cache: 'no-store' })
+    .then(function (r) {
+      if (!r.ok) throw new Error('loop-data.json ' + r.status);
+      return r.json();
+    })
+    .then(function (d) {
+      data = d;
+      if (!data.blocks || !data.blocks.length) throw new Error('no schedule in loop-data.json');
+      if (!pickBlock()) throw new Error('no block covers the current time');
+      items = data.loops[blk.p] || [];
+      idx = indexAt(cursor);
+      if (idx < 0) idx = 0;
+
+      renderShows();
+      renderNow();
+      renderList();
+      resync();
+      tickAt = Date.now();
+      setInterval(tick, 1000);
+    })
+    .catch(function (e) {
+      if (window.console) console.warn('homepage live data unavailable:', e);
+      var note = document.getElementById('lvNote');
+      if (note) note.textContent =
+        'Live data unavailable — showing the last static snapshot. '
+        + 'Is the sandbox serving loop-data.json?';
+    });
+})();
+</script>

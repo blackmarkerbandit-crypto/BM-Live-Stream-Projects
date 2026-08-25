@@ -37,6 +37,52 @@ include is only followed if it resolves inside a mounted folder.
 **No-cache on everything.** A browser refresh always shows the file as it is on
 disk right now. No hard-refresh dance after every edit.
 
+## Homepage live data
+
+The 3.0 Live page fills three sections from real ChannelCast data. They do not
+come from the same place, and the split is forced:
+
+| Section | Source | Why |
+|---|---|---|
+| Now Playing | `channelcast.tv/api/v1/playback/timeseek/{channelId}` | Public, no auth, CORS `*` — the same feed the ChannelCast player uses. Read straight from the browser, accurate to the second. |
+| Upcoming | `loop-data.json` + `timeseek` | No public playlist endpoint exists |
+| Latest Shows | `loop-data.json` | No public media endpoint exists |
+
+Everything except `timeseek` sits behind the ChannelCast MCP API, which
+authenticates with the `cck_` token. **That token can `delete_media` and
+`delete_playlist`, so it can never be in a page.** `build-loop-data.py` runs
+server-side and writes `loop-data.json` — titles, schedule and poster URLs, and
+nothing else.
+
+`loop-data.json` and the loop builder's `config.json` are gitignored. The
+config holds the token; do not commit it, and note the loop-builder folder is
+deliberately **not** a sandbox mount, so no URL can reach it.
+
+### Where the numbers come from — all looked up, none assumed
+
+- **`list_schedules`** gives the real weekly timetable: 28 entries, each a
+  `startUtc` and a `playlistId`. The page finds the airing block from these
+  rather than assuming Eastern is UTC−4, so a schedule change or a DST shift
+  needs no code edit. (The assumption happened to be right in August and would
+  have broken in November.)
+- **`list_playlist_items`** gives each item's `playsAtSeconds` in its block.
+- **`list_category_items`** gives the newest episode per show — `sort` 0 is
+  Eric's own running order, not a date scraped out of a filename.
+
+The page cross-checks both sources every 30s and **trusts `timeseek` when they
+disagree**, saying so in the note under the list. That is how you find out
+`loop-data.json` has gone stale, instead of the page quietly lying.
+
+### Keeping it current
+
+Rebuilt **nightly at 4am** by the `BMB Loop Data Refresh` scheduled task, and on
+demand from the **Rebuild now** button at http://127.0.0.1:8790/ (about 20
+seconds, ~35 API calls). Rebuild after changing loops or publishing an episode.
+
+The nightly run is `pythonw`, so its output goes nowhere — but a failed run
+shows up on its own, because the sandbox home page reports how old
+`loop-data.json` is and warns past 26 hours.
+
 ## Running it
 
 **Automatic** — a per-user scheduled task, `BMB Sandbox Server`, starts it at

@@ -153,6 +153,14 @@ nav{position:sticky;top:0;z-index:60;background:var(--red);border-bottom:1px sol
 .live-grid{display:grid;grid-template-columns:1fr 330px;gap:16px;align-items:stretch;transition:grid-template-columns .25s;}
 .live-grid.chat-off{grid-template-columns:1fr 0px;}
 .live-grid.chat-off .chat{opacity:0;pointer-events:none;border-width:0;}
+/* The chat column must never drive the row height. align-items:stretch makes
+   both columns match the TALLER one, so an in-flow chat panel grows the row
+   with every message and drags the video down with it. The wrapper is the
+   grid item and stretches to the player's height; the panel is taken out of
+   flow inside it, so the row is sized by the player alone and the message
+   list scrolls once it fills. */
+.chat-col{position:relative;min-width:0;}
+.chat-col > .chat{position:absolute;inset:0;}
 .player{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--border);
   background:radial-gradient(ellipse 70% 90% at 50% 30%,rgba(232,24,28,.16),transparent 70%),linear-gradient(160deg,#191512,#0d0b0a);
   display:flex;flex-direction:column;}
@@ -285,6 +293,9 @@ footer{border-top:1px solid var(--border);margin-top:26px;background:var(--surfa
   .head-in{gap:24px;}
   .live-grid{grid-template-columns:1fr;}
   .live-grid.chat-off{grid-template-columns:1fr;}
+  /* Stacked: there is no player height to fill, so the panel goes back in
+     flow and a fixed cap gives the list something to scroll inside. */
+  .chat-col > .chat{position:static;}
   .chat{max-height:380px;}
   .grid-cat{grid-template-columns:1fr;}
   .foot-top{grid-template-columns:1fr 1fr;gap:32px;}
@@ -402,7 +413,8 @@ footer{border-top:1px solid var(--border);margin-top:26px;background:var(--surfa
         <div class="player-bar">
           <div>
             <div style="font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:4px;display:flex;align-items:center;gap:6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--red);display:inline-block;animation:blink 1.3s infinite;"></span>Now Playing</div>
-            <div class="pb-title" id="pbTitle">The Weekly Interrupt — PR Parade Weekend Countdown</div>
+            <div class="pb-title" id="pbTitle">Loading…</div>
+            <div class="pb-prog"><i id="pbProg"></i></div>
             <div class="pb-sub">Only <b style="color:var(--text);">Dope Sh!t</b> · 24/7 Music &amp; Shows · <a href="mailto:canyoudigit@blackmarker.tv" style="color:var(--red);font-weight:700;">Submit Your Music Today!</a></div>
           </div>
           <div class="pb-actions">
@@ -411,6 +423,9 @@ footer{border-top:1px solid var(--border);margin-top:26px;background:var(--surfa
           </div>
         </div>
       </div>
+      <!-- The wrapper is the grid item; the panel inside is taken out of flow
+           so a long conversation can never stretch the row. See .chat-col. -->
+      <div class="chat-col">
       <div class="chat" id="chatPanel">
         <div class="chat-head">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
@@ -427,6 +442,7 @@ footer{border-top:1px solid var(--border);margin-top:26px;background:var(--surfa
           <button class="chat-send" id="chatSend">Send</button>
         </div>
       </div>
+      </div><!-- /.chat-col -->
     </div>
     <span class="ann-note"><b>Live player:</b> embed the ChannelCast channel (slug <b>black-marker-tv</b>) — same player already on the live site. <b>Chat toggle:</b> the "Chat: On/Off" button collapses the panel and the video fills the width. <b>Chat is real and live.</b> Supabase-backed, in this exact front-end, wired 2026-08-25. Messages broadcast to everyone with the page open. Moderators release a message to put it on air, which pushes it to the vMix overlay and into vMix Social — one action, every surface. Panel: <b>/chat/moderator.html</b>. It renders only when the page is <b>served</b> from the sandbox; opened off disk it falls back to a notice, since Supabase realtime cannot run from a file:// origin.</span>
   </div>
@@ -453,7 +469,8 @@ footer{border-top:1px solid var(--border);margin-top:26px;background:var(--surfa
         <div class="up-row"><span class="up-when">+10:13</span><span class="up-mid"><span class="up-artist">Alex Jean</span> <span class="up-song">&mdash; Skress Bout Dat</span></span><span class="up-dur">3:42</span></div>
         <div class="up-row"><span class="up-when">+13:56</span><span class="up-mid"><span class="up-artist">Dee</span> <span class="up-song">&mdash; 1 Happy And Humble Freestyle</span></span><span class="up-dur">2:07</span></div>
       </div>
-      <span class="ann-note"><b>Follows the day &amp; loop automatically (confirmed via your ChannelCast schedule).</b> Blocks recur weekly at 00:00 / 06:00 / 12:00 / 18:00 ET (stored 04/10/16/22 UTC). The page: (1) picks the schedule active right now → that's the live loop; (2) loads its items (title + playsAtSeconds + durationSeconds); (3) finds "Now" via cursor = now − blockStart; (4) lists what's next. Rolls to the next loop — and the next day — on its own. No thumbnails; titles auto-cleaned from filenames ("MV Berwyn WhoAmI" → "Berwyn — Who Am I"). <b>This is a real snapshot:</b> Tuesday 00:00 ET block, captured at 02:24 ET (144m into the loop). It's static, so it drifts as time passes until the live endpoint drives it.</span>
+      <div class="lv-note" id="lvNote">Connecting to ChannelCast…</div>
+      <span class="ann-note"><b>This list is live.</b> The airing block comes from ChannelCast's own <code>list_schedules</code> — 28 weekly entries, each a real <code>startUtc</code> and playlist — so a schedule change or a DST shift needs no code change here. The page finds the cursor inside that block, lists what follows, and counts down every second, rolling into the next loop and the next day on its own. It cross-checks against the player's <code>timeseek</code> feed every 30s and trusts the player when they disagree, which is also how you find out the generated data has gone stale. Titles are auto-cleaned from filenames ("MV Berwyn WhoAmI" → "Berwyn — Who Am I").</span>
     </div>
   </div>
   </div>
@@ -481,7 +498,7 @@ footer{border-top:1px solid var(--border);margin-top:26px;background:var(--surfa
         <div class="card full"><div class="thumb"><span class="cat-tag">Talking Tipsy</span><img class="thumb-img" src="https://channelcast.tv/uploads/019eb9feacc37d939dbb4677a5b9ef9f/media-thumb/019fcace02c37a81b0f722614d9b6bd4.jpg" alt="Mother's Day Special Edition - Talking Tipsy Podcast EP011 | 05-09-2026" loading="lazy"><span class="dur">57:17</span></div><div class="c-title">Ep 011 &mdash; Mother&rsquo;s Day Special Edition</div><div class="c-meta">Newest episode &middot; May 9</div></div>
         <div class="card full"><div class="thumb"><span class="cat-tag">Special Interrupts</span><img class="thumb-img" src="https://channelcast.tv/uploads/019eb9feacc37d939dbb4677a5b9ef9f/media-thumb/019fcae7b5ae7390a54744ed94c17ecf.jpg" alt="ReeBaby LIVE Listening Session - 07-24-2026" loading="lazy"><span class="dur">2:04:28</span></div><div class="c-title">ReeBaby LIVE Listening Session</div><div class="c-meta">Newest special &middot; Jul 24</div></div>
       </div>
-      <span class="ann-note">One card per show, ordered by <b>editorial priority</b> (Can You Dig It!? &rarr; Weekly Interrupt &rarr; For The Record &rarr; Alien Podcast &rarr; Talking Tipsy &rarr; Special Interrupts). Each shows that category&rsquo;s <b>newest</b> item, taken from its lowest <code>sort</code> index in ChannelCast, with the real poster from the feed. Performance Battles is intentionally not here &mdash; it lives in the Event Streams dropdown only.</span>
+      <span class="ann-note"><b>These cards are live.</b> One per show, ordered by <b>editorial priority</b> (Can You Dig It!? &rarr; Weekly Interrupt &rarr; For The Record &rarr; Alien Podcast &rarr; Talking Tipsy &rarr; Special Interrupts). Each is that ChannelCast category&rsquo;s item at <code>sort</code> 0 &mdash; your own running order, not a date scraped out of a filename &mdash; with the real <code>posterUrl</code> and duration from the feed. Performance Battles is intentionally not here; it lives in the Event Streams dropdown only.</span>
     </div>
   </div>
   </div>
@@ -624,3 +641,10 @@ footer{border-top:1px solid var(--border);margin-top:26px;background:var(--surfa
      way — Supabase realtime cannot work from a file:// origin regardless.
      ===================================================================== -->
 <!--#include file="../BM Live Stream Projects/bmtv-chat/chat-widget.html"-->
+
+<!-- =====================================================================
+     LIVE HOMEPAGE DATA — Now Playing, Upcoming, Latest Shows.
+     Same arrangement as the chat widget: one source, expanded by the
+     sandbox server at request time, so this page cannot drift from it.
+     ===================================================================== -->
+<!--#include file="../BM Live Stream Projects/bmtv-sandbox/homepage-live.html"-->

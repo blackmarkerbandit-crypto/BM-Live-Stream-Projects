@@ -21,8 +21,12 @@ Start it: run.bat   (or: python serve.py)
 import os
 import re
 import sys
+import json
+import time
 import posixpath
 import mimetypes
+import subprocess
+import threading
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import unquote, urlparse
 from html import escape
@@ -61,6 +65,58 @@ FEATURED = [
 
 INCLUDE_RE = re.compile(rb'<!--#include\s+file="([^"]+)"\s*-->')
 
+# ---------------------------------------------------------------------------
+# Rebuilding loop-data.json on demand.
+#
+# The generator needs the ChannelCast token, so it only ever runs here, on the
+# server. It takes about a minute, which is far too long to hold a request
+# open, so the POST starts a thread and the page polls for the result.
+# ---------------------------------------------------------------------------
+GENERATOR = os.path.join(HERE, "build-loop-data.py")
+LOOP_DATA = os.path.join(HERE, "loop-data.json")
+
+_rebuild = {"running": False, "started": 0, "finished": 0, "ok": None, "log": ""}
+_rebuild_lock = threading.Lock()
+
+
+def _run_generator():
+    try:
+        proc = subprocess.run(
+            [sys.executable, GENERATOR],
+            cwd=HERE, capture_output=True, text=True, timeout=600,
+        )
+        tail = (proc.stdout or "").strip().splitlines()[-6:]
+        with _rebuild_lock:
+            _rebuild["ok"] = (proc.returncode == 0)
+            _rebuild["log"] = "\n".join(tail) or (proc.stderr or "")[-600:]
+    except Exception as exc:
+        with _rebuild_lock:
+            _rebuild["ok"] = False
+            _rebuild["log"] = str(exc)[:600]
+    finally:
+        with _rebuild_lock:
+            _rebuild["running"] = False
+            _rebuild["finished"] = time.time()
+
+
+def start_rebuild():
+    with _rebuild_lock:
+        if _rebuild["running"]:
+            return False
+        _rebuild.update(running=True, started=time.time(), finished=0, ok=None, log="")
+    threading.Thread(target=_run_generator, daemon=True).start()
+    return True
+
+
+def rebuild_state():
+    with _rebuild_lock:
+        state = dict(_rebuild)
+    try:
+        state["data_age_hours"] = (time.time() - os.path.getmtime(LOOP_DATA)) / 3600
+    except OSError:
+        state["data_age_hours"] = None
+    return state
+
 
 def _within_mounts(path):
     """True if an absolute path sits inside one of the mounted folders."""
@@ -89,11 +145,30 @@ def _index_page():
             '<td>' + escape(label) + '</td>'
             '<td class="' + live + '">' + live + '</td></tr>'
         )
+    st = rebuild_state()
+    age = st.get("data_age_hours")
+    if age is None:
+        fresh = '<span class="stale">loop-data.json is missing &mdash; the homepage has no schedule.</span>'
+    elif age < 26:
+        fresh = 'Homepage data generated <b>%s</b>.' % _ago(age)
+    else:
+        fresh = ('<span class="stale">Homepage data is <b>%s</b> old.</span> '
+                 'Upcoming and Latest Shows may be behind.' % _ago(age).replace("ago", "").strip())
+
     return (_INDEX_TMPL
             .replace("__HOSTPORT__", escape(HOST) + ":" + str(PORT))
             .replace("__CARDS__", "".join(rows))
             .replace("__MOUNTS__", "".join(mounts))
+            .replace("__FRESH__", fresh)
             .encode("utf-8"))
+
+
+def _ago(hours):
+    if hours < 1:
+        return "%d minutes ago" % max(1, int(hours * 60))
+    if hours < 48:
+        return "%d hours ago" % int(hours)
+    return "%d days ago" % int(hours / 24)
 
 
 _INDEX_TMPL = """<!doctype html><html><head><meta charset="utf-8">
@@ -123,11 +198,32 @@ td.ok{color:#4ecb8b} td.missing{color:var(--red)}
 .foot{margin-top:34px;padding-top:16px;border-top:1px solid var(--border);
 color:#6b645d;font-size:11.5px;line-height:1.7}
 code{font-family:ui-monospace,Consolas,monospace;color:var(--muted)}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:16px 18px}
+.panel .sub{color:var(--muted);font-size:12.5px;margin-top:7px;line-height:1.6}
+.panel .stale{color:#FFC21E}
+.panel button{margin-top:13px;background:var(--red);border:0;color:#fff;border-radius:7px;
+padding:9px 15px;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer}
+.panel button:disabled{opacity:.5;cursor:default}
+.panel #rbMsg{margin-left:11px}
+.panel pre{margin-top:12px;background:var(--surface2);border:1px solid var(--border);
+border-radius:7px;padding:11px;font-family:ui-monospace,Consolas,monospace;font-size:11.5px;
+color:var(--muted);white-space:pre-wrap;line-height:1.55}
 </style></head><body><div class="wrap">
 <h1><b>BMB</b> Sandbox</h1>
 <div class="sub">Local staging for BlackMarker.TV work in progress &middot; __HOSTPORT__</div>
 <h2>Start here</h2>
 __CARDS__
+<h2>Homepage data</h2>
+<div class="panel">
+  <div id="fresh">__FRESH__</div>
+  <div class="sub">Now Playing reads ChannelCast live and needs nothing.
+  Upcoming and Latest Shows come from <code>loop-data.json</code>, which is rebuilt
+  nightly at 4am. Rebuild it now after changing loops or publishing an episode.</div>
+  <button id="rb">Rebuild now</button>
+  <span id="rbMsg" class="sub"></span>
+  <pre id="rbLog" hidden></pre>
+</div>
+
 <h2>Mounted folders</h2>
 <table>__MOUNTS__</table>
 <div class="foot">
@@ -135,7 +231,54 @@ Explicit mounts only &mdash; nothing else in the tree is reachable from this ser
 Every response is sent no-cache, so a browser refresh always shows the file on disk.<br>
 <code>&lt;!--#include file="x.html"--&gt;</code> in any served .html is replaced at request time.
 </div>
-</div></body></html>"""
+</div>
+<script>
+(function () {
+  var btn = document.getElementById('rb'),
+      msg = document.getElementById('rbMsg'),
+      log = document.getElementById('rbLog'),
+      poll = null;
+
+  function show(s) {
+    if (s.running) {
+      btn.disabled = true;
+      msg.textContent = 'Running… about a minute.';
+      return true;
+    }
+    btn.disabled = false;
+    if (s.ok === true)  msg.textContent = 'Done. Reload the homepage to see it.';
+    if (s.ok === false) msg.textContent = 'Failed — see below.';
+    if (s.log) { log.hidden = false; log.textContent = s.log; }
+    return false;
+  }
+
+  function watch() {
+    poll = setInterval(function () {
+      fetch('/api/rebuild-status', {cache: 'no-store'})
+        .then(function (r) { return r.json(); })
+        .then(function (s) { if (!show(s)) { clearInterval(poll); } })
+        .catch(function () { clearInterval(poll); btn.disabled = false; });
+    }, 2000);
+  }
+
+  btn.addEventListener('click', function () {
+    btn.disabled = true;
+    msg.textContent = 'Starting…';
+    log.hidden = true;
+    fetch('/api/rebuild', {method: 'POST'})
+      .then(function (r) { return r.json(); })
+      .then(function (d) { show(d.state); watch(); })
+      .catch(function (e) { btn.disabled = false; msg.textContent = 'Could not start: ' + e; });
+  });
+
+  // if a rebuild is already running (nightly task, or another tab), show it
+  fetch('/api/rebuild-status', {cache: 'no-store'})
+    .then(function (r) { return r.json(); })
+    .then(function (s) { if (s.running) { show(s); watch(); } })
+    .catch(function () {});
+})();
+</script>
+</body></html>"""
 
 _LISTING_TMPL = """<!doctype html><meta charset="utf-8"><title>__PATH__</title>
 <style>body{background:#0a0908;color:#F2EFEC;font:15px/1.7 ui-monospace,Consolas,monospace;padding:34px}
@@ -177,9 +320,29 @@ class Handler(SimpleHTTPRequestHandler):
             return None
         return os.path.join(mount[0], *parts[1:])
 
+    def do_POST(self):
+        if urlparse(self.path).path == "/api/rebuild":
+            started = start_rebuild()
+            self._send_json({"started": started, "state": rebuild_state()})
+            return
+        self.send_error(404, "No such endpoint")
+
+    def _send_json(self, obj):
+        body = json.dumps(obj).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        self.wfile.write(body)
+
     def send_head(self):
         if self.path in ("/", "/index.html"):
             return self._send_body(_index_page(), "text/html; charset=utf-8")
+
+        if urlparse(self.path).path == "/api/rebuild-status":
+            body = json.dumps(rebuild_state()).encode("utf-8")
+            return self._send_body(body, "application/json")
 
         target = self.translate_path(self.path)
         if target is None:
