@@ -40,8 +40,13 @@ a{color:inherit;text-decoration:none;}
 h1{font-size:21px;letter-spacing:-.02em;margin-bottom:6px;}
 .lede{color:var(--muted);font-size:13px;margin-bottom:24px;max-width:70ch;}
 
-.grid{display:grid;grid-template-columns:1fr 372px;gap:20px;align-items:start;}
-@media(max-width:900px){.grid{grid-template-columns:1fr;}}
+/* stretch, not start — the chat panel takes the stage's full height and the
+   message list fills it. The widget owns the list sizing from there. */
+.grid{display:grid;grid-template-columns:1fr 372px;gap:20px;align-items:stretch;}
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr;}
+  .chat{max-height:380px;}   /* stacked: nothing to stretch into, so cap it */
+}
 
 /* stand-in for the player, so the chat sits in a realistic column width */
 .stage{border:1px solid var(--border);border-radius:14px;background:var(--surface);
@@ -50,22 +55,9 @@ h1{font-size:21px;letter-spacing:-.02em;margin-bottom:6px;}
 .stage .big{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--muted);}
 .stage .sm{font-size:12px;max-width:44ch;line-height:1.6;}
 
-/* --- chat shell: same rules as the 3.0 Live page --- */
-.chat{display:flex;flex-direction:column;border-radius:14px;overflow:hidden;border:1px solid var(--border);
-  background:var(--surface);min-width:0;transition:opacity .2s;}
-.chat-head{display:flex;align-items:center;gap:9px;padding:13px 15px;border-bottom:1px solid var(--border);}
-.chat-head .t{font-weight:800;font-size:13px;}
-.chat-head .cnt{margin-left:auto;color:var(--muted);font-size:11.5px;font-weight:600;}
-.chat-body{flex:1;overflow-y:auto;padding:13px 15px;display:flex;flex-direction:column;gap:12px;min-height:300px;max-height:430px;}
-.msg{font-size:13px;line-height:1.45;}
-.msg .u{font-weight:800;margin-right:6px;}
-.msg .u.mod{color:var(--red);} .msg .u.a{color:#5aa9ff;} .msg .u.b{color:#c58bff;} .msg .u.c{color:#ffb14e;} .msg .u.d{color:#4ecb8b;}
-.msg .txt{opacity:.92;}
-.sys-msg{font-size:11.5px;color:var(--muted2);text-align:center;font-style:italic;}
-.chat-foot{border-top:1px solid var(--border);padding:11px;display:flex;gap:8px;}
-.chat-foot input{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font:inherit;font-size:13px;outline:none;}
-.chat-foot input:focus{border-color:var(--red);}
-.chat-send{background:var(--red);border:none;color:#fff;border-radius:8px;padding:0 14px;font-weight:800;cursor:pointer;}
+/* No chat CSS here on purpose — the panel's styling arrives with the widget
+   include at the end of this file, from ../bmtv-chat/chat-widget.html. This
+   page owns layout only. */
 
 /* --- how-to-test panel --- */
 .how{margin-top:26px;border:1px dashed var(--ann);border-radius:11px;background:var(--ann-bg);padding:19px 21px;}
