@@ -273,7 +273,6 @@ def main():
     # top bar's grey. Emitting the same pseudo-class states alongside each
     # selector lifts it above the reset in every state.
     STATES = (":link", ":visited", ":hover", ":active", ":focus")
-    REST_ONLY = (":link", ":visited")
 
     # Which selectors already have a deliberate hover COLOUR in the design?
     # Propagating a rest-state colour into :hover would override them --
@@ -317,10 +316,19 @@ def main():
             parts.append(one)
             if re.search(r':(link|visited|hover|active|focus)\b', one):
                 continue
-            # If the design defines a hover colour that covers this element,
-            # leave the interactive states alone and protect the rest state only.
-            covered = any(generalises(h, one) for h in hover_colour_sels)
-            parts += [one + st for st in (REST_ONLY if covered else STATES)]
+            # If the design defines a hover colour covering this element, add NO
+            # pseudo variants at all -- not even :link. An unvisited anchor
+            # matches :link the whole time, hover included, so
+            # `.socials a.s-yt:link` (0,3,1) would outrank the design's
+            # `.socials a:hover` (0,2,1) and pin the rest colour on hover.
+            #
+            # The bare selector is enough on its own: `.socials a.s-yt` (0,2,1)
+            # still beats every reset line (highest is a:link at (0,1,1)), and
+            # ties with `.socials a:hover`, which is emitted later and therefore
+            # wins the tie exactly when it should.
+            if any(generalises(h, one) for h in hover_colour_sels):
+                continue
+            parts += [one + st for st in STATES]
         return ",".join(parts)
 
     ctx2 = ""
