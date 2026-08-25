@@ -70,6 +70,12 @@
   var hold  = parseFloat(q.get('hold') || '0') || 0;
   var size  = parseFloat(q.get('size') || '1') || 1;
 
+  /* Which room this overlay is on air for. Pin it whenever more than one
+     chat is running -- an unpinned overlay would happily put a PPV message
+     on the free channel's broadcast. Defaults to the 24/7 channel. */
+  var room  = (q.get('room') || 'main').trim().toLowerCase();
+  if (!/^[a-z0-9][a-z0-9_-]{1,60}$/.test(room)) room = 'main';
+
   var stage = document.getElementById('stage');
   var card  = document.getElementById('card');
   var nameEl = document.getElementById('name');
@@ -106,6 +112,7 @@
     sb.from('messages')
       .select('id,display_name,body,is_verified,released_at')
       .eq('status', 'released')
+      .eq('room', room)
       .order('released_at', { ascending: false })
       .limit(1)
       .then(function (r) {
@@ -119,8 +126,10 @@
     return sb.auth.signInAnonymously();
   }).then(function () {
     refresh();
-    sb.channel('bmtv-overlay')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'messages' }, refresh)
+    sb.channel('bmtv-overlay-' + room)
+      .on('postgres_changes',
+          { event: '*', schema: 'public', table: 'messages', filter: 'room=eq.' + room },
+          refresh)
       .subscribe();
     // realtime does the work; this is only a safety net if the socket drops
     setInterval(refresh, 15000);

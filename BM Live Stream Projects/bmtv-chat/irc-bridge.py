@@ -40,11 +40,13 @@ WHY IT IS BUILT THIS CAREFULLY
 """
 
 import json
+import os
 import re
 import socket
 import sys
 import threading
 import time
+import urllib.parse
 import urllib.request
 
 # --------------------------------------------------------------------------
@@ -58,6 +60,12 @@ SUPABASE_ANON = (
 HOST = '127.0.0.1'      # '0.0.0.0' if vMix runs on another machine
 PORT = 6667
 CHANNEL = '#bmtv'
+
+# Which chat room this bridge relays. Override without editing the file:
+#     set BMTV_CHAT_ROOM=ppv-2026-11-14 && python irc-bridge.py
+# Running two shows at once means two bridges, each on its own room AND its
+# own PORT -- otherwise a PPV message reaches the free channel's vMix Social.
+ROOM = os.environ.get('BMTV_CHAT_ROOM', 'main').strip().lower()
 POLL_SECONDS = 1.5
 BACKFILL = 15
 WIRE_LOG = True         # print every protocol line, in and out
@@ -124,15 +132,18 @@ def _get(path):
         return json.loads(r.read().decode())
 
 
+ROOM_Q = '&room=eq.' + urllib.parse.quote(ROOM, safe='')
+
+
 def fetch_after(i):
     return _get('/rest/v1/messages?select=id,display_name,body&status=neq.hidden'
-                '&id=gt.%d&order=id.asc&limit=100' % i)
+                + ROOM_Q + '&id=gt.%d&order=id.asc&limit=100' % i)
 
 
 def fetch_recent(n):
     return list(reversed(_get(
         '/rest/v1/messages?select=id,display_name,body&status=neq.hidden'
-        '&order=id.desc&limit=%d' % n)))
+        + ROOM_Q + '&order=id.desc&limit=%d' % n)))
 
 
 def broadcast(nick, text):
@@ -283,7 +294,8 @@ def handle_client(sock, addr):
 def poller():
     global last_id
     try:
-        rows = _get('/rest/v1/messages?select=id&status=neq.hidden&order=id.desc&limit=1')
+        rows = _get('/rest/v1/messages?select=id&status=neq.hidden'
+                    + ROOM_Q + '&order=id.desc&limit=1')
         last_id = rows[0]['id'] if rows else 0
     except Exception:
         last_id = 0

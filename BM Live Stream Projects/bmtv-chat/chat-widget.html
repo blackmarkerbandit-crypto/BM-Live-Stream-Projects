@@ -124,6 +124,28 @@
   var send  = document.getElementById('chatSend');
   if (!body || !input || !send || !window.supabase) return;
 
+  /* ---------- which room ----------
+     Precedence is deliberate. A page that states its room wins over
+     anything in the URL, so a visitor cannot retype ?room= on the Live
+     page and land in a PPV chat. The URL is only consulted when the host
+     page has not pinned one — which is the iframe-embed case.
+
+         <div class="chat" data-room="ppv-2026-11-14">   page pins it
+         window.BMTV_CHAT_ROOM = 'ppv-2026-11-14'        script pins it
+         ...chat.html?room=ppv-2026-11-14                embed picks it
+         (nothing)                                       'main'
+
+     The server decides what a room actually permits; this only chooses
+     which one to ask for. */
+  var panel = body.closest ? body.closest('.chat') : null;
+  var room =
+      (panel && panel.getAttribute('data-room')) ||
+      window.BMTV_CHAT_ROOM ||
+      (new URLSearchParams(location.search)).get('room') ||
+      'main';
+  room = String(room).trim().toLowerCase();
+  if (!/^[a-z0-9][a-z0-9_-]{1,60}$/.test(room)) room = 'main';
+
   var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
   var me = null;                       // our user_id once signed in
   var seen = Object.create(null);      // id -> element, so updates can find rows
@@ -259,7 +281,7 @@
     sending = true;
     var keep = v;
     input.value = '';
-    sb.from('messages').insert({ user_id: me, display_name: myName, body: keep })
+    sb.from('messages').insert({ user_id: me, display_name: myName, body: keep, room: room })
       .then(function (res) {
         sending = false;
         if (!res.error) return;
@@ -290,6 +312,7 @@
 
     return sb.from('messages')
       .select('id,user_id,display_name,body,status,is_verified')
+      .eq('room', room)
       .neq('status', 'hidden')
       .order('id', { ascending: false })
       .limit(50);
@@ -300,10 +323,16 @@
     (res.data || []).slice().reverse().forEach(render);
     body.scrollTop = body.scrollHeight;
 
-    sb.channel('bmtv-chat')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' },
+    /* Filter server-side on room, and give the channel a per-room name.
+       Without the filter every room's traffic reaches every client and the
+       browser quietly decides what to show — which is exactly the kind of
+       leak between rooms that must not depend on client-side code. */
+    sb.channel('bmtv-chat-' + room)
+      .on('postgres_changes',
+          { event: 'INSERT', schema: 'public', table: 'messages', filter: 'room=eq.' + room },
           function (p) { render(p.new); })
-      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'messages' },
+      .on('postgres_changes',
+          { event: 'UPDATE', schema: 'public', table: 'messages', filter: 'room=eq.' + room },
           function (p) { update(p.new); })
       .subscribe(function (s) {
         if (s === 'SUBSCRIBED')            status('live', 'online');

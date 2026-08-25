@@ -81,11 +81,21 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-s
   .m .acts{max-width:420px;}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+  /* room picker + admin link in the top bar */
+  #roomSel{margin-left:14px;background:#141210;color:#F2EFEC;border:1px solid #2a2622;
+    border-radius:7px;padding:6px 9px;font:inherit;font-size:12.5px;max-width:230px;}
+  #roomSel:focus{outline:none;border-color:#E8181C;}
+  .adminlink{margin-left:10px;font-size:11.5px;font-weight:800;letter-spacing:.08em;
+    text-transform:uppercase;color:#E8181C;text-decoration:none;border:1px solid #E8181C;
+    border-radius:6px;padding:5px 10px;}
+  .adminlink:hover{background:rgba(232,24,28,.12);}
 </style>
 
 <div class="bar">
   <span class="dot" id="dot"></span>
   <h1>Chat Moderator</h1>
+  <select id="roomSel" title="Which room you are moderating" hidden></select>
+  <a class="adminlink" id="adminLink" href="admin.html" hidden>Admin</a>
   <span class="who" id="who"></span>
   <button id="out" hidden>Sign out</button>
 </div>
@@ -139,14 +149,23 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-s
       });
   }
   function ban(m) {
-    if (!confirm('Ban ' + m.display_name + '? Their messages will be hidden and they will not be able to post again.')) return;
-    sb.from('bans').insert({ user_id: m.user_id, reason: 'from moderator panel' }).then(function (r) {
-      if (r.error && String(r.error.message).indexOf('duplicate') < 0) {
-        alert('Ban failed — your account may not be on the moderator list.');
-        return;
-      }
-      sb.from('messages').update({ status: 'hidden' }).eq('user_id', m.user_id).then(function(){});
-    });
+    // Scoped to the room being moderated, not global. A PPV moderator has no
+    // business banning someone from the 24/7 channel, and the RLS policy
+    // would refuse a '*' ban from them anyway. Site-wide bans are an admin
+    // action, done from admin.html.
+    if (!confirm('Ban ' + m.display_name + ' from this room (' + room + ')?\n\n' +
+                 'Their messages here will be hidden and they will not be able to post ' +
+                 'in this room again. Other rooms are unaffected — use Admin for a ' +
+                 'site-wide ban.')) return;
+    sb.from('bans').insert({ user_id: m.user_id, room: room, reason: 'from moderator panel' })
+      .then(function (r) {
+        if (r.error && String(r.error.message).indexOf('duplicate') < 0) {
+          alert('Ban failed — you may not moderate this room.');
+          return;
+        }
+        sb.from('messages').update({ status: 'hidden' })
+          .eq('user_id', m.user_id).eq('room', room).then(function(){});
+      });
   }
 
   /* ---------- rendering ---------- */
@@ -220,20 +239,67 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-s
     recomputeAir();
   }
 
-  /* ---------- start ---------- */
-  function start(session) {
-    gate.hidden = true; app.hidden = false; out.hidden = false;
-    who.textContent = session.user.email || 'signed in';
+  /* ---------- rooms ----------
+     A moderator sees only the rooms they actually moderate. The list comes
+     from their own moderators rows, except for '*' (and admins), who get
+     every room. Switching rooms tears down the subscription and reloads —
+     nothing from the old room may survive the switch. */
+  var roomSel  = document.getElementById('roomSel');
+  var chan     = null;
+  var room     = (new URLSearchParams(location.search)).get('room') || null;
 
-    sb.from('moderators').select('user_id').eq('user_id', session.user.id).then(function (r) {
-      if (!r.data || !r.data.length) {
-        who.textContent = (session.user.email || '') + ' — NOT a moderator';
+  function loadRooms(session) {
+    return Promise.all([
+      sb.from('moderators').select('room').eq('user_id', session.user.id),
+      sb.from('rooms').select('slug,name,visibility,archived').order('slug'),
+      // Admins moderate everything without needing a moderators row. Without
+      // this an admin appointed from admin.html would be told they moderate
+      // nothing and be shut out of their own panel.
+      sb.from('admins').select('user_id').eq('user_id', session.user.id)
+    ]).then(function (res) {
+      var mine  = (res[0].data || []).map(function (r) { return r.room; });
+      var rooms = res[1].data || [];
+      var isAdmin = !!(res[2].data && res[2].data.length);
+      var global = isAdmin || mine.indexOf('*') >= 0;
+
+      // RLS already hides rooms they cannot moderate; this keeps the list
+      // honest if a policy is ever loosened.
+      var allowed = global ? rooms : rooms.filter(function (r) {
+        return mine.indexOf(r.slug) >= 0;
+      });
+
+      if (!allowed.length) {
+        who.textContent = (session.user.email || '') + ' — not a moderator of any room';
         who.style.color = '#ff6b6b';
+        queue.innerHTML = '<div class="empty">Nothing to moderate. Ask an admin for a room.</div>';
+        return null;
       }
+
+      roomSel.innerHTML = '';
+      allowed.forEach(function (r) {
+        var o = document.createElement('option');
+        o.value = r.slug;
+        o.textContent = r.name + (r.visibility !== 'public' ? '  (' + r.visibility + ')' : '')
+                                + (r.archived ? '  [archived]' : '');
+        roomSel.appendChild(o);
+      });
+      roomSel.hidden = false;
+
+      var wanted = allowed.filter(function (r) { return r.slug === room; })[0];
+      room = wanted ? wanted.slug : allowed[0].slug;
+      roomSel.value = room;
+      return room;
     });
+  }
+
+  function watchRoom() {
+    if (chan) { sb.removeChannel(chan); chan = null; }
+    rows = {}; air = null;
+    queue.innerHTML = '<div class="empty">Loading…</div>';
 
     sb.from('messages')
       .select('id,user_id,display_name,body,status,is_verified,created_at,released_at')
+      .eq('room', room)
       .neq('status', 'hidden')
       .order('id', { ascending: true })
       .limit(200)
@@ -241,12 +307,34 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-s
         queue.innerHTML = '';
         (r.data || []).forEach(upsert);
         if (!Object.keys(rows).length) queue.innerHTML = '<div class="empty">No messages yet.</div>';
+        recomputeAir();
       });
 
-    sb.channel('bmtv-mod')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'messages' },
+    chan = sb.channel('bmtv-mod-' + room)
+      .on('postgres_changes',
+          { event: '*', schema: 'public', table: 'messages', filter: 'room=eq.' + room },
           function (p) { if (p.new && p.new.id) upsert(p.new); })
       .subscribe(function (s) { dot.className = 'dot ' + (s === 'SUBSCRIBED' ? 'on' : 'off'); });
+  }
+
+  roomSel.addEventListener('change', function () {
+    room = roomSel.value;
+    var u = new URL(location.href);
+    u.searchParams.set('room', room);
+    history.replaceState(null, '', u);     // survives a refresh
+    watchRoom();
+  });
+
+  /* ---------- start ---------- */
+  function start(session) {
+    gate.hidden = true; app.hidden = false; out.hidden = false;
+    who.textContent = session.user.email || 'signed in';
+
+    sb.from('admins').select('user_id').eq('user_id', session.user.id).then(function (r) {
+      if (r.data && r.data.length) document.getElementById('adminLink').hidden = false;
+    });
+
+    loadRooms(session).then(function (r) { if (r) watchRoom(); });
 
     setInterval(function () {
       for (var k in rows) {

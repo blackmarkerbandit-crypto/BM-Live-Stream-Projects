@@ -40,12 +40,17 @@ a{color:inherit;text-decoration:none;}
 h1{font-size:21px;letter-spacing:-.02em;margin-bottom:6px;}
 .lede{color:var(--muted);font-size:13px;margin-bottom:24px;max-width:70ch;}
 
-/* stretch, not start — the chat panel takes the stage's full height and the
-   message list fills it. The widget owns the list sizing from there. */
+/* stretch, not start — the chat column takes the stage's full height. The
+   panel is absolutely positioned inside that column so a long conversation
+   cannot grow the row: align-items:stretch matches both columns to the
+   TALLER one, so an in-flow panel would drag the stage down with it. */
 .grid{display:grid;grid-template-columns:1fr 372px;gap:20px;align-items:stretch;}
+.chat-col{position:relative;min-width:0;}
+.chat-col > .chat{position:absolute;inset:0;}
 @media(max-width:900px){
   .grid{grid-template-columns:1fr;}
-  .chat{max-height:380px;}   /* stacked: nothing to stretch into, so cap it */
+  .chat-col > .chat{position:static;}   /* stacked: back in flow, capped */
+  .chat{max-height:380px;}
 }
 
 /* stand-in for the player, so the chat sits in a realistic column width */
@@ -87,7 +92,9 @@ h1{font-size:21px;letter-spacing:-.02em;margin-bottom:6px;}
       testing chat, and the player pulls a lot of weight for nothing here.</div>
     </div>
 
-    <!-- the markup the widget binds to: #chatBody, #chatInput, #chatSend -->
+    <!-- the markup the widget binds to: #chatBody, #chatInput, #chatSend.
+         The wrapper is the grid item; the panel is out of flow inside it. -->
+    <div class="chat-col">
     <div class="chat" id="chatPanel">
       <div class="chat-head">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
@@ -101,6 +108,7 @@ h1{font-size:21px;letter-spacing:-.02em;margin-bottom:6px;}
         <button class="chat-send" id="chatSend">Send</button>
       </div>
     </div>
+    </div><!-- /.chat-col -->
   </div>
 
   <div class="how">

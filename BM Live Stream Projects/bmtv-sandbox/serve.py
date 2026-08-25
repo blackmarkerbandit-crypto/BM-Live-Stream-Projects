@@ -51,6 +51,8 @@ FEATURED = [
      "The real Supabase widget on a host page. Type here, moderate in the panel, watch it hit the overlay."),
     ("/chat/moderator.html", "Moderator panel",
      "Sign in with a moderator EMAIL account -- anonymous logins lose access when cookies clear."),
+    ("/chat/admin.html", "Chat admin",
+     "Rooms, per-room moderators, admins, bans, and everyone who has chatted."),
     ("/chat/vmix-overlay.html", "vMix overlay",
      "What a vMix Browser input shows. Only released messages appear. ?pos=top &hold=20 &size=1.25"),
     ("/preview/BlackMarkerTV-3-LIVE-PREVIEW.html", "3.0 Live page (preview)",

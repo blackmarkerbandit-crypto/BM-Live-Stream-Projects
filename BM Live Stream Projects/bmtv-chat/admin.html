@@ -1,0 +1,537 @@
+<!doctype html>
+<!-- =====================================================================
+     BMTV chat — admin
+
+     Create rooms, appoint per-room moderators, lift or place bans, and see
+     who is actually chatting.
+
+     Only the anon key is here, like every other page in this build. Being
+     an admin is decided by the database: if your user_id is not in
+     public.admins, every write on this page affects zero rows. The URL is
+     not a secret and does not need to be.
+
+     Requires schema-v2-rooms.sql to have been run.
+     ===================================================================== -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BMTV — Chat Admin</title>
+<style>
+:root{--red:#E8181C;--bg:#0a0908;--surface:#141210;--surface2:#1c1917;
+--border:#2a2622;--border2:#3a352f;--text:#F2EFEC;--muted:#8a827a;--muted2:#6b645d;
+--ann:#37E0C8;--ok:#57D9A3;--bad:#ff6b6b;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);
+  font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;padding-bottom:60px;}
+a{color:var(--red);text-decoration:none}
+
+.bar{display:flex;align-items:center;gap:12px;padding:13px 20px;
+  border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:5;}
+.bar h1{font-size:15px;font-weight:800;letter-spacing:-.01em;}
+.bar .sp{margin-left:auto}
+.bar .who{color:var(--muted);font-size:12.5px}
+.bar button,.bar a.btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);
+  border-radius:7px;padding:7px 12px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer}
+.bar button:hover,.bar a.btn:hover{border-color:var(--muted)}
+
+.wrap{max-width:1080px;margin:0 auto;padding:24px 20px}
+section{margin-bottom:34px}
+h2{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ann);
+  font-weight:800;margin-bottom:12px}
+.hint{color:var(--muted);font-size:12.5px;margin-bottom:14px;max-width:78ch;line-height:1.65}
+.hint b{color:var(--text)}
+.hint code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:4px;padding:1px 5px}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px;
+  background:var(--surface);border:1px solid var(--border);border-radius:11px;overflow:hidden}
+th{text-align:left;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted2);font-weight:800;padding:10px 13px;border-bottom:1px solid var(--border)}
+td{padding:10px 13px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.mono,th.mono{font-family:ui-monospace,Consolas,monospace;font-size:12px}
+td .sub{color:var(--muted);font-size:11.5px}
+.tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.07em;
+  text-transform:uppercase;border-radius:4px;padding:2px 7px;border:1px solid var(--border2);color:var(--muted)}
+.tag.public{border-color:var(--ok);color:var(--ok)}
+.tag.unlisted{border-color:#FFC21E;color:#FFC21E}
+.tag.restricted{border-color:var(--red);color:var(--red)}
+.tag.arch{border-color:var(--muted2);color:var(--muted2)}
+
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+input,select{background:var(--surface2);border:1px solid var(--border);border-radius:7px;
+  padding:9px 11px;color:var(--text);font:inherit;font-size:13px;outline:none;min-width:0}
+input:focus,select:focus{border-color:var(--red)}
+button.go{background:var(--red);border:0;color:#fff;border-radius:7px;padding:9px 14px;
+  font:inherit;font-size:12.5px;font-weight:800;cursor:pointer}
+button.go:hover{filter:brightness(1.1)}
+button.mini{background:transparent;border:1px solid var(--border2);color:var(--muted);
+  border-radius:6px;padding:4px 9px;font:inherit;font-size:11.5px;font-weight:700;cursor:pointer}
+button.mini:hover{border-color:var(--red);color:var(--red)}
+button.mini.danger:hover{border-color:var(--bad);color:var(--bad)}
+
+.gate{max-width:340px;margin:90px auto;background:var(--surface);border:1px solid var(--border);
+  border-radius:13px;padding:26px}
+.gate h2{color:var(--text);font-size:15px;letter-spacing:0;text-transform:none;margin-bottom:8px}
+.gate p{color:var(--muted);font-size:12.5px;margin-bottom:16px}
+.gate input{width:100%;margin-bottom:9px}
+.gate button{width:100%;background:var(--red);border:0;color:#fff;border-radius:7px;
+  padding:10px;font:inherit;font-weight:800;cursor:pointer}
+.err{color:var(--bad);font-size:12.5px;margin-top:10px;min-height:1em}
+.empty{color:var(--muted2);font-size:12.5px;font-style:italic;padding:14px 13px}
+.note{margin-top:10px;font-size:12px;color:var(--muted2);line-height:1.6}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <h1>Chat Admin</h1>
+  <a class="btn" href="moderator.html">Moderator panel</a>
+  <span class="sp"></span>
+  <span class="who" id="who"></span>
+  <button id="out" hidden>Sign out</button>
+</div>
+
+<div class="gate" id="gate" hidden>
+  <h2>Admin sign in</h2>
+  <p>Admins only. A moderator account that is not an admin can sign in here and will see nothing to change.</p>
+  <input id="email" type="email" placeholder="Email" autocomplete="username">
+  <input id="pass" type="password" placeholder="Password" autocomplete="current-password">
+  <button id="in">Sign in</button>
+  <div class="err" id="err"></div>
+</div>
+
+<div class="wrap" id="app" hidden>
+
+  <section>
+    <h2>Rooms</h2>
+    <div class="hint">
+      One chat per room. Nothing crosses between them — messages, moderators and bans are all
+      room-scoped. <b>public</b> is listed and open. <b>unlisted</b> is not listed anywhere, but
+      anyone who learns the slug can read and post, so it relies on the page around it being gated
+      and the slug not being guessable — right for a PPV room the CMS protects.
+      <b>restricted</b> admits only people added to <code>room_members</code>, which needs something
+      server-side to add them; until that exists a restricted room is readable by nobody but its
+      moderators. Archiving keeps a room readable but stops new messages.
+    </div>
+    <table id="rooms"><tbody><tr><td class="empty">Loading…</td></tr></tbody></table>
+    <div class="row">
+      <input id="rSlug" placeholder="slug (a-z, 0-9, dashes)" style="flex:1;min-width:190px">
+      <input id="rName" placeholder="Display name" style="flex:1;min-width:190px">
+      <select id="rVis">
+        <option value="public">public</option>
+        <option value="unlisted" selected>unlisted</option>
+        <option value="restricted">restricted</option>
+      </select>
+      <button class="go" id="rAdd">Create room</button>
+    </div>
+    <div class="note">Embed a room with <code>?room=&lt;slug&gt;</code>, or pin it on the page with
+      <code>&lt;div class="chat" data-room="&lt;slug&gt;"&gt;</code>. A page that pins a room always
+      beats the URL, so a visitor cannot retype their way into another chat.</div>
+  </section>
+
+  <section>
+    <h2>Moderators</h2>
+    <div class="hint">
+      A moderator only sees and acts on the rooms listed here. Room <code>*</code> means every room,
+      now and in future. Moderators must sign in with a real <b>email</b> account — an anonymous
+      identity lives in browser storage and is lost the moment cookies are cleared.
+    </div>
+    <table id="mods"><tbody><tr><td class="empty">Loading…</td></tr></tbody></table>
+    <div class="row">
+      <input id="mUser" placeholder="user id (uuid)" style="flex:1;min-width:290px" class="mono">
+      <select id="mRoom"></select>
+      <input id="mNote" placeholder="note (who is this?)" style="flex:1;min-width:150px">
+      <button class="go" id="mAdd">Add moderator</button>
+    </div>
+    <div class="note">The uuid comes from the People table below once someone has chatted, or from
+      Supabase → Authentication → Users for an account that has not.</div>
+  </section>
+
+  <section>
+    <h2>Admins</h2>
+    <div class="hint">
+      Admins do everything moderators do, in every room, plus create rooms and appoint moderators.
+      Keep this list short.
+    </div>
+    <table id="admins"><tbody><tr><td class="empty">Loading…</td></tr></tbody></table>
+    <div class="row">
+      <input id="aUser" placeholder="user id (uuid)" style="flex:1;min-width:290px" class="mono">
+      <input id="aNote" placeholder="note" style="flex:1;min-width:150px">
+      <button class="go" id="aAdd">Add admin</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Bans</h2>
+    <div class="hint">Room <code>*</code> is a site-wide ban. Anything else bans from that room only.</div>
+    <table id="bans"><tbody><tr><td class="empty">Loading…</td></tr></tbody></table>
+    <div class="row">
+      <input id="bUser" placeholder="user id (uuid)" style="flex:1;min-width:290px" class="mono">
+      <select id="bRoom"></select>
+      <input id="bReason" placeholder="reason" style="flex:1;min-width:150px">
+      <button class="go" id="bAdd">Ban</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>People</h2>
+    <div class="hint">
+      Everyone who has ever posted, newest first. Built from a profiles row written when a message is
+      saved — which is why this works without the service_role key ever touching a browser. Someone
+      who registered but never chatted will not appear; find them in Supabase → Authentication → Users.
+    </div>
+    <table id="people"><tbody><tr><td class="empty">Loading…</td></tr></tbody></table>
+  </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+(function () {
+  var SUPABASE_URL = 'https://eyqtvdwchwfomhkfjimv.supabase.co';
+  var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5cXR2ZHdjaHdmb21oa2ZqaW12Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4MTgyNzEsImV4cCI6MjEwMjM5NDI3MX0.8J_Mi9sOt4-BP8NOF2NHkkPcHnN4fXL8p0bUzbn8qu0';
+
+  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  var gate = document.getElementById('gate');
+  var app  = document.getElementById('app');
+  var who  = document.getElementById('who');
+  var out  = document.getElementById('out');
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function fail(r, what) {
+    if (!r || !r.error) return false;
+    var m = String(r.error.message || '');
+    // RLS does not error on a refused write, it affects zero rows -- a real
+    // error here is a constraint or a typo, so show it rather than guess.
+    alert(what + ' failed: ' + m);
+    return true;
+  }
+  function short(id) { return id ? id.slice(0, 8) + '…' : ''; }
+  function when(ts) {
+    if (!ts) return '';
+    var d = new Date(ts), now = new Date();
+    var same = d.toDateString() === now.toDateString();
+    return same ? d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
+                : d.toLocaleDateString([], {month:'short', day:'numeric'});
+  }
+
+  /* ---------------- rooms ---------------- */
+  var roomCache = [];
+
+  function fillRoomSelects() {
+    ['mRoom', 'bRoom'].forEach(function (id) {
+      var s = document.getElementById(id);
+      var keep = s.value;
+      s.innerHTML = '';
+      var star = el('option', null, '*  (every room)'); star.value = '*';
+      s.appendChild(star);
+      roomCache.forEach(function (r) {
+        var o = el('option', null, r.slug); o.value = r.slug; s.appendChild(o);
+      });
+      if (keep) s.value = keep;
+    });
+  }
+
+  function loadRooms() {
+    return sb.from('rooms').select('*').order('slug').then(function (r) {
+      roomCache = r.data || [];
+      var tb = document.querySelector('#rooms tbody');
+      tb.innerHTML = '';
+      var head = document.createElement('tr');
+      ['Slug', 'Name', 'Visibility', 'Messages', ''].forEach(function (h) {
+        head.appendChild(el('th', h === 'Slug' ? 'mono' : null, h));
+      });
+      tb.appendChild(head);
+
+      if (!roomCache.length) {
+        var e = document.createElement('tr');
+        e.appendChild(el('td', 'empty', 'No rooms. Run schema-v2-rooms.sql first.')).colSpan = 5;
+        tb.appendChild(e);
+        return;
+      }
+
+      roomCache.forEach(function (rm) {
+        var tr = document.createElement('tr');
+        tr.appendChild(el('td', 'mono', rm.slug));
+        tr.appendChild(el('td', null, rm.name));
+
+        var vis = document.createElement('td');
+        vis.appendChild(el('span', 'tag ' + rm.visibility, rm.visibility));
+        if (rm.archived) vis.appendChild(el('span', 'tag arch', ' archived'));
+        tr.appendChild(vis);
+
+        var count = el('td', 'sub', '…');
+        tr.appendChild(count);
+        sb.from('messages').select('id', { count: 'exact', head: true }).eq('room', rm.slug)
+          .then(function (c) { count.textContent = (c.count == null ? '?' : c.count); });
+
+        var act = document.createElement('td');
+        var arch = el('button', 'mini', rm.archived ? 'Unarchive' : 'Archive');
+        arch.addEventListener('click', function () {
+          sb.from('rooms').update({ archived: !rm.archived }).eq('slug', rm.slug)
+            .then(function (r) { if (!fail(r, 'Archive')) loadRooms(); });
+        });
+        act.appendChild(arch);
+
+        if (rm.slug !== 'main') {
+          var del = el('button', 'mini danger', 'Delete');
+          del.style.marginLeft = '6px';
+          del.addEventListener('click', function () {
+            if (!confirm('Delete room "' + rm.slug + '"?\n\nEvery message, moderator and ban in it ' +
+                         'goes too. This cannot be undone. Archive instead if you only want to ' +
+                         'stop new messages.')) return;
+            sb.from('rooms').delete().eq('slug', rm.slug)
+              .then(function (r) { if (!fail(r, 'Delete')) { loadRooms(); loadMods(); loadBans(); } });
+          });
+          act.appendChild(del);
+        }
+        tr.appendChild(act);
+        tb.appendChild(tr);
+      });
+      fillRoomSelects();
+    });
+  }
+
+  document.getElementById('rAdd').addEventListener('click', function () {
+    var slug = document.getElementById('rSlug').value.trim().toLowerCase();
+    var name = document.getElementById('rName').value.trim();
+    var vis  = document.getElementById('rVis').value;
+    if (!/^[a-z0-9][a-z0-9_-]{1,60}$/.test(slug)) {
+      alert('Slug must be lower-case letters, numbers, dashes or underscores — and at least 2 characters.');
+      return;
+    }
+    if (!name) { alert('Give the room a display name.'); return; }
+    sb.from('rooms').insert({ slug: slug, name: name, visibility: vis }).then(function (r) {
+      if (fail(r, 'Create room')) return;
+      document.getElementById('rSlug').value = '';
+      document.getElementById('rName').value = '';
+      loadRooms();
+    });
+  });
+
+  /* ---------------- moderators ---------------- */
+  function loadMods() {
+    return sb.from('moderators').select('*').order('room').then(function (r) {
+      var tb = document.querySelector('#mods tbody');
+      tb.innerHTML = '';
+      var head = document.createElement('tr');
+      ['User', 'Room', 'Note', 'Added', ''].forEach(function (h) { head.appendChild(el('th', null, h)); });
+      tb.appendChild(head);
+      var list = r.data || [];
+      if (!list.length) {
+        var tr = document.createElement('tr');
+        var td = el('td', 'empty', 'No moderators yet.'); td.colSpan = 5; tr.appendChild(td);
+        tb.appendChild(tr); return;
+      }
+      list.forEach(function (m) {
+        var tr = document.createElement('tr');
+        var u = el('td', 'mono', short(m.user_id));
+        u.title = m.user_id;
+        tr.appendChild(u);
+        tr.appendChild(el('td', 'mono', m.room));
+        tr.appendChild(el('td', null, m.note || ''));
+        tr.appendChild(el('td', 'sub', when(m.created_at)));
+        var act = document.createElement('td');
+        var rm = el('button', 'mini danger', 'Remove');
+        rm.addEventListener('click', function () {
+          if (!confirm('Remove this moderator from room ' + m.room + '?')) return;
+          sb.from('moderators').delete().eq('user_id', m.user_id).eq('room', m.room)
+            .then(function (r) { if (!fail(r, 'Remove')) loadMods(); });
+        });
+        act.appendChild(rm); tr.appendChild(act);
+        tb.appendChild(tr);
+      });
+    });
+  }
+
+  document.getElementById('mAdd').addEventListener('click', function () {
+    var u = document.getElementById('mUser').value.trim();
+    if (!u) { alert('Paste a user id.'); return; }
+    sb.from('moderators').insert({
+      user_id: u,
+      room: document.getElementById('mRoom').value,
+      note: document.getElementById('mNote').value.trim() || null
+    }).then(function (r) {
+      if (fail(r, 'Add moderator')) return;
+      document.getElementById('mUser').value = '';
+      document.getElementById('mNote').value = '';
+      loadMods();
+    });
+  });
+
+  /* ---------------- admins ---------------- */
+  function loadAdmins() {
+    return sb.from('admins').select('*').then(function (r) {
+      var tb = document.querySelector('#admins tbody');
+      tb.innerHTML = '';
+      var head = document.createElement('tr');
+      ['User', 'Note', 'Added', ''].forEach(function (h) { head.appendChild(el('th', null, h)); });
+      tb.appendChild(head);
+      var list = r.data || [];
+      list.forEach(function (a) {
+        var tr = document.createElement('tr');
+        var u = el('td', 'mono', short(a.user_id)); u.title = a.user_id; tr.appendChild(u);
+        tr.appendChild(el('td', null, a.note || ''));
+        tr.appendChild(el('td', 'sub', when(a.created_at)));
+        var act = document.createElement('td');
+        var rm = el('button', 'mini danger', 'Remove');
+        rm.addEventListener('click', function () {
+          if (!confirm('Remove this admin?\n\nIf it is your own account you will lose access to ' +
+                       'this page immediately.')) return;
+          sb.from('admins').delete().eq('user_id', a.user_id)
+            .then(function (r) { if (!fail(r, 'Remove')) loadAdmins(); });
+        });
+        act.appendChild(rm); tr.appendChild(act);
+        tb.appendChild(tr);
+      });
+    });
+  }
+
+  document.getElementById('aAdd').addEventListener('click', function () {
+    var u = document.getElementById('aUser').value.trim();
+    if (!u) { alert('Paste a user id.'); return; }
+    sb.from('admins').insert({ user_id: u, note: document.getElementById('aNote').value.trim() || null })
+      .then(function (r) {
+        if (fail(r, 'Add admin')) return;
+        document.getElementById('aUser').value = '';
+        document.getElementById('aNote').value = '';
+        loadAdmins();
+      });
+  });
+
+  /* ---------------- bans ---------------- */
+  function loadBans() {
+    return sb.from('bans').select('*').order('created_at', { ascending: false }).then(function (r) {
+      var tb = document.querySelector('#bans tbody');
+      tb.innerHTML = '';
+      var head = document.createElement('tr');
+      ['User', 'Room', 'Reason', 'When', ''].forEach(function (h) { head.appendChild(el('th', null, h)); });
+      tb.appendChild(head);
+      var list = r.data || [];
+      if (!list.length) {
+        var tr = document.createElement('tr');
+        var td = el('td', 'empty', 'Nobody is banned.'); td.colSpan = 5; tr.appendChild(td);
+        tb.appendChild(tr); return;
+      }
+      list.forEach(function (b) {
+        var tr = document.createElement('tr');
+        var u = el('td', 'mono', short(b.user_id)); u.title = b.user_id; tr.appendChild(u);
+        tr.appendChild(el('td', 'mono', b.room));
+        tr.appendChild(el('td', null, b.reason || ''));
+        tr.appendChild(el('td', 'sub', when(b.created_at)));
+        var act = document.createElement('td');
+        var rm = el('button', 'mini', 'Lift');
+        rm.addEventListener('click', function () {
+          sb.from('bans').delete().eq('user_id', b.user_id).eq('room', b.room)
+            .then(function (r) { if (!fail(r, 'Lift ban')) loadBans(); });
+        });
+        act.appendChild(rm); tr.appendChild(act);
+        tb.appendChild(tr);
+      });
+    });
+  }
+
+  document.getElementById('bAdd').addEventListener('click', function () {
+    var u = document.getElementById('bUser').value.trim();
+    if (!u) { alert('Paste a user id.'); return; }
+    sb.from('bans').insert({
+      user_id: u,
+      room: document.getElementById('bRoom').value,
+      reason: document.getElementById('bReason').value.trim() || null
+    }).then(function (r) {
+      if (fail(r, 'Ban')) return;
+      document.getElementById('bUser').value = '';
+      document.getElementById('bReason').value = '';
+      loadBans();
+    });
+  });
+
+  /* ---------------- people ---------------- */
+  function loadPeople() {
+    return sb.from('profiles').select('*').order('last_seen', { ascending: false }).limit(200)
+      .then(function (r) {
+        var tb = document.querySelector('#people tbody');
+        tb.innerHTML = '';
+        var head = document.createElement('tr');
+        ['Name', 'User id', 'Messages', 'First seen', 'Last seen', ''].forEach(function (h) {
+          head.appendChild(el('th', null, h));
+        });
+        tb.appendChild(head);
+        var list = r.data || [];
+        if (!list.length) {
+          var tr = document.createElement('tr');
+          var td = el('td', 'empty', 'Nobody has chatted yet.'); td.colSpan = 6; tr.appendChild(td);
+          tb.appendChild(tr); return;
+        }
+        list.forEach(function (p) {
+          var tr = document.createElement('tr');
+          tr.appendChild(el('td', null, p.display_name || '—'));
+          var u = el('td', 'mono', short(p.user_id)); u.title = p.user_id;
+          u.style.cursor = 'pointer';
+          u.addEventListener('click', function () {
+            document.getElementById('mUser').value = p.user_id;
+            document.getElementById('bUser').value = p.user_id;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+          tr.appendChild(u);
+          tr.appendChild(el('td', 'sub', String(p.message_count)));
+          tr.appendChild(el('td', 'sub', when(p.first_seen)));
+          tr.appendChild(el('td', 'sub', when(p.last_seen)));
+          var act = document.createElement('td');
+          var bn = el('button', 'mini danger', 'Ban…');
+          bn.addEventListener('click', function () {
+            document.getElementById('bUser').value = p.user_id;
+            document.getElementById('bReason').focus();
+            document.getElementById('bans').scrollIntoView({ behavior: 'smooth' });
+          });
+          act.appendChild(bn); tr.appendChild(act);
+          tb.appendChild(tr);
+        });
+      });
+  }
+
+  /* ---------------- session ---------------- */
+  function start(session) {
+    gate.hidden = true; app.hidden = false; out.hidden = false;
+    who.textContent = session.user.email || 'signed in';
+
+    sb.from('admins').select('user_id').eq('user_id', session.user.id).then(function (r) {
+      if (!r.data || !r.data.length) {
+        who.textContent = (session.user.email || '') + ' — NOT an admin';
+        who.style.color = 'var(--bad)';
+      }
+    });
+
+    loadRooms().then(loadMods).then(loadAdmins).then(loadBans).then(loadPeople);
+  }
+
+  document.getElementById('in').addEventListener('click', function () {
+    var e = document.getElementById('email').value.trim();
+    var p = document.getElementById('pass').value;
+    document.getElementById('err').textContent = '';
+    sb.auth.signInWithPassword({ email: e, password: p }).then(function (r) {
+      if (r.error) { document.getElementById('err').textContent = r.error.message; return; }
+      start(r.data.session);
+    });
+  });
+  document.getElementById('pass').addEventListener('keydown', function (ev) {
+    if (ev.key === 'Enter') document.getElementById('in').click();
+  });
+  out.addEventListener('click', function () { sb.auth.signOut().then(function () { location.reload(); }); });
+
+  sb.auth.getSession().then(function (r) {
+    if (r.data && r.data.session && !r.data.session.user.is_anonymous) start(r.data.session);
+    else gate.hidden = false;
+  });
+})();
+</script>
+</body>
+</html>
