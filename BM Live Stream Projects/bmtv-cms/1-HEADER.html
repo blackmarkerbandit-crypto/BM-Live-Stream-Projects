@@ -1,5 +1,5 @@
 <!-- =====================================================================
-     BlackMarker.TV 3.0 — HEADER
+     BlackMarker.TV 3.0 &mdash; HEADER
      Paste into the CMS header template. Runs on every page.
 
      Contains, in order:
@@ -17,11 +17,15 @@
      into the CMS stylesheet template.
 
      HEAD TAGS: the preview pages have no <head>, so there is nothing to bring
-     over. If the CMS lets you add to <head>, these two are worth having:
+     over. If the CMS lets you add to <head>, these two are still worth having:
          <meta charset="utf-8">
          <meta name="viewport" content="width=device-width,initial-scale=1">
-     The layout is responsive and the viewport tag is what makes that work on
-     phones -- without it the site renders zoomed out.
+     Charset is now belt-and-braces rather than load-bearing: this file is pure
+     ASCII, every special character is an HTML entity, and the dropdown arrow
+     in the stylesheet is a CSS escape instead of a raw glyph. That is what
+     makes the arrows and dashes render whether or not the CMS declares UTF-8.
+     The viewport tag is NOT optional -- the layout is responsive and without
+     it the whole site renders zoomed out on phones.
 
      NAV LINKS still point at the preview filenames
      (BlackMarkerTV-3-CONTACT.html etc). Repoint them to the CMS URLs as those
@@ -31,7 +35,7 @@
 <!-- ============ TOP BAR ============ -->
 <div class="topbar">
   <div class="topbar-in">
-    <span class="msg">Artists — get <b>featured</b> on Black Marker TV</span>
+    <span class="msg">Artists &mdash; get <b>featured</b> on Black Marker TV</span>
     <a class="topbar-btn" href="BlackMarkerTV-3-CONTACT.html#contact-form">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 00-3 3v6a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M5 10v1a7 7 0 0014 0v-1M12 18v4M8 22h8"/></svg>
       Submit Your Music
@@ -45,7 +49,7 @@
   <div class="head-in">
     <div class="brand-col">
       <a class="brand-logo" href="#"><img src="/images/logo.png" alt="Black Marker TV"></a>
-      <div class="brand-tag">Only <b>Dope Sh!t</b> — An Independent Broadcast Network</div>
+      <div class="brand-tag">Only <b>Dope Sh!t</b> &mdash; An Independent Broadcast Network</div>
     </div>
     <div class="head-actions">
       <div class="socials">
@@ -62,9 +66,9 @@
 <!-- SUBSCRIBE MODAL -->
 <div class="modal-overlay" id="subModal">
   <form class="modal" onsubmit="return false;">
-    <button type="button" class="modal-x" id="closeSub" aria-label="Close">✕</button>
+    <button type="button" class="modal-x" id="closeSub" aria-label="Close">&#10005;</button>
     <div class="su-title">Join the List</div>
-    <div class="su-sub">Latest news, drops &amp; events — straight to your inbox.</div>
+    <div class="su-sub">Latest news, drops &amp; events &mdash; straight to your inbox.</div>
     <div class="su-grid">
       <input type="text" placeholder="First Name *" aria-label="First name">
       <input type="text" placeholder="Last Name" aria-label="Last name">

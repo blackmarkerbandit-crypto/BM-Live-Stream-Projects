@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /* =====================================================================
    BlackMarker.TV 3.0 — site stylesheet
 
@@ -144,7 +146,7 @@ nav{position:sticky;top:0;z-index:60;background:var(--red);border-bottom:1px sol
 .nav-in a.on{background:#0a0908;color:#fff;}
 .nav-in a.on:hover{background:#0a0908;color:#fff;}
 .has-sub{position:relative;}
-.has-sub>a::after{content:"▾";font-size:10px;margin-left:6px;color:currentColor;opacity:.65;vertical-align:middle;}
+.has-sub>a::after{content:"\25BE ";font-size:10px;margin-left:6px;color:currentColor;opacity:.65;vertical-align:middle;}
 .submenu{position:absolute;top:calc(100% + 6px);left:0;background:var(--surface);border:1px solid var(--border2);
   border-radius:10px;padding:8px;min-width:280px;display:none;flex-direction:column;gap:2px;box-shadow:0 20px 44px rgba(0,0,0,.55);z-index:70;}
 .has-sub:hover .submenu,.has-sub:focus-within .submenu{display:flex;}
@@ -837,3 +839,67 @@ body.no-ann .bd-tag{display:none;}
   .cmp-dd .cmp-them::before{color:#57D9A3;}
   .cmp-dd .cmp-us::before{color:#ff6b6b;}
 }
+
+/* =====================================================================
+   CMS OVERRIDE GUARD  (generated -- keep this LAST in the stylesheet)
+
+   The CMS ships its own global styles and may load them after this
+   file. Without this block its rules win on any link that relies on
+   the bare `a{color:inherit}` -- the logo, the top-bar button, card
+   links, the footer logo -- which shows up as underlines on hover and
+   the wrong hover colour.
+
+   Underlines are forced off outright: text-decoration appears exactly
+   once in this entire design, as `none`. Nothing here is underlined by
+   intent, so there is nothing to lose.
+
+   Colour is handled the other way round -- reset to inherit, then every
+   colour the design deliberately sets on a link is re-asserted below.
+   ===================================================================== */
+a,a:link,a:visited,a:hover,a:active,a:focus{text-decoration:none !important;}
+a,a:link,a:visited,a:hover,a:active,a:focus{color:inherit !important;}
+a:focus-visible{outline:2px solid var(--red);outline-offset:2px;}
+
+/* the design's own link colours, re-asserted so the reset above cannot eat them */
+a{color:inherit !important;}
+.topbar-btn{color:#1a1206 !important;}
+.socials a.s-yt{color:#FF0000 !important;}
+.socials a.s-ig{color:#E1306C !important;}
+.socials a.s-fb{color:#1877F2 !important;}
+.socials a.s-tw{color:#9146FF !important;}
+.socials a:hover{color:#fff !important;}
+.btn-red{color:#fff !important;}
+.btn-ghost{color:var(--text) !important;}
+.nav-in a{color:#fff !important;}
+.nav-in a:hover{color:#fff !important;}
+.nav-in a.on{color:#fff !important;}
+.nav-in a.on:hover{color:#fff !important;}
+.has-sub>a::after{color:currentColor !important;}
+.submenu a{color:var(--text) !important;}
+.submenu a:hover{color:#fff !important;}
+.nav-in a.acct{color:#fff !important;}
+.nav-in a.acct:hover{color:#fff !important;}
+.sec-link{color:var(--muted) !important;}
+.sec-link:hover{color:var(--red) !important;}
+.foot-col a{color:var(--muted) !important;}
+.foot-col a:hover{color:#fff !important;}
+.foot-socials a{color:var(--muted) !important;}
+.foot-socials a:hover{color:#fff !important;}
+.show-crumb a{color:var(--muted) !important;}
+.show-crumb a:hover{color:#fff !important;}
+.ac-crumb a{color:var(--muted) !important;}
+.ac-crumb a:hover{color:var(--red) !important;}
+.sch-crumb a{color:var(--muted) !important;}
+.sch-crumb a:hover{color:var(--red) !important;}
+.sch-link{color:var(--muted) !important;}
+.sch-link:hover{color:var(--red) !important;}
+.bd-crumb a{color:var(--muted) !important;}
+.bd-crumb a:hover{color:var(--red) !important;}
+.ct-crumb a{color:var(--muted) !important;}
+.ct-crumb a:hover{color:var(--red) !important;}
+.ct-mail a{color:var(--text) !important;}
+.ct-mail a:hover{color:var(--red) !important;}
+.ct-soc{color:var(--muted) !important;}
+.ct-soc:hover{color:#fff !important;}
+.wk-crumb a{color:var(--muted) !important;}
+.wk-crumb a:hover{color:var(--red) !important;}

@@ -180,7 +180,108 @@ def main():
         return
 
     # --- write -------------------------------------------------------------
+    # --- glyphs -> CSS escapes -------------------------------------------
+    # The dropdown arrow is content:"▾" (U+25BE). Delivered as a raw character
+    # it depends on the browser guessing UTF-8; if the CMS serves the stylesheet
+    # as latin-1, or the page has no <meta charset>, it renders as mojibake.
+    # A CSS escape carries no encoding assumption at all, so it always works.
+    glyphs = 0
+    for i, it in enumerate(merged):
+        if it[0] != "rule" or "content" not in it[3]:
+            continue
+        def esc(m):
+            global_count = m.group(0)
+            return "".join(
+                ("\\%04X " % ord(c)) if ord(c) > 127 else c for c in global_count)
+        new = re.sub(r'content\s*:\s*"[^"]*"',
+                     lambda m: esc(m) if any(ord(c) > 127 for c in m.group(0)) else m.group(0),
+                     it[3])
+        if new != it[3]:
+            glyphs += 1
+            merged[i] = ("rule", it[1], it[2], new)
+    print("glyphs escaped in content: %d" % glyphs)
+
+    # --- CMS override guard ----------------------------------------------
+    # Pasted into someone else's CMS, the site's links compete with the CMS's
+    # own global stylesheet, which may load after this one. Two symptoms seen
+    # in practice: underlines appearing on hover, and hover colours changing.
+    #
+    # text-decoration is safe to force: it appears exactly once in this whole
+    # design, as `none`. The design never underlines anything.
+    #
+    # Colour is not safe to force blindly -- 29 rules set deliberate hover
+    # colours. So the guard resets links to `inherit`, then re-asserts every
+    # colour the design sets on an anchor, at !important, after the reset.
+    # The anchor class list is read out of the real HTML rather than guessed.
+    anchor_classes = set()
+    for f in files:
+        html = open(f, encoding="utf-8", errors="replace").read()
+        for m in re.finditer(r'<a\b[^>]*\bclass\s*=\s*"([^"]+)"', html):
+            anchor_classes.update(m.group(1).split())
+
+    def targets_anchor(sel):
+        for part in sel.split(","):
+            part = part.strip()
+            if re.search(r'(^|[\s>+~])a([.:\[\s>+~]|$)', part):
+                return True
+            for c in anchor_classes:
+                if re.search(r'\.' + re.escape(c) + r'([.:\[\s>+~]|$)', part):
+                    return True
+        return False
+
+    reasserts = []
+    for it in merged:
+        if it[0] != "rule":
+            continue
+        if not targets_anchor(it[2]):
+            continue
+        cols = [p.strip() for p in it[3].split(";")
+                if p.strip().startswith("color:")]
+        if not cols:
+            continue
+        val = cols[-1].split(":", 1)[1].strip()
+        reasserts.append((it[1], it[2], val))
+
+    guard = [
+        "",
+        "/* =====================================================================",
+        "   CMS OVERRIDE GUARD  (generated -- keep this LAST in the stylesheet)",
+        "",
+        "   The CMS ships its own global styles and may load them after this",
+        "   file. Without this block its rules win on any link that relies on",
+        "   the bare `a{color:inherit}` -- the logo, the top-bar button, card",
+        "   links, the footer logo -- which shows up as underlines on hover and",
+        "   the wrong hover colour.",
+        "",
+        "   Underlines are forced off outright: text-decoration appears exactly",
+        "   once in this entire design, as `none`. Nothing here is underlined by",
+        "   intent, so there is nothing to lose.",
+        "",
+        "   Colour is handled the other way round -- reset to inherit, then every",
+        "   colour the design deliberately sets on a link is re-asserted below.",
+        "   ===================================================================== */",
+        "a,a:link,a:visited,a:hover,a:active,a:focus{text-decoration:none !important;}",
+        "a,a:link,a:visited,a:hover,a:active,a:focus{color:inherit !important;}",
+        "a:focus-visible{outline:2px solid var(--red);outline-offset:2px;}",
+        "",
+        "/* the design's own link colours, re-asserted so the reset above cannot eat them */",
+    ]
+    ctx2 = ""
+    for c, sel, val in reasserts:
+        if c != ctx2:
+            if ctx2:
+                guard.append("}")
+            if c:
+                guard.append(c + "{")
+            ctx2 = c
+        guard.append("%s%s{color:%s !important;}" % ("  " if ctx2 else "", sel, val))
+    if ctx2:
+        guard.append("}")
+    print("link colours re-asserted: %d" % len(reasserts))
+
     head = [
+        '@charset "UTF-8";',
+        "",
         "/* =====================================================================",
         "   BlackMarker.TV 3.0 — site stylesheet",
         "",
@@ -223,7 +324,7 @@ def main():
     if ctx:
         out.append("}")
 
-    body = "\n".join(head) + "\n".join(out) + "\n"
+    body = "\n".join(head) + "\n".join(out) + "\n" + "\n".join(guard) + "\n"
     with open(OUT, "w", encoding="utf-8") as fh:
         fh.write(body)
     print("wrote %s  (%d rules, %.0f KB)"

@@ -1,5 +1,5 @@
 <!-- =====================================================================
-     BlackMarker.TV 3.0 — FOOTER
+     BlackMarker.TV 3.0 &mdash; FOOTER
      Paste into the CMS footer template. Runs on every page.
 
      Contains, in order:
@@ -27,8 +27,8 @@
     <div class="foot-top">
       <div class="foot-brand">
         <a class="foot-logo" href="#"><img src="/images/logo.png" alt="Black Marker TV"></a>
-        <p>The Black Marker Bandit independent broadcast network — live music reviews, shows, battles, and events.</p>
-        <div class="foot-cc"><span class="ccmk">ChannelCast</span> · Platform &amp; hosting partner</div>
+        <p>The Black Marker Bandit independent broadcast network &mdash; live music reviews, shows, battles, and events.</p>
+        <div class="foot-cc"><span class="ccmk">ChannelCast</span> &middot; Platform &amp; hosting partner</div>
       </div>
       <div class="foot-col">
         <h4>Work With Us</h4>
@@ -50,8 +50,8 @@
       </div>
     </div>
     <div class="foot-bot">
-      <span>© 2022–2026 Black Marker Media LLC · All Rights Reserved</span>
-      <span>BlackMarker.TV · Wesley Chapel, FL</span>
+      <span>&copy; 2022&ndash;2026 Black Marker Media LLC &middot; All Rights Reserved</span>
+      <span>BlackMarker.TV &middot; Wesley Chapel, FL</span>
     </div>
   </div>
 </footer>
@@ -59,7 +59,7 @@
 <!-- ============ SITE-WIDE SCRIPT ============ -->
 <script>
 (function(){
-  // Subscribe modal — opened by any .open-sub button (header and footer both have one)
+  // Subscribe modal &mdash; opened by any .open-sub button (header and footer both have one)
   var subModal = document.getElementById('subModal');
   if (subModal) {
     document.querySelectorAll('.open-sub').forEach(function(b){
@@ -71,13 +71,13 @@
     document.addEventListener('keydown', function(e){ if (e.key === 'Escape') subModal.classList.remove('open'); });
   }
 
-  // Share button — native share sheet where available, otherwise copy the link
+  // Share button &mdash; native share sheet where available, otherwise copy the link
   var shareBtn = document.getElementById('shareBtn');
   if (shareBtn) {
     shareBtn.addEventListener('click', function(){
       var url = 'https://www.blackmarker.tv';
       if (navigator.share) {
-        navigator.share({ title: 'Black Marker TV — The Free Loop', url: url }).catch(function(){});
+        navigator.share({ title: 'Black Marker TV &mdash; The Free Loop', url: url }).catch(function(){});
       } else {
         var l = document.getElementById('shareLbl');
         var o = l ? l.textContent : '';
