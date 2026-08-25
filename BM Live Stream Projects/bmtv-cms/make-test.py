@@ -107,6 +107,7 @@ def main():
         ("4-BODY-CONTACT.html",  "_TEST-contact.html",  "CMS test - Contact page"),
         ("7-BODY-CALENDAR.html", "_TEST-calendar.html", "CMS test - Calendar page"),
         ("10-BODY-SCHEDULE.html", "_TEST-schedule.html", "CMS test - Schedule page"),
+        ("11-BODY-BODEGA.html",  "_TEST-bodega.html",   "CMS test - The Bodega"),
     ]:
         if os.path.exists(os.path.join(HERE, src)):
             ok &= build(out, title, read(src))

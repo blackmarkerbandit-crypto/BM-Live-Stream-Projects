@@ -1,0 +1,228 @@
+<!-- =====================================================================
+     BlackMarker.TV 3.0 - THE BODEGA PAGE BODY
+     Paste into the CMS page editor for The Bodega, between the shared header
+     and footer templates.
+
+     CSS      : nothing extra. Every class here is already in
+                blackmarker-tv.css.
+     IMAGES   : none. This page carries no images of its own.
+     SCRIPT   : one, at the bottom -- the ad banner rotator. Keep it with the
+                page; the shared footer script does not cover it.
+
+     TWO THINGS TO WIRE UP, both fenced below:
+       BEGIN AD SLOTS     three rotating promo slots. Text and links should
+                          come from the CMS so campaigns can change without
+                          editing the page.
+       BEGIN STORE EMBED  the storefront mounts here -- cart embed, commerce
+                          module, or a buy-button grid.
+
+     HERO     : shared .page-hero / .pg-* classes. This hero has no side
+                column, so .pg-hero-in carries is-solo. Without it the grid
+                keeps a second column and the copy sits in a narrow strip with
+                dead space beside it.
+
+     TITLE    : the page supplies its own <h1>, so the footer script hides the
+                CMS page-title h1 as a duplicate. To let the CMS drive the
+                title instead, replace the h1 TEXT with the page-title macro.
+
+     LINKS    : still the preview filenames. Repoint as pages go up.
+     ===================================================================== -->
+
+<!-- BODEGA HERO -->
+<section class="page-hero">
+  <div class="wrap">
+    <div class="pg-crumb"><a href="BlackMarkerTV-3-LIVE-PREVIEW.html">Home</a> <span class="sep">/</span> <span>The Bodega</span></div>
+    <div class="pg-hero-in is-solo">
+      <div>
+        <div class="pg-kicker">Shop &middot; Merch &middot; Services</div>
+        <h1 class="pg-title">The Bodega</h1>
+        <p class="pg-desc">Gear, drops and services straight from the network. Everything Black Marker
+        puts its name on lives here.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROTATING AD BANNER ============ -->
+<!-- ================= BEGIN AD SLOTS =================
+     Each <article class="bd-slide"> is one ad slot. Headline, copy, button
+     text and the button link should all come from the CMS so campaigns can be
+     swapped without editing this page.
+
+     TO WIRE UP:
+       .bd-tag        small label above the headline (or delete it)
+       .bd-slide-h    headline
+       .bd-slide-p    body copy
+       .bd-slide-btn  currently a <span>, because the wireframe had nowhere to
+                      point it. Make it an <a href="..."> once there is a real
+                      destination -- it is already styled as a button.
+
+     SLIDE COUNT IS FREE. Add or remove <article class="bd-slide"> blocks and
+     the dots rebuild to match; the script counts slides rather than trusting
+     the markup. Keep the first one as class="bd-slide s1 is-on" and give any
+     others the hidden attribute, as below.
+     ================================================== -->
+<section class="wrap bd-banner-wrap">
+    <div class="bd-banner" id="bdBanner" aria-roledescription="carousel" aria-label="Featured promotions">
+
+      <div class="bd-slides" id="bdSlides">
+        <!-- ===== BANNER SLOT 1 ===== -->
+        <article class="bd-slide s1 is-on" data-slide="0" role="group" aria-label="Slide 1 of 3">
+          <div class="bd-slide-in">
+            <span class="bd-tag">Banner Slot 1</span>
+            <h2 class="bd-slide-h">New Clothing Drops</h2>
+            <p class="bd-slide-p">Rotate seasonal apparel launches through here &mdash; tees, hoodies, hats.</p>
+            <span class="btn btn-red bd-slide-btn">Shop the Drop</span>
+          </div>
+        </article>
+        <!-- ===== BANNER SLOT 2 ===== -->
+        <article class="bd-slide s2" data-slide="1" role="group" aria-label="Slide 2 of 3" hidden>
+          <div class="bd-slide-in">
+            <span class="bd-tag">Banner Slot 2</span>
+            <h2 class="bd-slide-h">Limited Items</h2>
+            <p class="bd-slide-p">One-off runs, event exclusives and collabs worth putting front and centre.</p>
+            <span class="btn btn-red bd-slide-btn">See What&rsquo;s Left</span>
+          </div>
+        </article>
+        <!-- ===== BANNER SLOT 3 ===== -->
+        <article class="bd-slide s3" data-slide="2" role="group" aria-label="Slide 3 of 3" hidden>
+          <div class="bd-slide-in">
+            <span class="bd-tag">Banner Slot 3</span>
+            <h2 class="bd-slide-h">Services &amp; Bookings</h2>
+            <p class="bd-slide-p">Studio time, streaming production, event coverage &mdash; sell the services too.</p>
+            <span class="btn btn-red bd-slide-btn">Book the Crew</span>
+          </div>
+        </article>
+      </div>
+
+      <button class="bd-nav prev" id="bdPrev" type="button" aria-label="Previous slide">&#8249;</button>
+      <button class="bd-nav next" id="bdNext" type="button" aria-label="Next slide">&#8250;</button>
+
+      <div class="bd-dots" id="bdDots" role="tablist" aria-label="Choose slide">
+        <button class="bd-dot is-on" type="button" data-go="0" role="tab" aria-label="Slide 1" aria-selected="true"></button>
+        <button class="bd-dot" type="button" data-go="1" role="tab" aria-label="Slide 2" aria-selected="false"></button>
+        <button class="bd-dot" type="button" data-go="2" role="tab" aria-label="Slide 3" aria-selected="false"></button>
+      </div>
+    </div>
+
+    <!-- ================== END AD SLOTS ================== -->
+    <!-- NOTE: Auto-rotates every 6s, pauses on hover/focus, and honours prefers-reduced-motion. Each slide is an ad slot &mdash; image, headline, copy and link should all come from the CMS so the team can swap campaigns without a code change. Add or remove slides freely; the dots and controls build off whatever slides exist. -->
+  
+</section>
+
+<!-- ============ STORE ============ -->
+<section class="section wrap">
+  <div class="sec-head">
+    <div>
+      <div class="eyebrow">Shop</div>
+      <h2 class="sec-title">The Store</h2>
+    </div>
+  </div>
+
+    <!-- ================= BEGIN STORE EMBED =================
+         Replace the placeholder below with the storefront: a hosted cart
+         embed, a CMS commerce module, or a Shopify / Square buy-button grid.
+         Whatever it turns out to be, it drops inside this section -- the
+         banner above and the page shell around it stay as they are.
+         ====================================================== -->
+    <div class="bd-store">
+      <div class="bd-store-mark">[STORE]</div>
+      <p class="bd-store-p">Product grid, cart and checkout mount in this block.</p>
+    </div>
+    <!-- ================== END STORE EMBED ================== -->
+    <!-- NOTE: Placeholder for the storefront. Whatever we land on &mdash; a hosted cart embed, a CMS commerce module, or a Shopify/Square buy-button grid &mdash; it drops into this container. The banner above and the page shell around it stay as they are. -->
+  
+</section>
+
+<!-- =====================================================================
+     AD BANNER SCRIPT
+     Rotates the slots above. Keep it with this page; the shared footer
+     script does not cover it.
+
+     Advances every 6s, pauses on hover and on keyboard focus, stops entirely
+     while the tab is hidden, and does not auto-rotate at all for visitors who
+     ask for reduced motion.
+
+     Two changes from the wireframe version, both for CMS use:
+       * The dots are BUILT from the slides now instead of being hardcoded at
+         three. Add a fourth slot and a fourth dot appears. The wireframe
+         version would have kept showing three dots and silently stranded the
+         new slide -- its own note claimed slides could be added freely, and
+         that was not actually true.
+       * The prev/next lookups are guarded. If those buttons are removed the
+         banner still rotates, instead of throwing and taking the rest of the
+         page script down with it.
+     ===================================================================== -->
+<script>
+(function () {
+  var root = document.getElementById('bdBanner');
+  if (!root) return;
+
+  var slides = Array.prototype.slice.call(root.querySelectorAll('.bd-slide'));
+  if (slides.length < 2) return;          // one slot is not a carousel
+
+  var dotBox = document.getElementById('bdDots');
+  var dots = [];
+
+  var i = 0, timer = null;
+  var DELAY = 6000;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function show(n) {
+    i = (n + slides.length) % slides.length;
+    slides.forEach(function (s, k) {
+      var on = k === i;
+      s.classList.toggle('is-on', on);
+      s.hidden = !on;
+    });
+    dots.forEach(function (d, k) {
+      d.classList.toggle('is-on', k === i);
+      d.setAttribute('aria-selected', k === i ? 'true' : 'false');
+    });
+  }
+  function next() { show(i + 1); }
+  function prev() { show(i - 1); }
+  function start() { if (!reduce && !timer) timer = setInterval(next, DELAY); }
+  function stop()  { if (timer) { clearInterval(timer); timer = null; } }
+  function bump()  { stop(); start(); }
+
+  // The slides carry aria-label="Slide 1 of 3" written into the markup, so a
+  // fourth slot would announce "of 3". Restate them from the real count.
+  slides.forEach(function (s, k) {
+    s.setAttribute('aria-label', 'Slide ' + (k + 1) + ' of ' + slides.length);
+  });
+
+  // Build the dots from the slides, so the slide count is free to change.
+  if (dotBox) {
+    dotBox.innerHTML = '';
+    slides.forEach(function (s, k) {
+      var d = document.createElement('button');
+      d.type = 'button';
+      d.className = 'bd-dot' + (k === 0 ? ' is-on' : '');
+      d.setAttribute('role', 'tab');
+      d.setAttribute('aria-label', 'Slide ' + (k + 1));
+      d.setAttribute('aria-selected', k === 0 ? 'true' : 'false');
+      d.addEventListener('click', function () { show(k); bump(); });
+      dotBox.appendChild(d);
+      dots.push(d);
+    });
+  }
+
+  var nextBtn = document.getElementById('bdNext');
+  var prevBtn = document.getElementById('bdPrev');
+  if (nextBtn) nextBtn.addEventListener('click', function () { next(); bump(); });
+  if (prevBtn) prevBtn.addEventListener('click', function () { prev(); bump(); });
+
+  root.addEventListener('mouseenter', stop);
+  root.addEventListener('mouseleave', start);
+  root.addEventListener('focusin', stop);
+  root.addEventListener('focusout', start);
+  // don't burn cycles rotating a banner nobody is looking at
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) { stop(); } else { start(); }
+  });
+
+  show(0);
+  start();
+})();
+</script>
