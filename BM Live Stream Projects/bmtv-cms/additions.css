@@ -204,6 +204,73 @@
 
 
 /* =====================================================================
+   CMS FRAMEWORK NEUTRALISER
+
+   The CMS loads Bootstrap, jQuery UI and four of its own stylesheets before
+   ours. Our components are class-based so they win wherever the design sets a
+   property -- but any property the design LEAVES AT BROWSER DEFAULT is fair
+   game, and Bootstrap sets a lot of them on bare elements.
+
+   That is not theoretical. It is what put a stray horizontal rule under the
+   "Your Material" heading on the Contact page:
+
+       legend{display:block;width:100%;padding:0;margin-bottom:20px;
+              font-size:21px;line-height:inherit;color:#333;
+              border:0;border-bottom:1px solid #e5e5e5}
+
+   The design styles that heading through
+   `.ct-field label,.ct-media-lg{display:block;font-size:11.5px;...}`, so the
+   font size, weight and transform were all safely overridden by class. What
+   was NOT overridden -- because the design never had reason to set it -- was
+   `border-bottom`. That drew a rule under the heading, spanning the legend's
+   full width, which sits inside the fieldset's 20px padding. So it stopped
+   short of the box on both sides and read as a misaligned line.
+
+   The design wants a plain uppercase label inside an unbroken box, not a
+   notched legend, which is why display:block is kept below.
+
+   Below: only the properties that actually leak into components this design
+   uses. Not a blanket reset -- resetting things the CMS legitimately owns
+   causes a different and harder class of bug.
+   ===================================================================== */
+
+/* legend: back to a shrink-to-fit label sitting in the fieldset's border
+   notch, which is what the design draws. */
+legend{
+  display:block;
+  width:auto;
+  max-width:none;
+  padding:0;
+  margin:0;
+  /* Bootstrap writes `border:0` then `border-bottom:1px solid #e5e5e5` in the
+     same block. Our `border:0` shorthand does override it on source order,
+     but the longhand is spelled out too so this cannot come down to shorthand
+     resolution -- that is the whole bug, and it should not be subtle. */
+  border:0;
+  border-bottom:0;
+  font-size:inherit;
+  line-height:inherit;
+  color:inherit;
+}
+fieldset{min-width:0;}
+
+/* label: Bootstrap forces inline-block, bold and a 5px bottom margin. The
+   design positions its own labels, so hand that back. */
+label{display:inline;font-weight:inherit;margin-bottom:0;max-width:none;}
+
+/* the design's form controls inherit the page font; Bootstrap overrides the
+   family and size on textarea in particular */
+input,select,textarea,button{font-family:inherit;}
+
+/* The design's reset is *{margin:0}, a zero-specificity rule that any bare
+   element selector beats. Bootstrap's p{margin:0 0 10px} therefore wins and
+   adds spacing the preview never had. Restore the design's intent; every
+   component that wants space sets it explicitly. */
+p{margin:0;}
+ul{margin:0;}
+
+
+/* =====================================================================
    PAGE HERO  (.page-hero)  -- shared by every secondary page
 
    The design builds this same component four times over with a different
