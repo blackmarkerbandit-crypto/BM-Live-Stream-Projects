@@ -1,0 +1,129 @@
+<meta charset="utf-8">
+<title>BMTV — vMix chat overlay</title>
+
+<!-- =====================================================================
+     BlackMarker.TV — vMix chat overlay
+     Drop the URL of this page into a vMix BROWSER input. The background is
+     fully transparent, so it keys straight over your programme.
+
+     Shows the single most recently released message and nothing else.
+     Nothing appears here until a moderator puts a message on air, and it
+     disappears the moment they take it off.
+
+     URL OPTIONS (add to the address, e.g. ...vmix-overlay.html?pos=top&hold=20)
+       pos=bottom | top      where the lower third sits          (default bottom)
+       hold=SECONDS          auto-hide after N seconds           (default 0 = stay
+                             up until the moderator clears it)
+       size=1.0              scale everything, e.g. size=1.25    (default 1)
+     ===================================================================== -->
+
+<style>
+  html,body{margin:0;height:100%;background:transparent;overflow:hidden;}
+  body{font-family:"Segoe UI",system-ui,-apple-system,sans-serif;}
+
+  #stage{position:fixed;left:0;right:0;display:flex;padding:0 6vw;}
+  #stage.bottom{bottom:7vh;justify-content:flex-start;}
+  #stage.top{top:7vh;justify-content:flex-start;}
+
+  .card{
+    display:inline-flex;align-items:stretch;max-width:76vw;
+    border-radius:10px;overflow:hidden;
+    background:linear-gradient(90deg, rgba(12,10,9,.94), rgba(12,10,9,.86));
+    box-shadow:0 10px 40px -8px rgba(0,0,0,.75);
+    transform:translateY(18px);opacity:0;
+    transition:opacity .32s ease, transform .32s cubic-bezier(.2,.8,.2,1);
+  }
+  .card.in{opacity:1;transform:translateY(0);}
+  .card .bar{width:7px;background:#E8181C;flex:none;}
+  .card .in{padding:14px 22px 15px 18px;min-width:0;}
+
+  .name{
+    font-size:15px;font-weight:800;letter-spacing:.02em;color:#E8181C;
+    text-transform:uppercase;margin-bottom:3px;display:flex;align-items:center;gap:7px;
+  }
+  .name .tick{font-size:12px;color:#FFC21E;}
+  .body{
+    font-size:26px;line-height:1.28;color:#fff;font-weight:600;
+    word-wrap:break-word;overflow-wrap:anywhere;
+    text-shadow:0 2px 10px rgba(0,0,0,.55);
+  }
+
+  @media (prefers-reduced-motion:reduce){.card{transition:none;}}
+</style>
+
+<div id="stage"><div class="card" id="card">
+  <div class="bar"></div>
+  <div class="in">
+    <div class="name" id="name"></div>
+    <div class="body" id="body"></div>
+  </div>
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+(function () {
+  var URL_ = 'https://eyqtvdwchwfomhkfjimv.supabase.co';
+  var ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5cXR2ZHdjaHdmb21oa2ZqaW12Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4MTgyNzEsImV4cCI6MjEwMjM5NDI3MX0.8J_Mi9sOt4-BP8NOF2NHkkPcHnN4fXL8p0bUzbn8qu0';
+
+  var q     = new URLSearchParams(location.search);
+  var pos   = q.get('pos') === 'top' ? 'top' : 'bottom';
+  var hold  = parseFloat(q.get('hold') || '0') || 0;
+  var size  = parseFloat(q.get('size') || '1') || 1;
+
+  var stage = document.getElementById('stage');
+  var card  = document.getElementById('card');
+  var nameEl = document.getElementById('name');
+  var bodyEl = document.getElementById('body');
+
+  stage.className = pos;
+  if (size !== 1) { card.style.transform = 'scale(' + size + ')'; card.style.transformOrigin = pos === 'top' ? 'left top' : 'left bottom'; }
+
+  var sb = window.supabase.createClient(URL_, ANON);
+  var showingId = null, hideTimer = null;
+
+  function hide() {
+    card.classList.remove('in');
+    showingId = null;
+  }
+  function show(m) {
+    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+    if (m.id === showingId) return;               // already up, don't re-animate
+    showingId = m.id;
+    nameEl.textContent = m.display_name;
+    if (m.is_verified) {
+      var t = document.createElement('span');
+      t.className = 'tick'; t.textContent = '✓';
+      nameEl.appendChild(t);
+    }
+    bodyEl.textContent = m.body;
+    // force a reflow so the transition replays when swapping messages
+    void card.offsetWidth;
+    card.classList.add('in');
+    if (hold > 0) hideTimer = setTimeout(hide, hold * 1000);
+  }
+
+  function refresh() {
+    sb.from('messages')
+      .select('id,display_name,body,is_verified,released_at')
+      .eq('status', 'released')
+      .order('released_at', { ascending: false })
+      .limit(1)
+      .then(function (r) {
+        var m = (r.data || [])[0];
+        if (m) show(m); else hide();
+      });
+  }
+
+  sb.auth.getSession().then(function (r) {
+    if (r.data && r.data.session) return r.data.session;
+    return sb.auth.signInAnonymously();
+  }).then(function () {
+    refresh();
+    sb.channel('bmtv-overlay')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'messages' }, refresh)
+      .subscribe();
+    // realtime does the work; this is only a safety net if the socket drops
+    setInterval(refresh, 15000);
+  });
+})();
+</script>

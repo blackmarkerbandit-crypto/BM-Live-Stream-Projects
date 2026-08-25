@@ -1,0 +1,279 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BMTV — Chat Moderator</title>
+
+<!-- =====================================================================
+     BlackMarker.TV — moderator panel
+     Works on a desktop second monitor and on a phone.
+
+     Only the anon key is here. Everything this page can do is decided by
+     the database: if your user_id is not in public.moderators, every
+     release/hide/ban silently affects zero rows. The URL is not a secret
+     and does not need to be.
+     ===================================================================== -->
+
+<style>
+:root{
+  --bg:#0b0a09; --panel:#151211; --panel2:#1e1a17;
+  --line:#2b2521; --line2:#221d1a;
+  --ink:#F3F0EC; --ink2:#A79D95; --ink3:#736A63;
+  --red:#E8181C; --gold:#FFC21E; --green:#57D9A3; --blue:#7C9CFF;
+  --ui:"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:"Cascadia Mono",Consolas,ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:15px;line-height:1.5;
+  display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
+
+/* ---------- top bar ---------- */
+.bar{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);
+  background:var(--panel);flex:none;}
+.bar h1{font-size:15px;margin:0;font-weight:700;letter-spacing:.01em;}
+.bar .dot{width:8px;height:8px;border-radius:50%;background:var(--ink3);flex:none;}
+.bar .dot.on{background:var(--green);} .bar .dot.off{background:var(--red);}
+.bar .who{margin-left:auto;font-size:12.5px;color:var(--ink2);}
+.bar button{font:inherit;font-size:12.5px;background:var(--panel2);color:var(--ink);border:1px solid var(--line);
+  border-radius:6px;padding:5px 10px;cursor:pointer;}
+
+/* ---------- on air ---------- */
+.onair{flex:none;padding:14px 16px;border-bottom:1px solid var(--line);background:#1a1210;}
+.onair .lbl{font-size:10.5px;font-weight:800;letter-spacing:.14em;color:var(--red);margin-bottom:6px;}
+.onair .none{color:var(--ink3);font-size:14px;}
+.onair .who2{font-weight:700;margin-right:8px;}
+.onair .txt{color:var(--ink);}
+.onair .clear{margin-top:10px;background:none;border:1px solid var(--line);color:var(--ink2);
+  border-radius:6px;padding:7px 12px;font:inherit;font-size:12.5px;cursor:pointer;}
+.onair .clear:hover{color:var(--ink);border-color:var(--ink3);}
+
+/* ---------- queue ---------- */
+.queue{flex:1;overflow-y:auto;padding:10px 12px 40px;}
+.m{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:11px 13px;margin-bottom:9px;}
+.m .top{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:5px;}
+.m .u{font-weight:700;font-size:14px;}
+.m .tick{color:var(--red);font-size:11px;}
+.m .ago{color:var(--ink3);font-size:11.5px;margin-left:auto;font-variant-numeric:tabular-nums;}
+.m .b{font-size:15px;word-wrap:break-word;overflow-wrap:anywhere;}
+.m .acts{display:flex;gap:8px;margin-top:10px;}
+.m button{flex:1;font:inherit;font-size:13.5px;font-weight:600;border-radius:7px;padding:10px 8px;
+  cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--ink);}
+.m button.go{background:var(--red);border-color:var(--red);color:#fff;}
+.m button.hide{color:var(--gold);}
+.m button.ban{color:var(--red);}
+.m button:active{transform:translateY(1px);}
+.m.live{border-color:#5c2020;}
+
+.empty{color:var(--ink3);text-align:center;padding:40px 20px;font-size:14px;}
+
+/* ---------- sign in ---------- */
+.gate{margin:auto;max-width:340px;width:100%;padding:26px 22px;background:var(--panel);
+  border:1px solid var(--line);border-radius:10px;}
+.gate h2{margin:0 0 4px;font-size:17px;}
+.gate p{margin:0 0 16px;color:var(--ink2);font-size:13.5px;}
+.gate input{width:100%;background:#100d0b;border:1px solid var(--line);border-radius:7px;
+  padding:10px 12px;color:var(--ink);font:inherit;margin-bottom:9px;}
+.gate button{width:100%;background:var(--red);color:#fff;border:0;border-radius:7px;
+  padding:11px;font:inherit;font-weight:700;cursor:pointer;}
+.gate .err{color:#ff6b6b;font-size:13px;margin-top:10px;min-height:18px;}
+
+@media (min-width:860px){
+  .queue{padding:14px 18px 40px;}
+  .m .acts{max-width:420px;}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+
+<div class="bar">
+  <span class="dot" id="dot"></span>
+  <h1>Chat Moderator</h1>
+  <span class="who" id="who"></span>
+  <button id="out" hidden>Sign out</button>
+</div>
+
+<div id="app" hidden>
+  <div class="onair">
+    <div class="lbl">ON AIR NOW</div>
+    <div id="airBox"><span class="none">Nothing on air — release a message to put it up.</span></div>
+    <button class="clear" id="clearAir" hidden>Take off air</button>
+  </div>
+  <div class="queue" id="queue"><div class="empty">Waiting for messages…</div></div>
+</div>
+
+<div class="gate" id="gate" hidden>
+  <h2>Moderator sign in</h2>
+  <p>Use the account added to the moderator list. Anonymous visitors cannot sign in here.</p>
+  <input id="email" type="email" placeholder="Email" autocomplete="username">
+  <input id="pass" type="password" placeholder="Password" autocomplete="current-password">
+  <button id="in">Sign in</button>
+  <div class="err" id="err"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+(function () {
+  var URL_ = 'https://eyqtvdwchwfomhkfjimv.supabase.co';
+  var ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5cXR2ZHdjaHdmb21oa2ZqaW12Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4MTgyNzEsImV4cCI6MjEwMjM5NDI3MX0.8J_Mi9sOt4-BP8NOF2NHkkPcHnN4fXL8p0bUzbn8qu0';
+  var sb = window.supabase.createClient(URL_, ANON);
+
+  var gate = document.getElementById('gate'), app = document.getElementById('app');
+  var queue = document.getElementById('queue'), airBox = document.getElementById('airBox');
+  var clearAir = document.getElementById('clearAir'), dot = document.getElementById('dot');
+  var who = document.getElementById('who'), out = document.getElementById('out');
+  var rows = Object.create(null);       // id -> {data, el}
+  var air = null;
+
+  function ago(iso) {
+    var s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
+    if (s < 60) return Math.floor(s) + 's';
+    if (s < 3600) return Math.floor(s / 60) + 'm';
+    return Math.floor(s / 3600) + 'h';
+  }
+
+  /* ---------- actions ---------- */
+  function setStatus(id, status) {
+    return sb.from('messages').update({ status: status }).eq('id', id)
+      .select('id').then(function (r) {
+        if (r.error || !r.data || !r.data.length) {
+          alert('That did not take. Your account may not be on the moderator list.');
+        }
+      });
+  }
+  function ban(m) {
+    if (!confirm('Ban ' + m.display_name + '? Their messages will be hidden and they will not be able to post again.')) return;
+    sb.from('bans').insert({ user_id: m.user_id, reason: 'from moderator panel' }).then(function (r) {
+      if (r.error && String(r.error.message).indexOf('duplicate') < 0) {
+        alert('Ban failed — your account may not be on the moderator list.');
+        return;
+      }
+      sb.from('messages').update({ status: 'hidden' }).eq('user_id', m.user_id).then(function(){});
+    });
+  }
+
+  /* ---------- rendering ---------- */
+  function card(m) {
+    var el = document.createElement('div');
+    el.className = 'm' + (m.status === 'released' ? ' live' : '');
+
+    var top = document.createElement('div'); top.className = 'top';
+    var u = document.createElement('span'); u.className = 'u'; u.textContent = m.display_name;
+    top.appendChild(u);
+    if (m.is_verified) { var t = document.createElement('span'); t.className = 'tick'; t.textContent = '✓ verified'; top.appendChild(t); }
+    var a = document.createElement('span'); a.className = 'ago'; a.textContent = ago(m.created_at); top.appendChild(a);
+
+    var b = document.createElement('div'); b.className = 'b'; b.textContent = m.body;
+
+    var acts = document.createElement('div'); acts.className = 'acts';
+    var go = document.createElement('button'); go.className = 'go';
+    go.textContent = m.status === 'released' ? 'On air' : 'Put on air';
+    go.addEventListener('click', function () { setStatus(m.id, 'released'); });
+    var hd = document.createElement('button'); hd.className = 'hide'; hd.textContent = 'Hide';
+    hd.addEventListener('click', function () { setStatus(m.id, 'hidden'); });
+    var bn = document.createElement('button'); bn.className = 'ban'; bn.textContent = 'Ban';
+    bn.addEventListener('click', function () { ban(m); });
+    acts.appendChild(go); acts.appendChild(hd); acts.appendChild(bn);
+
+    el.appendChild(top); el.appendChild(b); el.appendChild(acts);
+    return el;
+  }
+
+  function paintAir() {
+    if (!air) {
+      airBox.innerHTML = '<span class="none">Nothing on air — release a message to put it up.</span>';
+      clearAir.hidden = true;
+      return;
+    }
+    airBox.innerHTML = '';
+    var w = document.createElement('span'); w.className = 'who2'; w.textContent = air.display_name;
+    var t = document.createElement('span'); t.className = 'txt'; t.textContent = air.body;
+    airBox.appendChild(w); airBox.appendChild(t);
+    clearAir.hidden = false;
+  }
+  clearAir.addEventListener('click', function () { if (air) setStatus(air.id, 'live'); });
+
+  function recomputeAir() {
+    var best = null;
+    for (var k in rows) {
+      var m = rows[k].data;
+      if (m.status === 'released' && m.released_at) {
+        if (!best || new Date(m.released_at) > new Date(best.released_at)) best = m;
+      }
+    }
+    air = best;
+    paintAir();
+  }
+
+  function upsert(m) {
+    var existing = rows[m.id];
+    if (m.status === 'hidden') {
+      if (existing) { existing.el.remove(); delete rows[m.id]; }
+      recomputeAir();
+      return;
+    }
+    var el = card(m);
+    if (existing) { existing.el.replaceWith(el); rows[m.id] = { data: m, el: el }; }
+    else {
+      rows[m.id] = { data: m, el: el };
+      var first = queue.firstChild;
+      if (first && first.className === 'empty') { queue.innerHTML = ''; first = null; }
+      queue.insertBefore(el, queue.firstChild);      // newest at the top
+    }
+    recomputeAir();
+  }
+
+  /* ---------- start ---------- */
+  function start(session) {
+    gate.hidden = true; app.hidden = false; out.hidden = false;
+    who.textContent = session.user.email || 'signed in';
+
+    sb.from('moderators').select('user_id').eq('user_id', session.user.id).then(function (r) {
+      if (!r.data || !r.data.length) {
+        who.textContent = (session.user.email || '') + ' — NOT a moderator';
+        who.style.color = '#ff6b6b';
+      }
+    });
+
+    sb.from('messages')
+      .select('id,user_id,display_name,body,status,is_verified,created_at,released_at')
+      .neq('status', 'hidden')
+      .order('id', { ascending: true })
+      .limit(200)
+      .then(function (r) {
+        queue.innerHTML = '';
+        (r.data || []).forEach(upsert);
+        if (!Object.keys(rows).length) queue.innerHTML = '<div class="empty">No messages yet.</div>';
+      });
+
+    sb.channel('bmtv-mod')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'messages' },
+          function (p) { if (p.new && p.new.id) upsert(p.new); })
+      .subscribe(function (s) { dot.className = 'dot ' + (s === 'SUBSCRIBED' ? 'on' : 'off'); });
+
+    setInterval(function () {
+      for (var k in rows) {
+        var a = rows[k].el.querySelector('.ago');
+        if (a) a.textContent = ago(rows[k].data.created_at);
+      }
+    }, 30000);
+  }
+
+  document.getElementById('in').addEventListener('click', function () {
+    var e = document.getElementById('email').value.trim();
+    var p = document.getElementById('pass').value;
+    document.getElementById('err').textContent = '';
+    sb.auth.signInWithPassword({ email: e, password: p }).then(function (r) {
+      if (r.error) { document.getElementById('err').textContent = r.error.message; return; }
+      start(r.data.session);
+    });
+  });
+  document.getElementById('pass').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') document.getElementById('in').click();
+  });
+  out.addEventListener('click', function () { sb.auth.signOut().then(function () { location.reload(); }); });
+
+  sb.auth.getSession().then(function (r) {
+    var s = r.data && r.data.session;
+    if (s && s.user && s.user.email) start(s);
+    else gate.hidden = false;
+  });
+})();
+</script>

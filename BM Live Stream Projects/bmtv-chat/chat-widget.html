@@ -1,0 +1,237 @@
+<!-- =====================================================================
+     BlackMarker.TV live chat — site widget
+     Paste this block at the END of any page that contains the chat markup
+     (#chatBody, #chatInput, #chatSend). It is self-contained.
+
+     The anon key below is MEANT to be public — it ships in every visitor's
+     browser. Every rule that matters lives in the database (RLS + triggers),
+     so this file being readable gives nobody any power. Never put the
+     service_role key here; that one bypasses all of it.
+     ===================================================================== -->
+
+<style>
+  /* name bar -- only shown until the visitor has picked a name */
+  .chat-name{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--border);align-items:center;}
+  .chat-name.hide{display:none;}
+  .chat-name input{flex:1;min-width:0;background:#100d0b;border:1px solid var(--border);border-radius:7px;
+    padding:8px 11px;color:var(--text);font:inherit;font-size:13px;}
+  .chat-name button{background:var(--red);border:0;border-radius:7px;padding:8px 13px;color:#fff;
+    font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;}
+  .chat-as{padding:6px 12px 0;font-size:11.5px;color:var(--muted);}
+  .chat-as.hide{display:none;}
+  .chat-as b{color:var(--text);}
+  .chat-as a{color:var(--red);cursor:pointer;text-decoration:none;margin-left:6px;}
+
+  /* a message that a moderator has put on air */
+  .msg .onair{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.09em;
+    background:var(--red);color:#fff;border-radius:3px;padding:1px 5px;margin-right:6px;vertical-align:1px;}
+  .msg .vtick{color:var(--red);margin-left:3px;font-size:10px;vertical-align:1px;}
+
+  .chat-head .cnt.connecting{color:var(--muted);}
+  .chat-head .cnt.online{color:#57D9A3;}
+  .chat-head .cnt.down{color:#ff6b6b;}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+(function () {
+  var SUPABASE_URL = 'https://eyqtvdwchwfomhkfjimv.supabase.co';
+  var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5cXR2ZHdjaHdmb21oa2ZqaW12Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4MTgyNzEsImV4cCI6MjEwMjM5NDI3MX0.8J_Mi9sOt4-BP8NOF2NHkkPcHnN4fXL8p0bUzbn8qu0';
+
+  var body  = document.getElementById('chatBody');
+  var input = document.getElementById('chatInput');
+  var send  = document.getElementById('chatSend');
+  if (!body || !input || !send || !window.supabase) return;
+
+  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  var me = null;                       // our user_id once signed in
+  var seen = Object.create(null);      // id -> element, so updates can find rows
+
+  /* ---------- small helpers ---------- */
+  var PALETTE = ['#E8181C','#FFC21E','#37E0C8','#7C9CFF','#FF8A3D','#57D9A3'];
+  function colorFor(id) {              // same person, same colour, every session
+    var h = 0;
+    for (var i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+    return PALETTE[h % PALETTE.length];
+  }
+  function status(text, cls) {
+    var c = document.querySelector('.chat-head .cnt');
+    if (c) { c.textContent = text; c.className = 'cnt ' + (cls || ''); }
+  }
+  function sysMsg(text) {
+    var d = document.createElement('div');
+    d.className = 'sys-msg';
+    d.textContent = text;
+    body.appendChild(d);
+    body.scrollTop = body.scrollHeight;
+  }
+  function atBottom() {
+    return body.scrollHeight - body.scrollTop - body.clientHeight < 60;
+  }
+
+  /* ---------- rendering ---------- */
+  function render(m) {
+    if (seen[m.id]) { update(m); return; }
+    var stick = atBottom();
+
+    var el = document.createElement('div');
+    el.className = 'msg';
+
+    var u = document.createElement('span');
+    u.className = 'u';
+    u.style.color = colorFor(m.user_id);
+    u.textContent = m.display_name;
+    if (m.is_verified) {
+      var v = document.createElement('span');
+      v.className = 'vtick'; v.textContent = '✓'; v.title = 'Verified account';
+      u.appendChild(v);
+    }
+
+    var t = document.createElement('span');
+    t.className = 'txt';
+    t.textContent = m.body;
+
+    el.appendChild(u);
+    el.appendChild(t);
+    seen[m.id] = el;
+    body.appendChild(el);
+    if (m.status === 'released') update(m);
+    if (stick) body.scrollTop = body.scrollHeight;
+  }
+
+  function update(m) {
+    var el = seen[m.id];
+    if (!el) return;
+    if (m.status === 'hidden') {        // moderator killed it -- vanish everywhere
+      el.remove();
+      delete seen[m.id];
+      return;
+    }
+    var tag = el.querySelector('.onair');
+    if (m.status === 'released' && !tag) {
+      tag = document.createElement('span');
+      tag.className = 'onair';
+      tag.textContent = 'ON AIR';
+      el.insertBefore(tag, el.firstChild);
+    } else if (m.status !== 'released' && tag) {
+      tag.remove();
+    }
+  }
+
+  /* ---------- display name ---------- */
+  var nameKey = 'bmtv-chat-name';
+  var myName = null;
+  try { myName = localStorage.getItem(nameKey); } catch (e) {}
+
+  var foot = document.querySelector('.chat-foot');
+  var nameBar = document.createElement('div');
+  nameBar.className = 'chat-name';
+  nameBar.innerHTML =
+    '<input maxlength="40" placeholder="Pick a name to chat as…" aria-label="Display name">' +
+    '<button type="button">Set</button>';
+  var asBar = document.createElement('div');
+  asBar.className = 'chat-as';
+  foot.parentNode.insertBefore(nameBar, foot);
+  foot.parentNode.insertBefore(asBar, foot);
+
+  var nameInput = nameBar.querySelector('input');
+  var nameBtn = nameBar.querySelector('button');
+
+  function paintName() {
+    if (myName) {
+      nameBar.classList.add('hide');
+      asBar.classList.remove('hide');
+      asBar.innerHTML = '';
+      asBar.appendChild(document.createTextNode('Chatting as '));
+      var b = document.createElement('b'); b.textContent = myName; asBar.appendChild(b);
+      var a = document.createElement('a'); a.textContent = 'change';
+      a.addEventListener('click', function () { myName = null; paintName(); nameInput.focus(); });
+      asBar.appendChild(a);
+      input.placeholder = 'Say something…';
+      input.disabled = false;
+      send.disabled = false;
+    } else {
+      nameBar.classList.remove('hide');
+      asBar.classList.add('hide');
+      input.placeholder = 'Pick a name first…';
+      input.disabled = true;
+      send.disabled = true;
+    }
+  }
+  function setName() {
+    var v = nameInput.value.trim().slice(0, 40);
+    if (!v) { nameInput.focus(); return; }
+    myName = v;
+    try { localStorage.setItem(nameKey, v); } catch (e) {}
+    paintName();
+    input.focus();
+  }
+  nameBtn.addEventListener('click', setName);
+  nameInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') setName(); });
+  paintName();
+
+  /* ---------- sending ---------- */
+  var sending = false;
+  function post() {
+    var v = input.value.trim();
+    if (!v || !me || !myName || sending) return;
+    sending = true;
+    var keep = v;
+    input.value = '';
+    sb.from('messages').insert({ user_id: me, display_name: myName, body: keep })
+      .then(function (res) {
+        sending = false;
+        if (!res.error) return;
+        var msg = String(res.error.message || '');
+        if (msg.indexOf('rate_limited') >= 0)      sysMsg('Slow down a second — too many messages at once.');
+        else if (msg.indexOf('banned') >= 0)       sysMsg('You are not able to post in this chat.');
+        else                                       sysMsg('Message did not send. Try again.');
+        input.value = keep;   // give them their text back rather than losing it
+      });
+  }
+  send.addEventListener('click', post);
+  input.addEventListener('keydown', function (e) { if (e.key === 'Enter') post(); });
+
+  /* ---------- start ---------- */
+  status('connecting…', 'connecting');
+
+  sb.auth.getSession().then(function (r) {
+    if (r.data && r.data.session) return r.data.session;
+    return sb.auth.signInAnonymously().then(function (r2) {
+      if (r2.error) throw r2.error;
+      return r2.data.session;
+    });
+  }).then(function (session) {
+    me = session.user.id;
+    // a real (non-anonymous) sign-in gets the verified tick
+    var anon = !session.user.email && !session.user.phone;
+    if (!anon) { /* is_verified is set server-side later if we add real auth */ }
+
+    return sb.from('messages')
+      .select('id,user_id,display_name,body,status,is_verified')
+      .neq('status', 'hidden')
+      .order('id', { ascending: false })
+      .limit(50);
+  }).then(function (res) {
+    if (res.error) throw res.error;
+    body.innerHTML = '';
+    sysMsg('Welcome to BlackMarker.TV — keep it respectful.');
+    (res.data || []).slice().reverse().forEach(render);
+    body.scrollTop = body.scrollHeight;
+
+    sb.channel('bmtv-chat')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' },
+          function (p) { render(p.new); })
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'messages' },
+          function (p) { update(p.new); })
+      .subscribe(function (s) {
+        if (s === 'SUBSCRIBED')            status('live', 'online');
+        else if (s === 'CHANNEL_ERROR')    status('reconnecting…', 'down');
+      });
+  }).catch(function (e) {
+    status('chat offline', 'down');
+    sysMsg('Chat is unavailable right now.');
+    if (window.console) console.warn('chat init failed:', e);
+  });
+})();
+</script>
