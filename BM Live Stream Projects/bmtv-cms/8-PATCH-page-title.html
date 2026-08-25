@@ -1,0 +1,44 @@
+<!-- =====================================================================
+     PATCH - page title into the hero
+     Add this ONCE, anywhere in the footer template, after the page content.
+     Nothing else in the footer changes; your macros are untouched.
+
+     It is already inside 3-FOOTER.html too, so if you ever re-paste that whole
+     file you can delete this - having it twice is harmless (the second run
+     finds nothing left to move) but there is no reason to keep both.
+
+     WHAT IT FIXES
+     The CMS prints the page title as the FIRST thing inside .page-body:
+
+         <div class="page-body">
+           <h1><pagetitle>Official BMTV Calendar</pagetitle></h1>   <- unstyled
+           ...
+             <div class="pg-title"><div class="page-title-area"></div></div>
+                                                                    ^ empty
+
+     So every page has a bare heading floating above the hero band, and a hole
+     inside the band where the headline belongs. Confirmed on Contact, the
+     calendar list, and an event detail page.
+
+     This moves the real h1 into the slot rather than copying its text, so the
+     heading keeps its h1 semantics. On calendar detail pages that means the
+     hero picks up the EVENT name on its own - which is why the body should not
+     hardcode a title there.
+
+     If a page supplies its own hero title, the CMS h1 is then a duplicate, so
+     it is hidden instead of stacking two headings.
+     ===================================================================== -->
+<script>
+(function () {
+  var h1 = document.querySelector('.page-body > h1');
+  if (!h1) return;
+  var slot = document.querySelector('.page-hero .pg-title');
+
+  if (slot && !slot.textContent.trim()) {
+    h1.classList.add('pg-title');
+    slot.parentNode.replaceChild(h1, slot);   // move it into the hero
+    return;
+  }
+  if (slot) h1.style.display = 'none';        // hero already has a title
+})();
+</script>
