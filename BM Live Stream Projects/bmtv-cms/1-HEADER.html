@@ -59,6 +59,14 @@
         <a class="s-tw" href="https://www.twitch.tv/blackmarkertv" target="_blank" rel="noopener" title="Twitch @blackmarkertv" aria-label="Twitch"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg></a>
       </div>
       <button class="btn btn-red btn-subscribe open-sub" id="openSub"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>Subscribe</button>
+
+      <!-- Mobile menu toggle. Hidden above 900px by CSS; the footer script
+           wires it to the nav panel. aria-expanded is both the accessibility
+           signal and the hook the bars-to-X animation uses. -->
+      <button class="nav-burger" id="navBurger" type="button"
+              aria-label="Menu" aria-controls="mainNav" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </header>
@@ -86,7 +94,7 @@
 </div>
 
 <!-- ============ MAIN NAV ============ -->
-<nav>
+<nav id="mainNav">
                                               <div class="nav-in">
     <a href="BlackMarkerTV-3-LIVE-PREVIEW.html" class="on">Home</a>
     <span class="has-sub">

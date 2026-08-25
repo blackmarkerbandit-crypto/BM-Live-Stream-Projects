@@ -71,6 +71,74 @@
     document.addEventListener('keydown', function(e){ if (e.key === 'Escape') subModal.classList.remove('open'); });
   }
 
+  // Mobile menu.
+  //
+  // Two things the desktop nav cannot do on a touch screen, both handled here:
+  //   * The panel itself has no open state -- CSS alone cannot toggle it.
+  //   * The dropdowns are :hover-based. On touch, tapping "Exclusive Shows"
+  //     fires hover and follows its href in the same gesture, so the submenu
+  //     can never be reached. Below the breakpoint the parent link's default
+  //     is prevented and the tap expands the section instead.
+  var burger = document.getElementById('navBurger');
+  var mainNav = document.getElementById('mainNav');
+  if (burger && mainNav) {
+    var MOBILE = window.matchMedia('(max-width:900px)');
+
+    function setMenu(open) {
+      document.body.classList.toggle('nav-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+      if (!open) {
+        mainNav.querySelectorAll('.has-sub.open').forEach(function (s) {
+          s.classList.remove('open');
+        });
+      }
+    }
+
+    burger.addEventListener('click', function () {
+      setMenu(!document.body.classList.contains('nav-open'));
+    });
+
+    // tap a dropdown parent to expand it, instead of following its href
+    mainNav.querySelectorAll('.has-sub > a').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        if (!MOBILE.matches) return;              // desktop keeps hover
+        e.preventDefault();
+        var sub = a.parentNode;
+        var wasOpen = sub.classList.contains('open');
+        mainNav.querySelectorAll('.has-sub.open').forEach(function (s) {
+          if (s !== sub) s.classList.remove('open');
+        });
+        sub.classList.toggle('open', !wasOpen);
+      });
+    });
+
+    // a real destination closes the menu behind it
+    mainNav.querySelectorAll('a[href]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (a.getAttribute('href') === '#') return;
+        setMenu(false);
+      });
+    });
+
+    // tapping the dimmed backdrop closes it -- the overlay is a ::after on
+    // body, so anything outside the panel counts
+    document.addEventListener('click', function (e) {
+      if (!document.body.classList.contains('nav-open')) return;
+      if (mainNav.contains(e.target) || burger.contains(e.target)) return;
+      setMenu(false);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setMenu(false);
+    });
+
+    // resizing past the breakpoint must not leave the page scroll-locked
+    // with a panel that is no longer visible
+    var onChange = function () { if (!MOBILE.matches) setMenu(false); };
+    if (MOBILE.addEventListener) MOBILE.addEventListener('change', onChange);
+    else if (MOBILE.addListener) MOBILE.addListener(onChange);
+  }
+
   // Share button &mdash; native share sheet where available, otherwise copy the link
   var shareBtn = document.getElementById('shareBtn');
   if (shareBtn) {

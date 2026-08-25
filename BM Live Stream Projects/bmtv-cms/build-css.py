@@ -266,6 +266,22 @@ def main():
         "",
         "/* the design's own link colours, re-asserted so the reset above cannot eat them */",
     ]
+    # A re-assertion has to out-specify the reset above, and the reset carries
+    # link pseudo-classes: a:link is (0,1,1), which beats a bare .topbar-btn at
+    # (0,1,0). Both are !important, so specificity decides and the reset wins --
+    # which is exactly how the Submit Your Music button ended up inheriting the
+    # top bar's grey. Emitting the same pseudo-class states alongside each
+    # selector lifts it above the reset in every state.
+    STATES = (":link", ":visited", ":hover", ":active", ":focus")
+
+    def with_states(sel):
+        parts = []
+        for one in [s.strip() for s in sel.split(",") if s.strip()]:
+            parts.append(one)
+            if not re.search(r':(link|visited|hover|active|focus)\b', one):
+                parts += [one + st for st in STATES]
+        return ",".join(parts)
+
     ctx2 = ""
     for c, sel, val in reasserts:
         if c != ctx2:
@@ -274,7 +290,8 @@ def main():
             if c:
                 guard.append(c + "{")
             ctx2 = c
-        guard.append("%s%s{color:%s !important;}" % ("  " if ctx2 else "", sel, val))
+        guard.append("%s%s{color:%s !important;}"
+                     % ("  " if ctx2 else "", with_states(sel), val))
     if ctx2:
         guard.append("}")
     print("link colours re-asserted: %d" % len(reasserts))
@@ -324,7 +341,16 @@ def main():
     if ctx:
         out.append("}")
 
-    body = "\n".join(head) + "\n".join(out) + "\n" + "\n".join(guard) + "\n"
+    # Hand-written CMS-only CSS (the mobile menu lives here). Appended after
+    # the generated rules so it can override them, and before the guard so the
+    # guard stays last.
+    extra = ""
+    add_path = os.path.join(HERE, "additions.css")
+    if os.path.exists(add_path):
+        extra = "\n\n" + open(add_path, encoding="utf-8").read().rstrip() + "\n"
+        print("appended additions.css  (%.1f KB)" % (len(extra) / 1024))
+
+    body = "\n".join(head) + "\n".join(out) + "\n" + extra + "\n".join(guard) + "\n"
     with open(OUT, "w", encoding="utf-8") as fh:
         fh.write(body)
     print("wrote %s  (%d rules, %.0f KB)"
