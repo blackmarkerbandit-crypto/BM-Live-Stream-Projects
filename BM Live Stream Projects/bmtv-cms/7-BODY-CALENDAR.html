@@ -1,0 +1,124 @@
+<!-- =====================================================================
+     BlackMarker.TV 3.0 - CALENDAR PAGE BODY
+     Paste into the CMS page editor for the Events Calendar page, between the
+     shared header and footer templates.
+
+     THE MACRO
+     Everything inside the BEGIN / END CALENDAR MACRO fence below is a
+     placeholder. Drop the CMS calendar macro in there -- the same one the
+     existing /Calendar page uses; copy it out of that page's editor.
+
+     Nothing else on this page needs to change when you do. The wrapper around
+     the fence is what the styling hangs off, so the macro can be swapped,
+     moved or reconfigured freely as long as it stays inside
+     <div class="bmtv-calendar"> ... </div>.
+
+     WHY THE WRAPPER EXISTS - this is not decoration
+     The calendar app writes its own <style> blocks into the BODY, after our
+     stylesheet has loaded:
+
+         .app-calendar-search-box { background-color:rgba(0,0,0,.05); ... }
+         .divCalendarLinearEntry .eventtitle { font-size:1em;font-weight:bold; }
+
+     A stylesheet in <head> loses to those at equal specificity, no matter how
+     it is written. The .bmtv-calendar wrapper adds one class to every rule we
+     write, which puts us above them. Remove the wrapper and the calendar
+     reverts to a light-grey search panel on a black page.
+
+     It also emits Bootstrap grid classes (col-md-6, row, form-control,
+     btn-block) and inline style="" attributes on a few elements. Those are
+     handled in the stylesheet; see the CALENDAR APP section there.
+
+     CSS      : in blackmarker-tv.css. Nothing to paste separately.
+     IMAGES   : none of its own. Event images come from the calendar app at
+                /images/EventImage<id>.jpg, uploaded per event in the CMS.
+     ===================================================================== -->
+
+
+<!-- ============ HERO ============ -->
+<section class="page-hero">
+  <div class="wrap">
+    <div class="pg-crumb">
+      <a href="/">Home</a>
+      <span class="sep">/</span>
+      <span>Calendar</span>
+    </div>
+    <div class="pg-hero-in">
+      <div>
+        <div class="pg-kicker">Live Streams &middot; Specials &middot; Events</div>
+        <h1 class="pg-title">Official Calendar</h1>
+        <p class="pg-desc">Every live broadcast, special interrupt and event we have on the books.
+        Streams land on <b>The Loop</b> afterwards, so if you miss one live you can still catch it
+        on demand.</p>
+      </div>
+      <div class="pg-hero-side">
+        <div class="pg-stat"><span class="n">Live</span><span class="l">Watch as it airs</span></div>
+        <div class="pg-stat"><span class="n">On Demand</span><span class="l">Replays hit The Loop</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ CALENDAR ============ -->
+<section class="section wrap">
+
+  <div class="sec-head" style="margin-bottom:18px;">
+    <div>
+      <div class="eyebrow">What&rsquo;s Coming Up</div>
+      <h2 class="sec-title">Events &amp; Live Streams</h2>
+    </div>
+    <a class="sec-link" href="/Schedule">Weekly schedule &rarr;</a>
+  </div>
+
+  <p class="cal-intro">Search by keyword or jump to a month. Click any event for full details.
+  Weekly programming lives on the <a href="/Schedule">schedule</a>; this page is for
+  dated broadcasts and one-offs.</p>
+
+  <div class="bmtv-calendar">
+
+    <!-- ================= BEGIN CALENDAR MACRO =================
+         Replace this entire comment block with the CMS calendar macro.
+
+         The app renders, in order:
+           form.app-calendar-search-box   keyword box, month select, submit
+           div.divCalendarLinearEntry     one per event, Bootstrap col-md-6
+             div.calendar-linear-entry-inner
+               div.date      the event image, clickable
+               div.info
+                 div.eventtitle   linked title
+                 div.times        date and time
+                 div.summary      description
+           ul.pagination          when there is more than one page
+
+         All of those are styled already. If the app is reconfigured to a
+         different layout (grid or month view instead of linear), send me a
+         sample of the rendered markup and I will skin the new classes.
+         ========================================================= -->
+    <div class="cal-placeholder">
+      <b>Calendar macro goes here.</b>
+      This box is a placeholder and disappears the moment the macro replaces it.
+    </div>
+    <!-- ================== END CALENDAR MACRO ================== -->
+
+  </div>
+</section>
+
+
+<!-- ============ CTA ============ -->
+<!-- Same block as the "Artists - Get Reviewed" snippet. If that is already a
+     reusable snippet in the CMS, insert the snippet here instead of this copy. -->
+<section class="section wrap">
+  <div class="cc cc-review">
+    <div class="cc-txt">
+      <div class="cc-eye">Artists &mdash; Get Reviewed</div>
+      <h2 class="cc-h">Think your record<br>can hang?</h2>
+      <p class="cc-p">Drop a video link and we&rsquo;ll put it in front of the panel on <b>Can You Dig It!?</b> &mdash; the
+      live music review show. Honest feedback, on air, in front of the network.</p>
+      <div class="cc-actions">
+        <a class="btn btn-red" href="/Contact-2026#contact-form">Submit Your Music</a>
+        <a class="btn btn-ghost" href="/Can-You-Dig-It">Watch the Show</a>
+      </div>
+    </div>
+  </div>
+</section>

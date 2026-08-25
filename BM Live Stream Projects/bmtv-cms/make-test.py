@@ -103,9 +103,12 @@ def build(outfile, title, body):
 def main():
     ok = True
     ok &= build("_TEST-header-footer.html", "CMS test - header + footer", PLACEHOLDER)
-    if os.path.exists(os.path.join(HERE, "4-BODY-CONTACT.html")):
-        ok &= build("_TEST-contact.html", "CMS test - Contact page",
-                    read("4-BODY-CONTACT.html"))
+    for src, out, title in [
+        ("4-BODY-CONTACT.html",  "_TEST-contact.html",  "CMS test - Contact page"),
+        ("7-BODY-CALENDAR.html", "_TEST-calendar.html", "CMS test - Calendar page"),
+    ]:
+        if os.path.exists(os.path.join(HERE, src)):
+            ok &= build(out, title, read(src))
     sys.exit(0 if ok else 1)
 
 
