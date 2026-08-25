@@ -1,0 +1,234 @@
+"""
+Merge every <style> block in the 3.0 preview pages into one stylesheet.
+
+WHY
+    The CMS takes one CSS template. The preview pages each carry their own
+    inline <style>, which is fine for standalone files and useless for a CMS.
+
+WHAT IT GUARANTEES
+    Two things are checked rather than hoped for, because a silent break here
+    would show up as "some page looks wrong" days later:
+
+    1. CONFLICTS. If the same selector is defined differently on different
+       pages, merging them means the last one silently wins everywhere. Every
+       such case is reported. (As of 2026-08-25 there is exactly one, and it is
+       an artefact of moving the chat panel's styles into bmtv-chat.js.)
+
+    2. CASCADE ORDER. Rules of equal specificity are resolved by order, so the
+       merged file has to keep every page's rules in their original relative
+       order. Unseen rules are inserted at the position they held on their own
+       page, not appended, and the result is verified as a supersequence of
+       all 18 pages before it is written.
+
+RUN
+    python build-css.py
+"""
+
+import os
+import re
+import glob
+import datetime as dt
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+PREVIEW = os.path.join(os.path.dirname(os.path.dirname(HERE)), "blackmarker-tv-3-preview")
+OUT = os.path.join(HERE, "blackmarker-tv.css")
+
+AT_RULE = re.compile(r'@(media|supports|layer|container)\b')
+
+
+def blocks(css, ctx=""):
+    """Ordered stream of ('comment', text) and ('rule', ctx, selector, decls)."""
+    out, i, n, buf = [], 0, len(css), ""
+    while i < n:
+        if css.startswith("/*", i):
+            j = css.find("*/", i + 2)
+            j = n if j < 0 else j + 2
+            if not buf.strip():
+                out.append(("comment", css[i:j]))
+            i = j
+            continue
+        c = css[i]
+        if c == "{":
+            depth, j = 1, i + 1
+            while j < n and depth:
+                if css[j] == "{":
+                    depth += 1
+                elif css[j] == "}":
+                    depth -= 1
+                j += 1
+            head = re.sub(r"\s+", " ", buf.strip())
+            body = css[i + 1:j - 1]
+            if head.startswith("@") and AT_RULE.match(head):
+                out += blocks(body, head if not ctx else ctx + " and " + head)
+            else:
+                out.append(("rule", ctx, head, body.strip()))
+            buf = ""
+            i = j
+        else:
+            buf += c
+            i += 1
+    return out
+
+
+def key_of(item):
+    return ("c", item[1].strip()) if item[0] == "comment" else ("r", item[1], item[2])
+
+
+def main():
+    files = sorted(glob.glob(os.path.join(PREVIEW, "*.html")))
+    pages = {}
+    for f in files:
+        html = open(f, encoding="utf-8", errors="replace").read()
+        css = "\n".join(re.findall(r"<style[^>]*>(.*?)</style>", html, re.S))
+        pages[os.path.basename(f)] = blocks(css)
+    print("read %d pages" % len(pages))
+
+    # --- conflicts ---------------------------------------------------------
+    defs = {}
+    for name, items in pages.items():
+        for it in items:
+            if it[0] != "rule":
+                continue
+            norm = ";".join(p.strip() for p in it[3].split(";") if p.strip())
+            defs.setdefault((it[1], it[2]), {}).setdefault(norm, []).append(name)
+    conflicts = {k: v for k, v in defs.items() if len(v) > 1}
+    print("selectors: %d unique, %d defined differently by page"
+          % (len(defs), len(conflicts)))
+    for (ctx, sel), variants in conflicts.items():
+        print("   CONFLICT %s%s" % (("[" + ctx + "] ") if ctx else "", sel))
+        for d, names in variants.items():
+            print("      %2d page(s): %s" % (len(names), ", ".join(n[:28] for n in names[:3])))
+        print("      -> merged by union; check the result if these disagree on a property")
+
+    # --- merge, keeping each page's relative order -------------------------
+    # The homepage leads because it is the template everything else is built
+    # from. An unseen rule is inserted right after the last rule already placed
+    # from the same page, never appended, so relative order survives.
+    lead = "BlackMarkerTV-3-LIVE-PREVIEW.html"
+    order = ([lead] if lead in pages else []) + sorted(
+        (p for p in pages if p != lead), key=lambda p: -len(pages[p]))
+
+    merged, at = [], {}
+    for name in order:
+        cursor = -1
+        for it in pages[name]:
+            k = key_of(it)
+            if k in at:
+                cursor = at[k]
+                continue
+            cursor += 1
+            merged.insert(cursor, it)
+            for kk in at:
+                if at[kk] >= cursor:
+                    at[kk] += 1
+            at[k] = cursor
+    # Union the declarations of any selector defined differently by page.
+    # Property-wise, not string concatenation: appending whole blocks would
+    # repeat every shared property once per page. Order of first appearance is
+    # kept, and a property redefined with a different value keeps the later one
+    # (CSS semantics inside a block) and is reported.
+    def decl_pairs(text):
+        pairs = []
+        for part in text.split(";"):
+            part = part.strip()
+            if not part or ":" not in part:
+                continue
+            prop, val = part.split(":", 1)
+            pairs.append((prop.strip(), val.strip()))
+        return pairs
+
+    variants = {}
+    for name in order:
+        for it in pages[name]:
+            if it[0] == "rule":
+                variants.setdefault(key_of(it), []).append(it[3])
+
+    for k, texts in variants.items():
+        if len(set(texts)) < 2:
+            continue
+        ordered, seen_props = [], {}
+        for t in texts:
+            for prop, val in decl_pairs(t):
+                if prop in seen_props:
+                    if seen_props[prop] != val:
+                        print("      note: %s redefines %s (%s -> %s); keeping the later value"
+                              % (k[2], prop, seen_props[prop], val))
+                        ordered[[p for p, _ in ordered].index(prop)] = (prop, val)
+                        seen_props[prop] = val
+                    continue
+                seen_props[prop] = val
+                ordered.append((prop, val))
+        i = at[k]
+        cur = merged[i]
+        merged[i] = ("rule", cur[1], cur[2],
+                     ";".join("%s:%s" % (p, v) for p, v in ordered) + ";")
+
+    # --- verify ------------------------------------------------------------
+    pos = {}
+    for i, it in enumerate(merged):
+        if it[0] == "rule":
+            pos[(it[1], it[2])] = i
+    bad = []
+    for name, items in pages.items():
+        seq = [pos[(it[1], it[2])] for it in items if it[0] == "rule"]
+        if seq != sorted(seq):
+            bad.append(name)
+    print("cascade order preserved : %s"
+          % ("YES for all %d pages" % len(pages) if not bad else "NO -> " + ", ".join(bad)))
+    if bad:
+        print("REFUSING to write a stylesheet that reorders rules.")
+        return
+
+    # --- write -------------------------------------------------------------
+    head = [
+        "/* =====================================================================",
+        "   BlackMarker.TV 3.0 — site stylesheet",
+        "",
+        "   Generated %s by bmtv-cms/build-css.py" % dt.date.today().isoformat(),
+        "   Merged from the <style> blocks of %d preview pages." % len(pages),
+        "   Verified: no rule reordering, %d selector conflict(s)." % len(conflicts),
+        "",
+        "   PASTE THIS WHOLE FILE into the CMS stylesheet template.",
+        "",
+        "   NOT IN HERE, on purpose:",
+        "     * Chat panel styles. bmtv-chat.js injects its own, scoped under",
+        "       .bmtv-chat, reading --red/--surface/--border from this file when",
+        "       they exist. Nothing to paste for chat.",
+        "     * Web fonts. There are none — the site uses the system UI stack.",
+        "",
+        "   IMAGES: no image files are referenced from this stylesheet. The only",
+        "   url() values are inline SVG data URIs for a few small icons, which",
+        "   stay as they are. The /images/<filename> rule applies to the HTML",
+        "   sections (img src, script src), not to this file.",
+        "   ===================================================================== */",
+        "",
+    ]
+
+    out, ctx = [], ""
+    for it in merged:
+        if it[0] == "comment":
+            if ctx:
+                out.append("}")
+                ctx = ""
+            out.append("\n" + it[1])
+            continue
+        _, c, sel, decl = it
+        if c != ctx:
+            if ctx:
+                out.append("}")
+            if c:
+                out.append("\n" + c + "{")
+            ctx = c
+        out.append("%s%s{%s}" % ("  " if ctx else "", sel, decl))
+    if ctx:
+        out.append("}")
+
+    body = "\n".join(head) + "\n".join(out) + "\n"
+    with open(OUT, "w", encoding="utf-8") as fh:
+        fh.write(body)
+    print("wrote %s  (%d rules, %.0f KB)"
+          % (OUT, sum(1 for i in merged if i[0] == "rule"), len(body) / 1024))
+
+
+if __name__ == "__main__":
+    main()

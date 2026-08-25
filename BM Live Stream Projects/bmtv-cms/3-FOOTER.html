@@ -1,0 +1,101 @@
+<!-- =====================================================================
+     BlackMarker.TV 3.0 — FOOTER
+     Paste into the CMS footer template. Runs on every page.
+
+     Contains, in order:
+       1. Footer: 3-column (logo/blurb, Work With Us, Stay in the Loop) plus
+          the copyright bar
+       2. Site-wide script: Subscribe modal + Share button
+       3. Chat embed script
+
+     ASSETS: /images/logo.png (same file the header uses).
+
+     WHAT WAS LEFT OUT, on purpose:
+       * The wireframe banner and its "Integration notes" toggle. Preview-only
+         scaffolding, not part of the real site.
+       * The chat On/Off toggle handler. It belongs to the homepage player
+         section, not to every page, and would throw on pages without it.
+
+     Every handler below is null-guarded, so a page missing the modal or the
+     share button costs nothing instead of throwing and killing the rest of
+     the script.
+     ===================================================================== -->
+
+<!-- ============ FOOTER (no chat support) ============ -->
+<footer>
+  <div class="foot-in">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="foot-logo" href="#"><img src="/images/logo.png" alt="Black Marker TV"></a>
+        <p>The Black Marker Bandit independent broadcast network — live music reviews, shows, battles, and events.</p>
+        <div class="foot-cc"><span class="ccmk">ChannelCast</span> · Platform &amp; hosting partner</div>
+      </div>
+      <div class="foot-col">
+        <h4>Work With Us</h4>
+        <a href="BlackMarkerTV-3-PARTNERSHIPS.html">Partnership Opportunities</a>
+        <a href="BlackMarkerTV-3-ADVERTISING.html">Advertising &amp; Promotions</a>
+        <a href="BlackMarkerTV-3-PRODUCTION.html">Streaming Production Services</a>
+        <a href="BlackMarkerTV-3-SUBMIT-MUSIC.html">Submit Your Music</a>
+      </div>
+      <div class="foot-col foot-signup">
+        <h4>Stay in the Loop</h4>
+        <div class="lbl">Sign up for the latest news, updates &amp; promotions sent directly to your email.</div>
+        <button class="btn btn-red btn-subscribe open-sub" style="margin-top:2px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>Subscribe</button>
+        <div class="socials socials-sm" style="margin-top:20px;">
+          <a class="s-yt" href="https://www.youtube.com/@blackmarkertv" target="_blank" rel="noopener" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.5-.4-5.2a2.7 2.7 0 00-1.9-1.9C18.9 4.5 12 4.5 12 4.5s-6.9 0-8.7.4a2.7 2.7 0 00-1.9 1.9C1 8.5 1 12 1 12s0 3.5.4 5.2a2.7 2.7 0 001.9 1.9c1.8.4 8.7.4 8.7.4s6.9 0 8.7-.4a2.7 2.7 0 001.9-1.9C23 15.5 23 12 23 12zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
+          <a class="s-ig" href="https://www.instagram.com/BlackMarkerTV" target="_blank" rel="noopener" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a class="s-fb" href="https://www.facebook.com/BlackMarkerTV" target="_blank" rel="noopener" aria-label="Facebook"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+          <a class="s-tw" href="https://www.twitch.tv/blackmarkertv" target="_blank" rel="noopener" aria-label="Twitch"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2022–2026 Black Marker Media LLC · All Rights Reserved</span>
+      <span>BlackMarker.TV · Wesley Chapel, FL</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ SITE-WIDE SCRIPT ============ -->
+<script>
+(function(){
+  // Subscribe modal — opened by any .open-sub button (header and footer both have one)
+  var subModal = document.getElementById('subModal');
+  if (subModal) {
+    document.querySelectorAll('.open-sub').forEach(function(b){
+      b.addEventListener('click', function(){ subModal.classList.add('open'); });
+    });
+    var closeSub = document.getElementById('closeSub');
+    if (closeSub) closeSub.addEventListener('click', function(){ subModal.classList.remove('open'); });
+    subModal.addEventListener('click', function(e){ if (e.target === subModal) subModal.classList.remove('open'); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') subModal.classList.remove('open'); });
+  }
+
+  // Share button — native share sheet where available, otherwise copy the link
+  var shareBtn = document.getElementById('shareBtn');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', function(){
+      var url = 'https://www.blackmarker.tv';
+      if (navigator.share) {
+        navigator.share({ title: 'Black Marker TV — The Free Loop', url: url }).catch(function(){});
+      } else {
+        var l = document.getElementById('shareLbl');
+        var o = l ? l.textContent : '';
+        if (navigator.clipboard) navigator.clipboard.writeText(url);
+        if (l) { l.textContent = 'Link Copied!'; setTimeout(function(){ l.textContent = o; }, 1600); }
+      }
+    });
+  }
+})();
+</script>
+
+<!-- ============ LIVE CHAT ============
+     Safe on every page: the script looks for a <div data-bmtv-chat> and does
+     nothing at all -- not even loading its library -- when there isn't one.
+     Add chat to a page with:  <div data-bmtv-chat data-room="main"></div>
+
+     NOTE ON THE PATH: /images/ per your convention. If the CMS has a proper
+     scripts or assets folder, point this there instead -- nothing else needs
+     to change.
+     ================================================================= -->
+<script src="/images/bmtv-chat.js" defer></script>
