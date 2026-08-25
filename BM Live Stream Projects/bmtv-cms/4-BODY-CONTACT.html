@@ -29,32 +29,19 @@
      ===================================================================== -->
 
 <!-- CONTACT HERO -->
-<section class="ct-hero">
+<section class="page-hero">
   <div class="wrap">
-    <div class="ct-crumb"><a href="BlackMarkerTV-3-LIVE-PREVIEW.html">Home</a> <span class="sep">/</span> <span>Contact</span></div>
-    <div class="ct-hero-in">
+    <div class="pg-crumb"><a href="BlackMarkerTV-3-LIVE-PREVIEW.html">Home</a> <span class="sep">/</span> <span>Contact</span></div>
+    <div class="pg-hero-in">
       <div>
-        <div class="ct-kicker">Contact &middot; Submissions &middot; Partnerships</div>
-        <h1 class="ct-title">Get At Us</h1>
-        <p class="ct-desc">Whether you&rsquo;re an artist trying to get your record reviewed on air, a brand looking to advertise, or an organizer who wants us covering your event &mdash; this is the door. Pick what you&rsquo;re here for and we&rsquo;ll route it to the right person.</p>
+        <div class="pg-kicker">Contact &middot; Submissions &middot; Partnerships</div>
+        <h1 class="pg-title">Get At Us</h1>
+        <p class="pg-desc">Whether you&rsquo;re an artist trying to get your record reviewed on air, a brand looking to advertise, or an organizer who wants us covering your event &mdash; this is the door. Pick what you&rsquo;re here for and we&rsquo;ll route it to the right person.</p>
       </div>
-      <div class="ct-hero-side">
-        <div class="ct-hero-stat"><span class="n">Video</span><span class="l">Preferred for submissions</span></div>
-        <div class="ct-hero-stat"><span class="n">YouTube</span><span class="l">Links are perfectly fine</span></div>
+      <div class="pg-hero-side">
+        <div class="pg-stat"><span class="n">Video</span><span class="l">Preferred for submissions</span></div>
+        <div class="pg-stat"><span class="n">YouTube</span><span class="l">Links are perfectly fine</span></div>
       </div>
-    </div>
-
-    <!-- topic quick-picks: set the dropdown + jump to the form -->
-    <div class="ct-chips" id="ctChips">
-      <button type="button" class="ct-chip is-on" data-topic="submission">&#9835; Music / Video Submission</button>
-      <button type="button" class="ct-chip" data-topic="review">&#9654; Live Music Review</button>
-      <button type="button" class="ct-chip" data-topic="advertising">Advertising</button>
-      <button type="button" class="ct-chip" data-topic="partnership">Partnership</button>
-      <button type="button" class="ct-chip" data-topic="pitch">Show Pitch</button>
-      <button type="button" class="ct-chip" data-topic="event">Event Invite / Coverage</button>
-      <button type="button" class="ct-chip" data-topic="speaking">Speaking / Conference Stream</button>
-      <button type="button" class="ct-chip" data-topic="press">Press / Media</button>
-      <button type="button" class="ct-chip" data-topic="general">General Inquiry</button>
     </div>
   </div>
 </section>
@@ -93,6 +80,21 @@
                topic is "submission" or "review", and make
                video_url + rights_ok required in that state.
              ================================================== -->
+        <!-- Topic quick-picks. These SET THE TOPIC FIELD, so they belong with
+             the form and move into the form tool along with it. Each button's
+             data-topic must match a value in the topic select. -->
+        <div class="ct-chips" id="ctChips">
+        <button type="button" class="ct-chip is-on" data-topic="submission">&#9835; Music / Video Submission</button>
+        <button type="button" class="ct-chip" data-topic="review">&#9654; Live Music Review</button>
+        <button type="button" class="ct-chip" data-topic="advertising">Advertising</button>
+        <button type="button" class="ct-chip" data-topic="partnership">Partnership</button>
+        <button type="button" class="ct-chip" data-topic="pitch">Show Pitch</button>
+        <button type="button" class="ct-chip" data-topic="event">Event Invite / Coverage</button>
+        <button type="button" class="ct-chip" data-topic="speaking">Speaking / Conference Stream</button>
+        <button type="button" class="ct-chip" data-topic="press">Press / Media</button>
+        <button type="button" class="ct-chip" data-topic="general">General Inquiry</button>
+    </div>
+
         <form class="ct-form" id="ctForm" novalidate>
 
           <div class="ct-form-head">
@@ -309,12 +311,17 @@
      =====================================================================
      This does TWO separate jobs. They have different fates in the CMS.
 
-     1. TOPIC CHIPS - keep this.
-        The quick-pick buttons above the form set the topic dropdown and
-        scroll down to it. This is page behaviour, not form behaviour, and
-        it keeps working as long as the form has a topic control. It finds
-        that control by id OR by name, so a form tool that renames
-        "f-topic" to something else still works.
+     1. TOPIC CHIPS - these are part of the FORM now.
+        The quick-pick buttons were in the page hero; they have been moved
+        inside the CMS FORM fence, directly above the form. They are form
+        controls -- each one sets the topic field -- so they belong next to
+        the field they drive and should move into the form tool WITH it.
+
+        If the form tool cannot host them, they still work as plain markup
+        sitting above the form: this code finds the topic control by id OR by
+        name, so a tool that renames "f-topic" does not break them. What must
+        stay true either way is that each button's data-topic matches a value
+        in the topic select.
 
      2. CONDITIONAL "YOUR MATERIAL" FIELDSET - REPRODUCE THIS IN THE FORM TOOL.
         When topic is "submission" or "review", the Your Material fieldset
@@ -359,8 +366,9 @@
       if (!chip) return;
       topic.value = chip.dataset.topic;
       sync();
-      var form = document.getElementById('contact-form');
-      if (form) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // No scroll: the chips now sit directly above the form, so the field
+      // they set is already on screen. They used to live up in the hero,
+      // which is why the old version jumped the page.
     });
   }
 

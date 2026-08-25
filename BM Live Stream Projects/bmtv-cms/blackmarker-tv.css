@@ -1047,6 +1047,71 @@ body.no-ann .bd-tag{display:none;}
 
 
 /* =====================================================================
+   PAGE HERO  (.page-hero)  -- shared by every secondary page
+
+   The design builds this same component four times over with a different
+   class prefix each: ct- on Contact, sch- on Schedule, bd- on Bodega, ac- on
+   Account. Compared rule by rule they are the same component -- crumb,
+   kicker, title, hero-in, hero-side and hero-stat are byte-identical across
+   all four, and the only differences anywhere are 2px of bottom padding on
+   the Schedule hero and 20px of max-width on its description.
+
+   So this is one set of rules the CMS can share, rather than four near-copies
+   that drift the first time anyone edits one. The per-page part is the
+   CONTENT -- crumb trail, kicker, title, description, and whether there are
+   stat cards on the right -- which the page supplies. The chrome is here.
+
+   The old prefixed rules are left alone. Pages that have not been ported yet
+   still use them, and nothing here touches them.
+   ===================================================================== */
+.page-hero{
+  background:radial-gradient(120% 100% at 20% 0%,rgba(232,24,28,.14),transparent 55%),#15110d;
+  border-bottom:1px solid #3a332b;
+  padding:26px 0 32px;
+}
+.pg-crumb{font-size:12.5px;color:var(--muted);margin-bottom:16px;}
+.pg-crumb a{color:var(--muted);transition:.15s;}
+.pg-crumb a:hover{color:var(--red);}
+.pg-crumb .sep{margin:0 7px;color:var(--muted2);}
+
+.pg-hero-in{display:grid;grid-template-columns:1.5fr .8fr;gap:34px;align-items:center;}
+.pg-kicker{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--red);margin-bottom:11px;}
+.pg-title{font-size:clamp(30px,4.4vw,50px);font-weight:900;letter-spacing:var(--disp);
+  line-height:1.02;margin-bottom:14px;}
+.pg-desc{color:var(--muted);font-size:15.5px;max-width:640px;line-height:1.6;}
+
+.pg-hero-side{display:flex;flex-direction:column;gap:12px;}
+.pg-stat{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--red);
+  border-radius:10px;padding:13px 16px;}
+.pg-stat .n{display:block;font-size:18px;font-weight:900;letter-spacing:var(--disp);}
+.pg-stat .l{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;}
+
+/* A hero with no stat cards should not leave a dead column. */
+.pg-hero-in.is-solo{grid-template-columns:1fr;}
+
+@media (max-width:980px){
+  .pg-hero-in{grid-template-columns:1fr;}
+  .pg-hero-side{flex-direction:row;flex-wrap:wrap;}
+  .pg-stat{flex:1;min-width:180px;}
+}
+
+
+/* =====================================================================
+   TOPIC CHIPS  (.ct-chips)
+
+   These live with the FORM, not the hero. They are form controls -- each one
+   sets the topic dropdown -- so they belong next to the field they drive and
+   inside the block that moves into the CMS form tool. Sitting up in the hero
+   they were page furniture that reached down into a form.
+
+   The margin flips from top to bottom because they now sit above the form
+   rather than below the hero copy.
+   ===================================================================== */
+.ct-chips{margin-top:0;margin-bottom:22px;}
+
+
+/* =====================================================================
    "ARTISTS - GET REVIEWED" CTA  (.cc.cc-review)
 
    Adds a full-bleed photo from the Can You Dig It!? studio so the block stops

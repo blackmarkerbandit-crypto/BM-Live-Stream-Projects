@@ -1,0 +1,65 @@
+<!-- =====================================================================
+     TEMPLATE - PAGE HERO  (every secondary page)
+
+     Paste at the top of a secondary page body and edit the five marked spots.
+     The chrome - background wash, red glow, bottom divider, type scale,
+     spacing, stat cards, responsive behaviour - all comes from the shared
+     stylesheet, so every page matches without anyone maintaining it.
+
+     WHY THIS IS A TEMPLATE AND NOT A SNIPPET
+     The structure is identical on every page but the CONTENT is not: crumb
+     trail, kicker, title, description and stats all change. A snippet with
+     fixed content cannot vary per page. If the CMS supports snippets WITH
+     parameters, this is a good candidate - pass in the five values below.
+     Otherwise paste and edit; the part worth sharing is the CSS, and that
+     already is shared.
+
+     WHAT THIS REPLACED
+     The design built this same component four separate times with a different
+     class prefix each - ct- on Contact, sch- on Schedule, bd- on Bodega, ac-
+     on Account. Rule for rule they were the same component; the only
+     differences in the whole set were 2px of padding and 20px of max-width.
+     One shared set of classes now covers all of them.
+
+     FORM CONTROLS DO NOT BELONG HERE. The Contact page had its topic
+     quick-pick chips in the hero, reaching down into a form further down the
+     page. Those moved into the form block. Keep the hero to page identity:
+     where am I, what is this page, what is it for.
+     ===================================================================== -->
+
+<section class="page-hero">
+  <div class="wrap">
+
+    <!-- (1) BREADCRUMB -->
+    <div class="pg-crumb">
+      <a href="BlackMarkerTV-3-LIVE-PREVIEW.html">Home</a>
+      <span class="sep">/</span>
+      <span>Page Name</span>
+    </div>
+
+    <!-- add class "is-solo" to pg-hero-in if this page has no stat cards,
+         or the copy sits in a narrow column with dead space beside it -->
+    <div class="pg-hero-in">
+      <div>
+        <!-- (2) KICKER - small red line above the title -->
+        <div class="pg-kicker">Section &middot; Context &middot; Keywords</div>
+
+        <!-- (3) TITLE -->
+        <h1 class="pg-title">Page Headline</h1>
+
+        <!-- (4) DESCRIPTION -->
+        <p class="pg-desc">One or two sentences on what this page is and who it is
+        for. Caps at 640px so the line length stays readable on wide screens.</p>
+      </div>
+
+      <!-- (5) STAT CARDS - optional. Delete this whole block if unused and
+           add is-solo to pg-hero-in above. Two or three works; more than
+           three starts to compete with the headline. -->
+      <div class="pg-hero-side">
+        <div class="pg-stat"><span class="n">Value</span><span class="l">What it means</span></div>
+        <div class="pg-stat"><span class="n">Value</span><span class="l">What it means</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
