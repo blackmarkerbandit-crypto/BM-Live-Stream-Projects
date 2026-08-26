@@ -1853,6 +1853,64 @@ ul{margin:0;}
 }
 
 /* =====================================================================
+   "POWERED BY CHANNELCAST" CTA  (.cc.cc-network)
+
+   Full-bleed photo of a figure facing a wall of video screens -- which is
+   literally the pitch: your own content, your own channel.
+
+   THE BLUE IS DELIBERATE. Everything else on this site is red on near-black,
+   and the instinct is to push a stray blue toward the palette. Not here:
+   ChannelCast's own branding is blue, and this is the ChannelCast pitch. The
+   colour marks it as a different product rather than looking like a mistake.
+
+   Scoped to .cc-network for the same reason .cc-review is scoped: the shared
+   .cc panel carries three different CTAs, and each needs its own picture or
+   none at all.
+
+   Scrim is heaviest on the LEFT, where the headline and copy sit, and lifts
+   toward the centre where the screens are. The right-hand "What you get" card
+   has its own opaque background, so the photo behind it is irrelevant.
+
+   Muted in the file too -- 72% saturation, 62% brightness -- so the stylesheet
+   only handles the scrim. 1600x900 rather than the 3840x2160 source, which is
+   4.1 MB nobody would ever see at that size.
+   ===================================================================== */
+.cc-network::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    /* vignette, so no edge meets the panel border as a hard line */
+    radial-gradient(ellipse 120% 130% at 50% 45%,
+      rgba(10,9,8,0) 32%, rgba(10,9,8,.55) 76%, rgba(10,9,8,.9) 100%),
+    /* scrim: protects the copy on the left, opens up toward the middle */
+    linear-gradient(100deg,
+      rgba(10,9,8,.95) 0%, rgba(10,9,8,.88) 26%,
+      rgba(10,9,8,.62) 55%, rgba(10,9,8,.74) 100%),
+    url('/images/cta-network.jpg');
+  background-size:cover, cover, cover;
+  background-position:center, center, center;
+  background-repeat:no-repeat, no-repeat, no-repeat;
+  pointer-events:none;
+  z-index:0;
+}
+/* copy and the side card both sit above the photo */
+.cc-network > *{position:relative;z-index:1;}
+
+@media (max-width:899px){
+  /* stacked, so the copy sits over more of the frame -- scrim goes vertical
+     and heavier at the top where the headline is */
+  .cc-network::after{
+    background-image:
+      radial-gradient(ellipse 140% 120% at 50% 50%,
+        rgba(10,9,8,0) 28%, rgba(10,9,8,.62) 78%, rgba(10,9,8,.93) 100%),
+      linear-gradient(to bottom,
+        rgba(10,9,8,.94) 0%, rgba(10,9,8,.86) 45%, rgba(10,9,8,.76) 100%),
+      url('/images/cta-network.jpg');
+  }
+}
+
+/* =====================================================================
    "ARTISTS - GET REVIEWED" CTA  (.cc.cc-review)
 
    Adds a full-bleed photo from the Can You Dig It!? studio so the block stops

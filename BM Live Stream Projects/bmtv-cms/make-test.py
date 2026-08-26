@@ -116,6 +116,7 @@ def main():
         ("26-HOME-1-PLAYER-CHAT.html","_TEST-home1.html",       "CMS test - Home section 1"),
         ("27-HOME-2-UPCOMING.html",  "_TEST-home2.html",       "CMS test - Home section 2"),
         ("28-HOME-3-LATEST.html",    "_TEST-home3.html",       "CMS test - Home section 3"),
+        ("29-HOME-5-CHANNELCAST-CTA.html","_TEST-home5.html",  "CMS test - Home section 5"),
         ("17-BODY-CAN-YOU-DIG-IT.html","_TEST-cudi.html",       "CMS test - Can You Dig It"),
         ("18-BODY-WEEKLY-INTERRUPT.html", "_TEST-weekly-interrupt.html", "CMS test - Weekly Interrupt"),
         ("19-BODY-FOR-THE-RECORD.html", "_TEST-for-the-record.html", "CMS test - For The Record"),

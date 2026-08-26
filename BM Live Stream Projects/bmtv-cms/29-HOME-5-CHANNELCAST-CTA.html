@@ -1,0 +1,48 @@
+<!-- =====================================================================
+     BlackMarker.TV 3.0 - HOMEPAGE, SECTION 5: POWERED BY CHANNELCAST
+     Paste directly UNDER section 3. (Section 4, Trending in Music, is being
+     dropped, so this follows Latest Videos.)
+
+     CSS      : re-paste blackmarker-tv.css - it carries the new .cc-network
+                background rules.
+     IMAGES   : ONE to upload - /images/cta-network.jpg
+
+     THE CONTAINER IS class="cc cc-network" - BOTH classes.
+       cc          the shared CTA panel
+       cc-network  adds the video-wall photo behind it
+     The same .cc panel is also used for "Artists - Get Reviewed" (cc-review,
+     studio photo) and "Never Miss a Drop" on Weekly Interrupt (no photo). The
+     variant class is what keeps the right picture on the right pitch.
+
+     TWO DEAD BUTTONS FIXED. Both were <button> elements with no destination -
+     they looked clickable and did nothing. Now real links:
+        Explore ChannelCast  ->  https://channelcast.tv
+        Book a Demo          ->  /Contact-2026#contact-form
+     Repoint either if there is somewhere better to send people.
+     ===================================================================== -->
+
+<!-- ============ WANT YOUR NETWORK LIKE THIS ============ -->
+<section class="section wrap">
+  <div class="cc cc-network">
+    <div class="cc-txt">
+      <div class="cc-eye">Powered by ChannelCast</div>
+      <h2 class="cc-h">Want your network<br>like this?</h2>
+      <p class="cc-p">BlackMarker.TV runs on ChannelCast &mdash; the same platform we build and manage for creators, venues, and businesses. Your own branded site, 24/7 loop, live channel, On Demand library, and chat. This whole page is the live demo.</p>
+      <div class="cc-actions">
+        <a class="btn btn-red" href="https://channelcast.tv" target="_blank" rel="noopener">Explore ChannelCast</a>
+        <a class="btn btn-ghost" href="/Contact-2026#contact-form">Book a Demo</a>
+      </div>
+    </div>
+    <div style="flex:0 0 250px;min-width:220px;">
+      <div style="border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:20px;">
+        <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">What you get</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;">
+          <div>&#9646; Branded streaming site</div>
+          <div>&#9646; 24/7 loop + live channel</div>
+          <div>&#9646; On Demand library</div>
+          <div>&#9646; Live chat + PPV</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
