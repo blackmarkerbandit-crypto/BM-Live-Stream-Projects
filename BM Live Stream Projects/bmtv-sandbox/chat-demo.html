@@ -2,17 +2,15 @@
 <!-- =====================================================================
      Live chat demo host — BMB Sandbox
 
-     A minimal page carrying the chat markup the widget expects
-     (#chatBody, #chatInput, #chatSend) plus the 3.0 site's colour
-     variables, so the widget renders exactly as it will on the real page.
+     A minimal page carrying the 3.0 site's colour variables, so the chat
+     renders exactly as it will on the real page.
 
-     The widget itself is NOT copied here. The include below pulls
-     ../bmtv-chat/chat-widget.html in at request time, so this page can
-     never drift from the real file. Edit the widget, refresh this page.
+     The panel is not written here. One div plus one script tag is the whole
+     integration -- the same one the CMS gets -- and bmtv-chat.js builds the
+     markup, styles and behaviour inside it.
 
      Served by serve.py — open http://127.0.0.1:8790/sandbox/chat-demo.html
-     (opening this file directly off disk will not work: the include is
-     resolved by the server, not the browser).
+     (off disk the script path and Supabase's origin checks both fail).
      ===================================================================== -->
 <html lang="en">
 <head>
@@ -60,9 +58,9 @@ h1{font-size:21px;letter-spacing:-.02em;margin-bottom:6px;}
 .stage .big{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--muted);}
 .stage .sm{font-size:12px;max-width:44ch;line-height:1.6;}
 
-/* No chat CSS here on purpose — the panel's styling arrives with the widget
-   include at the end of this file, from ../bmtv-chat/chat-widget.html. This
-   page owns layout only. */
+/* No chat CSS here on purpose — bmtv-chat.js injects the panel's own styles,
+   reading this page's --red/--surface/--border variables where they exist.
+   This page owns layout only. */
 
 /* --- how-to-test panel --- */
 .how{margin-top:26px;border:1px dashed var(--ann);border-radius:11px;background:var(--ann-bg);padding:19px 21px;}
@@ -82,8 +80,9 @@ h1{font-size:21px;letter-spacing:-.02em;margin-bottom:6px;}
 
   <div class="crumb"><a href="/">BMB Sandbox</a> &rsaquo; Live chat demo</div>
   <h1>Live chat — real Supabase build</h1>
-  <p class="lede">This is the actual widget from <code>bmtv-chat/chat-widget.html</code>, pulled in live by the
-  server. Messages you send here hit the real database and appear for anyone else with the page open.</p>
+  <p class="lede">The real chat, loaded the way the CMS will load it — one
+  <code>&lt;div data-bmtv-chat&gt;</code> and one <code>&lt;script src="/chat/bmtv-chat.js"&gt;</code>.
+  Messages you send here hit the real database and appear for anyone else with the page open.</p>
 
   <div class="grid">
     <div class="stage">
@@ -92,22 +91,10 @@ h1{font-size:21px;letter-spacing:-.02em;margin-bottom:6px;}
       testing chat, and the player pulls a lot of weight for nothing here.</div>
     </div>
 
-    <!-- the markup the widget binds to: #chatBody, #chatInput, #chatSend.
-         The wrapper is the grid item; the panel is out of flow inside it. -->
+    <!-- The wrapper is the grid item; the panel is out of flow inside it so a
+         long conversation cannot stretch the row. -->
     <div class="chat-col">
-    <div class="chat" id="chatPanel">
-      <div class="chat-head">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-        <span class="t">Live Chat</span><span class="cnt">sandbox</span>
-      </div>
-      <div class="chat-body" id="chatBody">
-        <div class="sys-msg">Connecting…</div>
-      </div>
-      <div class="chat-foot">
-        <input id="chatInput" placeholder="Chat as guest…" aria-label="Chat message">
-        <button class="chat-send" id="chatSend">Send</button>
-      </div>
-    </div>
+    <div class="chat" id="chatPanel" data-bmtv-chat data-room="main"></div>
     </div><!-- /.chat-col -->
   </div>
 
@@ -129,8 +116,8 @@ h1{font-size:21px;letter-spacing:-.02em;margin-bottom:6px;}
 
 </div>
 
-<!-- The real widget, inlined by serve.py at request time. Not a copy. -->
-<!--#include file="../bmtv-chat/chat-widget.html"-->
+<!-- The drop-in embed, exactly as the CMS will load it. -->
+<script src="/chat/bmtv-chat.js" defer></script>
 
 </body>
 </html>

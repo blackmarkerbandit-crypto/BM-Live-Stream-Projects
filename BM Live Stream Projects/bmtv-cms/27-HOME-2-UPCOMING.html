@@ -1,0 +1,203 @@
+<!-- =====================================================================
+     BlackMarker.TV 3.0 - HOMEPAGE, SECTION 2: COMING UP ON THE LOOP
+     Paste directly UNDER section 1 in the homepage body.
+
+     CSS      : nothing extra. All of it is already in blackmarker-tv.css.
+     IMAGES   : none.
+
+     &#9888; ONE FILE TO UPLOAD: loop-data.json -> /images/loop-data.json
+     Without it this section hides itself. It is the only part of the homepage
+     that cannot run on public ChannelCast endpoints alone: timeseek says what
+     is playing NOW, and there is no public endpoint for what plays NEXT.
+
+     RE-UPLOAD WHEN THE LOOPS CHANGE. Regenerate it with build-loop-data.py in
+     bmtv-sandbox, then upload the new file. 215 KB, and it covers the whole
+     week, so this is a "when you rebuild loops" job rather than a daily one.
+
+     The page is honest about staleness rather than silently wrong: it cross-
+     checks the schedule against the live player every 30 seconds, and if the
+     track on air is not where the schedule expects, it trusts the player and
+     re-syncs the list around it.
+     ===================================================================== -->
+
+<!-- ============ UPCOMING VIDEOS (playlist feed) ============ -->
+<section class="section up-section">
+  <div class="wrap">
+    <div style="padding:20px;">
+      <div class="sec-head" style="margin-bottom:16px;">
+        <div>
+          <div class="eyebrow">Coming Up on the Loop</div>
+          <h2 class="sec-title">Upcoming Videos</h2>
+        </div>
+        <a class="sec-link" href="#">See full schedule &rarr;</a>
+      </div>
+      <div class="up-list">
+        <div class="up-row"><span class="up-when">&mdash;</span><span class="up-mid"><span class="up-song">Loading the loop&hellip;</span></span><span class="up-dur"></span></div>
+      
+      </div>
+      
+      
+    </div>
+  
+  </div>
+</section>
+
+<!-- =====================================================================
+     COMING UP ON THE LOOP
+     Builds the list from two sources, and needs BOTH.
+
+       1. timeseek        ChannelCast, public, no auth. Says what is playing
+                          this second and how far into it.
+       2. loop-data.json  the weekly schedule and the track titles. Generated
+                          server-side because the ChannelCast API needs a
+                          token that can delete media, which cannot ship to a
+                          browser.
+
+     &#9888; UPLOAD loop-data.json TO /images/ OR THIS SECTION STAYS EMPTY. It is
+     the one part of the homepage that cannot run on public endpoints alone --
+     there is no public ChannelCast endpoint for "what plays next", only for
+     what is playing now.
+
+     RE-UPLOAD IT WHENEVER THE LOOPS CHANGE. Regenerate with
+     build-loop-data.py in bmtv-sandbox, then upload the new file. The page
+     notices staleness on its own: it cross-checks timeseek against the
+     schedule, and if the track on air is not where the schedule says it
+     should be, it trusts the player and re-syncs the list around it.
+
+     Times are worked out from ChannelCast's own list_schedules, so a
+     schedule change or a DST shift needs no edit here.
+
+     If the file is missing the section hides itself rather than sitting on
+     "Loading the loop..." forever.
+     ===================================================================== -->
+<script>
+(function () {
+  var DATA = "/images/loop-data.json";
+  var API  = "https://channelcast.tv";
+  var WEEK = 7 * 86400;
+  var RESYNC_MS = 30000;
+
+  var elList = document.querySelector('.up-list');
+  var section = document.querySelector('.up-section');
+  if (!elList) return;
+
+  var data = null, blk = null, items = [], idx = -1, cursor = 0, tickAt = 0, lastSeek = 0;
+
+  function mmss(s) {
+    s = Math.max(0, Math.round(s));
+    var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), x = s % 60;
+    return h ? h + ':' + String(m).padStart(2, '0') + ':' + String(x).padStart(2, '0')
+             : m + ':' + String(x).padStart(2, '0');
+  }
+  function rel(s) {
+    s = Math.round(s);
+    if (s <= 0) return 'Now';
+    return '+' + Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  }
+  function el(t, c, x) {
+    var e = document.createElement(t);
+    if (c) e.className = c;
+    if (x != null) e.textContent = x;
+    return e;
+  }
+
+  function weekSeconds() {
+    var n = new Date();
+    // getUTCDay() is Sunday-based; the schedule is Monday-based
+    var dow = (n.getUTCDay() + 6) % 7;
+    return dow * 86400 + n.getUTCHours() * 3600 + n.getUTCMinutes() * 60 + n.getUTCSeconds();
+  }
+  function pickBlock() {
+    var w = weekSeconds();
+    for (var i = 0; i < data.blocks.length; i++) {
+      var b = data.blocks[i];
+      var into = ((w - b.o) % WEEK + WEEK) % WEEK;
+      if (into < b.len) { blk = b; cursor = into; return true; }
+    }
+    return false;
+  }
+  function indexAt(c) {
+    var found = -1;
+    for (var i = 0; i < items.length; i++) { if (items[i].t <= c) found = i; else break; }
+    return found;
+  }
+
+  function render() {
+    if (idx < 0) return;
+    var frag = document.createDocumentFragment();
+    for (var n = idx; n < Math.min(idx + 7, items.length); n++) {
+      var it = items[n];
+      var row = el('div', 'up-row' + (n === idx ? ' now' : ''));
+      var when = el('span', 'up-when');
+      if (n === idx) { when.appendChild(el('span', 'd')); when.appendChild(document.createTextNode('Now')); }
+      else if (n === idx + 1) { when.textContent = 'Next'; }
+      else { when.textContent = rel(it.t - cursor); }
+      row.appendChild(when);
+
+      var mid = el('span', 'up-mid');
+      if (it.a) {
+        mid.appendChild(el('span', 'up-artist', it.a));
+        mid.appendChild(document.createTextNode(' '));
+        mid.appendChild(el('span', 'up-song', '\u2014 ' + it.s));
+      } else {
+        mid.appendChild(el('span', 'up-song', it.s));
+      }
+      row.appendChild(mid);
+      row.appendChild(el('span', 'up-dur', mmss(it.d)));
+      frag.appendChild(row);
+    }
+    elList.innerHTML = '';
+    elList.appendChild(frag);
+  }
+
+  // The player is the authority on what is on air. If it names a track that
+  // is not where the schedule says, trust the player and re-sync -- that is
+  // also the tell that loop-data.json needs regenerating.
+  function resync() {
+    fetch(API + '/api/v1/playback/timeseek/' + data.channel_id, { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (s) {
+        lastSeek = Date.now();
+        if (!s || !s.mediaId) return;
+        // loop-data stores a shortened id (last 8 hex, no dashes) to keep the
+        // file small enough to host by hand -- shorten the same way
+        var want = String(s.mediaId).replace(/-/g, '').slice(-8), at = -1;
+        for (var i = 0; i < items.length; i++) { if (items[i].i === want) { at = i; break; } }
+        if (at >= 0) { idx = at; cursor = items[at].t + (s.offsetSeconds || 0); render(); }
+      })
+      .catch(function () {});
+  }
+
+  function tick() {
+    var now = Date.now();
+    if (tickAt) cursor += (now - tickAt) / 1000;
+    tickAt = now;
+    var next = idx + 1;
+    if (next < items.length && cursor >= items[next].t) { idx = next; render(); }
+    else if (next >= items.length && pickBlock()) {
+      items = data.loops[blk.p] || []; idx = indexAt(cursor); render();
+    }
+    if (now - lastSeek > RESYNC_MS) resync();
+  }
+
+  fetch(DATA, { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    .then(function (d) {
+      data = d;
+      if (!data.blocks || !data.blocks.length || !pickBlock()) throw 0;
+      items = data.loops[blk.p] || [];
+      idx = indexAt(cursor);
+      if (idx < 0) idx = 0;
+      render();
+      resync();
+      tickAt = Date.now();
+      setInterval(tick, 1000);
+    })
+    .catch(function () {
+      // no schedule, nothing honest to show -- hide rather than sit on a
+      // loading message that will never resolve
+      if (section) section.style.display = 'none';
+      if (window.console) console.warn('Upcoming: /images/loop-data.json not reachable');
+    });
+})();
+</script>

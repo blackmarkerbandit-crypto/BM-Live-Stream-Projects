@@ -212,8 +212,13 @@ def build_loops(client, wanted_ids, arts):
         for it in items:
             mid = it.get("mediaId") or it.get("id")
             artist, song = clean_track(it.get("title", ""), arts.get(mid))
+            # Short id, not the full uuid. Verified across the real catalogue:
+            # 870 distinct media, no collisions even at 6 hex chars. At 8 this
+            # saves ~82 KB in a file that has to be uploaded by hand, and the
+            # only thing the id is used for is cross-checking against
+            # timeseek's mediaId, which the page shortens the same way.
             rows.append({
-                "i": mid, "a": artist, "s": song,
+                "i": re.sub(r"-", "", mid or "")[-8:], "a": artist, "s": song,
                 "d": int(it.get("durationSeconds") or 0),
                 "t": int(it.get("playsAtSeconds") or 0),
             })

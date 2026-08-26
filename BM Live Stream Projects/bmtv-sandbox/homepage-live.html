@@ -200,7 +200,9 @@
         // Trust the player over the schedule. If the media it names sits
         // somewhere else in this loop, move the cursor there; that also tells
         // us loop-data.json is behind and wants regenerating.
-        var want = seek.mediaId, at = -1;
+        // loop-data stores a shortened media id (last 8 hex, no dashes) to
+        // keep the file small enough to host by hand; shorten the same way
+        var want = String(seek.mediaId || '').replace(/-/g, '').slice(-8), at = -1;
         for (var i = 0; i < items.length; i++) {
           if (items[i].i === want) { at = i; break; }
         }
