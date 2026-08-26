@@ -1,0 +1,165 @@
+<!-- =====================================================================
+     BlackMarker.TV 3.0 - THE WEEKLY INTERRUPT SHOW PAGE BODY
+     Paste into the CMS page editor, between the shared header and footer.
+
+     CSS      : nothing extra. Every class is already in blackmarker-tv.css.
+     IMAGES   : ONE to upload - /images/show-art-weekly-interrupt.jpg
+     SCRIPTS  : THREE, all inside the episodes section, all required. The
+                episode list does not exist without them.
+
+     EPISODES COUNT is live. It reads the ChannelCast feed and counts items
+     in this show's category (The Weekly Interrupt), so it stops drifting. The number left in
+     the markup is the fallback if the feed cannot be reached.
+
+     HERO     : keeps its own .show-* classes. That hero is a different
+                component from the secondary-page one - artwork, stat row,
+                action buttons - and all nine show pages share it.
+
+     &#9888; CONTAINS A DOCUMENTED WORKAROUND for a ChannelCast limitation, marked
+     CC-08. Read the comment before removing it - the episode grid collapses
+     back to one scrolling row without it.
+     ===================================================================== -->
+
+<!-- SHOW HERO -->
+<section class="show-hero">
+  <div class="wrap">
+    <div class="show-crumb"><a href="/on-demand">Exclusive Shows</a> <span class="sep">/</span> <span>The Weekly Interrupt</span></div>
+    <div class="show-hero-in">
+      <div class="show-hero-info">
+        <div class="show-kicker">Exclusive Shows &middot; Talk &amp; Culture</div>
+        <h1 class="show-title">The Weekly Interrupt</h1>
+        <p class="show-desc">BlackMarker.TV's flagship weekly talk show &mdash; hip-hop, current events, comedy, and unfiltered interviews with the culture. New episodes every week from the BMB studio.</p>
+        <div class="show-stats">
+          <div class="show-stat"><span class="n" id="epCount">12</span><span class="l">Episodes</span></div>
+          <div class="show-stat"><span class="n">Weekly</span><span class="l">New Drops</span></div>
+          <div class="show-stat"><span class="n">2024</span><span class="l">On Air Since</span></div>
+        </div>
+        <div class="show-actions">
+          <a class="btn btn-red" href="#episodes"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right:6px;vertical-align:-2px;"><path d="M8 5v14l11-7z"/></svg>Browse Episodes</a>
+          <button class="btn btn-ghost">+ Follow</button>
+        </div>
+      </div>
+      <div class="show-hero-media">
+        <img class="show-art-img" src="/images/show-art-weekly-interrupt.jpg" alt="The Weekly Interrupt">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EPISODES &mdash; ChannelCast OTT renderer (browse + play) -->
+<section class="section wrap" id="episodes">
+  <div class="sec-head">
+    <div>
+      <div class="eyebrow">The Archive &middot; Watch Now</div>
+      <h2 class="sec-title">All Episodes</h2>
+    </div>
+  </div>
+  <!-- ================= BEGIN CHANNELCAST OTT =================
+       The episode list is rendered by ChannelCast, not by this page:
+         1. the mount div, with a fallback inside it that only shows if the
+            script never loads
+         2. ott-renderer.js from channelcast.tv -- must stay on that domain
+         3. OTTRenderer.mount() with the feed URL, category filter and theme
+
+       category MUST match the ChannelCast category name exactly, or the feed
+       renders empty. This page uses: The Weekly Interrupt
+
+       The feed URL carries a token. It ships to every browser so it is public
+       by design, but if it is rotated in ChannelCast it has to change here.
+       ========================================================== -->
+  <div class="ott-wrap">
+    <div id="cc-ott-019eba4dbb24746eafa619f8fea1e9aa">
+      <div class="ott-fallback">
+        <span class="pill"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>ChannelCast OTT episode grid</span>
+        Loading episodes&hellip; if this stays put, the ChannelCast OTT script did not load.</div>
+    </div>
+  </div>
+  <!-- ChannelCast OTT renderer: pulls the content feed, filters to "The Weekly Interrupt", themed to brand -->
+  <script src="https://channelcast.tv/ott/ott-renderer.js"></script>
+  <script>
+    // Declared once and shared by the renderer and the counter below, so the
+    // two can never disagree about which show this page is.
+    var OTT_TARGET   = "#cc-ott-019eba4dbb24746eafa619f8fea1e9aa";
+    var OTT_FEED     = "https://channelcast.tv/api/v1/feeds/019eba4d-bb24-746e-afa6-19f8fea1e9aa?format=mrss&expires=2100206919&token=Tn1sKSyTcrga-KPVejX4BJpkbPXRcKkIaZ2twvo0Rsw";
+    var OTT_CATEGORY = "The Weekly Interrupt";
+
+    OTTRenderer.mount({
+      target: OTT_TARGET,
+      feedUrl: OTT_FEED,
+      category: OTT_CATEGORY,
+      theme: { bg: "transparent", tile: "#1c1917", text: "#F2EFEC", accent: "#E8181C" }
+    });
+  </script>
+  <!-- TEMPORARY WORKAROUND &mdash; force grid layout.
+       The renderer only enters grid mode when a user clicks a category
+       (verticalBrowseMode = Boolean(state.activeCategory)), and mount() exposes no
+       layout option. So we apply ChannelCast's OWN grid class (.ott-track-vertical)
+       to the rendered track. Remove this once CC-08 ships a real layout option. -->
+  <script>
+    (function () {
+      var host = document.getElementById('cc-ott-019eba4dbb24746eafa619f8fea1e9aa');
+      if (!host) return;
+      function forceGrid() {
+        host.querySelectorAll('.ott-track').forEach(function (t) {
+          t.classList.add('ott-track-vertical');
+        });
+        host.querySelectorAll('.ott-track-nav').forEach(function (n) {
+          n.style.display = 'none';   // carousel arrows are meaningless in grid mode
+        });
+      }
+      new MutationObserver(forceGrid).observe(host, { childList: true, subtree: true });
+      forceGrid();
+      [300, 800, 1500, 3000].forEach(function (ms) { setTimeout(forceGrid, ms); });
+    })();
+  </script>
+  <!-- =====================================================================
+       LIVE EPISODES COUNT
+       The stat at the top of the page was typed by hand and drifts every time
+       something is published. The ChannelCast feed is public and CORS-open, so
+       the page counts its own category instead.
+
+       Fails silently: an unreachable feed leaves the typed number on screen,
+       which beats a zero or an error where a number should be.
+       ===================================================================== -->
+  <script>
+  (function () {
+    var el = document.getElementById('epCount');
+    if (!el || !window.fetch || !window.DOMParser) return;
+
+    fetch(OTT_FEED, { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.text() : null; })
+      .then(function (xml) {
+        if (!xml) return;
+        var doc = new DOMParser().parseFromString(xml, 'application/xml');
+        if (doc.querySelector('parsererror')) return;
+        var items = doc.getElementsByTagName('item'), n = 0;
+        for (var i = 0; i < items.length; i++) {
+          var tags = items[i].getElementsByTagName('*');
+          for (var j = 0; j < tags.length; j++) {
+            var t = tags[j];
+            if ((t.localName || t.nodeName).toLowerCase() !== 'category') continue;
+            if ((t.textContent || '').trim() === OTT_CATEGORY) { n++; break; }
+          }
+        }
+        if (n > 0) el.textContent = n;
+      })
+      .catch(function () { /* keep the fallback number */ });
+  })();
+  </script>
+  <!-- ================== END CHANNELCAST OTT ================== -->
+</section>
+
+<!-- CTA -->
+<section class="section wrap">
+  <div class="cc cc-review">
+    <div class="cc-txt">
+      <div class="cc-eye">Never Miss a Drop</div>
+      <h2 class="cc-h">New Weekly Interrupt<br>every week.</h2>
+      <p class="cc-p">Get an alert the moment a new episode goes live, plus event drops and PPV announcements &mdash; straight to your inbox.</p>
+      <div class="cc-actions">
+        <button class="btn btn-red open-sub">Subscribe for Updates</button>
+        <button class="btn btn-ghost">Watch on the Live Loop</button>
+      </div>
+    </div>
+  </div>
+</section>

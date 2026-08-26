@@ -114,6 +114,14 @@ def main():
         ("15-BODY-SUBMIT-MUSIC.html", "_TEST-submit-music.html", "CMS test - Submit Your Music"),
         ("16-BODY-ACCOUNT.html",      "_TEST-account.html",      "CMS test - Account"),
         ("17-BODY-CAN-YOU-DIG-IT.html","_TEST-cudi.html",       "CMS test - Can You Dig It"),
+        ("18-BODY-WEEKLY-INTERRUPT.html", "_TEST-weekly-interrupt.html", "CMS test - Weekly Interrupt"),
+        ("19-BODY-FOR-THE-RECORD.html", "_TEST-for-the-record.html", "CMS test - For The Record"),
+        ("20-BODY-ALIEN-PODCAST.html", "_TEST-alien-podcast.html", "CMS test - Alien Podcast"),
+        ("21-BODY-TALKING-TIPSY.html", "_TEST-talking-tipsy.html", "CMS test - Talking Tipsy"),
+        ("22-BODY-DUH-DIGGITY.html", "_TEST-duh-diggity.html", "CMS test - Duh Diggity"),
+        ("23-BODY-2-BAFOONZ.html", "_TEST-2-bafoonz.html", "CMS test - 2 Bafoonz"),
+        ("24-BODY-PERFORMANCE-BATTLES.html", "_TEST-performance-battles.html", "CMS test - Performance Battles"),
+        ("25-BODY-SPECIAL-INTERRUPTS.html", "_TEST-special-interrupts.html", "CMS test - Special Interrupts"),
     ]:
         if os.path.exists(os.path.join(HERE, src)):
             ok &= build(out, title, read(src))
