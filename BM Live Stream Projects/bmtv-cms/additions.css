@@ -1010,6 +1010,34 @@ ul{margin:0;}
 }
 
 /* =====================================================================
+   SIDE PADDING ON .wrap  -- the mobile "flush to the edge" fix
+
+   .wrap sets padding:0 24px. But .wrap is regularly combined with another
+   class on the SAME element, and two of those also use the padding
+   SHORTHAND, which resets all four sides:
+
+       .section{padding:40px 0}        41 sections across the site
+       .live-wrap{padding:26px 0 48px} the homepage player row
+
+   Both are defined after .wrap and carry the same specificity, so they win
+   outright and the horizontal padding becomes 0. Nobody notices on a desktop,
+   because .wrap is also max-width:1300px and the leftover viewport looks like
+   padding. On a phone the viewport is narrower than that max-width, so the
+   content runs edge to edge -- which is exactly what it looked like.
+
+   Restated here as LONGHANDS. Longhands do not disturb the vertical padding
+   those classes are actually setting, this file is appended last so it wins
+   on source order, and it covers any future class combined with .wrap rather
+   than just the two that do it today.
+   ===================================================================== */
+.wrap{padding-left:24px;padding-right:24px;}
+
+/* Small phones: 24px a side out of ~360px is a lot of the screen. */
+@media (max-width:420px){
+  .wrap{padding-left:16px;padding-right:16px;}
+}
+
+/* =====================================================================
    "POWERED BY CHANNELCAST" CTA  (.cc.cc-network)
 
    Full-bleed photo of a figure facing a wall of video screens -- which is
