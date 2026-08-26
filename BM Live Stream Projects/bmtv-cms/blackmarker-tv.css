@@ -1815,6 +1815,29 @@ ul{margin:0;}
 
 
 /* =====================================================================
+   WIREFRAME TEXTURE OVER THE LIVE PLAYER  -- removed
+
+   .player-stage::after paints a 44px graph-paper grid across the whole
+   stage. That was the wireframe's texture for an EMPTY player box. The real
+   ChannelCast embed now mounts inside that same box, so the grid sits on top
+   of the video.
+
+   WHY IT CAME BACK AFTER BEING DELETED ONCE
+   The rule is not in one place. All 18 preview pages carry their own copy of
+   the base stylesheet, and every one of them defines it. Deleting it from a
+   single page did nothing, because build-css.py merges all 18 and the other
+   17 put it straight back. That is the merge being faithful, which is what it
+   is for -- but faithful includes reviving something deleted from one copy.
+
+   Overriding it HERE is what makes it stick: additions.css is appended after
+   the merged rules, so this wins, and it survives every regeneration.
+
+   It is pointer-events:none, so it never blocked playback -- it was only ever
+   visible.
+   ===================================================================== */
+.player-stage::after{display:none !important;}
+
+/* =====================================================================
    "ARTISTS - GET REVIEWED" CTA  (.cc.cc-review)
 
    Adds a full-bleed photo from the Can You Dig It!? studio so the block stops
