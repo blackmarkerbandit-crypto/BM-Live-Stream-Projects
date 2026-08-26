@@ -1780,6 +1780,41 @@ ul{margin:0;}
 
 
 /* =====================================================================
+   CHANNELCAST OTT EMBED  (.ott-wrap)
+
+   The OTT renderer is built to run as a standalone app filling a browser
+   tab, so it ships chrome that makes no sense embedded in a page section:
+
+       <header class="ott-nav">          its own top bar
+         <div class="ott-brand">           channel name, duplicating our H1
+         <div class="ott-tools">           filters toggle and refresh buttons
+       <div class="ott-body">            grid: 300px sidepanel + 1fr main
+         <aside class="ott-sidepanel">     category filters
+
+   On a show page all of that is redundant. The page already says which show
+   this is, and the feed is filtered to one category, so a category filter
+   panel filters nothing. Hidden below, leaving the featured hero and the
+   episode grid underneath -- which is the whole reason the embed is here.
+
+   .ott-app also sets min-height:100vh, correct for a full-tab app and wrong
+   inside a section; it would leave a screen of empty space under the grid.
+
+   Scoped under .ott-wrap because the renderer injects its own stylesheet at
+   runtime, which lands after ours. The extra class is what outranks it.
+
+   The filters toggle is the "hamburger" -- data-toggle-panel, not navigation.
+   Nothing is lost by hiding it while the feed shows a single category.
+   ===================================================================== */
+.ott-wrap .ott-nav{display:none !important;}
+.ott-wrap .ott-sidepanel{display:none !important;}
+.ott-wrap .ott-body{grid-template-columns:1fr !important;padding:0 !important;}
+.ott-wrap .ott-app{min-height:0 !important;background:transparent !important;}
+
+/* the hero is the featured video -- keep it, just stop it eating the screen */
+.ott-wrap .ott-hero{min-height:min(56vh,420px) !important;border-radius:14px;overflow:hidden;}
+
+
+/* =====================================================================
    "ARTISTS - GET REVIEWED" CTA  (.cc.cc-review)
 
    Adds a full-bleed photo from the Can You Dig It!? studio so the block stops
