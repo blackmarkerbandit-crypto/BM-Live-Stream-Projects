@@ -56,13 +56,15 @@ sys.path.insert(0, BUILDER)
 #
 # Performance Battles is deliberately absent -- it lives in the Event Streams
 # dropdown only.
+# Paths are the LIVE CMS urls, taken from the site's own nav rather than
+# guessed -- the preview filenames these used to carry would 404 on the site.
 SHOW_CATEGORIES = [
-    ("Can You Dig It!? Live Music Review", "Can You Dig It!?",      "BlackMarkerTV-3-CAN-YOU-DIG-IT.html"),
-    ("The Weekly Interrupt",               "The Weekly Interrupt",  "BlackMarkerTV-3-WEEKLY-INTERRUPT.html"),
-    ("For The Record",                     "For The Record",        "BlackMarkerTV-3-FOR-THE-RECORD.html"),
-    ("The Alien Podcast",                  "The Alien Podcast",     "BlackMarkerTV-3-ALIEN-PODCAST.html"),
-    ("Talking Tipsy",                      "Talking Tipsy",         "BlackMarkerTV-3-TALKING-TIPSY.html"),
-    ("Special Interrupts",                 "Special Interrupts",    "BlackMarkerTV-3-SPECIAL-INTERRUPTS.html"),
+    ("Can You Dig It!? Live Music Review", "Can You Dig It!?",      "/Can-You-Dig-It-2026"),
+    ("The Weekly Interrupt",               "The Weekly Interrupt",  "/The-Weekly-Interrupt-2026"),
+    ("For The Record",                     "For The Record",        "/For-The-Record-2026"),
+    ("The Alien Podcast",                  "The Alien Podcast",     "/The-Alien-Podcast-2026"),
+    ("Talking Tipsy",                      "Talking Tipsy",         "/Talking-Tipsy-2026"),
+    ("Special Interrupts",                 "Special Interrupts",    "/Special-Interrupts-2026"),
 ]
 
 WEEK = 7 * 86400

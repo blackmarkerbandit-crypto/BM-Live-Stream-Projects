@@ -1,0 +1,132 @@
+<!-- =====================================================================
+     BlackMarker.TV 3.0 - HOMEPAGE, SECTION 3: LATEST VIDEOS
+     Paste directly UNDER section 2 in the homepage body.
+
+     CSS      : nothing extra.
+     IMAGES   : none of its own. The posters come from ChannelCast at
+                channelcast.tv/uploads/..., managed per episode there.
+
+     DATA     : the same /images/loop-data.json as section 2. If that is
+                already uploaded, this section needs nothing further. If it is
+                missing, the section hides rather than showing empty boxes.
+
+     The show links point at the live CMS urls, taken from the site's own nav.
+     They used to be preview filenames, which would have 404'd on every card.
+
+     RE-UPLOAD loop-data.json after publishing an episode, or this row keeps
+     showing the previous one. Regenerate with build-loop-data.py.
+     ===================================================================== -->
+
+<!-- ============ LATEST VIDEOS (per category) ============ -->
+<section class="section latest-section">
+  <!-- BACKGROUND HOLDER: set background-image on .latest-bg later, or drop <img class="latest-bg-img" src="..."> inside it -->
+  <div class="latest-bg" id="latestBg"></div>
+  <div class="wrap">
+    <div style="padding:20px;">
+      <div class="sec-head" style="margin-bottom:16px;">
+        <div>
+          <div class="eyebrow">Fresh Episodes</div>
+          <h2 class="sec-title">Latest Videos</h2>
+        </div>
+        <a class="sec-link" href="#">All Exclusive Shows &rarr;</a>
+      </div>
+      <div class="grid-cat">
+        <div class="card full"><div class="thumb"></div><div class="c-title">Loading&hellip;</div><div class="c-meta"></div></div>
+      
+      </div>
+      
+    </div>
+  
+  </div>
+</section>
+
+<!-- =====================================================================
+     LATEST VIDEOS
+     One card per show, each showing that show's NEWEST item.
+
+     Reads the same /images/loop-data.json as section 2, so if that file is
+     already uploaded there is nothing more to do here.
+
+     WHERE THE "NEWEST" COMES FROM. Not a date parsed out of a filename --
+     ChannelCast's own category ordering. The generator takes each category's
+     item at sort 0, which is the running order maintained in ChannelCast, so
+     re-ordering a category there changes this row without touching the page.
+
+     WHY THE CARDS LINK TO THE SHOW AND NOT THE EPISODE. The ChannelCast embed
+     plays a CHANNEL -- it takes a channelId and has no VOD mode, and there is
+     no public watch page for a single item (/watch/{id} and /media/{id} both
+     404). The S3 file could be played directly, but that bypasses
+     ChannelCast's own play tracking, so those views would never appear in
+     play_report. Landing on the show page is also simply better than dropping
+     someone into hour two of a three-hour podcast.
+
+     Hides itself if the data file is missing, rather than leaving a row of
+     empty boxes.
+     ===================================================================== -->
+<script>
+(function () {
+  var DATA = "/images/loop-data.json";
+
+  var grid = document.querySelector('.grid-cat');
+  var section = document.querySelector('.latest-section');
+  if (!grid) return;
+
+  function mmss(s) {
+    s = Math.max(0, Math.round(s));
+    var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), x = s % 60;
+    return h ? h + ':' + String(m).padStart(2, '0') + ':' + String(x).padStart(2, '0')
+             : m + ':' + String(x).padStart(2, '0');
+  }
+  function el(t, c, x) {
+    var e = document.createElement(t);
+    if (c) e.className = c;
+    if (x != null) e.textContent = x;
+    return e;
+  }
+  function niceDate(iso) {
+    if (!iso) return '';
+    var p = iso.split('-');
+    var d = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2]));
+    return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', timeZone: 'UTC' });
+  }
+
+  fetch(DATA, { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    .then(function (d) {
+      if (!d.shows || !d.shows.length) throw 0;
+      var frag = document.createDocumentFragment();
+
+      d.shows.forEach(function (s) {
+        var card = el(s.page ? 'a' : 'div', 'card full');
+        if (s.page) {
+          card.href = s.page;
+          card.setAttribute('aria-label', s.category + ' \u2014 ' + s.title);
+        }
+
+        var thumb = el('div', 'thumb');
+        thumb.appendChild(el('span', 'cat-tag', s.category));
+        if (s.poster) {
+          var img = el('img', 'thumb-img');
+          img.src = s.poster;
+          img.alt = s.title;
+          img.loading = 'lazy';
+          thumb.appendChild(img);
+        }
+        if (s.duration) thumb.appendChild(el('span', 'dur', mmss(s.duration)));
+        card.appendChild(thumb);
+
+        card.appendChild(el('div', 'c-title', s.title));
+        var when = niceDate(s.date);
+        card.appendChild(el('div', 'c-meta', when ? 'Newest episode \u00b7 ' + when : 'Newest episode'));
+        frag.appendChild(card);
+      });
+
+      grid.innerHTML = '';
+      grid.appendChild(frag);
+    })
+    .catch(function () {
+      if (section) section.style.display = 'none';
+      if (window.console) console.warn('Latest Videos: /images/loop-data.json not reachable');
+    });
+})();
+</script>
