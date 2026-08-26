@@ -1853,6 +1853,55 @@ ul{margin:0;}
 }
 
 /* =====================================================================
+   SHOW HERO ON MOBILE  (.show-hero-in and friends)
+
+   The show hero never had a breakpoint. Unlike .pg-hero-in, which collapses
+   at 980px, .show-hero-in stayed grid-template-columns:1.35fr 1fr at EVERY
+   width -- so on a 360px phone the copy got about 200px and the artwork about
+   150px. That is the "cards look small and the text is crunched" symptom, and
+   it was on all nine show pages.
+
+   Fixed once here rather than page by page, because all nine share these
+   classes. No page edits.
+
+   Matched to the 980px the secondary-page hero already uses, so the whole
+   site changes shape at the same width instead of at two different ones.
+   ===================================================================== */
+@media (max-width:980px){
+  /* one column: full-width copy, artwork beneath it */
+  .show-hero-in{grid-template-columns:1fr;gap:24px;}
+
+  /* the artwork is 16/9 and would tower over a phone at full width */
+  .show-hero-media{max-width:520px;width:100%;}
+
+  /* three stats at a 26px gap wrap into a ragged column; tighten and let
+     them sit two-up instead */
+  .show-stats{gap:14px 22px;margin-bottom:20px;}
+  .show-stat{flex:0 1 auto;min-width:88px;}
+
+  /* the copy is capped at 520px for line length on desktop; on a narrow
+     screen that cap does nothing but the margin still matters */
+  .show-desc{max-width:none;}
+}
+
+@media (max-width:560px){
+  /* full-width buttons read better than two half-width ones side by side */
+  .show-actions{flex-direction:column;align-items:stretch;}
+  .show-actions .btn{justify-content:center;text-align:center;}
+  .show-hero-media{max-width:none;}
+
+  /* Secondary-page stat cards. At 980px they go two-up with min-width:180px,
+     which still just about fits a 380px phone -- two 180px cards crammed
+     against the gutters. Below 560px give them the full width each instead;
+     a stat card that is 170px wide reads as a mistake. */
+  .pg-stat{flex:1 1 100% !important;min-width:0 !important;}
+  .pg-hero-side{flex-direction:column;}
+
+  /* the timezone chip on Schedule sits in the same column */
+  .sch-tz{flex:1 1 100%;min-width:0;}
+}
+
+/* =====================================================================
    SIDE PADDING ON .wrap  -- the mobile "flush to the edge" fix
 
    .wrap sets padding:0 24px. But .wrap is regularly combined with another
