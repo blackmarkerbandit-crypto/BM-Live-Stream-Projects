@@ -1,0 +1,138 @@
+<!-- =====================================================================
+     BlackMarker.TV 3.0 - CAN YOU DIG IT!? SHOW PAGE BODY
+     Paste into the CMS page editor, between the shared header and footer.
+
+     CSS      : nothing extra. Every class is already in blackmarker-tv.css.
+
+     IMAGES   : ONE to upload - /images/show-art-can-you-dig-it.jpg
+                It was a 225 KB base64 PNG in the preview. No transparency and
+                a photographic 1920x1080 frame, so it is now an 86 KB JPEG --
+                same picture, 62% smaller.
+
+     SCRIPTS  : THREE, all inside the episodes section, all required. See the
+                BEGIN CHANNELCAST OTT fence. They are not page furniture; the
+                episode list does not exist without them.
+
+     HERO     : this page keeps its own .show-* hero rather than the shared
+                .page-hero. It is a genuinely different component -- artwork,
+                stat row and action buttons -- and all nine show pages use it,
+                so it is already shared where it matters.
+
+     CTA      : opted into cc-review, so it carries the studio photo.
+
+     TITLE    : the page supplies its own <h1>, so the footer script hides the
+                CMS page-title h1 as a duplicate.
+
+     &#9888; CONTAINS A DOCUMENTED WORKAROUND for a ChannelCast limitation, marked
+     CC-08 in the markup. Read the comment before removing it -- the episode
+     grid collapses back to a single scrolling row without it.
+     ===================================================================== -->
+
+<!-- SHOW HERO -->
+<section class="show-hero">
+  <div class="wrap">
+    <div class="show-crumb"><a href="/on-demand">Exclusive Shows</a> <span class="sep">/</span> <span>Can You Dig It!?</span></div>
+    <div class="show-hero-in">
+      <div class="show-hero-info">
+        <div class="show-kicker">Exclusive Shows &middot; Live Music Review</div>
+        <h1 class="show-title">Can You Dig It!?</h1>
+        <p class="show-desc">The flagship live music review show. Independent artists bring their records, videos and freestyles for an honest on-air breakdown &mdash; plus interviews, guest DJs and the occasional battle. Streamed live from the BMB studio.</p>
+        <div class="show-stats">
+          <div class="show-stat"><span class="n">22</span><span class="l">Episodes</span></div>
+          <div class="show-stat"><span class="n">Live</span><span class="l">Music Review</span></div>
+          <div class="show-stat"><span class="n">2024</span><span class="l">On Air Since</span></div>
+        </div>
+        <div class="show-actions">
+          <a class="btn btn-red" href="#episodes"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right:6px;vertical-align:-2px;"><path d="M8 5v14l11-7z"/></svg>Browse Episodes</a>
+          <button class="btn btn-ghost">+ Follow</button>
+        </div>
+      </div>
+      <div class="show-hero-media">
+        <img class="show-art-img" src="/images/show-art-can-you-dig-it.jpg" alt="Can You Dig It!? Live Music Review">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EPISODES &mdash; ChannelCast OTT renderer (browse + play) -->
+<section class="section wrap" id="episodes">
+  <div class="sec-head">
+    <div>
+      <div class="eyebrow">The Archive &middot; Watch Now</div>
+      <h2 class="sec-title">All Episodes</h2>
+    </div>
+  </div>
+  <!-- ================= BEGIN CHANNELCAST OTT =================
+       The episode list is rendered by ChannelCast, not by this page. Three
+       parts, all of which must stay together:
+
+         1. <div id="cc-ott-..."> the mount point, with a fallback inside it
+            that shows only if the script never loads
+         2. ott-renderer.js from channelcast.tv  -- must stay on that domain,
+            it is not a local asset
+         3. OTTRenderer.mount({...}) with the feed URL, the category filter
+            and the brand theme
+
+       category MUST match the ChannelCast category name exactly, or the feed
+       renders empty. Same string as the show page title in ChannelCast.
+
+       The feed URL carries a token. It ships to every visitor's browser, so
+       it is public by design like any client-side key -- but it is a feed
+       credential, so if it is ever rotated in ChannelCast it has to be
+       updated here too.
+       ========================================================== -->
+  <div class="ott-wrap">
+    <div id="cc-ott-019eba4dbb24746eafa619f8fea1e9aa">
+      <div class="ott-fallback">
+        <span class="pill"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>ChannelCast OTT episode grid</span>
+        Loading episodes&hellip; if this stays put, the ChannelCast OTT script did not load.</div>
+    </div>
+  </div>
+  <!-- ChannelCast OTT renderer: pulls the content feed, filters to "Can You Dig It!? Live Music Review", themed to brand -->
+  <script src="https://channelcast.tv/ott/ott-renderer.js"></script>
+  <script>
+    OTTRenderer.mount({
+      target: "#cc-ott-019eba4dbb24746eafa619f8fea1e9aa",
+      feedUrl: "https://channelcast.tv/api/v1/feeds/019eba4d-bb24-746e-afa6-19f8fea1e9aa?format=mrss&expires=2100206919&token=Tn1sKSyTcrga-KPVejX4BJpkbPXRcKkIaZ2twvo0Rsw",
+      category: "Can You Dig It!? Live Music Review",
+      theme: { bg: "transparent", tile: "#1c1917", text: "#F2EFEC", accent: "#E8181C" }
+    });
+  </script>
+  <!-- TEMPORARY WORKAROUND &mdash; force grid layout. See CC-08.
+       The renderer only enters grid mode when a user clicks a category
+       (verticalBrowseMode = Boolean(state.activeCategory)), and mount() exposes no
+       layout option. So we apply ChannelCast's OWN grid class (.ott-track-vertical). -->
+  <script>
+    (function () {
+      var host = document.getElementById('cc-ott-019eba4dbb24746eafa619f8fea1e9aa');
+      if (!host) return;
+      function forceGrid() {
+        host.querySelectorAll('.ott-track').forEach(function (t) {
+          t.classList.add('ott-track-vertical');
+        });
+        host.querySelectorAll('.ott-track-nav').forEach(function (n) {
+          n.style.display = 'none';
+        });
+      }
+      new MutationObserver(forceGrid).observe(host, { childList: true, subtree: true });
+      forceGrid();
+      [300, 800, 1500, 3000].forEach(function (ms) { setTimeout(forceGrid, ms); });
+    })();
+  </script>
+  <!-- ================== END CHANNELCAST OTT ================== -->
+</section>
+
+<!-- CTA -->
+<section class="section wrap">
+  <div class="cc cc-review">
+    <div class="cc-txt">
+      <div class="cc-eye">Artists &mdash; Get Reviewed</div>
+      <h2 class="cc-h">Think your record<br>can hang?</h2>
+      <p class="cc-p">Submit your music and get it reviewed live on Can You Dig It!? &mdash; plus alerts when new episodes drop and when we go live.</p>
+      <div class="cc-actions">
+        <a class="btn btn-red" href="BlackMarkerTV-3-CONTACT.html#contact-form">Submit Your Music</a>
+        <button class="btn btn-ghost open-sub">Subscribe for Updates</button>
+      </div>
+    </div>
+  </div>
+</section>
