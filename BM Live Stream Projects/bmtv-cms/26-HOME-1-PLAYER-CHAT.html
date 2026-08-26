@@ -1,0 +1,215 @@
+<!-- =====================================================================
+     BlackMarker.TV 3.0 - HOMEPAGE, SECTION 1: PLAYER + CHAT
+     Paste at the TOP of the homepage body, between the shared header and
+     footer. Later homepage sections go underneath this one.
+
+     CSS      : one small addition for the progress bar (.pb-prog) - it lives
+                in blackmarker-tv.css now, so re-paste the stylesheet.
+     IMAGES   : none.
+     UPLOAD   : bmtv-chat.js to /images/ if it is not there already.
+
+     WHAT IS LIVE HERE, with nothing hosted server-side:
+       * the ChannelCast player itself
+       * the chat, against Supabase
+       * NOW PLAYING and its progress bar, from ChannelCast's public
+         timeseek endpoint
+
+     Now Playing derives its title from the stream FILENAME, which is why it
+     needs no backend. Good, not perfect - filenames are not curated titles.
+     Set LOOP_DATA in the script to the hosted loop-data.json URL when that
+     exists and it will use the real titles instead, automatically.
+
+     &#9888; TWO EXTERNAL DEPENDENCIES the CMS must allow if it sets a CSP:
+         channelcast.tv        the player and the timeseek feed
+         cdn.jsdelivr.net      supabase-js, pulled in by the chat
+         *.supabase.co         the chat database
+     Without those the player and chat fail silently rather than erroring.
+     ===================================================================== -->
+
+<div class="wrap live-wrap">
+    <div class="live-grid" id="liveGrid">
+      <div class="player">
+                <div class="player-stage">
+          <div class="live-tag" style="z-index:3;"><span class="d"></span>LIVE &middot; THE FREE LOOP</div>
+          <div id="cc-player-019eba4dbb24746eafa619f8fea1e9aa" style="width:100%;aspect-ratio:16/9;background:#000;"></div>
+        </div>
+        <script src="https://channelcast.tv/embed/player.js"></script>
+        <script>ChannelCastPlayer.mount({ target: '#cc-player-019eba4dbb24746eafa619f8fea1e9aa', channelId: '019eba4d-bb24-746e-afa6-19f8fea1e9aa', apiBase: 'https://channelcast.tv' });</script>
+        <div class="player-bar">
+          <div>
+            <div style="font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:4px;display:flex;align-items:center;gap:6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--red);display:inline-block;animation:blink 1.3s infinite;"></span>Now Playing</div>
+            <div class="pb-title" id="pbTitle">Loading&hellip;</div>
+            <div class="pb-prog"><i id="pbProg"></i></div>
+            <div class="pb-sub">Only <b style="color:var(--text);">Dope Sh!t</b> &middot; 24/7 Music &amp; Shows &middot; <a href="mailto:canyoudigit@blackmarker.tv" style="color:var(--red);font-weight:700;">Submit Your Music Today!</a></div>
+          </div>
+          <div class="pb-actions">
+            <div class="chip active" id="chatToggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span id="chatToggleLbl">Chat: On</span></div>
+            <div class="chip" id="shareBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span id="shareLbl">Share</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- The wrapper is the grid item; the panel inside is taken out of flow
+           so a long conversation can never stretch the row. See .chat-col. -->
+      <div class="chat-col">
+      <!-- The chat embed builds itself inside this div: markup, styles and
+           behaviour all come from bmtv-chat.js. This is the exact one-line
+           integration Jose gets for the CMS, so the preview exercises the
+           real path rather than a sandbox-only one.
+           data-room beats ?room= in the URL, so nobody can retype their way
+           from here into a PPV room. -->
+      <div class="chat" id="chatPanel" data-bmtv-chat data-room="main"></div>
+      </div><!-- /.chat-col -->
+    </div>
+    
+  
+</div>
+<!-- ============ LIVE CHAT ============
+     One div (above, in the grid) plus this one script. The panel builds
+     itself: markup, styles and behaviour all come from bmtv-chat.js.
+
+     data-room="main" is pinned on the div and beats any ?room= in the URL, so
+     a visitor cannot retype their way from here into a PPV room.
+
+     PATH: /images/ per the site convention. If there is a proper scripts
+     folder, point it there -- nothing else changes.
+
+     &#9888; CONTENT-SECURITY-POLICY. The widget pulls supabase-js from
+     cdn.jsdelivr.net and talks to *.supabase.co. If the CMS sets a strict CSP,
+     both need allowing or the chat silently never connects.
+     ================================================= -->
+<script src="/images/bmtv-chat.js" defer></script>
+
+<!-- =====================================================================
+     PLAYER SECTION SCRIPT
+     Two jobs, both belonging to this section rather than the site footer.
+
+     1. CHAT ON/OFF
+        Collapses the chat column so the video fills the width. It lived in
+        the preview's shared script, but it only exists on this page, so it
+        travels with the section instead of throwing on every other page.
+
+     2. NOW PLAYING
+        Reads ChannelCast's public timeseek endpoint -- no auth, CORS open,
+        the same feed the player itself uses -- and shows what is on air with
+        a progress bar.
+
+        The title is derived from the stream's filename, which means this
+        needs NOTHING hosted server-side. "MV-Doechii-Pacer.mp4" becomes
+        "Doechii - Pacer"; "IA-SpirosInterviewClip-DayOnes.mp4" becomes
+        "Spiros Interview Clip - Day Ones".
+
+        That is a deliberate trade. Filenames are not curated titles, so this
+        is good rather than perfect. When loop-data.json is hosted alongside
+        the site (it drives Upcoming and Latest Videos), it carries proper
+        titles and this will prefer them automatically -- see the LOOP_DATA
+        hook below. Until then the section is fully live on its own.
+
+        Polls every 20s and ticks the progress bar locally in between, rather
+        than hammering the endpoint once a second.
+     ===================================================================== -->
+<script>
+(function () {
+  var CHANNEL   = "019eba4d-bb24-746e-afa6-19f8fea1e9aa";
+  var API       = "https://channelcast.tv";
+  var LOOP_DATA = null;   // set to a URL once loop-data.json is hosted, for real titles
+
+  var elTitle = document.getElementById('pbTitle');
+  var elProg  = document.getElementById('pbProg');
+
+  /* ---- chat on/off ---- */
+  var grid = document.getElementById('liveGrid');
+  var ct   = document.getElementById('chatToggle');
+  var lbl  = document.getElementById('chatToggleLbl');
+  if (grid && ct) {
+    ct.addEventListener('click', function () {
+      var off = grid.classList.toggle('chat-off');
+      ct.classList.toggle('active', !off);
+      if (lbl) lbl.textContent = off ? 'Chat: Off' : 'Chat: On';
+    });
+  }
+
+  if (!elTitle) return;
+
+  /* ---- turn a stream filename into something readable ---- */
+  var KIND = /^(MV|IA|LP|LI|TWI|BMTV|FTR|CUDI|TT|TAP|Promo|Performance)[-_ ]/i;
+
+  function words(s) {
+    return s
+      // a lone x between two names is a collaboration marker, not a letter:
+      // "KhantrastxDeeBillz" -> "Khantrast x Dee Billz"
+      .replace(/([a-z])x([A-Z])/g, '$1 x $2')
+      // normal camel boundary: "WhereTheHoes" -> "Where The Hoes"
+      .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+      // a single capital glued to the next word: "QuitAJob" -> "Quit A Job"
+      .replace(/([A-Z])([A-Z][a-z])/g, '$1 $2')
+      .replace(/[_]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function titleFrom(url) {
+    if (!url) return null;
+    var f = url.split('?')[0].split('/').pop();
+    try { f = decodeURIComponent(f); } catch (e) {}
+    f = f.replace(/\.[a-z0-9]+$/i, '');          // drop the extension
+    f = f.replace(KIND, '');                     // drop the kind prefix
+    // trailing MMDDYYYY or a dashed date -- an upload stamp, not part of a title
+    f = f.replace(/[-_ ]?\d{8}$/, '')
+         .replace(/[-_ ]?\d{1,2}[-.]\d{1,2}[-.]\d{2,4}$/, '');
+    // hyphens AND spaces both separate the artist from the title
+    var parts = f.split(/[-\s]+/).map(words).filter(Boolean);
+    if (!parts.length) return null;
+    if (parts.length === 1) return parts[0];
+    return parts[0] + ' \u2014 ' + parts.slice(1).join(' ');
+  }
+
+  var titles = null;          // mediaId -> title, if loop-data is available
+  var cur = { id: null, at: 0, dur: 0, t: 0 };
+
+  function paint() {
+    var name = (titles && cur.id && titles[cur.id]) || cur.name;
+    if (name && elTitle.textContent !== name) elTitle.textContent = name;
+    if (elProg && cur.dur > 0) {
+      var into = Math.min(cur.dur, cur.at + (Date.now() - cur.t) / 1000);
+      elProg.style.width = (into / cur.dur * 100).toFixed(1) + '%';
+    }
+  }
+
+  function poll() {
+    fetch(API + '/api/v1/playback/timeseek/' + CHANNEL, { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d) return;
+        cur = {
+          id: d.mediaId,
+          at: d.offsetSeconds || 0,
+          dur: d.durationSeconds || 0,
+          t: Date.now(),
+          name: titleFrom(d.streamUrl)
+        };
+        paint();
+      })
+      .catch(function () { /* leave whatever is on screen */ });
+  }
+
+  if (LOOP_DATA) {
+    fetch(LOOP_DATA, { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d || !d.loops) return;
+        titles = {};
+        Object.keys(d.loops).forEach(function (k) {
+          d.loops[k].forEach(function (it) {
+            titles[it.i] = it.a ? it.a + ' \u2014 ' + it.s : it.s;
+          });
+        });
+        paint();
+      })
+      .catch(function () {});
+  }
+
+  poll();
+  setInterval(poll, 20000);
+  setInterval(paint, 1000);
+})();
+</script>

@@ -113,6 +113,7 @@ def main():
         ("14-BODY-PRODUCTION.html",   "_TEST-production.html",   "CMS test - Production"),
         ("15-BODY-SUBMIT-MUSIC.html", "_TEST-submit-music.html", "CMS test - Submit Your Music"),
         ("16-BODY-ACCOUNT.html",      "_TEST-account.html",      "CMS test - Account"),
+        ("26-HOME-1-PLAYER-CHAT.html","_TEST-home1.html",       "CMS test - Home section 1"),
         ("17-BODY-CAN-YOU-DIG-IT.html","_TEST-cudi.html",       "CMS test - Can You Dig It"),
         ("18-BODY-WEEKLY-INTERRUPT.html", "_TEST-weekly-interrupt.html", "CMS test - Weekly Interrupt"),
         ("19-BODY-FOR-THE-RECORD.html", "_TEST-for-the-record.html", "CMS test - For The Record"),

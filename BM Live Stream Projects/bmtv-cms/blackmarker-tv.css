@@ -1838,6 +1838,21 @@ ul{margin:0;}
 .player-stage::after{display:none !important;}
 
 /* =====================================================================
+   NOW PLAYING PROGRESS BAR  (.pb-prog)
+
+   Not in the preview pages, so the merge never picked it up -- it was added
+   later, in the sandbox's own homepage-live.html. Belongs here so it reaches
+   the CMS with everything else.
+   ===================================================================== */
+.pb-prog{height:3px;border-radius:2px;background:var(--surface3);
+  margin-top:7px;overflow:hidden;max-width:320px;}
+.pb-prog i{display:block;height:100%;background:var(--red);width:0;
+  transition:width .9s linear;}
+@media (prefers-reduced-motion:reduce){
+  .pb-prog i{transition:none;}
+}
+
+/* =====================================================================
    "ARTISTS - GET REVIEWED" CTA  (.cc.cc-review)
 
    Adds a full-bleed photo from the Can You Dig It!? studio so the block stops
